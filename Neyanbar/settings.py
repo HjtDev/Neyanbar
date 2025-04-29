@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from django.contrib import admin
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -113,9 +114,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fa-ir'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tehran'
 
 USE_I18N = True
 
@@ -126,6 +127,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Jazzmin settings
+
+JAZZMIN_SETTINGS = {
+    'custom_css': 'css/jazzmin-rtl.css',
+    'site_brand': 'داشبورد',
+}
+admin.sites.AdminSite.site_header = 'پنل مدیریت'
+admin.sites.AdminSite.site_title = 'فروشگاه'
+admin.sites.AdminSite.index_title = 'پنل مدیریت'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
