@@ -1,0 +1,1371 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="keywords" content="HTML5 Template {% block page_keywords %}{% endblock %}"/>
+    <meta name="description" content="{% block page_description %}{% endblock %}">
+    <meta name="author" content="M-dehghan marziye.dehghan8006@gmail.com">
+    <link rel="icon" type="image/png" href="{% static 'images/icons/favicon.png' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/awesome/css/custom.css' %}">
+    <link href="{% static 'fonts/vazir/font-vazir.css' %}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/animate/animate.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/owl-carousel/owl.carousel.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/sticky-icon/stickyicon.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main-min.css' %}">
+    {% block header %}{% endblock %}
+</head>
+<body>
+<div class="bg-loader">
+    <div class="loader"></div>
+</div>
+<div class="page-wrapper">
+    <header class="header rtl text-right">
+        <div class="header-middle">
+            <div class="container">
+                <div class="header-right">
+                    <a href="#" class="mobile-menu-toggle">
+                        <i class="fa-light fa-bars"></i>
+                    </a>
+                    <a href="index.html" class="logo">
+                        <picture>
+                            <source srcset="{% static 'images/logo.webp' %}" type="image/webp">
+                            <img src="{% static 'images/logo.png' %}" alt="logo" width="153" height="44"/></picture>
+                    </a>
+                    <div class="header-search hs-simple">
+                        <form action="#" class="input-wrapper">
+                            <input type="text" class="form-control" name="search" autocomplete="off"
+                                   placeholder="جستجو ..." required
+                                   oninvalid="this.setCustomValidity('نام محصول مورد نظر را تایپ نمایید .');"
+                                   onchange="try{setCustomValidity('')}catch(e){};"
+                                   x-moz-errormessage="نام محصول مورد نظر را تایپ نمایید ."/>
+                            <button class="btn btn-search" type="submit" title="submit-button">
+                                <i class="fa-light fa-magnifying-glass"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="icon-box icon-box-side phone-box">
+                        <div class="icon-box-icon mr-0 mr-lg-2">
+                            <a href="tel:#">
+                                <i class="fa-light fa-phone"></i>
+                            </a>
+                        </div>
+                        <div class="icon-box-content d-lg-show">
+                            <h4 class="icon-box-title text-dark text-normal">
+                                <a href="#" class=" d-inline-block">تلفن پاسخگو</a>
+                            </h4>
+                            <p><a href="tel:#"> 09112345678 </a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-left ">
+                    <div class="dropdown wishlist wishlist-dropdown type2 off-canvas">
+                        <a href="wishlist.html" class="wishlist-toggle  label-block link d-lg-show" title="wishlist">
+                            <i class="fa-light fa-heart"><span class="wishlist-count">2</span></i>
+                        </a>
+                        <div class="canvas-overlay"></div>
+                        <div class="dropdown-box scrollable">
+                            <div class="canvas-header">
+                                <h4 class="canvas-title">علاقه مندی ها</h4>
+                                <a href="#" class="btn btn-dark btn-link btn-icon-right  btn-close">
+                                    <i class="fa-light fa-xmark"></i>
+                                </a>
+                            </div>
+                            <div class="products scrollable">
+                                <div class="product product-wishlist">
+                                    <figure class="product-media">
+                                        <a href="product.html">
+                                            <picture>
+                                                <source srcset="{% static 'images/wishlist/product-1.webp' %}" type="image/webp">
+                                                <img loading="lazy" decoding="async" src="{% static 'images/wishlist/product-1.jpg' %}"
+                                                     width="100" height="100"
+                                                     alt="product"/></picture>
+                                        </a>
+                                        <button class="btn btn-link btn-close">
+                                            <i class="fa-light fa-xmark"></i>
+                                        </button>
+                                    </figure>
+                                    <div class="product-detail">
+                                        <a href="product.html" class="product-name">ادوپرفیوم زنانه اونتوس کرید</a>
+                                        <div class="price-box">
+                                            <span class="product-price"> 3,000,000 تومان</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product product-wishlist">
+                                    <figure class="product-media">
+                                        <a href="product.html">
+                                            <picture>
+                                                <source srcset="{% static 'images/wishlist/product-2.webp' %}" type="image/webp">
+                                                <img loading="lazy" decoding="async" src="images/wishlist/product-2.jpg"
+                                                     width="100" height="100"
+                                                     alt="product"/></picture>
+                                        </a>
+                                        <button class="btn btn-link btn-close">
+                                            <i class="fa-light fa-xmark"></i>
+                                        </button>
+                                    </figure>
+                                    <div class="product-detail">
+                                        <a href="product.html" class="product-name">
+                                            ایو سن لورن لیبر اینتنس
+                                        </a>
+                                        <div class="price-box">
+                                            <span class="product-price"> 3,000,000 تومان</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product product-wishlist">
+                                    <figure class="product-media">
+                                        <a href="product.html">
+                                            <picture>
+                                                <source srcset="{% static 'images/wishlist/product-3.webp' %}" type="image/webp">
+                                                <img loading="lazy" decoding="async" src="{% static 'images/wishlist/product-3.jpg' %}"
+                                                     width="100" height="100"
+                                                     alt="product"/></picture>
+                                        </a>
+                                        <button class="btn btn-link btn-close">
+                                            <i class="fa-light fa-xmark"></i>
+                                        </button>
+                                    </figure>
+                                    <div class="product-detail">
+                                        <a href="product.html" class="product-name">ادوپرفیوم زنانه میس دیور</a>
+                                        <div class="price-box">
+                                            <span class="product-price"> 3,000,000 تومان</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="wishlist.html"
+                               class="btn btn-dark wishlist-btn mt-4  btn-rounded  btn-block btn-gradient">
+                                    <span>
+                                        نمایش لیست
+                                    </span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="dropdown cart-dropdown type2 off-canvas ml-0 mr-lg-2">
+                        <a href="#" class="cart-toggle label-block link">
+                            <i class="fa-light fa-shopping-bag"><span class="cart-count">2</span></i>
+                        </a>
+                        <div class="canvas-overlay"></div>
+                        <div class="dropdown-box">
+                            <div class="canvas-header">
+                                <h4 class="canvas-title">سبد خرید</h4>
+                                <a href="#" class="btn btn-dark btn-link btn-icon-right  btn-close">
+                                    بستن<i class="fa-light fa-xmark"></i>
+                                </a>
+                            </div>
+                            <div class="products scrollable">
+                                <div class="product product-cart">
+                                    <figure class="product-media">
+                                        <a href="product.html">
+                                            <picture>
+                                                <source srcset="{% static 'images/cart/product-1.webp' %}" type="image/webp">
+                                                <img loading="lazy" decoding="async" src="{% static 'images/cart/product-1.jpg' %}"
+                                                     alt="product" width="80"
+                                                     height="88"/></picture>
+                                        </a>
+                                        <button class="btn btn-link btn-close">
+                                            <i class="fa-light fa-xmark"></i>
+                                        </button>
+                                    </figure>
+                                    <div class="product-detail">
+                                        <a href="product.html" class="product-name">ادوپرفیوم زنانه میس دیور</a>
+                                        <div class="price-box">
+                                            <span class="product-quantity">1</span>
+                                            <span class="product-price">3,000,000 تومان</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product product-cart">
+                                    <figure class="product-media">
+                                        <a href="product.html">
+                                            <picture>
+                                                <source srcset="{% static 'images/cart/product-2.webp' %}" type="image/webp">
+                                                <img loading="lazy" decoding="async" src="{% static 'images/cart/product-2.jpg' %}"
+                                                     alt="product" width="80"
+                                                     height="88"/></picture>
+                                        </a>
+                                        <button class="btn btn-link btn-close">
+                                            <i class="fa-light fa-xmark"></i>
+                                        </button>
+                                    </figure>
+                                    <div class="product-detail">
+                                        <a href="product.html" class="product-name">
+                                            ایو سن لورن لیبر اینتنس
+                                        </a>
+                                        <div class="price-box">
+                                            <span class="product-quantity">1</span>
+                                            <span class="product-price">3,000,000 تومان</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cart-total">
+                                <label>جمع قبل از تخفیف:</label>
+                                <span class="price">6,000,000 تومان</span>
+                            </div>
+                            <div class="cart-action">
+                                <a href="cart.html" class="btn btn-dark btn-link">نمایش خرید </a>
+                                <a href="checkout.html"
+                                   class="btn btn-dark mt-4  btn-rounded  btn-block btn-gradient"><span>پرداخت</span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="login-wrap">
+                        <div class="icon-box icon-box-side border-color-green">
+                            <div class="icon-box-icon mr-0 mr-lg-2 d-lg-show">
+                                <i class="fa-light fa-user"></i>
+                            </div>
+                            <div class="icon-box-content ">
+                                <h4 class="icon-box-title text-dark text-normal">
+                                    <a href="#signin" class="login-toggle link-to-tab">ورود</a>
+                                    <span class="delimiter">/</span>
+                                    <a href="#register" class="register-toggle link-to-tab mr-0">ثبت نام</a>
+                                </h4>
+                                <p><a href="#">حساب کاربری</a></p>
+                            </div>
+                        </div>
+                        <div class="dropdown login-dropdown off-canvas">
+                            <div class="canvas-overlay"></div>
+                            <div class="dropdown-box scrollable">
+                                <div class="login-popup">
+                                    <div class="form-box">
+                                        <div class="tab tab-nav-simple tab-nav-boxed form-tab">
+                                            <ul class="nav nav-tabs nav-fill align-items-center border-no justify-content-center"
+                                                role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active border-no lh-1 ls-normal"
+                                                       href="#signin">ورود </a>
+                                                </li>
+                                                <li class="delimiter">یا</li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link border-no lh-1 ls-normal"
+                                                       href="#register"> ثبت نام</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="signin">
+                                                    <form action="#">
+                                                        <div class="form-group mb-3">
+                                                            <input type="text" class="form-control text-left"
+                                                                   id="singin-email"
+                                                                   name="singin-email"
+                                                                   placeholder="نام کاربری یا آدرس ایمیل" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="password" class="form-control text-left ltr"
+                                                                   id="singin-password" name="singin-password"
+                                                                   placeholder="رمز عبور" required>
+                                                        </div>
+                                                        <div class="form-footer">
+                                                            <div class="form-checkbox">
+                                                                <input type="checkbox" class="custom-checkbox"
+                                                                       id="signin-remember" name="signin-remember">
+                                                                <label class="form-control-label"
+                                                                       for="signin-remember">
+                                                                    مرا به خاطر بسپار
+                                                                </label>
+                                                            </div>
+                                                            <a href="#" class="lost-link"> رمز عبور خود را فراموش کرده
+                                                                اید؟</a>
+                                                        </div>
+                                                        <button class="btn btn-rounded btn-dark btn-block btn-gradient"
+                                                                type="submit">
+                                                            ورود
+                                                        </button>
+                                                    </form>
+                                                    <div class="form-choice text-center">
+                                                        <label class="ls-m">یا وارد شوید با</label>
+                                                        <div class="social-links">
+                                                            <a href="#"
+                                                               class="social-link"><img
+                                                                    src="{% static 'images/social/whatsapp-silver.png' %}"/></a>
+                                                            <a href="#"
+                                                               class="social-link"><img
+                                                                    src="{% static 'images/social/instagram-silver.png' %}"/></a>
+                                                            <a href="#"
+                                                               class="social-link"><img
+                                                                    src="{% static 'images/social/x-silver.png' %}"/></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="register">
+                                                    <form action="#">
+                                                        <div class="form-group mb-3">
+                                                            <input type="email" class="form-control text-left"
+                                                                   id="register-email"
+                                                                   name="register-email" placeholder="آدرس ایمیل"
+                                                                   required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <input type="password" class="form-control text-left ltr"
+                                                                   id="register-password" name="register-password"
+                                                                   placeholder="رمز عبور" required>
+                                                        </div>
+                                                        <div class="form-footer">
+                                                            <div class="form-checkbox">
+                                                                <input type="checkbox" class="custom-checkbox"
+                                                                       id="register-agree" name="register-agree"
+                                                                       required>
+                                                                <label class="form-control-label" for="register-agree">
+                                                                    اطلاعات شما محفوظ است
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn btn-rounded btn-dark btn-block btn-gradient"
+                                                                type="submit">
+                                                            ثبت نام
+                                                        </button>
+                                                    </form>
+                                                    <div class="form-choice text-center">
+                                                        <label class="ls-m">یا ثبت نام با</label>
+                                                        <div class="social-links">
+                                                            <a href="#"
+                                                               class="social-link"><img
+                                                                    src="{% static 'images/social/whatsapp-silver.png' %}"/></a>
+                                                            <a href="#"
+                                                               class="social-link"><img
+                                                                    src="{% static 'images/social/instagram-silver.png' %}"/></a>
+                                                            <a href="#"
+                                                               class="social-link"><img
+                                                                    src="{% static 'images/social/x-silver.png' %}"/></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button title="Close (Esc)" type="button" class="mfp-close"><span>×</span></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom sticky-header fix-top sticky-content d-lg-show">
+            <div class="container">
+                <div class="header-right">
+                    <div class="dropdown category-dropdown" data-visible="true">
+                        <a href="#" class="category-toggle" role="button" data-toggle="dropdown"
+                           data-display="static" title="دسته بندی ها را مرور کنید">
+                            <i class="fa-light fa-bars-staggered"></i>
+                            <span>دسته بندی ها </span>
+                        </a>
+                        <div class="dropdown-box">
+                            <ul class="menu vertical-menu category-menu">
+                                <li>
+                                    <a href="#">
+                                        <i class="fa-light fa-wine-bottle"></i>عطر
+                                    </a>
+                                    <ul class="megamenu">
+                                        <li>
+                                            <h4 class="menu-title">عطر زنانه</h4>
+                                            <hr class="divider">
+                                            <ul>
+                                                <li><a href="#"> عطر زنانه تلخ</a></li>
+                                                <li><a href="#">عطر زنانه تند </a></li>
+                                                <li><a href="#">عطر زنانه شیرین</a></li>
+                                                <li><a href="#">عطر زنانه ترش</a></li>
+                                                <li><a href="#">همه عطرهای زنانه</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <h4 class="menu-title">عطر مردانه</h4>
+                                            <hr class="divider">
+                                            <ul>
+                                                <li><a href="#"> عطر مردانه تلخ</a></li>
+                                                <li><a href="#">عطر مردانه تند </a></li>
+                                                <li><a href="#">عطر مردانه شیرین</a></li>
+                                                <li><a href="#">عطر مردانه ترش</a></li>
+                                                <li><a href="#">همه عطرهای مردانه</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <div class="banner-fixed menu-banner menu-banner4 content-middle">
+                                                <figure>
+                                                    <picture>
+                                                        <source srcset="{% static 'images/menu/banner-4.webp' %}" type="image/webp">
+                                                        <img loading="lazy" decoding="async"
+                                                             src="{% static 'images/menu/banner-4.jpg' %}" alt="Menu Banner"
+                                                             width="235" height="347"/></picture>
+                                                </figure>
+                                                <div class="banner-content rtl">
+                                                    <h4 class="banner-subtitle mb-2 font-weight-normal">
+                                                        ترند های جدید
+                                                    </h4>
+                                                    <h3 class="banner-title ls-m">
+                                                        عطرهای <br>زنانه <br>مردانه
+                                                    </h3>
+                                                    <a href="#"
+                                                       class="btn btn-md btn-block btn-gradient">
+                                                        مشاهده و انتخاب
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa-light fa-prescription-bottle"></i>عطر های منیاتوری
+                                    </a>
+                                    <ul class="megamenu">
+                                        <li>
+                                            <h4 class="menu-title">منیاتوری زنانه</h4>
+                                            <hr class="divider">
+                                            <ul>
+                                                <li><a href="#"> مینیاتوری زنانه پرفیوم </a></li>
+                                                <li><a href="#">مینیاتوری زنانه ادو پرفیوم</a></li>
+                                                <li><a href="#">مینیاتوری زنانه ادو تویلت</a></li>
+                                                <li><a href="#"> مینیاتوری زنانه ادو کلن</a></li>
+                                                <li><a href="#">مینیاتوری زنانه او فرش</a></li>
+                                            </ul>
+                                            <h4 class="menu-title">منیاتوری مردانه</h4>
+                                            <hr class="divider">
+                                            <ul>
+                                                <li><a href="#"> مینیاتوری مردانه پرفیوم </a></li>
+                                                <li><a href="#">مینیاتوری مردانه ادو پرفیوم</a></li>
+                                                <li><a href="#">مینیاتوری مردانه ادو تویلت</a></li>
+                                                <li><a href="#"> مینیاتوری مردانه ادو کلن</a></li>
+                                                <li><a href="#">مینیاتوری مردانه او فرش</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <h4 class="menu-title">منیاتوری نوجوان</h4>
+                                            <hr class="divider">
+                                            <ul>
+                                                <li><a href="#"> مینیاتوری نوجوان پرفیوم </a></li>
+                                                <li><a href="#">مینیاتوری نوجوان ادو پرفیوم</a></li>
+                                                <li><a href="#">مینیاتوری نوجوان ادو تویلت</a></li>
+                                                <li><a href="#"> مینیاتوری نوجوان ادو کلن</a></li>
+                                                <li><a href="#">مینیاتوری نوجوان او فرش</a></li>
+                                            </ul>
+                                            <h4 class="menu-title">منیاتوری کودکانه</h4>
+                                            <hr class="divider">
+                                            <ul>
+                                                <li><a href="#"> مینیاتوری مردانه پرفیوم </a></li>
+                                                <li><a href="#">مینیاتوری مردانه ادو پرفیوم</a></li>
+                                                <li><a href="#">مینیاتوری مردانه ادو تویلت</a></li>
+                                                <li><a href="#"> مینیاتوری مردانه ادو کلن</a></li>
+                                                <li><a href="#">مینیاتوری مردانه او فرش</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <div class="menu-banner banner-fixed menu-banner5">
+                                                <figure>
+                                                    <picture>
+                                                        <source srcset="{% static 'images/menu/banner-5.webp' %}" type="image/webp">
+                                                        <img loading="lazy" decoding="async"
+                                                             src="{% static 'images/menu/banner-5.jpg' %}" alt="Menu Banner"
+                                                             width="235" height="461"/></picture>
+                                                </figure>
+                                                <div class="banner-content rtl">
+                                                    <h4 class="banner-subtitle text-dark font-weight-normal ls-normal">
+                                                        داغ ترین تخفیف ها
+                                                    </h4>
+                                                    <h3 class="banner-title text-dark ls-m mb-5">
+                                                        این هفته<br>بالای
+                                                        30%<br>
+                                                        روی تمامی اجناس
+                                                    </h3>
+                                                    <a href="#" class="btn btn-md btn-block btn-gradient">
+                                                        مشاهده و انتخاب
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa-light fa-vial"></i>سمپل
+                                    </a>
+                                    <ul class="megamenu">
+                                        <li>
+                                            <h4 class="menu-title"> سمپل های زنانه </h4>
+                                            <hr class="divider">
+                                            <ul>
+                                                <li><a href="#"> سمپل زنانه خنگ </a></li>
+                                                <li><a href="#"> سمپل زنانه گرم</a></li>
+                                                <li><a href="#"> سمپل زنانه معتدل</a></li>
+                                            </ul>
+                                            <h4 class="menu-title"> سمپل های مردانه </h4>
+                                            <hr class="divider">
+                                            <ul>
+                                                <li><a href="#"> سمپل مردانه خنگ </a></li>
+                                                <li><a href="#"> سمپل مردانه گرم</a></li>
+                                                <li><a href="#"> سمپل مردانه معتدل</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <h4 class="menu-title"> سمپل های نوجوان </h4>
+                                            <hr class="divider">
+                                            <ul>
+                                                <li><a href="#"> سمپل نوجوان خنگ </a></li>
+                                                <li><a href="#"> سمپل نوجوان گرم</a></li>
+                                                <li><a href="#"> سمپل نوجوان معتدل</a></li>
+                                            </ul>
+                                            <h4 class="menu-title"> سمپل های کودکانه </h4>
+                                            <hr class="divider">
+                                            <ul>
+                                                <li><a href="#"> سمپل کودکانه خنگ </a></li>
+                                                <li><a href="#"> سمپل کودکانه گرم</a></li>
+                                                <li><a href="#"> سمپل کودکانه معتدل</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <div class="menu-banner banner-fixed menu-banner5">
+                                                <figure>
+                                                    <picture>
+                                                        <source srcset="{% static 'images/menu/banner-6.webp' %}" type="image/webp">
+                                                        <img loading="lazy" decoding="async"
+                                                             src="{% static 'images/menu/banner-6.jpg' %}" alt="Menu Banner"
+                                                             width="235" height="433"/></picture>
+                                                </figure>
+                                                <div class="banner-content rtl">
+                                                    <h4 class="banner-subtitle font-weight-normal text-white">
+                                                        جدید این هفته
+                                                    </h4>
+                                                    <h3 class="banner-title ls-m mb-4">
+                                                        سمپل های
+                                                        زنانه<br>مردانه<br>و
+                                                        کودکانه
+                                                        <br><span
+                                                            class=" text-white d-inline-block mt-2 font-weight-bold">
+                                                                %20
+                                                                تخفیف
+                                                            </span>
+                                                    </h3>
+                                                    <a href="#"
+                                                       class="btn btn-md btn-block btn-gradient">
+                                                        مشاهده و انتخاب
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa-light fa-heart"></i>برند ها
+                                    </a>
+                                    <div class="megamenu type2">
+                                        <div class="row">
+                                            <div class="col-md-3 col-lg-3 col-6">
+                                                <h4 class="menu-title"> برندهای زنانه</h4>
+                                                <hr class="divider"/>
+                                                <ul>
+                                                    <li><a href="#">پاکو رابان</a></li>
+                                                    <li><a href="#">بولگاری</a></li>
+                                                    <li><a href="#">ایو سن لورن </a></li>
+                                                    <li><a href="#">آمواج </a></li>
+                                                    <li><a href="#">دانهیل</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3 col-6">
+                                                <h4 class="menu-title"> برندهای مردانه</h4>
+                                                <hr class="divider"/>
+                                                <ul>
+                                                    <li><a href="#">پاکو رابان</a></li>
+                                                    <li><a href="#">بولگاری</a></li>
+                                                    <li><a href="#">ایو سن لورن </a></li>
+                                                    <li><a href="#">آمواج </a></li>
+                                                    <li><a href="#">دانهیل</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3 col-6">
+                                                <h4 class="menu-title"> برندهای نوجوان</h4>
+                                                <hr class="divider"/>
+                                                <ul>
+                                                    <li><a href="#">پاکو رابان</a></li>
+                                                    <li><a href="#">بولگاری</a></li>
+                                                    <li><a href="#">ایو سن لورن </a></li>
+                                                    <li><a href="#">آمواج </a></li>
+                                                    <li><a href="#">دانهیل</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3 col-6">
+                                                <h4 class="menu-title"> برندهای کودکانه</h4>
+                                                <hr class="divider"/>
+                                                <ul>
+                                                    <li><a href="#">پاکو رابان</a></li>
+                                                    <li><a href="#">بولگاری</a></li>
+                                                    <li><a href="#">ایو سن لورن </a></li>
+                                                    <li><a href="#">آمواج </a></li>
+                                                    <li><a href="#">دانهیل</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3 col-lg-3 col-6">
+                                                <figure>
+                                                    <picture>
+                                                        <source srcset="{% static 'images/menu/1.webp' %}" type="image/webp">
+                                                        <img loading="lazy" decoding="async" src="{% static 'images/menu/1.png' %}"
+                                                             alt="Menu Banner" width="172"
+                                                             height="106"/></picture>
+                                                </figure>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3 col-6">
+                                                <figure>
+                                                    <picture>
+                                                        <source srcset="{% static 'images/menu/2.webp' %}" type="image/webp">
+                                                        <img loading="lazy" decoding="async" src="{% static 'images/menu/2.png' %}"
+                                                             alt="Menu Banner" width="172"
+                                                             height="106"/></picture>
+                                                </figure>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3 col-6">
+                                                <figure>
+                                                    <picture>
+                                                        <source srcset="{% static 'images/menu/3.webp' %}" type="image/webp">
+                                                        <img loading="lazy" decoding="async" src="{% static 'images/menu/3.png' %}"
+                                                             alt="Menu Banner" width="172"
+                                                             height="106"/></picture>
+                                                </figure>
+                                            </div>
+                                            <div class="col-md-3 col-lg-3 col-6">
+                                                <figure>
+                                                    <picture>
+                                                        <source srcset="{% static 'images/menu/4.webp' %}" type="image/webp">
+                                                        <img loading="lazy" decoding="async" src="{% static 'images/menu/4.png' %}"
+                                                             alt="Menu Banner" width="172"
+                                                             height="106"/></picture>
+                                                </figure>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa-light fa-jug"></i>ادکلن سایز بزرگ
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa-light fa-gift"></i>گیفت ست
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa-light fa-box-heart"></i>عطر لوکس
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa-light fa-sitemap"></i> فروش عمده و سازمانی
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fa-light fa-badge-percent"></i>عطر های تخفیف دار
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="shop-classic-filter.html" class="font-weight-semi-bold text-primary ls-25">
+                                        مشاهده همه دسته ها<i class="fa-light fa-chevron-square-left"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <nav class="main-nav ml-4">
+                        <ul class="menu menu-active-underline">
+                            <li class="active">
+                                <a href="#">صفحات اصلی</a>
+                                <ul>
+                                    <li><a href="index.html">صفحه نخست 1</a></li>
+                                    <li><a href="index2.html">صفحه نخست 2</a></li>
+                                    <li><a href="index3.html">صفحه نخست 3</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#"> وبلاگ</a>
+                                <ul>
+                                    <li><a href="blog.html">شرح مقاله</a></li>
+                                    <li><a href="blog-classic.html">لیست مقالات</a></li>
+                                </ul>
+                            </li>
+                            <li class="submenu submenu-container">
+                                <a href="shop-classic-filter.html">دسته بندی </a>
+                                <div class="megamenu">
+                                    <div class="row">
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <h4 class="menu-title">عطرهای جدید</h4>
+                                            <ul>
+                                                <li><a href="product.html">عطرهای جدید</a></li>
+                                                <li><a href="product.html">عطرهای جدید</a></li>
+                                                <li><a href="product.html">عطرهای جدید</a></li>
+                                                <li><a href="product.html">عطرهای جدید</a></li>
+                                                <li><a href="product.html">عطرهای جدید</a></li>
+                                                <li><a href="product.html">عطرهای جدید</a></li>
+                                                <li><a href="product.html">عطرهای جدید</a></li>
+                                                <li><a href="product.html">عطرهای جدید</a></li>
+                                                <li><a href="product.html">عطرهای جدید</a></li>
+                                                <li><a href="product.html">عطرهای جدید</a></li>
+                                                <li><a href="product.html">عطرهای جدید</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <h4 class="menu-title">عطرهای ترند</h4>
+                                            <ul>
+                                                <li><a href="product.html">عطرهای ترند</a></li>
+                                                <li><a href="product.html">عطرهای ترند</a></li>
+                                                <li><a href="product.html">عطرهای ترند</a></li>
+                                                <li><a href="product.html">عطرهای ترند</a></li>
+                                                <li><a href="product.html">عطرهای ترند</a></li>
+                                                <li><a href="product.html">عطرهای ترند</a></li>
+                                                <li><a href="product.html">عطرهای ترند</a></li>
+                                                <li><a href="product.html">عطرهای ترند</a></li>
+                                                <li><a href="product.html">عطرهای ترند</a></li>
+                                                <li><a href="product.html">عطرهای ترند</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <h4 class="menu-title">عطرهای پرفروش</h4>
+                                            <ul>
+                                                <li><a href="product.html">عطرهای پرفروش</a></li>
+                                                <li><a href="product.html">عطرهای پرفروش</a></li>
+                                                <li><a href="product.html">عطرهای پرفروش</a></li>
+                                                <li><a href="product.html">عطرهای پرفروش</a></li>
+                                                <li><a href="product.html">عطرهای پرفروش</a></li>
+                                                <li><a href="product.html">عطرهای پرفروش</a></li>
+                                                <li><a href="product.html">عطرهای پرفروش</a></li>
+                                                <li><a href="product.html">عطرهای پرفروش</a></li>
+                                                <li><a href="product.html">عطرهای پرفروش</a></li>
+                                                <li><a href="product.html">عطرهای پرفروش</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3 menu-banner menu-banner1 banner banner-fixed">
+                                            <figure>
+                                                <picture>
+                                                    <source srcset="{% static 'images/menu/banner-1.webp' %}" type="image/webp">
+                                                    <img loading="lazy" decoding="async" src="{% static 'images/menu/banner-1.jpg' %}"
+                                                         alt="Menu banner" width="221"
+                                                         height="330"/></picture>
+                                            </figure>
+                                            <div class="banner-content y-50 text-right rtl">
+                                                <h4 class="banner-subtitle font-weight-bold text-primary ls-m">
+                                                    فروش
+                                                </h4>
+                                                <h3 class="banner-title font-weight-bold">
+                                                    <span class="">بالای</span>%70 تخفیف
+                                                </h3>
+                                                <a href="shop-classic-filter.html"
+                                                   class="btn btn-md btn-block btn-gradient">
+                                                    مشاهده و انتخاب <i class="fa-light fa-angles-left"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#">دیگر صفحات</a>
+                                <ul>
+                                    <li><a href="account.html">کاربری</a></li>
+                                    <li><a href="cart.html">سبد خرید</a></li>
+                                    <li><a href="checkout.html">صورتحساب</a></li>
+                                    <li><a href="coming-soon.html">بزودی</a></li>
+                                    <li><a href="element-icons.html">لیست آیکون ها ( فونت آوسوم )</a></li>
+                                    <li><a href="error-404.html">صفحه 404</a></li>
+                                    <li><a href="order.html">سفارش</a></li>
+                                    <li><a href="wishlist-empty.html">علاقه مندی خالی </a></li>
+                                    <li><a href="wishlist.html">علاقه مندی</a></li>
+                                    <li><a href="contact.html">تماس با ما</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">محصول</a>
+                                <ul>
+                                    <li><a href="product.html">معرفی محصول</a></li>
+                                    <li><a href="shop-list-mode.html">محصولات با فیلتر ( لیستی )</a></li>
+                                    <li><a href="shop-classic-filter.html">محصولات با فیلتر ( گریدی ) </a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="about.html">درباره ما</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="header-left percent-wrap">
+                    <a class="percent-main" href="#"><i class="fa-light fa-badge-percent"></i> پیشنهاد ویژه</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% block content %}
+
+    {% endblock %}
+    <footer class="footer appear-animate rtl text-right">
+        <div class="container">
+            <div class="footer-top">
+                <div class="row align-items-center">
+                    <div class="col-xxl-8 col-xl-7 col-lg-6">
+                        <a href="index.html" class="logo-footer">
+                            <picture>
+                                <source srcset="{% static 'images/logo-footer.webp' %}" type="image/webp">
+                                <img src="{% static 'images/logo-footer.png' %}" alt="logo-footer" width="153"
+                                     height="44"/></picture>
+                        </a>
+                        <div class="widget-newsletter-info ">
+                            <ul>
+                                <li><span class="font-weight-bold ml-2">تلفن :</span><span class="">0912345678</span>
+                                </li>
+                                <li><span class="font-weight-bold ml-2">ایمیل :</span><span
+                                        class="">sample@gmail.com</span></li>
+                            </ul>
+                        </div>
+                        <!-- End FooterLogo -->
+                    </div>
+                    <div class="col-xxl-4 col-xl-5 col-lg-6 widget-newsletter">
+                        <form action="#" class="input-wrapper-inline mx-auto mx-lg-0">
+                            <input type="email" class="form-control text-left" name="email" id="email"
+                                   placeholder="آدرس ایمیل ..." required/>
+                            <button class="btn btn-primary btn-rounded btn-md mr-2" type="submit">
+                                عضویت<i class="fa-light fa-angles-left"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-middle">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="widget widget-info">
+                            <h4 class="widget-title">اطلاعات تماس</h4>
+                            <ul class="widget-body ">
+                                <li>
+                                    <label>تلفن:</label>
+                                    <a href="tel:#">تلفن : 09112345678 </a>
+                                </li>
+                                <li>
+                                    <label>ایمیل:</label>
+                                    <a href="mailto:mail@sample.com">sample@mail.com</a>
+                                </li>
+                                <li>
+                                    <label>آدرس :</label>
+                                    <a href="#">تهران کوچه 23 </a>
+                                </li>
+                                <li>
+                                    <label>روزها / ساعت کاری:</label>
+                                </li>
+                                <li>
+                                    <a href="#"> دوشنبه - یکشنبه / 9:00 صبح تا 8:00 شب</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <div class="widget">
+                            <h4 class="widget-title"> حساب کاربری من</h4>
+                            <ul class="widget-body ">
+                                <li>
+                                    <a href="account.html"> سفارش من را پیگیری کنید</a>
+                                </li>
+                                <li>
+                                    <a href="order.html">نمایش خرید </a>
+                                </li>
+                                <li>
+                                    <a href="account.html">ورود</a>
+                                </li>
+                                <li>
+                                    <a href="wishlist.html">موردعلاقه ها</a>
+                                </li>
+                                <li>
+                                    <a href="account.html">سیاست حفظ حریم خصوصی</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <div class="widget">
+                            <h4 class="widget-title">درباره ما</h4>
+                            <ul class="widget-body ">
+                                <li>
+                                    <a href="about.html">درباره ما</a>
+                                </li>
+                                <li>
+                                    <a href="order.html"> تاریخ چه سفارشات</a>
+                                </li>
+                                <li>
+                                    <a href="#">بازگشت</a>
+                                </li>
+                                <li>
+                                    <a href="order.html">خدمات سفارشی</a>
+                                </li>
+                                <li>
+                                    <a href="order.html">شرایط</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <div class="widget">
+                            <h4 class="widget-title">خدمات مشتری</h4>
+                            <ul class="widget-body ">
+                                <li>
+                                    <a href="#">روش های پرداخت</a>
+                                </li>
+                                <li>
+                                    <a href="#">پرداخت 100% مطمئن!</a>
+                                </li>
+                                <li>
+                                    <a href="#">محصولات برگشتی</a>
+                                </li>
+                                <li>
+                                    <a href="#">پشتیبانی</a>
+                                </li>
+                                <li>
+                                    <a href="#"> حمل و نقل</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="widget widget-instagram pr-lg-10 mb-0 mb-md-6">
+                            <h4 class="widget-title">نمادهای اعتماد</h4>
+                            <figure class="widget-body row rtl">
+                                <div class="nemad-box">
+                                    <picture>
+                                        <source srcset="{% static 'images/enemad.webp' %}" type="image/webp">
+                                        <img src="{% static 'images/enemad.png' %}" alt="نماد اعتماد عطر"></picture>
+                                </div>
+                                <div class="nemad-box">
+                                    <picture>
+                                        <source srcset="{% static 'images/samandehi.webp' %}" type="image/webp">
+                                        <img src="{% static 'images/samandehi.png' %}" alt="نماد ساماندهی"></picture>
+                                </div>
+                            </figure>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-middle-main">
+                <div class="container footer-middle-wrap">
+                    <div class="col-lg-4 footer-middle-main-right">
+                        <h5>ما را در مجازی دنبال کنید</h5>
+                    </div>
+                    <div class="col-lg-6 footer-middle-main-left">
+                        <div class="social-links inline-links">
+                            <a href="#" class="social-link"><img src="{% static 'images/social/facebook.png' %}"/></a>
+                            <a href="#" class="social-link"><img src="{% static 'images/social/x.png' %}"/></a>
+                            <a href="#" class="social-link"><img src="{% static 'images/social/instagram.png' %}"/></a>
+                            <a href="#" class="social-link"><img src="{% static 'images/social/envelope.png' %}"/></a>
+                            <a href="#" class="social-link"><img src="{% static 'images/social/whatsapp.png' %}"/></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-main">
+                    <div class="widget widget-category">
+                        <div class="category-box">
+                            <h6 class="category-name">عطرهای مردانه</h6>
+                            <a href="product.html">ادکلن‌ مردانه</a>
+                            <a href="product.html">ادو تویلت‌ مردانه</a>
+                            <a href="product.html">ادو پرفیوم‌ مردانه</a>
+                            <a href="product.html">عطر‌ مردانه</a>
+                            <a href="product.html">عطرهای لوکس‌ مردانه</a>
+                            <a href="product.html">عطرهای یونیسکس مردانه</a>
+                        </div>
+                        <div class="category-box">
+                            <h6 class="category-name">عطرهای زنانه </h6>
+                            <a href="product.html">ادکلن‌ زنانه</a>
+                            <a href="product.html">ادو تویلت‌ زنانه</a>
+                            <a href="product.html">ادو پرفیوم‌ زنانه</a>
+                            <a href="product.html">عطر‌ زنانه</a>
+                            <a href="product.html">عطرهای لوکس‌ زنانه</a>
+                            <a href="product.html">عطرهای یونیسکس زنانه</a>
+                        </div>
+                        <div class="category-box">
+                            <h6 class="category-name">برندها</h6>
+                            <a href="product.html">برندهای محبوب</a>
+                            <a href="product.html">برندهای جدید</a>
+                            <a href="product.html">برندهای لوکس</a>
+                            <a href="product.html">برندهای ترند</a>
+                            <a href="product.html">برندهای کلاسیک</a>
+                        </div>
+                        <div class="category-box">
+                            <h6 class="category-name">عطرهای مناسبتی</h6>
+                            <a href="product.html">عطرهای روزانه</a>
+                            <a href="product.html">عطرهای زنانه</a>
+                            <a href="product.html">عطرهای مردانه</a>
+                            <a href="product.html">عطرهای نوجوان</a>
+                            <a href="product.html">عطرهای کودکلن</a>
+                            <a href="product.html">عطرهای رسمی</a>
+                            <a href="product.html">عطرهای مهمانی</a>
+                        </div>
+                        <div class="category-box">
+                            <h6 class="category-name">رایحه‌ها</h6>
+                            <a href="product.html">رایحه چوبی</a>
+                            <a href="product.html">رایحه گلی</a>
+                            <a href="product.html">رایحه مرکباتی</a>
+                            <a href="product.html">رایحه شرقی</a>
+                        </div>
+                        <div class="category-box">
+                            <h6 class="category-name">پیشنهاد ویژه </h6>
+                            <a href="product.html">محصولات پر فروش</a>
+                            <a href="product.html">پکیج‌های هدیه</a>
+                            <a href="product.html">عطرهای پیشنهادی</a>
+                            <a href="product.html">عطرهای منتخب</a>
+                            <a href="product.html">عطرهای دست ساز</a>
+                            <a href="product.html">عطرهای ترند</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="footer-right">
+                        <figure class="payment">
+                            <picture>
+                                <source srcset="{% static 'images/payment.webp' %}" type="image/webp">
+                                <img src="{% static 'images/payment.png' %}" alt="payment" width="159" height="29"/></picture>
+                        </figure>
+                    </div>
+                    <div class="footer-center">
+                        <p class="copyright">فروشگاه آنلاین پرفیوم &copy; 2025 کلیه حقوق محفوظ است.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+<div class="sticky-footer sticky-content fix-bottom rtl text-right">
+    <a href="index.html" class="sticky-link">
+        <i class="fa-light fa-home"></i>
+        <span>صفحه نخست</span>
+    </a>
+    <a href="shop-classic-filter.html" class="sticky-link">
+        <i class="fa-light fa-sliders-up"></i>
+        <span>دسته بندی</span>
+    </a>
+    <a href="wishlist.html" class="sticky-link">
+        <i class="fa-light fa-heart"></i>
+        <span>علاقه مندی</span>
+    </a>
+    <a href="account.html" class="sticky-link">
+        <i class="fa-light fa-user"></i>
+        <span>حساب کاربری</span>
+    </a>
+    <div class="header-search hs-toggle dir-up">
+        <a href="#" class="search-toggle sticky-link">
+            <i class="fa-light fa-magnifying-glass"></i>
+            <span>جستجو</span>
+        </a>
+        <form action="#" class="input-wrapper">
+            <input type="text" class="form-control" name="search" autocomplete="off"
+                   placeholder="جستجو ..." required/>
+            <button class="btn btn-search" type="submit">
+                <i class="fa-light fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+</div>
+<a id="scroll-top" href="#top" title="Top" role="button" class="scroll-top"><i class="fa-light fa-arrow-up"></i></a>
+
+<div class="mobile-menu-wrapper">
+    <div class="mobile-menu-overlay">
+    </div>
+
+    <a class="mobile-menu-close" href="#"><i class="fa-light fa-xmark"></i></a>
+
+    <div class="mobile-menu-container scrollable">
+        <form action="#" class="input-wrapper">
+            <input type="text" class="form-control" name="search" autocomplete="off"
+                   placeholder="جستجو ..." required/>
+            <button class="btn btn-search" type="submit">
+                <i class="fa-light fa-magnifying-glass"></i>
+            </button>
+        </form>
+
+        <div class="tab tab-nav-simple tab-nav-center tab-nav-boxed">
+            <ul class="nav nav-tabs nav-fill" role="tablist">
+                <li class="nav-item">
+                    <a href="#tab-11" class="nav-link active">منو اصلی</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tab-21" class="nav-link">منو دسته بندی</a>
+                </li>
+            </ul>
+        </div>
+        <div class="mobile-menu mmenu-anim tab-content">
+            <div class="tab-pane active" id="tab-11">
+                <ul>
+                    <li>
+                        <a href="shop-classic-filter.html" class="active"><i
+                                class="fa-light fa-wine-bottle"></i>عطرها</a>
+                        <ul>
+                            <li>
+                                <a href="product.html">عطر های زنانه</a>
+                                <ul>
+                                    <li><a href="product.html">عطر زنانه تلخ</a></li>
+                                    <li><a href="product.html">عطر زنانه تند</a></li>
+                                    <li><a href="product.html">عطر زنانه شیرین</a></li>
+                                    <li><a href="product.html">عطر زنانه ترش</a></li>
+                                    <li><a href="product.html">همه عطرهای زنانه</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="product.html">عطر های مردانه</a>
+                                <ul>
+                                    <li><a href="product.html">عطر مردانه تلخ</a></li>
+                                    <li><a href="product.html">عطر مردانه تند</a></li>
+                                    <li><a href="product.html">عطر مردانه شیرین</a></li>
+                                    <li><a href="product.html">عطر مردانه ترش</a></li>
+                                    <li><a href="product.html">همه عطرهای مردانه</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="product.html">عطر های نوجوان</a>
+                                <ul>
+                                    <li><a href="product.html">عطر نوجوان تلخ</a></li>
+                                    <li><a href="product.html">عطر نوجوان تند</a></li>
+                                    <li><a href="product.html">عطر نوجوان شیرین</a></li>
+                                    <li><a href="product.html">عطر نوجوان ترش</a></li>
+                                    <li><a href="product.html">همه عطرهای نوجوان</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="product.html">عطر های کودکانه</a>
+                                <ul>
+                                    <li><a href="product.html">عطر کودکانه تلخ</a></li>
+                                    <li><a href="product.html">عطر کودکانه تند</a></li>
+                                    <li><a href="product.html">عطر کودکانه شیرین</a></li>
+                                    <li><a href="product.html">عطر کودکانه ترش</a></li>
+                                    <li><a href="product.html">همه عطرهای کودکانه</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="product.html"><i class="fa-light fa-prescription-bottle"></i>عطرهای منیاتوری</a>
+                        <ul>
+                            <li>
+                                <a href="product.html">عطرهای منیاتوری زنانه</a>
+                                <ul>
+                                    <li><a href="product.html">عطرهای منیاتوری زنانه تلخ</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری زنانه تند</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری زنانه شیرین</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری زنانه ترش</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری زنانه </a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="product.html">عطرهای منیاتوری مردانه</a>
+                                <ul>
+                                    <li><a href="product.html">عطرهای منیاتوری مردانه تلخ</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری مردانه تند</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری مردانه شیرین</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری مردانه ترش</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری مردانه </a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="product.html">عطرهای منیاتوری نوجوان</a>
+                                <ul>
+                                    <li><a href="product.html">عطرهای منیاتوری نوجوان تلخ</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری نوجوان تند</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری نوجوان شیرین</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری نوجوان ترش</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری نوجوان </a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="product.html">عطرهای منیاتوری کودکانه</a>
+                                <ul>
+                                    <li><a href="product.html">عطرهای منیاتوری کودکانه تلخ</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری کودکانه تند</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری کودکانه شیرین</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری کودکانه ترش</a></li>
+                                    <li><a href="product.html">عطرهای منیاتوری کودکانه </a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="product.html"> <i class="fa-light fa-vial"></i>عطرهای سمپل </a>
+                        <ul>
+                            <li>
+                                <a href="product.html">عطرهای سمپل زنانه</a>
+                                <ul>
+                                    <li><a href="product.html">عطرهای سمپل زنانه تلخ</a></li>
+                                    <li><a href="product.html">عطرهای سمپل زنانه تند</a></li>
+                                    <li><a href="product.html">عطرهای سمپل زنانه شیرین</a></li>
+                                    <li><a href="product.html">عطرهای سمپل زنانه ترش</a></li>
+                                    <li><a href="product.html">عطرهای سمپل زنانه </a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="product.html">عطرهای سمپل مردانه</a>
+                                <ul>
+                                    <li><a href="product.html">عطرهای سمپل مردانه تلخ</a></li>
+                                    <li><a href="product.html">عطرهای سمپل مردانه تند</a></li>
+                                    <li><a href="product.html">عطرهای سمپل مردانه شیرین</a></li>
+                                    <li><a href="product.html">عطرهای سمپل مردانه ترش</a></li>
+                                    <li><a href="product.html">عطرهای سمپل مردانه </a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="product.html">عطرهای سمپل نوجوان</a>
+                                <ul>
+                                    <li><a href="product.html">عطرهای سمپل نوجوان تلخ</a></li>
+                                    <li><a href="product.html">عطرهای سمپل نوجوان تند</a></li>
+                                    <li><a href="product.html">عطرهای سمپل نوجوان شیرین</a></li>
+                                    <li><a href="product.html">عطرهای سمپل نوجوان ترش</a></li>
+                                    <li><a href="product.html">عطرهای سمپل نوجوان </a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="product.html">عطرهای سمپل کودکانه</a>
+                                <ul>
+                                    <li><a href="product.html">عطرهای سمپل کودکانه تلخ</a></li>
+                                    <li><a href="product.html">عطرهای سمپل کودکانه تند</a></li>
+                                    <li><a href="product.html">عطرهای سمپل کودکانه شیرین</a></li>
+                                    <li><a href="product.html">عطرهای سمپل کودکانه ترش</a></li>
+                                    <li><a href="product.html">عطرهای سمپل کودکانه </a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="product.html"><i class="fa-light fa-heart"></i>عطرهای برند</a>
+                        <ul>
+                            <li>
+                                <a href="product.html">عطرهای برندهای زنانه</a>
+                                <ul>
+                                    <li><a href="product.html">عطرهای برندهای زنانه تلخ</a></li>
+                                    <li><a href="product.html">عطرهای برندهای زنانه تند</a></li>
+                                    <li><a href="product.html">عطرهای برندهای زنانه شیرین</a></li>
+                                    <li><a href="product.html">عطرهای برندهای زنانه ترش</a></li>
+                                    <li><a href="product.html">عطرهای برندهای زنانه </a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="product.html">عطرهای برندهای مردانه</a>
+                                <ul>
+                                    <li><a href="product.html">عطرهای برندهای مردانه تلخ</a></li>
+                                    <li><a href="product.html">عطرهای برندهای مردانه تند</a></li>
+                                    <li><a href="product.html">عطرهای برندهای مردانه شیرین</a></li>
+                                    <li><a href="product.html">عطرهای برندهای مردانه ترش</a></li>
+                                    <li><a href="product.html">عطرهای برندهای مردانه </a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="product.html">عطرهای برندهای نوجوان</a>
+                                <ul>
+                                    <li><a href="product.html">عطرهای برندهای نوجوان تلخ</a></li>
+                                    <li><a href="product.html">عطرهای برندهای نوجوان تند</a></li>
+                                    <li><a href="product.html">عطرهای برندهای نوجوان شیرین</a></li>
+                                    <li><a href="product.html">عطرهای برندهای نوجوان ترش</a></li>
+                                    <li><a href="product.html">عطرهای برندهای نوجوان </a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="product.html">عطرهای برندهای کودکانه</a>
+                                <ul>
+                                    <li><a href="product.html">عطرهای برندهای کودکانه تلخ</a></li>
+                                    <li><a href="product.html">عطرهای برندهای کودکانه تند</a></li>
+                                    <li><a href="product.html">عطرهای برندهای کودکانه شیرین</a></li>
+                                    <li><a href="product.html">عطرهای برندهای کودکانه ترش</a></li>
+                                    <li><a href="product.html">عطرهای برندهای کودکانه </a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="product.html"><i class="fa-light fa-jug"></i>ادکلن سایز بزرگ</a></li>
+                    <li><a href="product.html"><i class="fa-light fa-gift"></i>گیفت ست</a></li>
+                    <li><a href="product.html"><i class="fa-light fa-box-heart"></i>عطرلوکس</a></li>
+                    <li><a href="product.html"><i class="fa-light fa-sitemap"></i>فروش عمده و سازمانی</a></li>
+                    <li><a href="product.html"><i class="fa-light fa-badge-percent"></i>عطرهای تخفیف دار</a></li>
+                </ul>
+            </div>
+            <div class="tab-pane" id="tab-21">
+                <ul>
+                    <li>
+                        <a href="#">صفحات </a>
+                        <ul>
+                            <li><a href="index.html">صفحه اصلی 1</a></li>
+                            <li><a href="index2.html">صفحه اصلی 2</a></li>
+                            <li><a href="index3.html">صفحه اصلی 3</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">وبلاگ</a>
+                        <ul>
+                            <li><a href="blog.html">شرح مقاله</a></li>
+                            <li><a href="blog-classic.html">لیست مقالات</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">دیگر صفحات</a>
+                        <ul>
+                            <li><a href="account.html">کاربری</a></li>
+                            <li><a href="checkout.html">صورتحساب</a></li>
+                            <li><a href="coming-soon.html">بزودی</a></li>
+                            <li><a href="error-404.html">لیست آیکن ها ( فونت آوسوم )</a></li>
+                            <li><a href="order.html">سفارش</a></li>
+                            <li><a href="wishlist-empty.html">علاقه مندی خالی</a></li>
+                            <li><a href="wishlist.html">علاقه مندی</a></li>
+                            <li><a href="login.html">ورود</a></li>
+                            <li><a href="register.html">ثبت نام</a></li>
+                            <li><a href="notify-me.html">خبرم کن</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">محصولات</a>
+                        <ul>
+                            <li><a href="product.html">معرفی محصول</a></li>
+                            <li><a href="shop-list-mode.html">محصولات با فیلتر ( لیستی )</a></li>
+                            <li><a href="shop-classic-filter.html">محصولات با فیلتر ( گریدی )</a></li>
+                            <li><a href="cart-empty.html">سبد خرید ( خالی )</a></li>
+                            <li><a href="cart.html">سبد خرید</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="checkout.html">پیگیری سفارش</a></li>
+                    <li><a href="about.html"> درباره ما</a></li>
+                    <li><a href="contact.html"> تماس با ما</a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="sticky-icons-wrapper rtl">
+    <div class="sticky-icon-links">
+        <ul>
+            <li><a href="index.html"><i class="fa-light fa-home"></i><span>خانه</span></a></li>
+            <li>
+                <a href="contact.html"><i class="fa-light fa-phone"></i><span>تماس با ما</span></a>
+            </li>
+            <li><a href="wishlist.html"><i class="fa-light fa-heart"></i><span>علاقه مندی</span></a></li>
+            <li>
+                <a class="white" href="shop-list-mode.html"><i
+                        class="fa-light fa-shopping-cart"></i><span>فروشگاه</span></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script defer src="{% static 'plugin/jquery/jquery.min.js' %}"></script>
+<script defer src="{% static 'plugin/jquery.plugin/jquery.plugin.min.js' %}"></script>
+<script defer src="{% static 'plugin/owl-carousel/owl.carousel.min.js' %}"></script>
+<script defer src="{% static 'plugin/elevatezoom/jquery.elevatezoom.min.js' %}"></script>
+<script defer src="{% static 'plugin/parallax/parallax.min.js' %}"></script>
+<script defer src="{% static 'plugin/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+<script defer src="{% static 'plugin/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+<script defer src="{% static 'plugin/photoswipe/photoswipe.min.js' %}"></script>
+<script defer src="{% static 'plugin/photoswipe/photoswipe-ui-default.min.js' %}"></script>
+<script defer src="{% static 'plugin/jquery.floating/jquery.floating.min.js' %}"></script>
+<script defer src="{% static 'js/main.min.js' %}"></script>
+{% block footer %}{% endblock %}
+</body>
+</html>
