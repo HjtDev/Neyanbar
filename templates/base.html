@@ -15,12 +15,14 @@
     <link rel="stylesheet" type="text/css" href="{% static 'plugin/owl-carousel/owl.carousel.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'plugin/sticky-icon/stickyicon.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main-min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/button-spinner.css' %}">
     {% block header %}{% endblock %}
 </head>
 <body>
 <div class="bg-loader">
     <div class="loader"></div>
 </div>
+{% csrf_token %}
 <div class="page-wrapper">
     <header class="header rtl text-right">
         <div class="header-middle">
@@ -247,51 +249,33 @@
                                                 </li>
                                             </ul>
                                             <div class="tab-content">
-                                                <div class="tab-pane active" id="signin">
-                                                    <form action="#">
-                                                        <div class="form-group mb-3">
-                                                            <input type="text" class="form-control text-left"
-                                                                   id="singin-email"
-                                                                   name="singin-email"
-                                                                   placeholder="نام کاربری یا آدرس ایمیل" required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input type="password" class="form-control text-left ltr"
-                                                                   id="singin-password" name="singin-password"
-                                                                   placeholder="رمز عبور" required>
-                                                        </div>
-                                                        <div class="form-footer">
-                                                            <div class="form-checkbox">
-                                                                <input type="checkbox" class="custom-checkbox"
-                                                                       id="signin-remember" name="signin-remember">
-                                                                <label class="form-control-label"
-                                                                       for="signin-remember">
-                                                                    مرا به خاطر بسپار
-                                                                </label>
-                                                            </div>
-                                                            <a href="#" class="lost-link"> رمز عبور خود را فراموش کرده
-                                                                اید؟</a>
-                                                        </div>
-                                                        <button class="btn btn-rounded btn-dark btn-block btn-gradient"
-                                                                type="submit">
-                                                            ورود
-                                                        </button>
-                                                    </form>
-                                                    <div class="form-choice text-center">
-                                                        <label class="ls-m">یا وارد شوید با</label>
-                                                        <div class="social-links">
-                                                            <a href="#"
-                                                               class="social-link"><img
-                                                                    src="{% static 'images/social/whatsapp-silver.png' %}"/></a>
-                                                            <a href="#"
-                                                               class="social-link"><img
-                                                                    src="{% static 'images/social/instagram-silver.png' %}"/></a>
-                                                            <a href="#"
-                                                               class="social-link"><img
-                                                                    src="{% static 'images/social/x-silver.png' %}"/></a>
-                                                        </div>
+                                               ` <div class="tab-pane active" id="signin">
+                                                    <div class="form-group mb-3">
+                                                        <input type="text" class="form-control text-left"
+                                                               id="signin-phone"
+                                                               name="signin-phone"
+                                                               minlength="11"
+                                                               maxlength="11"
+                                                               placeholder="شماره تلفن">
+                                                        <input type="text" class="form-control text-left d-none"
+                                                               id="token"
+                                                               name="token"
+                                                               minlength="4"
+                                                               maxlength="4"
+                                                               placeholder="کد تایید">
                                                     </div>
-                                                </div>
+                                                    <div class="form-footer">
+                                                        <a id="login-response" class="d-none"></a>
+                                                        <a href="forgot-password" class="lost-link"> رمز عبور خود را فراموش کرده
+                                                            اید؟</a>
+                                                    </div>
+                                                    <button class="btn btn-rounded btn-dark btn-block btn-gradient btn-login">
+                                                        ورود
+                                                    </button>
+                                                    <button class="btn btn-rounded btn-dark btn-block btn-gradient btn-submit-token d-none">
+                                                        تایید
+                                                    </button>
+                                                </div>`
                                                 <div class="tab-pane" id="register">
                                                     <form action="#">
                                                         <div class="form-group mb-3">
@@ -1366,6 +1350,7 @@
 <script defer src="{% static 'plugin/photoswipe/photoswipe-ui-default.min.js' %}"></script>
 <script defer src="{% static 'plugin/jquery.floating/jquery.floating.min.js' %}"></script>
 <script defer src="{% static 'js/main.min.js' %}"></script>
+<script defer src="{% static 'js/login.js' %}"></script>
 {% block footer %}{% endblock %}
 </body>
 </html>
