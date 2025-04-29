@@ -1,0 +1,1496 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <main class="main rtl text-right">
+        <div class="page-content">
+            <section class="intro-section slider-main ltr text-right">
+                <div class="container slider-wrap">
+                    <div class="intro-slider animation-slider owl-carousel mb-8 mb-md-0 owl-nav-arrow owl-theme row cols-1 gutter-no"
+                         data-owl-options="{
+                            'items': 1,
+                            'loop': true,
+                            'dots': true,
+                            'nav': true,
+                            'autoplay': true,
+                            'autoplayTimeout':300000,
+                            'responsive': {
+                                '768': {
+                                    'autoplay': true,
+                                    'loop': true
+                                },
+                                '1450': {
+                                    'autoplay': true,
+                                    'nav': true
+                                }
+                            }
+                        }">
+                        <div class="intro-slide1">
+                            <div class="container intro-slide1-wrap">
+                                <div class="banner row align-items-center">
+                                    <div class="col-12 col-md-5 col-lg-6 image-item floating d-flex justify-content-center align-items-center "
+                                         data-options='{"invertX":true,"invertY":true}'>
+                                        <figure class="layer slide-animate" data-animation-options="{' name': 'fadeIn' , 'duration' : '1s'
+                                        , 'delay' : '1s' }">
+                                            <picture><source srcset="{% static 'images/intro/slide1.webp' %}" type="image/webp"><img loading="lazy" decoding="async" src="{% static 'images/intro/slide1.png' %}"
+                                                                                                                                     alt="intro-burger" width="628" class="ml-auto" height="505" /></picture>
+                                        </figure>
+                                    </div>
+                                    <div class="col-12 col-md-7 col-lg-6 d-flex justify-content-center align-items-center">
+                                        <div class="banner-content rtl">
+                                            <h3 class="banner-title font-weight-normal  text-white slide-animate"
+                                                data-animation-options="{' name': 'fadeInUpShorter' , 'duration' : '1.2s'
+                                                , 'delay' : '.3s' }">
+                                                پیشنهاد فرمیوم
+                                            </h3>
+                                            <h4 class="banner-subtitle ls-normal font-primary font-weight-bold text-grey slide-animate mb-8 mb-md-5 mb-sm-2 mb-xs-2 pb-2"
+                                                data-animation-options="{'name': 'fadeInUpShorter', 'duration': '.7s', 'delay': '.4s'}">
+                                                    <span class=" text-secondary">
+                                                        %30 تخفیف
+                                                    </span>
+                                            </h4>
+                                            <a href="shop-list-mode.html"
+                                               class="btn btn-outline btn-white  slide-animate"
+                                               data-animation-options="{'name': 'fadeInUpShorter', 'duration': '.7s', 'delay': '.5s'}">
+                                                مشاهده و انتخاب
+                                                <i class="fa-light fa-angles-right"></i>
+                                            </a>
+                                            <div class="svg-item p-absolute">
+                                                <figure class="p-absolute slide-animate"
+                                                        data-animation-options="{'name': 'rollIn', 'duration': '1s', 'delay': '3s'}">
+                                                    <picture><source srcset="{% static 'images/intro/1_leave-98x128.webp' %}" type="image/webp"><img loading="lazy" decoding="async" src="{% static 'images/intro/1_leave-98x128.png' %}"
+                                                                                                                                                     alt="intro-slider-leave" width="98" height="128" /></picture>
+                                                </figure>
+                                                <svg x="0px" y="0px" viewBox="0 0 245 297"
+                                                     enable-background="new 0 0 245 297" xml:space="preserve"
+                                                     class="slide-animate"
+                                                     data-animation-options="{'name': 'strokeAppear', 'duration': '3s', 'delay': '1s'}">
+                                                    <polyline fill="none" stroke="#2d2d2f" stroke-width="25"
+                                                              stroke-miterlimit="10"
+                                                              points="0,12.5 232.9,12.5 233.4,284.5 0,285 " />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="intro-slide2">
+                            <div class="container">
+                                <div class="banner row align-items-center floating"
+                                     data-options='{"invertX":true,"invertY":true}'>
+                                    <div class="col-12 col-md-6 d-flex d-lg-block justify-content-center align-items-center  layer">
+                                        <div class="banner-content mt-md-6 rtl">
+                                            <h3 class="banner-title font-weight-normal  text-white slide-animate"
+                                                data-animation-options="{'name': 'fadeInUpShorter', 'duration': '.7s', 'delay': '.3s'}">
+                                                جدیدترین رایحه ها <br>با پرفیوم
+                                            </h3>
+                                            <h4 class="banner-subtitle font-primary text-yellow slide-animate slide-animate"
+                                                data-animation-options="{'name': 'fadeInUpShorter', 'duration': '.7s', 'delay': '.3s'}">
+                                                ترند ها و برندها
+                                            </h4>
+                                            <a href="shop-list-mode.html"
+                                               class="btn btn-outline btn-white slide-animate mb-1"
+                                               data-animation-options="{'name': 'fadeInUpShorter', 'duration': '.7s', 'delay': '.3s'}">
+                                                مشاهده وانتخاب
+                                                <i class="fa-light fa-angles-right"></i>
+                                            </a>
+                                            <div class="svg-item p-absolute">
+                                                <figure class="p-absolute slide-animate"
+                                                        data-animation-options="{'name': 'rollIn', 'duration': '1s', 'delay': '2s'}">
+                                                    <picture><source srcset="../static/images/intro/2-93x63_leave.webp" type="image/webp"><img loading="lazy" decoding="async" src="../static/images/intro/2-93x63_leave.png"
+                                                                                                                                               alt="intro-slider-leave" width="93" height="63" /></picture>
+                                                </figure>
+                                                <svg xmlns="http://www.w3.org/2000/svg"
+                                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                     viewBox="0 0 422 339" enable-background="new 0 0 422 339"
+                                                     xml:space="preserve" class="slide-animate"
+                                                     data-animation-options="{'name': 'strokeAppear', 'duration': '4s', 'delay': '.5s'}">
+                                                    <polyline fill="none" stroke="#2d2d2f" stroke-width="25"
+                                                              stroke-miterlimit="10" points="0.4,13.2 407.9,13.2 407.9,327.2
+                                                    13.1,325 11.6,3.6 " />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 image-item slide-animate"
+                                         data-animation-options="{'name': 'fadeIn', 'duration': '.7s', 'delay': '.8s'}">
+                                        <figure class="pl-2 d-flex d-lg-block justify-content-center align-items-center mb-0 mb-lg-6">
+                                            <picture><source srcset="../static/images/intro/slide2.webp" type="image/webp"><img loading="lazy" decoding="async" src="../static/images/intro/slide2.png" alt="intro"
+                                                                                                                                width="594" height="667" /></picture>
+                                        </figure>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            
+            <section class="banner-group container discount-main-2 rtl text-right">
+                <div class="title-wrapper">
+                    <div class="container-fluid title-wrap">
+                        <h2 class="title">تخفیف پرفیوم</h2>
+                        <h5 class="title-info">
+                            <span></span>
+                            <picture><source srcset="{% static 'images/perfume/15.webp' %}" type="image/webp"><img src="{% static 'images/perfume/15.png' %}"></picture>
+                            <span></span>
+                        </h5>
+                    </div>
+                </div>
+                <div class="owl-carousel owl-theme row cols-lg-4 cols-md-3 cols-sm-2 cols-1" data-owl-options="{
+                         'rtl':true,
+                        'items': 4,
+                        'margin': 20,
+                        'loop': true,
+                        'autoplay':true,
+                        'autoHeight':true
+                        'responsive': {
+                            '0': {
+                                'items': 1
+                            },
+                            '576': {
+                                'items': 2
+                            },
+                            '768': {
+                                'items': 3
+                            },
+                            '992': {
+                                'items': 4
+                            }
+                        }
+                    }">
+                    <div class="banner1 banner-discount">
+                        <div class="banner banner-fixed overlay-zoom appear-animate" data-animation-options="{
+                                'name': 'zoomInShorter',
+                                'delay': '.3s'
+                            }">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/banner/1.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/banner/1.jpg' %}" alt="banner" width="280" height="331" />
+                                </picture>
+                            </figure>
+                            <div class="banner-content rtl">
+                                <h3 class="banner-title ls-normal font-weight-semi-bold text-white">
+                                    <span class="d-block mb-1">جیورجیو آرمانی</span><span class="d-block font-weight-normal ls-m">40 درصد تخفیف</span>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="banner2 banner-discount">
+                        <div class="banner banner-fixed overlay-zoom appear-animate" data-animation-options="{
+                                'name': 'zoomInShorter',
+                                'delay': '.4s'
+                            }">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/banner/2.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/banner/2.jpg' %}" alt="banner" width="280" height="331" />
+                                </picture>
+                            </figure>
+                            <div class="banner-content w-100 x-50 y-50 text-center">
+                                <p class="text-white font-primary">جیونچی</p>
+                                <h3 class="banner-title mb-2 ls-m text-white"></h3>
+                                <h4 class="banner-subtitle mb-7 text-primary font-weight-bold">
+                                    بالای
+                                    %25 تخفیف
+                                </h4>
+                                <a href="product.html"
+                                   class="btn btn-outline btn-ellipse btn-primary text-white mb-1">
+                                    مشاهده و انتخاب
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="banner3 banner-discount">
+                        <div class="banner banner-fixed overlay-zoom appear-animate" data-animation-options="{
+                                'name': 'zoomInShorter',
+                                'delay': '.5s'
+                            }">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/banner/3.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/banner/3.jpg' %}" alt="banner" width="280" height="331" />
+                                </picture>
+                            </figure>
+                            <div class="banner-content rtl">
+                                <h3 class="banner-title ls-normal font-weight-bold text-white">
+                                        <span class="d-block mb-1">
+                                            پاکورابان
+                                        </span><span class="d-block font-weight-normal ls-m pt-0">20 درصد تخفیف </span>
+                                </h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="banner4 banner-discount">
+                        <div class="banner banner-fixed overlay-zoom appear-animate" data-animation-options="{
+                                'name': 'zoomInShorter',
+                                'delay': '.6s'
+                            }">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/banner/4.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/banner/4.jpg' %}" alt="banner" width="280" height="331" />
+                                </picture>
+                            </figure>
+                            <div class="banner-content w-100 x-50 y-50 text-center">
+                                <h4 class="banner-subtitle text-white font-weight-normal ls-m">فروش فصلی</h4>
+                                <h3 class="banner-title ls-m font-weight-bold text-primary">تا 70% تخفیف </h3>
+                                <p class="text-white ls-s mb-5">
+                                    ارسال و مرجوعی رایگان<br />سراسر کشور*
+                                </p>
+                                <a href="product.html" class="btn btn-ellipse btn-primary mb-1">
+                                    مشاهده و انتخاب
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="product-wrapper container offer-main-2 appear-animate rtl text-right">
+                <div class="title-wrapper">
+                    <div class="container-fluid title-wrap">
+                        <h2 class="title">پیشنهاد پرفیوم </h2>
+                        <h5 class="title-info">
+                            <span></span>
+                            <picture><source srcset="{% static 'images/perfume/15.webp' %}" type="image/webp"><img src="{% static 'images/perfume/15.png' %}"></picture>
+                            <span></span>
+                        </h5>
+                    </div>
+                </div>
+                <div class="owl-carousel  bg-main owl-theme row owl-nav-inner owl-split no-border cols-xl-5 cols-lg-4 cols-md-3 cols-2 pb-4 animation-slider"
+                     data-owl-options="{
+                         'rtl':true,
+                        'items': 5,
+                        'nav': true,
+                        'dots': false,
+                        'loop': true,
+                        'autoplay':true,
+                        'margin': 1,
+                        'responsive': {
+                            '0': {
+                                'items': 2
+                            },
+                            '768': {
+                                'items': 3
+                            },
+                            '1200': {
+                                'items': 4,
+                                'dots': false
+                            }
+                        }
+                    }">
+                    <div class="product product-slideup text-center appear-animate" data-animation-options="{
+                            'name':'fadeInUpShorter',
+                            'delay': '.2s'
+                        }">
+                        <figure class="product-media">
+                            <a href="#">
+                                <picture>
+                                    <source srcset="{% static 'images/product/3.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/product/3.jpg' %}" alt="product" width="300"
+                                         height="338">
+                                </picture>
+                                <picture>
+                                    <source srcset="{% static 'images/product/3.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/product/3.jpg' %}" alt="product" width="300"
+                                         height="338">
+                                </picture>
+                            </a>
+                        </figure>
+                        <div class="product-details rtl">
+                            <h3 class="product-name">
+                                <a href="#">باربری مردانه</a>
+                            </h3>
+                            <div class="product-price">
+                                <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                            </div>
+                            <div class="ratings-container">
+                                <div class="ratings-full">
+                                    <span class="ratings" style="width:100%"></span>
+                                    <span class="tooltiptext tooltip-top"></span>
+                                </div>
+                                <a href="#" class="rating-reviews">( از 16نظر )</a>
+                            </div>
+                            <div class="product-action">
+                                <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                    <i class="fa-light fa-heart"></i>
+                                </a>
+                                <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                   data-target="#addCartModal" title="اضافه به خرید"><span>مشاهده و انتخاب</span></a>
+                                <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                    <i class="fa-light fa-magnifying-glass"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product product-slideup text-center appear-animate" data-animation-options="{
+                                'name': 'fadeInUpShorter',
+                                'duration': '1.5s',
+                                'delay': '.3s'
+                            }">
+                        <figure class="product-media">
+                            <a href="#">
+                                <picture>
+                                    <source srcset="{% static 'images/product/2.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/product/2.jpg' %}" alt="product" width="300"
+                                         height="338">
+                                </picture>
+                                <picture>
+                                    <source srcset="{% static 'images/product/2.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/product/2.jpg' %}" alt="product" width="300"
+                                         height="338">
+                                </picture>
+                            </a>
+                        </figure>
+                        <div class="product-details rtl">
+                            <h3 class="product-name">
+                                <a href="#">دیور </a>
+                            </h3>
+                            <div class="product-price">
+                                <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                            </div>
+                            <div class="ratings-container">
+                                <div class="ratings-full">
+                                    <span class="ratings" style="width:100%"></span>
+                                    <span class="tooltiptext tooltip-top"></span>
+                                </div>
+                                <a href="#" class="rating-reviews">( از 16نظر )</a>
+                            </div>
+                            <div class="product-action">
+                                <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                    <i class="fa-light fa-heart"></i>
+                                </a>
+                                <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                   data-target="#addCartModal" title="اضافه به خرید"><span>مشاهده و انتخاب</span></a>
+                                <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                    <i class="fa-light fa-magnifying-glass"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product product-slideup text-center appear-animate" data-animation-options="{
+                                'name': 'fadeInUpShorter',
+                                'duration': '1.5s',
+                                'delay': '.4s'
+                            }">
+                        <figure class="product-media">
+                            <a href="#">
+                                <picture>
+                                    <source srcset="{% static 'images/product/1.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/product/1.jpg' %}" alt="product" width="300"
+                                         height="338">
+                                </picture>
+                                <picture>
+                                    <source srcset="{% static 'images/product/1.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/product/1.jpg' %}" alt="product" width="300"
+                                         height="338">
+                                </picture>
+                            </a>
+                        </figure>
+                        <div class="product-details rtl">
+                            <h3 class="product-name">
+                                <a href="#">بولگاری</a>
+                            </h3>
+                            <div class="product-price">
+                                <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                            </div>
+                            <div class="ratings-container">
+                                <div class="ratings-full">
+                                    <span class="ratings" style="width:100%"></span>
+                                    <span class="tooltiptext tooltip-top"></span>
+                                </div>
+                                <a href="#" class="rating-reviews">( از 16نظر )</a>
+                            </div>
+                            <div class="product-action">
+                                <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                    <i class="fa-light fa-heart"></i>
+                                </a>
+                                <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                   data-target="#addCartModal" title="اضافه به خرید"><span>مشاهده و انتخاب</span></a>
+                                <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                    <i class="fa-light fa-magnifying-glass"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product product-slideup text-center appear-animate" data-animation-options="{
+                                'name': 'fadeInUpShorter',
+                                'duration': '1.5s',
+                                'delay': '.5s'
+                            }">
+                        <figure class="product-media">
+                            <a href="#">
+                                <picture>
+                                    <source srcset="{% static 'images/product/5.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/product/5.jpg' %}" alt="product" width="300"
+                                         height="338">
+                                </picture>
+                                <picture>
+                                    <source srcset="{% static 'images/product/5.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/product/5.jpg' %}" alt="product" width="300"
+                                         height="338">
+                                </picture>
+                            </a>
+                        </figure>
+                        <div class="product-details rtl">
+                            <h3 class="product-name">
+                                <a href="#">شنل زنانه</a>
+                            </h3>
+                            <div class="product-price">
+                                <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                            </div>
+                            <div class="ratings-container">
+                                <div class="ratings-full">
+                                    <span class="ratings" style="width:100%"></span>
+                                    <span class="tooltiptext tooltip-top"></span>
+                                </div>
+                                <a href="#" class="rating-reviews">( از 16نظر )</a>
+                            </div>
+                            <div class="product-action">
+                                <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                    <i class="fa-light fa-heart"></i>
+                                </a>
+                                <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                   data-target="#addCartModal" title="اضافه به خرید"><span>مشاهده و انتخاب</span></a>
+                                <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                    <i class="fa-light fa-magnifying-glass"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product product-slideup text-center appear-animate" data-animation-options="{
+                                'name': 'fadeInUpShorter',
+                                'duration': '1.5s',
+                                'delay': '.6s'
+                            }">
+                        <figure class="product-media">
+                            <a href="#">
+                                <picture>
+                                    <source srcset="{% static 'images/product/6.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/product/6.jpg' %}" alt="product" width="365"
+                                         height="389">
+                                </picture>
+                                <picture>
+                                    <source srcset="{% static 'images/product/6.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/product/6.jpg' %}" alt="product" width="300"
+                                         height="338">
+                                </picture>
+                            </a>
+                        </figure>
+                        <div class="product-details rtl">
+                            <h3 class="product-name">
+                                <a href="#">کالوین کلین  </a>
+                            </h3>
+                            <div class="product-price">
+                                <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                            </div>
+                            <div class="ratings-container">
+                                <div class="ratings-full">
+                                    <span class="ratings" style="width:100%"></span>
+                                    <span class="tooltiptext tooltip-top"></span>
+                                </div>
+                                <a href="#" class="rating-reviews">( از 16نظر )</a>
+                            </div>
+                            <div class="product-action">
+                                <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                    <i class="fa-light fa-heart"></i>
+                                </a>
+                                <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                   data-target="#addCartModal" title="اضافه به خرید"><span>مشاهده و انتخاب</span></a>
+                                <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                    <i class="fa-light fa-magnifying-glass"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="banner parallax rtl text-right" data-option="{'offset': 400}"
+                     data-image-src="{% static 'images/parallax.jpg' %}">
+                <div class="container">
+                    <div class="banner-content text-center appear-animate" data-animation-options="{
+                            'name': 'blurIn'
+                        }">
+                        <h4 class="banner-subtitle mb-2 text-secondary font-weight-bold">تخفیف امروز</h4>
+                        <h3 class="banner-title mb-2 text-white font-weight-bolder ls-m">
+                            تمامی عطرهای زنانه
+                        </h3>
+                        <p class="text-white font-primary ls-normal mb-6">
+                            به مناسبت روز زن و مادر
+                        </p>
+                        <a href="product.html" class="btn btn-primary btn-lg">
+                            مشاهده و انتخاب <i class="fa-light fa-angles-left"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            <section class="container rtl text-right">
+                <div class="service-list">
+                    <div class="owl-carousel owl-theme owl-middle row cols-lg-4 cols-md-3 cols-sm-2 cols-2"
+                         data-owl-options="{
+                             'rtl':true,
+                            'items': 4,
+                            'margin': 20,
+                            'autoplay':true,
+                            'responsive': {
+                                '0': {
+                                    'items': 1
+                                },
+                                '576': {
+                                    'items': 2
+                                },
+                                '768': {
+                                    'items': 3
+                                },
+                                '992': {
+                                    'items': 4
+                                }
+                            }
+                        }">
+                        <div class="icon-box text-center appear-animate" data-animation-options="{
+                                'name':'zoomInLeft',
+                                'delay': '.2s'
+                            }">
+                            <i class="fa-light fa-truck-fast"></i>
+                            <div class="icon-box-content rtl">
+                                <h4 class="icon-box-title">ارسال رایگان و مرجوعی </h4>
+                                <p> سراسر کشور </p>
+                            </div>
+                        </div>
+                        <div class="icon-box text-center appear-animate" data-animation-options="{
+                                'name':'zoomInLeft',
+                                'delay': '.3s'
+                            }">
+                            <i class="fa-light fa-headphones"></i>
+                            <div class="icon-box-content rtl">
+                                <h4 class="icon-box-title">پشتیبانی 24 ساعته</h4>
+                                <p>دسترسی فوری به پشتیبان های ما</p>
+                            </div>
+                        </div>
+                        <div class="icon-box text-center appear-animate" data-animation-options="{
+                                'name':'zoomInLeft',
+                                'delay': '.4s'
+                            }">
+                            <i class="fa-light fa-badge-check"></i>
+                            <div class="icon-box-content rtl">
+                                <h4 class="icon-box-title">پرداخت 100% مطمئن</h4>
+                                <p>ما تضمین پرداخت امن را داریم</p>
+                            </div>
+                        </div>
+                        <div class="icon-box text-center appear-animate" data-animation-options="{
+                                'name':'zoomInLeft',
+                                'delay': '.5s'
+                            }">
+                            <i class="fa-light fa-tags"></i>
+                            <div class="icon-box-content rtl">
+                                <h4 class="icon-box-title">تخفیف برای اولین سفارش</h4>
+                                <p>3 روز فرصت بازگشت کالا</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="product-wrapper bg-main container appear-animate rtl text-right">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="banner banner-fixed overlay-zoom b-r-20">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/banner/5.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/banner/5.jpg' %}" width="280" height="358" alt="banner" />
+                                </picture>
+                            </figure>
+                            <div class="banner-content appear-animate" data-animation-options="{
+                                    'name':'zoomInLeft'
+                                }">
+                                <h4 class="banner-subtitle mb-0 ls-s text-black mb-1">
+                                    جدیدترین های پرفیوم
+                                </h4>
+                                <h3 class="banner-title mb-2 ls-m text-green font-weight-bold"> دولچه گابانا</h3>
+                                <p class="mb-0 font-primary text-black">شروع قیمت از <strong> 2,000,000 تومان </strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8 col-sm-6">
+                        <div class="owl-carousel owl-theme row owl-split owl-nav-inner cols-xl-4 cols-lg-3 cols-md-2 cols-1 appear-animate"
+                             data-animation-options="{
+                                'name':'fadeInLeftShorter',
+                                'delay': '.6s'
+                            }" data-owl-options="{
+                                 'rtl':true,
+                                'items': 4,
+                                'nav': true,
+                                'dots': false,
+                                'loop': true,
+                                'autoplay':true,
+                                'margin': 1,
+                                'responsive': {
+                                    '0': {
+                                        'items': 1
+                                    },
+                                    '576': {
+                                        'items': 1
+                                    ,
+                                    '768': {
+                                        'items': 2
+                                    },
+                                    '992': {
+                                        'items': 3
+                                    },
+                                    '1200': {
+                                        'items': 4
+                                    }
+                                }
+                            }">
+                            <div class="product product-slideup text-center">
+                                <figure class="product-media">
+                                    <a href="#">
+                                        <picture>
+                                            <source srcset="{% static 'images/products/product1.webp' %}" type="image/webp">
+                                            <img loading="lazy" decoding="async" src="{% static 'images/products/product1.jpg' %}" alt="product" width="300"
+                                                 height="338">
+                                        </picture>
+                                    </a>
+                                </figure>
+                                <div class="product-details rtl">
+                                    <h3 class="product-name">
+                                        <a href="#">
+                                            هوگو بوس
+                                        </a>
+                                    </h3>
+                                    <div class="product-price">
+                                        <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                                    </div>
+                                    <div class="ratings-container">
+                                        <div class="ratings-full">
+                                            <span class="ratings" style="width:100%"></span>
+                                            <span class="tooltiptext tooltip-top"></span>
+                                        </div>
+                                        <a href="#" class="rating-reviews">( از 16نظر )</a>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                            <i class="fa-light fa-heart"></i>
+                                        </a>
+                                        <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                           data-target="#addCartModal" title="اضافه به خرید">
+                                                <span>
+                                                    اضافه
+                                                    خرید
+                                                </span>
+                                        </a>
+                                        <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                            <i class="fa-light fa-magnifying-glass"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product product-slideup text-center">
+                                <figure class="product-media">
+                                    <a href="#">
+                                        <picture>
+                                            <source srcset="{% static 'images/products/product2.webp' %}" type="image/webp">
+                                            <img loading="lazy" decoding="async" src="{% static 'images/products/product2.jpg' %}" alt="product" width="300"
+                                                 height="338">
+                                        </picture>
+                                    </a>
+                                </figure>
+                                <div class="product-details rtl">
+                                    <h3 class="product-name">
+                                        <a href="#">مون بلان</a>
+                                    </h3>
+                                    <div class="product-price">
+                                        <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                                    </div>
+                                    <div class="ratings-container">
+                                        <div class="ratings-full">
+                                            <span class="ratings" style="width:100%"></span>
+                                            <span class="tooltiptext tooltip-top"></span>
+                                        </div>
+                                        <a href="#" class="rating-reviews">( از 16نظر )</a>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                            <i class="fa-light fa-heart"></i>
+                                        </a>
+                                        <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                           data-target="#addCartModal" title="اضافه به خرید">
+                                                <span>
+                                                    اضافه
+                                                    خرید
+                                                </span>
+                                        </a>
+                                        <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                            <i class="fa-light fa-magnifying-glass"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product product-slideup text-center">
+                                <figure class="product-media">
+                                    <a href="#">
+                                        <picture>
+                                            <source srcset="{% static 'images/products/product3.webp' %}" type="image/webp">
+                                            <img loading="lazy" decoding="async" src="{% static 'images/products/product3.jpg' %}" alt="product" width="300"
+                                                 height="338">
+                                        </picture>
+                                    </a>
+                                </figure>
+                                <div class="product-details rtl">
+                                    <h3 class="product-name">
+                                        <a href="#">
+                                            پاکورابان
+                                        </a>
+                                    </h3>
+                                    <div class="product-price">
+                                        <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                                    </div>
+                                    <div class="ratings-container">
+                                        <div class="ratings-full">
+                                            <span class="ratings" style="width:100%"></span>
+                                            <span class="tooltiptext tooltip-top"></span>
+                                        </div>
+                                        <a href="#" class="rating-reviews">( از 16نظر )</a>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                            <i class="fa-light fa-heart"></i>
+                                        </a>
+                                        <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                           data-target="#addCartModal" title="اضافه به خرید">
+                                                <span>
+                                                    اضافه
+                                                    خرید
+                                                </span>
+                                        </a>
+                                        <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                            <i class="fa-light fa-magnifying-glass"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product product-slideup text-center">
+                                <figure class="product-media">
+                                    <a href="#">
+                                        <picture>
+                                            <source srcset="{% static 'images/products/product4.webp' %}" type="image/webp">
+                                            <img loading="lazy" decoding="async" src="{% static 'images/products/product4.jpg' %}" alt="product" width="300"
+                                                 height="338">
+                                        </picture>
+                                    </a>
+                                </figure>
+                                <div class="product-details rtl">
+                                    <h3 class="product-name">
+                                        <a href="#">پارفومز د مارلی</a>
+                                    </h3>
+                                    <div class="product-price">
+                                        <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                                    </div>
+                                    <div class="ratings-container">
+                                        <div class="ratings-full">
+                                            <span class="ratings" style="width:100%"></span>
+                                            <span class="tooltiptext tooltip-top"></span>
+                                        </div>
+                                        <a href="#" class="rating-reviews">( از 16نظر )</a>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                            <i class="fa-light fa-heart"></i>
+                                        </a>
+                                        <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                           data-target="#addCartModal" title="اضافه به خرید">
+                                                <span>
+                                                    اضافه
+                                                    خرید
+                                                </span>
+                                        </a>
+                                        <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                            <i class="fa-light fa-magnifying-glass"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="product-wrapper bg-main container product-wrap-main appear-animate rtl text-right">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="banner banner-fixed overlay-zoom b-r-20">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/banner/6.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/banner/6.jpg' %}" width="280" height="358" alt="banner" />
+                                </picture>
+                            </figure>
+                            <div class="banner-content appear-animate" data-animation-options="{
+                                    'name':'zoomInRight'
+                                }">
+                                <h4 class="banner-subtitle mb-0 text-black mb-1">
+                                    جیورجیو آرمانی
+                                </h4>
+                                <h3 class="banner-title mb-2 ls-m text-green font-weight-bold"> ایتالیایی پرطرفدار</h3>
+                                <p class="mb-0 font-primary text-black">شروع قیمت از <strong> 2,000,000 تومان </strong></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8 col-sm-6">
+                        <div class="owl-carousel owl-theme row owl-split owl-nav-innercols-xl-4 cols-lg-3 cols-md-2 cols-1 appear-animate"
+                             data-animation-options="{
+                                'name':'fadeInLeftShorter',
+                                'delay': '.6s'
+                            }" data-owl-options="{
+                                 'rtl':true,
+                                'items': 4,
+                                'nav': true,
+                                'dots': false,
+                                'loop': true,
+                                'autoplay':true,
+                                'margin': 1,
+                                'responsive':{
+                                    '0': {
+                                        'items': 1
+                                    },
+                                    '576': {
+                                        'items': 1
+                                    ,
+                                    '768': {
+                                        'items': 2
+                                    },
+                                    '992': {
+                                        'items': 3
+                                    },
+                                    '1200': {
+                                        'items': 4
+                                    }
+                                }
+                            }">
+                            <div class="product product-slideup text-center">
+                                <figure class="product-media">
+                                    <a href="#">
+                                        <picture>
+                                            <source srcset="{% static 'images/products/product5.webp' %}" type="image/webp">
+                                            <img loading="lazy" decoding="async" src="{% static 'images/products/product5.jpg' %}" alt="product" width="300"
+                                                 height="338">
+                                        </picture>
+                                    </a>
+                                </figure>
+                                <div class="product-details rtl">
+                                    <h3 class="product-name">
+                                        <a href="#">
+                                            تام فورد
+                                        </a>
+                                    </h3>
+                                    <div class="product-price">
+                                        <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                                    </div>
+                                    <div class="ratings-container">
+                                        <div class="ratings-full">
+                                            <span class="ratings" style="width:100%"></span>
+                                            <span class="tooltiptext tooltip-top"></span>
+                                        </div>
+                                        <a href="#" class="rating-reviews">( از 16نظر )</a>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                            <i class="fa-light fa-heart"></i>
+                                        </a>
+                                        <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                           data-target="#addCartModal" title="اضافه به خرید">
+                                                <span>
+                                                    اضافه
+                                                    خرید
+                                                </span>
+                                        </a>
+                                        <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                            <i class="fa-light fa-magnifying-glass"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product product-slideup text-center">
+                                <figure class="product-media">
+                                    <a href="#">
+                                        <picture>
+                                            <source srcset="{% static 'images/products/product6.webp' %}" type="image/webp">
+                                            <img loading="lazy" decoding="async" src="{% static 'images/products/product6.jpg' %}" alt="product" width="300"
+                                                 height="338">
+                                        </picture>
+                                    </a>
+                                </figure>
+                                <div class="product-details rtl">
+                                    <h3 class="product-name">
+                                        <a href="#">ورساچه</a>
+                                    </h3>
+                                    <div class="product-price">
+                                        <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                                    </div>
+                                    <div class="ratings-container">
+                                        <div class="ratings-full">
+                                            <span class="ratings" style="width:100%"></span>
+                                            <span class="tooltiptext tooltip-top"></span>
+                                        </div>
+                                        <a href="#" class="rating-reviews">( از 16نظر )</a>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                            <i class="fa-light fa-heart"></i>
+                                        </a>
+                                        <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                           data-target="#addCartModal" title="اضافه به خرید">
+                                                <span>
+                                                    اضافه
+                                                    خرید
+                                                </span>
+                                        </a>
+                                        <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                            <i class="fa-light fa-magnifying-glass"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product product-slideup text-center">
+                                <figure class="product-media">
+                                    <a href="#">
+                                        <picture>
+                                            <source srcset="{% static 'images/products/product7.webp' %}" type="image/webp">
+                                            <img loading="lazy" decoding="async" src="{% static 'images/products/product7.jpg' %}" alt="product" width="300"
+                                                 height="338">
+                                        </picture>
+                                    </a>
+                                </figure>
+                                <div class="product-details rtl">
+                                    <h3 class="product-name">
+                                        <a href="#">کالوین کلین </a>
+                                    </h3>
+                                    <div class="product-price">
+                                        <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                                    </div>
+                                    <div class="ratings-container">
+                                        <div class="ratings-full">
+                                            <span class="ratings" style="width:100%"></span>
+                                            <span class="tooltiptext tooltip-top"></span>
+                                        </div>
+                                        <a href="#" class="rating-reviews">( از 16نظر )</a>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                            <i class="fa-light fa-heart"></i>
+                                        </a>
+                                        <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                           data-target="#addCartModal" title="اضافه به خرید">
+                                                <span>
+                                                    اضافه
+                                                    خرید
+                                                </span>
+                                        </a>
+                                        <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                            <i class="fa-light fa-magnifying-glass"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product product-slideup text-center">
+                                <figure class="product-media">
+                                    <a href="#">
+                                        <picture>
+                                            <source srcset="{% static 'images/products/product8.webp' %}" type="image/webp">
+                                            <img loading="lazy" decoding="async" src="{% static 'images/products/product8.jpg' %}" alt="product" width="300"
+                                                 height="338">
+                                        </picture>
+                                    </a>
+                                </figure>
+                                <div class="product-details rtl">
+                                    <h3 class="product-name">
+                                        <a href="#"> دولچه گابانا</a>
+                                    </h3>
+                                    <div class="product-price">
+                                        <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                                    </div>
+                                    <div class="ratings-container">
+                                        <div class="ratings-full">
+                                            <span class="ratings" style="width:100%"></span>
+                                            <span class="tooltiptext tooltip-top"></span>
+                                        </div>
+                                        <a href="#" class="rating-reviews">( از 16نظر )</a>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                            <i class="fa-light fa-heart"></i>
+                                        </a>
+                                        <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                           data-target="#addCartModal" title="اضافه به خرید">
+                                                <span>
+                                                    اضافه
+                                                    خرید
+                                                </span>
+                                        </a>
+                                        <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                            <i class="fa-light fa-magnifying-glass"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="container parallax-wrap rtl text-right">
+                <div class="banner video-banner b-r-20"
+                     style="background-image: url('static/images/cta.jpg'); background-color: #4e4743; ">
+                    <div class="banner-content appear-animate text-center">
+                        <h4 class="banner-subtitle ls-normal font-weight-normal font-secondary text-white appear-animate"
+                            data-animation-options="{
+                                'name': 'fadeInDownShorter'
+                            }">
+                            خرید از پرفیوم
+                        </h4>
+                        <h3 class="banner-title text-white font-weight-bold mb-5 appear-animate"
+                            data-animation-options="{
+                                'name': 'blurIn',
+                                'delay': '.4s',
+                                'duration': '1.4s'
+                            }">
+                            و چرا باید از این وبسایت خرید کرد !
+                        </h3>
+                        <a class="btn-play btn-iframe text-white appear-animate" data-animation-options="{
+                                'name': 'fadeIn',
+                                'delay': '.8s'
+                            }" href="{% static 'video/perfume.mp4' %}">
+                            <i class="fa-light fa-play"></i>
+                        </a>
+                    </div>
+                </div>
+            </section>
+            <section class="product-wrapper bg-main container appear-animate rtl text-right">
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 col-sm-6">
+                        <div class="banner banner-fixed overlay-zoom b-r-20">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/banner/7.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/banner/7.jpg' %}" width="280" height="358" alt="banner" />
+                                </picture>
+                            </figure>
+                            <div class="banner-content appear-animate" data-animation-options="{
+                                    'name':'blurIn',
+                                    'delay': '.2s'
+                                }">
+                                <h4 class="banner-subtitle mb-1 ls-s text-white">پاکورابان</h4>
+                                <h3 class="banner-title mb-2 ls-m text-white font-weight-bold">
+                                    مردانه و زنانه
+                                </h3>
+                                <p class="mb-0 font-primary text-white">
+                                    شروع قیمت از <span class="font-weight-semi-bold"> 1,500,000 تومان</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8 col-sm-6">
+                        <div class="owl-carousel owl-theme row owl-split owl-nav-inner cols-xl-4 cols-lg-3 cols-md-2 cols-1 appear-animate"
+                             data-animation-options="{
+                                'name':'fadeInLeftShorter',
+                                'delay': '.4s'
+                            }" data-owl-options="{
+                                 'rtl':true,
+                                'items': 4,
+                                'nav': true,
+                                'dots': false,
+                                'loop': true,
+                                'autoplay':true,
+                                'margin': 1,
+                                'responsive': {
+                                    '0': {
+                                        'items': 1
+                                    },
+                                    '576': {
+                                        'items': 1
+                                    ,
+                                    '768': {
+                                        'items': 2
+                                    },
+                                    '992': {
+                                        'items': 3
+                                    },
+                                    '1200': {
+                                        'items': 4
+                                    }
+                                }
+                            }">
+                            <div class="product product-slideup text-center">
+                                <figure class="product-media">
+                                    <a href="#">
+                                        <picture>
+                                            <source srcset="{% static 'images/products/product14.webp' %}" type="image/webp">
+                                            <img loading="lazy" decoding="async" src="{% static 'images/products/product14.jpg' %}" alt="product" width="300"
+                                                 height="338">
+                                        </picture>
+                                    </a>
+                                </figure>
+                                <div class="product-details rtl">
+                                    <h3 class="product-name">
+                                        <a href="#">جیونچی</a>
+                                    </h3>
+                                    <div class="product-price">
+                                        <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                                    </div>
+                                    <div class="ratings-container">
+                                        <div class="ratings-full">
+                                            <span class="ratings" style="width:100%"></span>
+                                            <span class="tooltiptext tooltip-top"></span>
+                                        </div>
+                                        <a href="#" class="rating-reviews">( از 16نظر )</a>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                            <i class="fa-light fa-heart"></i>
+                                        </a>
+                                        <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                           data-target="#addCartModal" title="اضافه به خرید">
+                                                <span>
+                                                    اضافه
+                                                    خرید
+                                                </span>
+                                        </a>
+                                        <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                            <i class="fa-light fa-magnifying-glass"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product product-slideup text-center">
+                                <figure class="product-media">
+                                    <a href="#">
+                                        <picture>
+                                            <source srcset="{% static 'images/products/product15.webp' %}" type="image/webp">
+                                            <img loading="lazy" decoding="async" src="{% static 'images/products/product15.jpg' %}" alt="product" width="300"
+                                                 height="338">
+                                        </picture>
+                                    </a>
+                                </figure>
+                                <div class="product-details rtl">
+                                    <h3 class="product-name">
+                                        <a href="#">گرلن</a>
+                                    </h3>
+                                    <div class="product-price">
+                                        <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                                    </div>
+                                    <div class="ratings-container">
+                                        <div class="ratings-full">
+                                            <span class="ratings" style="width:100%"></span>
+                                            <span class="tooltiptext tooltip-top"></span>
+                                        </div>
+                                        <a href="#" class="rating-reviews">( از 16نظر )</a>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                            <i class="fa-light fa-heart"></i>
+                                        </a>
+                                        <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                           data-target="#addCartModal" title="اضافه به خرید">
+                                                <span>
+                                                    اضافه
+                                                    خرید
+                                                </span>
+                                        </a>
+                                        <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                            <i class="fa-light fa-magnifying-glass"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product product-slideup text-center">
+                                <figure class="product-media">
+                                    <a href="#">
+                                        <picture>
+                                            <source srcset="{% static 'images/products/product16.webp' %}" type="image/webp">
+                                            <img loading="lazy" decoding="async" src="{% static 'images/products/product16.jpg' %}" alt="product" width="300"
+                                                 height="338">
+                                        </picture>
+                                    </a>
+                                </figure>
+                                <div class="product-details rtl">
+                                    <h3 class="product-name">
+                                        <a href="#">هرمس</a>
+                                    </h3>
+                                    <div class="product-price">
+                                        <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                                    </div>
+                                    <div class="ratings-container">
+                                        <div class="ratings-full">
+                                            <span class="ratings" style="width:100%"></span>
+                                            <span class="tooltiptext tooltip-top"></span>
+                                        </div>
+                                        <a href="#" class="rating-reviews">( از 16نظر )</a>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                            <i class="fa-light fa-heart"></i>
+                                        </a>
+                                        <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                           data-target="#addCartModal" title="اضافه به خرید">
+                                                <span>
+                                                    اضافه
+                                                    خرید
+                                                </span>
+                                        </a>
+                                        <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                            <i class="fa-light fa-magnifying-glass"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product product-slideup text-center">
+                                <figure class="product-media">
+                                    <a href="#">
+                                        <picture>
+                                            <source srcset="{% static 'images/products/product17.webp' %}" type="image/webp">
+                                            <img loading="lazy" decoding="async" src="{% static 'images/products/product17.jpg' %}" alt="product" width="300"
+                                                 height="338">
+                                        </picture>
+                                    </a>
+                                </figure>
+                                <div class="product-details rtl">
+                                    <h3 class="product-name">
+                                        <a href="#"> هوگو بوس</a>
+                                    </h3>
+                                    <div class="product-price">
+                                        <del class="old-price"> 1,200,000 تومان </del><ins class="new-price"> 800,000 تومان </ins>
+                                    </div>
+                                    <div class="ratings-container">
+                                        <div class="ratings-full">
+                                            <span class="ratings" style="width:100%"></span>
+                                            <span class="tooltiptext tooltip-top"></span>
+                                        </div>
+                                        <a href="#" class="rating-reviews">( از 16نظر )</a>
+                                    </div>
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product-icon btn-wishlist" title="اضافه به علاقه مندی">
+                                            <i class="fa-light fa-heart"></i>
+                                        </a>
+                                        <a href="#" class="btn-product btn-cart" data-toggle="modal"
+                                           data-target="#addCartModal" title="اضافه به خرید">
+                                                <span>
+                                                    اضافه
+                                                    خرید
+                                                </span>
+                                        </a>
+                                        <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                            <i class="fa-light fa-magnifying-glass"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="banner banner-newsletter bg-green-gradient m-b-10 rtl text-right">
+                <div class="container">
+                    <div class="banner-content d-lg-flex">
+                        <div class="d-flex icon-container ml-3 justify-content-center mb-2 mb-lg-0 col-lg-6 col-xs-12">
+                            <div class="icon-box icon-box-side appear-animate"
+                                 data-animation-options="{'name': 'fadeInLeftShorter'}">
+                                <div class="icon-box-content rtl">
+                                    <h4 class="icon-box-title text-white"> عضویت در وبسایت</h4>
+                                    <p class="text-white">از آخرین تخفیف ها و محصولات جدید با خبر شوید.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-lg-block d-flex justify-content-center form-container col-lg-6 col-xs-12">
+                            <form action="#" method="get"
+                                  class="input-wrapper input-wrapper-inline ml-lg-auto appear-animate"
+                                  data-animation-options="{'name': 'fadeInRightShorter'}">
+                                <input type="email" class="form-control font-primary form-solid text-left"
+                                       name="email" id="email" placeholder="ایمیل خود را وارد کنید" required>
+                                <button class="btn btn-dark" type="submit">
+                                    عضویت<i class="fa-light fa-angles-left"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="container rtl text-right m-b-10">
+                <div class="title-wrapper">
+                    <div class="container-fluid title-wrap">
+                        <h2 class="title">آخرین پست ها</h2>
+                        <h5 class="title-info">
+                            <span></span>
+                            <picture><source srcset="{% static 'images/perfume/15.webp' %}" type="image/webp"><img src="images/perfume/15.png"></picture>
+                            <span></span>
+                        </h5>
+                    </div>
+                </div>
+                <div class="owl-carousel owl-theme row cols-lg-4 cols-md-3 cols-sm-2 cols-1 appear-animate"
+                     data-animation-options="{
+                        'name':'fadeInUpShorter',
+                        'delay': '.4s'
+                    }" data-owl-options="{
+                         'rtl':true,
+                        'items': 4,
+                        'margin': 20,
+                        'autoplay':true,
+                        'loop': true,
+                         'autoHeight':true,
+                        'responsive': {
+                            '0': {
+                                'items': 1
+                            },
+                            '576': {
+                                'items': 2
+                            },
+                            '768': {
+                                'items': 2
+                            },
+                            '992': {
+                                'items': 3
+                            },
+                            '1200': {
+                                'items': 4
+                            }
+                        }
+                    }">
+                    <div class="post post-main overlay-zoom">
+                        <figure class="post-media">
+                            <a href="post-single.html">
+                                <picture>
+                                    <source srcset="{% static 'images/blog/1.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/blog/1.jpg' %}" width="280" height="189" alt="post" />
+                                </picture>
+                            </a>
+                        </figure>
+                        <div class="post-details rtl">
+                            <div class="post-meta">
+                                نویسنده :   <a href="#" class="post-author">افسون هاشمی</a>
+                                در<a href="#" class="post-date">2 آبان 1402</a>
+                            </div>
+                            <h3 class="post-title"><a href="post-single.html">رایحه و نت های بویایی انواع عطر </a></h3>
+                            <p>رایحه خوش یک عطر در زمان تبخیر شدن ان به مشام میرسد،  دقیقا زمانی که عصاره روغن های طبیعی عطر گرم میشوند و شروع به تبخیر شدن میکنند. </p>
+                            <a href="post-single.html" class="btn btn-link btn-underline btn-sm">
+                                بیشتر<i class="fa-light fa-angles-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="post overlay-zoom post-main">
+                        <figure class="post-media">
+                            <a href="post-single.html">
+                                <picture>
+                                    <source srcset="{% static 'images/blog/2.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/blog/2.jpg' %}" width="280" height="189" alt="post" />
+                                </picture>
+                            </a>
+                        </figure>
+                        <div class="post-details rtl">
+                            <div class="post-meta">
+                                نویسنده :   <a href="#" class="post-author">افسون هاشمی</a>
+                                در<a href="#" class="post-date">2 آبان 1402</a>
+                            </div>
+                            <h3 class="post-title"><a href="post-single.html">رایحه و نت های بویایی انواع عطر </a></h3>
+                            <p>رایحه خوش یک عطر در زمان تبخیر شدن ان به مشام میرسد،  دقیقا زمانی که عصاره روغن های طبیعی عطر گرم میشوند و شروع به تبخیر شدن میکنند. </p>
+                            <a href="post-single.html" class="btn btn-link btn-underline btn-sm">
+                                بیشتر<i class="fa-light fa-angles-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="post overlay-zoom post-main">
+                        <figure class="post-media">
+                            <a href="post-single.html">
+                                <picture>
+                                    <source srcset="{% static 'images/blog/3.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/blog/3.jpg' %}" width="280" height="189" alt="post" />
+                                </picture>
+                            </a>
+                        </figure>
+                        <div class="post-details rtl">
+                            <div class="post-meta">
+                                نویسنده :   <a href="#" class="post-author">افسون هاشمی</a>
+                                در<a href="#" class="post-date">2 آبان 1402</a>
+                            </div>
+                            <h3 class="post-title"><a href="post-single.html">رایحه و نت های بویایی انواع عطر </a></h3>
+                            <p>رایحه خوش یک عطر در زمان تبخیر شدن ان به مشام میرسد،  دقیقا زمانی که عصاره روغن های طبیعی عطر گرم میشوند و شروع به تبخیر شدن میکنند. </p>
+                            <a href="post-single.html" class="btn btn-link btn-underline btn-sm">
+                                بیشتر<i class="fa-light fa-angles-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="post overlay-zoom post-main">
+                        <figure class="post-media">
+                            <a href="post-single.html">
+                                <picture>
+                                    <source srcset="{% static 'images/blog/4.webp' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/blog/4.jpg' %}" width="280" height="189" alt="post" />
+                                </picture>
+                            </a>
+                        </figure>
+                        <div class="post-details rtl">
+                            <div class="post-meta">
+                                نویسنده :   <a href="#" class="post-author">افسون هاشمی</a>
+                                در<a href="#" class="post-date">2 آبان 1402</a>
+                            </div>
+                            <h3 class="post-title"><a href="post-single.html">رایحه و نت های بویایی انواع عطر </a></h3>
+                            <p>رایحه خوش یک عطر در زمان تبخیر شدن ان به مشام میرسد،  دقیقا زمانی که عصاره روغن های طبیعی عطر گرم میشوند و شروع به تبخیر شدن میکنند. </p>
+                            <a href="post-single.html" class="btn btn-link btn-underline btn-sm">
+                                بیشتر<i class="fa-light fa-angles-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="container m-b-10 ">
+                <div class="title-wrapper">
+                    <div class="container-fluid title-wrap">
+                        <h2 class="title">برندهای ما</h2>
+                        <h5 class="title-info">
+                            <span></span>
+                            <picture><source srcset="{% static 'images/perfume/15.webp' %}" type="image/webp"><img src="{% static 'images/perfume/15.png' %}"></picture>
+                            <span></span>
+                        </h5>
+                    </div>
+                </div>
+                <div class="owl-carousel owl-theme row brand-carousel cols-xl-6 cols-lg-5 cols-md-4 cols-sm-3 cols-2 gutter-no mb-2 appear-animate"
+                     data-animation-options="{
+                        'name':'fadeInUpShorter',
+                        'delay': '.4s'
+                    }" data-owl-options="{
+                         'rtl':true,
+                        'items': 7,
+                        'nav': false,
+                        'dots': false,
+                        'autoplay': true,
+                        'margin': 20,
+                        'loop': true,
+                        'responsive': {
+                            '0': {
+                                'items': 2
+                            },
+                            '576': {
+                                'items': 3
+                            },
+                            '768': {
+                                'items': 4
+                            },
+                            '992': {
+                                'items': 5
+                            },
+                            '1200': {
+                                'items': 6
+                            }
+                        }
+                    }">
+                    <picture><source srcset="{% static 'images/brand/brand-1.webp' %}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{% static 'images/brand/brand-1.png' %}" alt="Brand" width="180" height="100" /></picture>
+                    <picture><source srcset="{% static 'images/brand/brand-2.webp' %}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{% static 'images/brand/brand-2.png' %}" alt="Brand" width="180" height="100" /></picture>
+                    <picture><source srcset="{% static 'images/brand/brand-3.webp' %}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{% static 'images/brand/brand-3.png' %}" alt="Brand" width="180" height="100" /></picture>
+                    <picture><source srcset="{% static 'images/brand/brand-4.webp' %}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{% static 'images/brand/brand-4.png' %}" alt="Brand" width="180" height="100" /></picture>
+                    <picture><source srcset="{% static 'images/brand/brand-5.webp' %}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{% static 'images/brand/brand-5.png' %}" alt="Brand" width="180" height="100" /></picture>
+                    <picture><source srcset="{% static 'images/brand/brand-6.webp' %}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{% static 'images/brand/brand-6.png' %}" alt="Brand" width="180" height="100" /></picture>
+                </div>
+            </section>
+        </div>
+    </main>
+{% endblock %}
+
