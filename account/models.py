@@ -28,10 +28,11 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField(max_length=11, unique=True, verbose_name='شماره تلفن')
     email = models.EmailField(max_length=255, unique=True, blank=True, null=True, verbose_name='ایمیل')
-    name = models.CharField(max_length=60, verbose_name='نام و نام خانوادگی')
+    name = models.CharField(max_length=60, verbose_name='نام')
 
     is_active = models.BooleanField(default=True, verbose_name='دسترسی به حساب')
     is_staff = models.BooleanField(default=False, verbose_name='کارمند سایت')
+    is_superuser = models.BooleanField(default=False, verbose_name='صاحب سایت')
 
     date_joined = models.DateTimeField(default=timezone.now, verbose_name='تاریخ ایجاد حساب')
 
