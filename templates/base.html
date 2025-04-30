@@ -227,7 +227,7 @@
 {#                                    <span class="delimiter">/</span>#}
 {#                                    <a href="#register" class="register-toggle link-to-tab mr-0">ثبت نام</a>#}
 {#                                </h4>#}
-                                <p><a href="#" class="login-toggle">حساب کاربری</a></p>
+                                <p><a href="{% if request.user.is_authenticated %}profile/">داشبورد{% else %}" class="login-toggle">حساب کاربری{% endif %}</a></p>
                             </div>
                         </div>
                         <div class="dropdown login-dropdown off-canvas">

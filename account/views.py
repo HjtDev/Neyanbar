@@ -40,10 +40,7 @@ def verify_view(request):
             if not code:
                 return JsonResponse({'message': 'کد تایید منقضی شده است.'}, status=406)
             elif code == int(token):
-                session = deepcopy(request.session)
                 login(request, user)
-                request.session = session
-                request.session.is_modified = True
                 cache.delete(f'login-user-{user.id}')
                 return JsonResponse({'logged_in': True}, status=200)
             else:
