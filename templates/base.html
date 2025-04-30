@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
+    <title>نی عنبر | {% block title %}{% endblock %}</title>
     <meta name="keywords" content="HTML5 Template {% block page_keywords %}{% endblock %}"/>
     <meta name="description" content="{% block page_description %}{% endblock %}">
     <meta name="author" content="M-dehghan marziye.dehghan8006@gmail.com">
@@ -15,12 +15,14 @@
     <link rel="stylesheet" type="text/css" href="{% static 'plugin/owl-carousel/owl.carousel.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'plugin/sticky-icon/stickyicon.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main-min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/button-spinner.css' %}">
     {% block header %}{% endblock %}
 </head>
 <body>
 <div class="bg-loader">
     <div class="loader"></div>
 </div>
+{% csrf_token %}
 <div class="page-wrapper">
     <header class="header rtl text-right">
         <div class="header-middle">
@@ -220,12 +222,12 @@
                                 <i class="fa-light fa-user"></i>
                             </div>
                             <div class="icon-box-content ">
-                                <h4 class="icon-box-title text-dark text-normal">
-                                    <a href="#signin" class="login-toggle link-to-tab">ورود</a>
-                                    <span class="delimiter">/</span>
-                                    <a href="#register" class="register-toggle link-to-tab mr-0">ثبت نام</a>
-                                </h4>
-                                <p><a href="#">حساب کاربری</a></p>
+{#                                <h4 class="icon-box-title text-dark text-normal">#}
+{#                                    <a href="#signin" class="login-toggle link-to-tab">ورود</a>#}
+{#                                    <span class="delimiter">/</span>#}
+{#                                    <a href="#register" class="register-toggle link-to-tab mr-0">ثبت نام</a>#}
+{#                                </h4>#}
+                                <p><a href="{% if request.user.is_authenticated %}{% url 'account:dashboard' %}">داشبورد{% else %}" class="login-toggle">حساب کاربری{% endif %}</a></p>
                             </div>
                         </div>
                         <div class="dropdown login-dropdown off-canvas">
@@ -248,97 +250,80 @@
                                             </ul>
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="signin">
-                                                    <form action="#">
-                                                        <div class="form-group mb-3">
-                                                            <input type="text" class="form-control text-left"
-                                                                   id="singin-email"
-                                                                   name="singin-email"
-                                                                   placeholder="نام کاربری یا آدرس ایمیل" required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input type="password" class="form-control text-left ltr"
-                                                                   id="singin-password" name="singin-password"
-                                                                   placeholder="رمز عبور" required>
-                                                        </div>
-                                                        <div class="form-footer">
-                                                            <div class="form-checkbox">
-                                                                <input type="checkbox" class="custom-checkbox"
-                                                                       id="signin-remember" name="signin-remember">
-                                                                <label class="form-control-label"
-                                                                       for="signin-remember">
-                                                                    مرا به خاطر بسپار
-                                                                </label>
-                                                            </div>
-                                                            <a href="#" class="lost-link"> رمز عبور خود را فراموش کرده
-                                                                اید؟</a>
-                                                        </div>
-                                                        <button class="btn btn-rounded btn-dark btn-block btn-gradient"
-                                                                type="submit">
-                                                            ورود
-                                                        </button>
-                                                    </form>
-                                                    <div class="form-choice text-center">
-                                                        <label class="ls-m">یا وارد شوید با</label>
-                                                        <div class="social-links">
-                                                            <a href="#"
-                                                               class="social-link"><img
-                                                                    src="{% static 'images/social/whatsapp-silver.png' %}"/></a>
-                                                            <a href="#"
-                                                               class="social-link"><img
-                                                                    src="{% static 'images/social/instagram-silver.png' %}"/></a>
-                                                            <a href="#"
-                                                               class="social-link"><img
-                                                                    src="{% static 'images/social/x-silver.png' %}"/></a>
-                                                        </div>
+                                                    <div class="form-group mb-3">
+                                                        <input type="text" class="form-control text-left"
+                                                               id="signin-phone"
+                                                               name="signin-phone"
+                                                               minlength="11"
+                                                               maxlength="11"
+                                                               placeholder="شماره تلفن">
+                                                        <input type="text" class="form-control text-left d-none"
+                                                               id="token"
+                                                               name="token"
+                                                               minlength="4"
+                                                               maxlength="4"
+                                                               placeholder="کد تایید">
                                                     </div>
+                                                    <div class="form-footer">
+                                                        <a id="login-response" class="d-none"></a>
+                                                    </div>
+                                                    <button class="btn btn-rounded btn-dark btn-block btn-gradient btn-login">
+                                                        ورود
+                                                    </button>
+                                                    <button class="btn btn-rounded btn-dark btn-block btn-gradient btn-submit-token d-none">
+                                                        تایید
+                                                    </button>
                                                 </div>
                                                 <div class="tab-pane" id="register">
-                                                    <form action="#">
-                                                        <div class="form-group mb-3">
-                                                            <input type="email" class="form-control text-left"
-                                                                   id="register-email"
-                                                                   name="register-email" placeholder="آدرس ایمیل"
-                                                                   required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input type="password" class="form-control text-left ltr"
-                                                                   id="register-password" name="register-password"
-                                                                   placeholder="رمز عبور" required>
-                                                        </div>
-                                                        <div class="form-footer">
-                                                            <div class="form-checkbox">
-                                                                <input type="checkbox" class="custom-checkbox"
-                                                                       id="register-agree" name="register-agree"
-                                                                       required>
-                                                                <label class="form-control-label" for="register-agree">
-                                                                    اطلاعات شما محفوظ است
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <button class="btn btn-rounded btn-dark btn-block btn-gradient"
-                                                                type="submit">
-                                                            ثبت نام
-                                                        </button>
-                                                    </form>
-                                                    <div class="form-choice text-center">
-                                                        <label class="ls-m">یا ثبت نام با</label>
-                                                        <div class="social-links">
-                                                            <a href="#"
-                                                               class="social-link"><img
-                                                                    src="{% static 'images/social/whatsapp-silver.png' %}"/></a>
-                                                            <a href="#"
-                                                               class="social-link"><img
-                                                                    src="{% static 'images/social/instagram-silver.png' %}"/></a>
-                                                            <a href="#"
-                                                               class="social-link"><img
-                                                                    src="{% static 'images/social/x-silver.png' %}"/></a>
+                                                    <div class="form-group mb-3">
+                                                        <input type="text" class="form-control text-left"
+                                                               id="register-name"
+                                                               name="register-name"
+                                                               minlength="1"
+                                                               maxlength="60"
+                                                               placeholder="نام و نام خانوادگی">
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <input type="text" class="form-control text-left"
+                                                               id="register-email"
+                                                               name="register-email"
+                                                               minlength="1"
+                                                               maxlength="255"
+                                                               placeholder="ایمیل">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control text-left"
+                                                               id="register-phone"
+                                                               name="register-phone"
+                                                               minlength="11"
+                                                               maxlength="11"
+                                                               placeholder="شماره تلفن">
+                                                        <input type="text" class="form-control text-left d-none"
+                                                               id="register-token"
+                                                               name="token"
+                                                               minlength="4"
+                                                               maxlength="4"
+                                                               placeholder="کد تایید">
+                                                    </div>
+                                                    <div class="form-footer">
+                                                        <a id="register-response" class="d-none"></a>
+                                                        <div class="form-checkbox">
+                                                            <p class="form-control-label">
+                                                                ثبت نام شما به معنای پذیرش <b>شرایط و ضوابط</b> سایت است.
+                                                            </p>
                                                         </div>
                                                     </div>
+                                                    <button class="btn btn-rounded btn-dark btn-block btn-gradient btn-register">
+                                                        ثبت نام
+                                                    </button>
+                                                    <button class="btn btn-rounded btn-dark btn-block btn-gradient btn-submit-register-token d-none">
+                                                        تایید
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <button title="Close (Esc)" type="button" class="mfp-close"><span>×</span></button>
+{#                                    <button title="Close (Esc)" type="button" class="mfp-close"><span>×</span></button>#}
                                 </div>
                             </div>
                         </div>
@@ -1343,7 +1328,7 @@
 <div class="sticky-icons-wrapper rtl">
     <div class="sticky-icon-links">
         <ul>
-            <li><a href="index.html"><i class="fa-light fa-home"></i><span>خانه</span></a></li>
+            <li><a href="{% url 'main:index' %}"><i class="fa-light fa-home"></i><span>خانه</span></a></li>
             <li>
                 <a href="contact.html"><i class="fa-light fa-phone"></i><span>تماس با ما</span></a>
             </li>
@@ -1366,6 +1351,7 @@
 <script defer src="{% static 'plugin/photoswipe/photoswipe-ui-default.min.js' %}"></script>
 <script defer src="{% static 'plugin/jquery.floating/jquery.floating.min.js' %}"></script>
 <script defer src="{% static 'js/main.min.js' %}"></script>
-{% block footer %}{% endblock %}
+<script defer src="{% static 'js/login.js' %}"></script>
+{% block script %}{% endblock %}
 </body>
 </html>
