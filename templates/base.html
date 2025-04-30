@@ -249,7 +249,7 @@
                                                 </li>
                                             </ul>
                                             <div class="tab-content">
-                                               ` <div class="tab-pane active" id="signin">
+                                                <div class="tab-pane active" id="signin">
                                                     <div class="form-group mb-3">
                                                         <input type="text" class="form-control text-left"
                                                                id="signin-phone"
@@ -266,8 +266,6 @@
                                                     </div>
                                                     <div class="form-footer">
                                                         <a id="login-response" class="d-none"></a>
-                                                        <a href="forgot-password" class="lost-link"> رمز عبور خود را فراموش کرده
-                                                            اید؟</a>
                                                     </div>
                                                     <button class="btn btn-rounded btn-dark btn-block btn-gradient btn-login">
                                                         ورود
@@ -275,49 +273,52 @@
                                                     <button class="btn btn-rounded btn-dark btn-block btn-gradient btn-submit-token d-none">
                                                         تایید
                                                     </button>
-                                                </div>`
+                                                </div>
                                                 <div class="tab-pane" id="register">
-                                                    <form action="#">
-                                                        <div class="form-group mb-3">
-                                                            <input type="email" class="form-control text-left"
-                                                                   id="register-email"
-                                                                   name="register-email" placeholder="آدرس ایمیل"
-                                                                   required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <input type="password" class="form-control text-left ltr"
-                                                                   id="register-password" name="register-password"
-                                                                   placeholder="رمز عبور" required>
-                                                        </div>
-                                                        <div class="form-footer">
-                                                            <div class="form-checkbox">
-                                                                <input type="checkbox" class="custom-checkbox"
-                                                                       id="register-agree" name="register-agree"
-                                                                       required>
-                                                                <label class="form-control-label" for="register-agree">
-                                                                    اطلاعات شما محفوظ است
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <button class="btn btn-rounded btn-dark btn-block btn-gradient"
-                                                                type="submit">
-                                                            ثبت نام
-                                                        </button>
-                                                    </form>
-                                                    <div class="form-choice text-center">
-                                                        <label class="ls-m">یا ثبت نام با</label>
-                                                        <div class="social-links">
-                                                            <a href="#"
-                                                               class="social-link"><img
-                                                                    src="{% static 'images/social/whatsapp-silver.png' %}"/></a>
-                                                            <a href="#"
-                                                               class="social-link"><img
-                                                                    src="{% static 'images/social/instagram-silver.png' %}"/></a>
-                                                            <a href="#"
-                                                               class="social-link"><img
-                                                                    src="{% static 'images/social/x-silver.png' %}"/></a>
+                                                    <div class="form-group mb-3">
+                                                        <input type="text" class="form-control text-left"
+                                                               id="register-name"
+                                                               name="register-name"
+                                                               minlength="1"
+                                                               maxlength="60"
+                                                               placeholder="نام و نام خانوادگی">
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <input type="text" class="form-control text-left"
+                                                               id="register-email"
+                                                               name="register-email"
+                                                               minlength="1"
+                                                               maxlength="255"
+                                                               placeholder="ایمیل">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control text-left"
+                                                               id="register-phone"
+                                                               name="register-phone"
+                                                               minlength="11"
+                                                               maxlength="11"
+                                                               placeholder="شماره تلفن">
+                                                        <input type="text" class="form-control text-left d-none"
+                                                               id="register-token"
+                                                               name="token"
+                                                               minlength="4"
+                                                               maxlength="4"
+                                                               placeholder="کد تایید">
+                                                    </div>
+                                                    <div class="form-footer">
+                                                        <a id="register-response" class="d-none"></a>
+                                                        <div class="form-checkbox">
+                                                            <p class="form-control-label">
+                                                                ثبت نام شما به معنای پذیرش <b>شرایط و ضوابط</b> سایت است.
+                                                            </p>
                                                         </div>
                                                     </div>
+                                                    <button class="btn btn-rounded btn-dark btn-block btn-gradient btn-register">
+                                                        ثبت نام
+                                                    </button>
+                                                    <button class="btn btn-rounded btn-dark btn-block btn-gradient btn-submit-register-token d-none">
+                                                        تایید
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>

@@ -4,10 +4,16 @@ from .models import User
 import re
 
 
-pattern = re.compile(r'^09\d{9}$')
+phone_pattern = re.compile(r'^09\d{9}$')
+email_pattern = re.compile(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$')
+
 
 def validate_phone(number):
-    return bool(pattern.match(number))
+    return bool(phone_pattern.match(number))
+
+
+def validate_email(email):
+    return bool(email_pattern.match(email))
 
 
 class UserCreationForm(UserCreationForm):
