@@ -5,6 +5,7 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 import jdatetime
+from .models import Post, Category, Tag
 
 
 @csrf_exempt
@@ -26,3 +27,8 @@ def editor_upload_handler(request):
         file_url = f"{settings.MEDIA_URL}editor/{now.jyear}/{str(now.jmonth).zfill(2)}/{str(now.jday).zfill(2)}/{file_obj.name}"
         return JsonResponse({'location': file_url})
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+def post_detail_view(request, pk):
+    return render(request, 'blog.html', {'post': Post.objects.get(pk=pk)})
+

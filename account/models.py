@@ -29,7 +29,7 @@ class UserManager(BaseUserManager):
 def profile_directory_path(instance, filename):
     return os.path.join(
         'Profiles',
-        f'user_{instance.user.id}',
+        f'user_{instance.id}',
         filename
     )
 
