@@ -94,3 +94,9 @@ def register_complete_view(request):
             return JsonResponse({'message': 'کد تایید اشتباه است.'}, status=403)
     else:
         return JsonResponse({'message': 'کد تایید یا شماره تلفن اشتباه می باشد.'}, status=400)
+
+
+def logout_view(request):
+    if request.user.is_authenticated:
+        logout(request)
+    return redirect('main:index')
