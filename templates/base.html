@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-    <title>{% block title %}{% endblock %}</title>
+    <title>نی عنبر | {% block title %}{% endblock %}</title>
     <meta name="keywords" content="HTML5 Template {% block page_keywords %}{% endblock %}"/>
     <meta name="description" content="{% block page_description %}{% endblock %}">
     <meta name="author" content="M-dehghan marziye.dehghan8006@gmail.com">
@@ -227,7 +227,7 @@
 {#                                    <span class="delimiter">/</span>#}
 {#                                    <a href="#register" class="register-toggle link-to-tab mr-0">ثبت نام</a>#}
 {#                                </h4>#}
-                                <p><a href="{% if request.user.is_authenticated %}profile/">داشبورد{% else %}" class="login-toggle">حساب کاربری{% endif %}</a></p>
+                                <p><a href="{% if request.user.is_authenticated %}{% url 'account:dashboard' %}">داشبورد{% else %}" class="login-toggle">حساب کاربری{% endif %}</a></p>
                             </div>
                         </div>
                         <div class="dropdown login-dropdown off-canvas">
@@ -1328,7 +1328,7 @@
 <div class="sticky-icons-wrapper rtl">
     <div class="sticky-icon-links">
         <ul>
-            <li><a href="index.html"><i class="fa-light fa-home"></i><span>خانه</span></a></li>
+            <li><a href="{% url 'main:index' %}"><i class="fa-light fa-home"></i><span>خانه</span></a></li>
             <li>
                 <a href="contact.html"><i class="fa-light fa-phone"></i><span>تماس با ما</span></a>
             </li>
@@ -1352,6 +1352,6 @@
 <script defer src="{% static 'plugin/jquery.floating/jquery.floating.min.js' %}"></script>
 <script defer src="{% static 'js/main.min.js' %}"></script>
 <script defer src="{% static 'js/login.js' %}"></script>
-{% block footer %}{% endblock %}
+{% block script %}{% endblock %}
 </body>
 </html>

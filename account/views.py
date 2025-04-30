@@ -1,13 +1,13 @@
-from django.contrib.auth import login
-from django.shortcuts import render
+from django.contrib.auth import login, logout
+from django.shortcuts import render, redirect
 from django.http.response import JsonResponse
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_http_methods
 from django.core.cache import cache
 from .forms import validate_phone, validate_email
 from .models import User
 from random import randint
 from main.utilities import send_sms
-from copy import deepcopy
+from django.http import QueryDict
 
 
 @require_POST
@@ -100,3 +100,29 @@ def logout_view(request):
     if request.user.is_authenticated:
         logout(request)
     return redirect('main:index')
+
+
+def dashboard_view(request):
+    if not request.user.is_authenticated:
+        return redirect('main:index')
+    return render(request, 'account.html')
+
+
+@require_http_methods(['PATCH'])
+def edit_profile_view(request):
+    data = QueryDict(request.body)
+    name = data.get('name')
+    email = data.get('email')
+
+    if not name or len(name) < 3:
+        return JsonResponse({'name': 'لطفا یک نام معتبر انتخاب کنید.'}, status=400)
+
+    if not validate_email(email):
+        return JsonResponse({'email': 'لطفا یک ایمیل معتبر انتخاب کنید.'}, status=400)
+
+
+    if request.user.is_authenticated:
+        request.user.name, request.user.email = name, email
+        request.user.save()
+
+    return JsonResponse({}, status=200)
