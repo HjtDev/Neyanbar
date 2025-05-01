@@ -1,4 +1,6 @@
 from random import choice
+from time import sleep
+
 from django.shortcuts import render, redirect
 from datetime import datetime
 import os
@@ -6,10 +8,9 @@ from django.conf import settings
 from django.http import JsonResponse, QueryDict
 from django.views.decorators.csrf import csrf_exempt
 import jdatetime
-from django.views.decorators.http import require_http_methods
-
-from .models import Post, Category, Tag
-from django.core.cache import cache
+from django.views.decorators.http import require_http_methods, require_POST
+from .models import Post, Category, Tag, Comment
+from main.templatetags.tags import to_jalali_verbose
 
 
 @csrf_exempt
@@ -51,7 +52,7 @@ def view_handler(request):
 
 def post_detail_view(request, slug):
     try:
-        post = Post.objects.prefetch_related('tags').get(slug=slug)
+        post = Post.objects.prefetch_related('tags', 'comments', 'comments__user').get(slug=slug)
 
         most_viewed = Post.objects.all().exclude(id=post.id).order_by('-views')
         suggestion = Post.objects.filter(category=post.category, is_visible=True).order_by('-created_at')
@@ -59,19 +60,38 @@ def post_detail_view(request, slug):
         next_post = suggestion[l_suggestion.index(post) - 1] if l_suggestion.index(post) - 1 >= 0 else suggestion[1]
         other_post = choice(suggestion.exclude(id=next_post.id).exclude(id=post.id) or most_viewed[:6])
 
-        categories = Category.objects.all()
-        tags = Tag.objects.all()
-
         context = {
             'post': Post.objects.get(slug=slug),
             'suggestion': suggestion.exclude(id=post.id)[:6],
             'other_post': other_post,
             'next_post': next_post,
             'most_viewed': most_viewed[:3],
-            'categories': categories,
-            'tags': tags,
+            'categories': Category.objects.all(),
+            'tags': Tag.objects.all(),
+            'verified_comment_count': post.comments.filter(is_verified=True).count()
         }
         return render(request, 'blog.html', context)
     except Post.DoesNotExist:
         return redirect('main:index')
 
+
+@require_POST
+def comment_view(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'message': 'You are not logged in'}, status=403)
+
+    post_id = request.POST.get('post')
+    content = request.POST.get('content')
+
+    if not content:
+        return JsonResponse({'error': 'Content is required'}, status=400)
+
+    try:
+        post = Post.objects.get(id=post_id)
+        if not request.user.comments.filter(id=post.id).count():
+            comment = Comment.objects.create(content=content, post=post, user=request.user)
+            return JsonResponse({'name': str(request.user), 'profile': request.user.profile.url,
+                                 'created_at': to_jalali_verbose(comment.created_at)}, status=200)
+        return JsonResponse({}, status=406)
+    except Post.DoesNotExist:
+        return JsonResponse({'error': 'Post not found'}, status=404)

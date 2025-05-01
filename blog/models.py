@@ -70,3 +70,18 @@ class Post(models.Model):
     class Meta:
         verbose_name = 'پست'
         verbose_name_plural = 'پست ها'
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments', verbose_name='کاربر')
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments', verbose_name='پست')
+    content = models.TextField(max_length=320, verbose_name='متن')
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_verified = models.BooleanField(default=False, verbose_name='نمایش در سایت')
+
+    def __str__(self):
+        return f'{self.user} - {self.post}'
+
+    class Meta:
+        verbose_name = 'کامنت'
+        verbose_name_plural = 'کامنت ها'
