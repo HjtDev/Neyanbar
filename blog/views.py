@@ -1,9 +1,8 @@
-from random import choice
-from time import sleep
-
 from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
 from datetime import datetime
 import os
+from random import choice
 from django.conf import settings
 from django.http import JsonResponse, QueryDict
 from django.views.decorators.csrf import csrf_exempt
@@ -11,6 +10,8 @@ import jdatetime
 from django.views.decorators.http import require_http_methods, require_POST
 from .models import Post, Category, Tag, Comment
 from main.templatetags.tags import to_jalali_verbose
+# from django.contrib.postgres.search import SearchVector, SearchQuery, SearchRank, TrigramSimilarity
+# from django.db.models import Q
 
 
 @csrf_exempt
@@ -95,3 +96,41 @@ def comment_view(request):
         return JsonResponse({}, status=406)
     except Post.DoesNotExist:
         return JsonResponse({'error': 'Post not found'}, status=404)
+
+
+def post_list_view(request):
+    filters = []
+    posts = Post.objects.select_related('user', 'category').prefetch_related('comments').all().order_by('-created_at')
+    tags = Tag.objects.all()
+
+    if request.GET.get('category'):
+        posts = posts.filter(category__slug=request.GET.get('category'))
+        filters.append(f'دسته بندی {posts.first().category.name}')
+
+    if request.GET.get('tag'):
+        tag = tags.get(slug=request.GET.get('tag'))
+        posts = posts.filter(tags__in=[tag])
+        filters.append(tag.name)
+
+    if request.GET.get('author'):
+        posts = posts.filter(user__name=request.GET.get('author'))
+        filters.append(f'نویسنده {posts.first().user.name}')
+
+    search_query = request.GET.get('search')
+    if search_query:
+        posts = posts.filter(title__icontains=search_query)
+        filters.append(f'جستوجو برای {search_query}')
+
+    page = request.GET.get('page', 1)
+    post = Paginator(posts, 1)
+
+    most_viewed = Post.objects.all().order_by('-views')
+
+    context = {
+        'posts': post.page(page),
+        'filters': filters,
+        'most_viewed': most_viewed[:3],
+        'categories': Category.objects.all(),
+        'tags': tags,
+    }
+    return render(request, 'blog-list.html', context)

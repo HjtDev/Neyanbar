@@ -236,8 +236,13 @@
                         <a href="#" class="sidebar-toggle"><i class="fa-light fa-chevron-right"></i></a>
                         <div class="sidebar-content">
                             <div class="sticky-sidebar">
+                                {% if filters %}
+                                    <div class="widget widget-search border-no mb-2 w-100">
+                                        <a href="{% url 'blog:post-list' %}?" class="btn btn-primary btn-rounded w-100">حذف فیلتر ها</a>
+                                    </div>
+                                {% endif %}
                                 <div class="widget widget-search border-no mb-2">
-                                    <form action="#" class="input-wrapper input-wrapper-inline btn-absolute">
+                                    <form action="{% url 'blog:post-list' %}" type="GET" class="input-wrapper input-wrapper-inline btn-absolute">
                                         <input type="text" class="form-control" name="search" autocomplete="off"
                                                placeholder="جستجو در وبلاگ" required/>
                                         <button class="btn btn-search btn-link" type="submit">
@@ -249,7 +254,7 @@
                                     <h3 class="widget-title">دسته بندی وبلاگ ها</h3>
                                     <ul class="widget-body filter-items search-ul">
                                         {% for category in categories %}
-                                            <li><a href="#">{{ category.name }}</a></li>
+                                            <li><a href="{% url 'blog:post-list' %}?{% query_transform category=category.slug page=None %}">{{ category.name }}</a></li>
                                         {% endfor %}
                                     </ul>
                                 </div>
@@ -296,7 +301,7 @@
                                     <h3 class="widget-title">برچسب ها</h3>
                                     <div class="widget-body ">
                                         {% for tag in tags %}
-                                            <a href="#" class="tag">{{ tag.name }}</a>
+                                            <a href="{% url 'blog:post-list' %}?{% query_transform tag=tag.slug page=None %}" class="tag">{{ tag.name }}</a>
                                         {% endfor %}
                                     </div>
                                 </div>

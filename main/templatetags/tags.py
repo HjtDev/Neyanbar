@@ -38,3 +38,18 @@ def to_jalali_verbose(value, only=None):
 
     except Exception:
         return ''
+
+
+@register.simple_tag(takes_context=True)
+def query_transform(context, **kwargs):
+    """
+    Return current GET parameters updated with new ones from kwargs.
+    Removes any params with empty values.
+    """
+    query = context['request'].GET.copy()
+    for k, v in kwargs.items():
+        if v is None or v == '':
+            query.pop(k, None)
+        else:
+            query[k] = v
+    return query.urlencode()
