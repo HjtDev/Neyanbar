@@ -1,4 +1,5 @@
 ﻿{% extends 'base.html' %}
+{% load static %}
 {% load tags %}
 
 {% block title %}
@@ -6,6 +7,7 @@
 {% endblock %}
 
 {% block content %}
+    <input type="hidden" name="post_id" data-id="{{ post.id }}">
     <main class="main single-product rtl text-right">
         <div class="page-content">
             <div class="page-header pl-4 pr-4">
@@ -75,10 +77,7 @@
                                         </div>
                                         <div class="author-content">
                                             <p class="mb-0">
-                                                ادوپرفیوم میس دیور عطر کلاسیکی است که هرگز قدیمی نمی‌شود و رایحه‌های
-                                                منحصربه‌فردی دارد. میس دیور عطر خنک،‌گلی و کاملا زنانه‌ای است که ترکیبی
-                                                از رز، زنبق دره‌ای، زنبق پودری و پئونی را در اختیارتان قرار می‌دهد. مشک،
-                                                وانیل و چوب صندل نیز، لایه‌های نهایی این عطر را تشکیل می‌دهند.
+                                                {{ post.author_comment | safe }}
                                             </p>
                                         </div>
                                     </div>
@@ -103,13 +102,13 @@
                             </div>
                         </article>
                         <nav class="page-nav">
-                            <a class="pager-link pager-link-prev" href="#">
-                                مشاهده پست قبلی
-                                <span class="pager-link-title">محل قرارگیری عنوان پست قبلی</span>
+                            <a class="pager-link pager-link-prev" href="{{ other_post.get_absolute_url }}">
+                                مشاهده پست های دیگر
+                                <span class="pager-link-title">{{ other_post.title }}</span>
                             </a>
-                            <a class="pager-link pager-link-next" href="#">
+                            <a class="pager-link pager-link-next" href="{{ next_post.get_absolute_url }}">
                                 مشاهده پست بعدی
-                                <span class="pager-link-title">محل قرارگیری عنوان پست بعدی</span>
+                                <span class="pager-link-title">{{ next_post.title }}</span>
                             </a>
                         </nav>
                         <!-- End Page Navigation -->
@@ -120,14 +119,14 @@
                                     <h5 class="title-info">
                                         <span></span>
                                         <picture>
-                                            <source srcset="images/perfume/15.webp" type="image/webp">
-                                            <img src="images/perfume/15.png"></picture>
+                                            <source srcset="{% static 'images/perfume/15.webp' %}" type="image/webp">
+                                            <img src="{% static 'images/perfume/15.png' %}"></picture>
                                         <span></span>
                                     </h5>
                                 </div>
                             </div>
                             <div class="owl-carousel owl-theme row cols-lg-3 cols-sm-2" data-owl-options="{
-                                     'rtl':true,
+                                    'rtl':true,
                                     'items': 1,
                                     'margin': 20,
                                     'loop': false,
@@ -143,134 +142,38 @@
                                         }
                                     }
                                 }">
-                                <div class="post">
-                                    <figure class="post-media">
-                                        <a href="#">
-                                            <picture>
-                                                <source srcset="images/blog/single/3.webp" type="image/webp">
-                                                <img loading="lazy" decoding="async" src="images/blog/single/3.jpg"
-                                                     width="380" height="250"
-                                                     alt="post"/>
-                                            </picture>
-                                        </a>
-                                        <div class="post-calendar">
-                                            <span class="post-day">19</span>
-                                            <span class="post-month">آبان</span>
-                                        </div>
-                                    </figure>
-                                    <div class="post-details rtl">
-                                        <h4 class="post-title">
-                                            <a href="blog.html">
-                                                10 عطر خوشبو سال 1401 با ماندگاری خیره کننده
+                                {% for post in suggestion %}
+                                    <div class="post">
+                                        <figure class="post-media">
+                                            <a href="{{ post.get_absolute_url }}">
+                                                <picture>
+                                                    <source srcset="{{ post.thumbnail.url }}" type="image/webp">
+                                                    <img loading="lazy" decoding="async" src="{{ post.thumbnail.url }}"
+                                                         width="380" height="250"
+                                                         alt="post"/>
+                                                </picture>
                                             </a>
-                                        </h4>
-                                        <p class="post-content">
-                                            خرید عطر خوشبو با رایحه ماندگار و فوق العاده برای همه مردان و زنانی که به
-                                            استایل خود اهمیت می دهند در اولویت قرار دارد. در حقیقت استفاده از عطر خوشبو
-                                            نه تنها موجب جذاب بودن ما در جمع می‌شود، بلکه اعتماد به نفس ما را نیز افزایش
-                                            می‌دهد تا ما در جمع آقایان و خانم‌ها احساس بهتری نسبت به خود داشته باشیم.
-                                        </p>
-                                        <a href="blog.html"
-                                           class="btn btn-link btn-underline ">
-                                            بیشتر<i class="fa-light fa-angles-left"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="post">
-                                    <figure class="post-media">
-                                        <a href="#">
-                                            <picture>
-                                                <source srcset="images/blog/single/4.webp" type="image/webp">
-                                                <img loading="lazy" decoding="async" src="images/blog/single/4.jpg"
-                                                     width="380" height="250"
-                                                     alt="post"/>
-                                            </picture>
-                                        </a>
-                                        <div class="post-calendar">
-                                            <span class="post-day">27</span>
-                                            <span class="post-month">آبان</span>
-                                        </div>
-                                    </figure>
-                                    <div class="post-details rtl">
-                                        <h4 class="post-title">
-                                            <a href="blog.html">
-                                                انتخاب بهترین عطر یونیسکس
+                                            <div class="post-calendar">
+                                                <span class="post-day">{{ post.created_at | to_jalali_verbose:'d' }}</span>
+                                                <span class="post-month">{{ post.created_at | to_jalali_verbose:'m' }}</span>
+                                            </div>
+                                        </figure>
+                                        <div class="post-details rtl">
+                                            <h4 class="post-title">
+                                                <a href="{{ post.get_absolute_url }}">
+                                                    {{ post.title }}
+                                                </a>
+                                            </h4>
+                                            <p class="post-content">
+                                                {{ post.short_content }}
+                                            </p>
+                                            <a href="{{ post.get_absolute_url }}"
+                                               class="btn btn-link btn-underline ">
+                                                بیشتر<i class="fa-light fa-angles-left"></i>
                                             </a>
-                                        </h4>
-                                        <p class="post-content">عطر های اسپرت از آن دسته عطرهایی هستند که جز گروه عطر
-                                            های مردانه و زنانه قرار میگیرند و محدود به یک دسته جنسیتی خاص نمیشوند این
-                                            عطر ها به عطر های یونیسکس (یونی‌سکس) شهرت دارند؛ گرچه عطر یونیسکس بین خانم
-                                            ها و آقایان مشترکا استفاده می‌شوند اما تمایل انتخاب اقایان به خرید این دسته
-                                            از عطرها بیشتر است. </p>
-                                        <a href="blog.html"
-                                           class="btn btn-link btn-underline ">
-                                            بیشتر<i class="fa-light fa-angles-left"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="post">
-                                    <figure class="post-media">
-                                        <a href="#">
-                                            <picture>
-                                                <source srcset="images/blog/single/5.webp" type="image/webp">
-                                                <img loading="lazy" decoding="async" src="images/blog/single/5.jpg"
-                                                     width="380" height="250"
-                                                     alt="post"/>
-                                            </picture>
-                                        </a>
-                                        <div class="post-calendar">
-                                            <span class="post-day">12</span>
-                                            <span class="post-month">آبان</span>
                                         </div>
-                                    </figure>
-                                    <div class="post-details rtl">
-                                        <h4 class="post-title">
-                                            <a href="blog.html">
-                                                شگفت انگیز ترین عطر های زنانه فصل
-                                            </a>
-                                        </h4>
-                                        <p class="post-content">اگر به عطر علاقه دارید، وقتی می گوییم باید رایحه خود را
-                                            با فصول تغییر دهید، موافق خواهید بود. رایحه های میوه ای و گلی را برای بهار و
-                                            تابستان و گرم و مرموز برای پاییز و زمستان. </p>
-                                        <a href="blog.html"
-                                           class="btn btn-link btn-underline ">
-                                            بیشتر<i class="fa-light fa-angles-left"></i>
-                                        </a>
                                     </div>
-                                </div>
-                                <div class="post">
-                                    <figure class="post-media">
-                                        <a href="#">
-                                            <picture>
-                                                <source srcset="images/blog/single/4.webp" type="image/webp">
-                                                <img loading="lazy" decoding="async" src="images/blog/single/4.jpg"
-                                                     width="380" height="250"
-                                                     alt="post"/>
-                                            </picture>
-                                        </a>
-                                        <div class="post-calendar">
-                                            <span class="post-day">27</span>
-                                            <span class="post-month">آبان</span>
-                                        </div>
-                                    </figure>
-                                    <div class="post-details rtl">
-                                        <h4 class="post-title">
-                                            <a href="blog.html">
-                                                پرطرفدارترین ترند های مد، در بهار1403
-                                            </a>
-                                        </h4>
-                                        <p class="post-content">
-                                            ادوپرفیوم میس دیور عطر کلاسیکی است که هرگز قدیمی نمی‌شود و رایحه‌های
-                                            منحصربه‌فردی دارد. میس دیور عطر خنک،‌گلی و کاملا زنانه‌ای است که ترکیبی از
-                                            رز، زنبق دره‌ای، زنبق پودری و پئونی را در اختیارتان قرار می‌دهد. مشک، وانیل
-                                            و چوب صندل نیز، لایه‌های نهایی این عطر را تشکیل می‌دهند.
-                                        </p>
-                                        <a href="blog.html"
-                                           class="btn btn-link btn-underline ">
-                                            بیشتر<i class="fa-light fa-angles-left"></i>
-                                        </a>
-                                    </div>
-                                </div>
+                                {% endfor %}
                             </div>
                         </div>
                         <div class="comments">
@@ -421,97 +324,39 @@
                                 <div class="widget widget-collapsible border-no">
                                     <h3 class="widget-title">دسته بندی وبلاگ ها</h3>
                                     <ul class="widget-body filter-items search-ul">
-                                        <li><a href="#">مردانه</a></li>
-                                        <li><a href="#">زنانه</a></li>
-                                        <li>
-                                            <a href="#">انتخاب هدیه</a>
-                                            <ul class="children">
-                                                <li><a href="#"> برای خانم ها</a></li>
-                                                <li><a href="#">برای آقایان </a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a href="#">انواع عطر</a>
-                                            <ul class="children">
-                                                <li><a href="#">اودکلن</a></li>
-                                                <li><a href="#">اودوفرش</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">ترند ها</a></li>
-                                        <li><a href="#"> تشخیص عطر اورجینال</a></li>
-                                        <li><a href="#">ماندگاری عطر</a></li>
+                                        {% for category in categories %}
+                                            <li><a href="#">{{ category.name }}</a></li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                                 <div class="widget widget-collapsible">
                                     <h3 class="widget-title">پست های محبوب</h3>
                                     <div class="widget-body ">
                                         <div class="post-col">
-                                            <div class="post post-list-sm">
-                                                <figure class="post-media">
-                                                    <a href="blog.html">
-                                                        <picture>
-                                                            <source srcset="images/blog/1_xs.webp" type="image/webp">
-                                                            <img loading="lazy" decoding="async"
-                                                                 src="images/blog/1_xs.jpg" width="90" height="90"
-                                                                 alt="post"/>
-                                                        </picture>
-                                                    </a>
-                                                </figure>
-                                                <div class="post-details rtl">
-                                                    <div class="post-meta">
-                                                        <a href="#" class="post-date"> تاریخ 1403/08/02</a>
-                                                    </div>
-                                                    <h4 class="post-title">
-                                                        <a href="blog.html">
-                                                            10 عطر خنک مردانه با ماندگاری بالا
+                                            {% for post in most_viewed %}
+                                                <div class="post post-list-sm">
+                                                    <figure class="post-media">
+                                                        <a href="{{ post.get_absolute_url }}">
+                                                            <picture>
+                                                                <source srcset="{{ post.thumbnail.url }}" type="image/webp">
+                                                                <img loading="lazy" decoding="async"
+                                                                     src="{{ post.thumbnail.url }}" width="90" height="90"
+                                                                     alt="post"/>
+                                                            </picture>
                                                         </a>
-                                                    </h4>
-                                                </div>
-                                            </div>
-                                            <div class="post post-list-sm">
-                                                <figure class="post-media">
-                                                    <a href="blog.html">
-                                                        <picture>
-                                                            <source srcset="images/blog/2_xs.webp" type="image/webp">
-                                                            <img loading="lazy" decoding="async"
-                                                                 src="images/blog/2_xs.jpg" width="90" height="90"
-                                                                 alt="post"/>
-                                                        </picture>
-                                                    </a>
-                                                </figure>
-                                                <div class="post-details rtl">
-                                                    <div class="post-meta">
-                                                        <a href="#" class="post-date"> تاریخ 1403/08/02</a>
+                                                    </figure>
+                                                    <div class="post-details rtl">
+                                                        <div class="post-meta">
+                                                            <a href="#" class="post-date"> تاریخ {{ post.created_at | to_jalali_verbose }}</a>
+                                                        </div>
+                                                        <h4 class="post-title">
+                                                            <a href="{{ post.get_absolute_url }}">
+                                                                {{ post.title }}
+                                                            </a>
+                                                        </h4>
                                                     </div>
-                                                    <h4 class="post-title">
-                                                        <a href="blog.html">
-                                                            چه عطری پادشاه عطرها می باشد؟
-                                                        </a>
-                                                    </h4>
                                                 </div>
-                                            </div>
-                                            <div class="post post-list-sm">
-                                                <figure class="post-media">
-                                                    <a href="blog.html">
-                                                        <picture>
-                                                            <source srcset="images/blog/3_xs.webp" type="image/webp">
-                                                            <img loading="lazy" decoding="async"
-                                                                 src="images/blog/3_xs.jpg" width="90" height="90"
-                                                                 alt="post"/>
-                                                        </picture>
-                                                    </a>
-                                                </figure>
-                                                <div class="post-details rtl">
-                                                    <div class="post-meta">
-                                                        <a href="#" class="post-date"> تاریخ 1403/08/02</a>
-                                                    </div>
-                                                    <h4 class="post-title">
-                                                        <a href="blog.html">
-                                                            15 عطر معروف زنانه دنیا
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                            </div>
+                                            {% endfor %}
                                         </div>
                                     </div>
                                 </div>
@@ -526,15 +371,9 @@
                                 <div class="widget widget-posts widget-collapsible">
                                     <h3 class="widget-title">برچسب ها</h3>
                                     <div class="widget-body ">
-                                        <a href="#" class="tag">عطر</a>
-                                        <a href="#" class="tag">مردانه</a>
-                                        <a href="#" class="tag">زنانه</a>
-                                        <a href="#" class="tag">بچه گانه</a>
-                                        <a href="#" class="tag">نوجوان</a>
-                                        <a href="#" class="tag">عصاره</a>
-                                        <a href="#" class="tag">ادکلن</a>
-                                        <a href="#" class="tag">ترند </a>
-                                        <a href="#" class="tag">جدید</a>
+                                        {% for tag in tags %}
+                                            <a href="#" class="tag">{{ tag.name }}</a>
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>
@@ -544,4 +383,8 @@
             </div>
         </div>
     </main>
+{% endblock %}
+
+{% block script %}
+    <script defer src="{% static 'js/views.js' %}"></script>
 {% endblock %}
