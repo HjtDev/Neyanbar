@@ -31,14 +31,14 @@ class UserAdmin(UserAdmin):
 
     fieldsets = (
         ('اصلی', {'fields': ('phone', 'password')}),
-        ('اطلاعات شخصی', {'fields': ('name', 'email')}),
+        ('اطلاعات شخصی', {'fields': ('name', 'email', 'profile')}),
         ('دسترسی ها', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
         ('تاریخ ها', {'fields': ('last_login', 'date_joined')}),
     )
 
     add_fieldsets = (
         ('اصلی', {'fields': ('phone', 'password1', 'password2')}),
-        ('اطلاعات شخصی', {'fields': ('name', 'email')}),
+        ('اطلاعات شخصی', {'fields': ('name', 'email', 'profile')}),
         ('دسترسی ها', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
         ('تاریخ ها', {'fields': ('last_login', 'date_joined')}),
     )

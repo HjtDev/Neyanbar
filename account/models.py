@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.utils import timezone
+import os
 
 
 class UserManager(BaseUserManager):
@@ -25,10 +26,20 @@ class UserManager(BaseUserManager):
         return self.create_user(phone, password, **extra_fields)
 
 
+def profile_directory_path(instance, filename):
+    return os.path.join(
+        'Profiles',
+        f'user_{instance.id}',
+        filename
+    )
+
+
+
 class User(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField(max_length=11, unique=True, verbose_name='شماره تلفن')
     email = models.EmailField(max_length=255, unique=True, blank=True, null=True, verbose_name='ایمیل')
     name = models.CharField(max_length=60, verbose_name='نام')
+    profile = models.ImageField(upload_to=profile_directory_path, null=True, blank=True, verbose_name='پروفایل', help_text='60*60')
 
     is_active = models.BooleanField(default=True, verbose_name='دسترسی به حساب')
     is_staff = models.BooleanField(default=False, verbose_name='کارمند سایت')
