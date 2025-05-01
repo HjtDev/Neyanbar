@@ -18,7 +18,7 @@
                 <div class="container breadcrumb-nav-wrap">
                     <ul class="breadcrumb ">
                         <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
-                        <li><a href="#">وبلاگ</a></li>
+                        <li><a href="{% url 'blog:post-list' %}">وبلاگ</a></li>
                         <li>{{ post }}</li>
                     </ul>
                 </div>
@@ -38,7 +38,7 @@
                             </figure>
                             <div class="post-details rtl">
                                 <div class="post-meta">
-                                    نویسنده : : <a href="#" class="post-author">{{ post.user.name }}</a>
+                                    نویسنده : : <a href="{% url 'blog:post-list' %}?author={{ post.user.name }}" class="post-author">{{ post.user.name }}</a>
                                     تاریخ انتشار: <a href="#" class="post-date">{{ post.created_at | to_jalali_verbose }}</a>
                                     | <a href="#" class="post-comment"><span>{{ verified_comment_count }}</span> دیدگاه</a>
                                 </div>

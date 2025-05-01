@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load tags %}
 
 {% block title %}
 	صفحه اصلی
@@ -1359,90 +1360,29 @@
                             }
                         }
                     }">
-                    <div class="post post-main overlay-zoom">
-                        <figure class="post-media">
-                            <a href="post-single.html">
-                                <picture>
-                                    <source srcset="{% static 'images/blog/1.webp' %}" type="image/webp">
-                                    <img loading="lazy" decoding="async" src="{% static 'images/blog/1.jpg' %}" width="280" height="189" alt="post" />
-                                </picture>
-                            </a>
-                        </figure>
-                        <div class="post-details rtl">
-                            <div class="post-meta">
-                                نویسنده :   <a href="#" class="post-author">افسون هاشمی</a>
-                                در<a href="#" class="post-date">2 آبان 1402</a>
+                    {% for post in posts %}
+                        <div class="post post-main overlay-zoom">
+                            <figure class="post-media">
+                                <a href="{{ post.get_absolute_url }}">
+                                    <picture>
+                                        <source srcset="{{ post.thumbnail.url }}" type="image/webp">
+                                        <img loading="lazy" decoding="async" src="{{ post.thumbnail.url }}" width="280" height="189" alt="post" />
+                                    </picture>
+                                </a>
+                            </figure>
+                            <div class="post-details rtl">
+                                <div class="post-meta">
+                                    نویسنده :   <a href="{% url 'blog:post-list' %}?author={{ post.user.name }}" class="post-author">{{ post.user }}</a>
+                                    در<a href="#" class="post-date">{{ post.created_at | to_jalali_verbose }}</a>
+                                </div>
+                                <h3 class="post-title"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+                                <p>{{ post.short_content }}</p>
+                                <a href="{{ post.get_absolute_url }}" class="btn btn-link btn-underline btn-sm">
+                                    بیشتر<i class="fa-light fa-angles-left"></i>
+                                </a>
                             </div>
-                            <h3 class="post-title"><a href="post-single.html">رایحه و نت های بویایی انواع عطر </a></h3>
-                            <p>رایحه خوش یک عطر در زمان تبخیر شدن ان به مشام میرسد،  دقیقا زمانی که عصاره روغن های طبیعی عطر گرم میشوند و شروع به تبخیر شدن میکنند. </p>
-                            <a href="post-single.html" class="btn btn-link btn-underline btn-sm">
-                                بیشتر<i class="fa-light fa-angles-left"></i>
-                            </a>
                         </div>
-                    </div>
-                    <div class="post overlay-zoom post-main">
-                        <figure class="post-media">
-                            <a href="post-single.html">
-                                <picture>
-                                    <source srcset="{% static 'images/blog/2.webp' %}" type="image/webp">
-                                    <img loading="lazy" decoding="async" src="{% static 'images/blog/2.jpg' %}" width="280" height="189" alt="post" />
-                                </picture>
-                            </a>
-                        </figure>
-                        <div class="post-details rtl">
-                            <div class="post-meta">
-                                نویسنده :   <a href="#" class="post-author">افسون هاشمی</a>
-                                در<a href="#" class="post-date">2 آبان 1402</a>
-                            </div>
-                            <h3 class="post-title"><a href="post-single.html">رایحه و نت های بویایی انواع عطر </a></h3>
-                            <p>رایحه خوش یک عطر در زمان تبخیر شدن ان به مشام میرسد،  دقیقا زمانی که عصاره روغن های طبیعی عطر گرم میشوند و شروع به تبخیر شدن میکنند. </p>
-                            <a href="post-single.html" class="btn btn-link btn-underline btn-sm">
-                                بیشتر<i class="fa-light fa-angles-left"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="post overlay-zoom post-main">
-                        <figure class="post-media">
-                            <a href="post-single.html">
-                                <picture>
-                                    <source srcset="{% static 'images/blog/3.webp' %}" type="image/webp">
-                                    <img loading="lazy" decoding="async" src="{% static 'images/blog/3.jpg' %}" width="280" height="189" alt="post" />
-                                </picture>
-                            </a>
-                        </figure>
-                        <div class="post-details rtl">
-                            <div class="post-meta">
-                                نویسنده :   <a href="#" class="post-author">افسون هاشمی</a>
-                                در<a href="#" class="post-date">2 آبان 1402</a>
-                            </div>
-                            <h3 class="post-title"><a href="post-single.html">رایحه و نت های بویایی انواع عطر </a></h3>
-                            <p>رایحه خوش یک عطر در زمان تبخیر شدن ان به مشام میرسد،  دقیقا زمانی که عصاره روغن های طبیعی عطر گرم میشوند و شروع به تبخیر شدن میکنند. </p>
-                            <a href="post-single.html" class="btn btn-link btn-underline btn-sm">
-                                بیشتر<i class="fa-light fa-angles-left"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="post overlay-zoom post-main">
-                        <figure class="post-media">
-                            <a href="post-single.html">
-                                <picture>
-                                    <source srcset="{% static 'images/blog/4.webp' %}" type="image/webp">
-                                    <img loading="lazy" decoding="async" src="{% static 'images/blog/4.jpg' %}" width="280" height="189" alt="post" />
-                                </picture>
-                            </a>
-                        </figure>
-                        <div class="post-details rtl">
-                            <div class="post-meta">
-                                نویسنده :   <a href="#" class="post-author">افسون هاشمی</a>
-                                در<a href="#" class="post-date">2 آبان 1402</a>
-                            </div>
-                            <h3 class="post-title"><a href="post-single.html">رایحه و نت های بویایی انواع عطر </a></h3>
-                            <p>رایحه خوش یک عطر در زمان تبخیر شدن ان به مشام میرسد،  دقیقا زمانی که عصاره روغن های طبیعی عطر گرم میشوند و شروع به تبخیر شدن میکنند. </p>
-                            <a href="post-single.html" class="btn btn-link btn-underline btn-sm">
-                                بیشتر<i class="fa-light fa-angles-left"></i>
-                            </a>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </section>
             <section class="container m-b-10 ">

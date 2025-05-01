@@ -42,7 +42,7 @@
                                     </figure>
                                     <div class="post-details rtl">
                                         <div class="post-meta">
-                                            نوسینده <a href="#" class="post-author">{{ post.user }} </a>
+                                            نوسینده <a href="?{% query_transform author=post.user.name %}" class="post-author">{{ post.user }} </a>
                                             تاریخ  <a href="#" class="post-date">{{ post.created_at | to_jalali_verbose }}</a>
                                             | <a href="#" class="post-comment"><span>{{ post.comments.count }}</span>  نظر </a>
                                         </div>
