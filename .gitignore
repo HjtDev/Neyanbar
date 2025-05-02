@@ -129,3 +129,5 @@ dmypy.json
 # Media files
 media/
 .idea/dictionaries/project.xml
+
+.idea/
