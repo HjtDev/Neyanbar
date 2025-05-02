@@ -56,7 +56,7 @@ class Post(models.Model):
     author_comment = HTMLField(verbose_name='نظر نویسنده', blank=True, null=True)
     tags = models.ManyToManyField(Tag, verbose_name='برچسب ها', related_name='posts', blank=True)
     slug = models.SlugField(max_length=255, unique=True, verbose_name='اسلاگ')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ انتشار')
     is_visible = models.BooleanField(default=False, verbose_name='نمایش در سایت')
     views = models.PositiveIntegerField(default=0, verbose_name='بازدید')
 

@@ -4,6 +4,6 @@ from blog.models import Post
 
 def home_view(request):
     context = {
-        'posts': Post.objects.select_related('user').all().order_by('-created_at')[:6]
+        'posts': Post.objects.select_related('user').filter(is_visible=True).order_by('-created_at')[:6]
     }
     return render(request, 'index.html', context)

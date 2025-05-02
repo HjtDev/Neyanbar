@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, PageNotAnInteger
 from datetime import datetime
 import os
 from random import choice
@@ -54,12 +54,16 @@ def view_handler(request):
 def post_detail_view(request, slug):
     try:
         post = Post.objects.prefetch_related('tags', 'comments', 'comments__user').get(slug=slug)
+        if not post.is_visible and not request.user.is_superuser:
+            return redirect('main:index')
 
-        most_viewed = Post.objects.all().exclude(id=post.id).order_by('-views')
-        suggestion = Post.objects.filter(category=post.category, is_visible=True).order_by('-created_at')
-        l_suggestion = list(suggestion)
-        next_post = suggestion[l_suggestion.index(post) - 1] if l_suggestion.index(post) - 1 >= 0 else suggestion[1]
-        other_post = choice(suggestion.exclude(id=next_post.id).exclude(id=post.id) or most_viewed[:6])
+        all_posts = Post.objects.all()
+
+        most_viewed = all_posts.exclude(id=post.id).order_by('-views')
+        suggestion = all_posts.filter(category=post.category).order_by('-created_at')
+        other_post = choice(all_posts.exclude(id=post.id) or most_viewed[:6])
+        all_posts = list(all_posts.exclude(id=post.id))
+        next_post = all_posts[list(all_posts).index(other_post) - 1]
 
         context = {
             'post': Post.objects.get(slug=slug),
@@ -89,7 +93,7 @@ def comment_view(request):
 
     try:
         post = Post.objects.get(id=post_id)
-        if not request.user.comments.filter(id=post.id).count():
+        if not post.comments.filter(user=request).exist():
             comment = Comment.objects.create(content=content, post=post, user=request.user)
             return JsonResponse({'name': str(request.user), 'profile': request.user.profile.url,
                                  'created_at': to_jalali_verbose(comment.created_at)}, status=200)
@@ -100,7 +104,8 @@ def comment_view(request):
 
 def post_list_view(request):
     filters = []
-    posts = Post.objects.select_related('user', 'category').prefetch_related('comments').all().order_by('-created_at')
+    all_posts = Post.objects.filter(is_visible=True)
+    posts = all_posts.select_related('user', 'category').prefetch_related('comments').order_by('-created_at')
     tags = Tag.objects.all()
 
     if request.GET.get('category'):
@@ -121,13 +126,14 @@ def post_list_view(request):
         posts = posts.filter(title__icontains=search_query)
         filters.append(f'جستوجو برای {search_query}')
 
-    page = request.GET.get('page', 1)
-    post = Paginator(posts, 1)
+    page = int(request.GET.get('page', 1))
+    post = Paginator(all_posts, 2)
 
-    most_viewed = Post.objects.all().order_by('-views')
+    most_viewed = all_posts.order_by('-views')
+    # most_viewed = all_posts.exclude(id__in=[p.id for p in post.object_list]).order_by('-views')  # separates most_viewed from current page posts
 
     context = {
-        'posts': post.page(page),
+        'posts': post.page(page if page < post.num_pages else post.num_pages),
         'filters': filters,
         'most_viewed': most_viewed[:3],
         'categories': Category.objects.all(),
