@@ -49,7 +49,9 @@ class ProductAdmin(admin.ModelAdmin):
             ),
         }),
         ('گزارشات', {
-            'fields': ('inventory', 'liked_by', 'bought_by', 'views', 'last_view', 'created_at', 'updated_at'),
+            'fields': ('inventory', 'liked_by', 'bought_by',
+                       'remind_to', 'views',
+                       'last_view', 'created_at', 'updated_at'),
             'classes': ('collapse',),
         }),
     )
