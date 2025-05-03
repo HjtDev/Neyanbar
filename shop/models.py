@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
+from django.urls import reverse
 from tinymce.models import HTMLField
 import os
 from account.models import User
@@ -20,6 +21,7 @@ def video_validator(value):
 
 
 class Product(models.Model):
+    objects = models.Manager()
     name = models.CharField(max_length=100, verbose_name='اسم محصول', help_text='به فارسی')
     name_en = models.CharField(max_length=100, verbose_name='اسم محصول', help_text='به انگلیسی')
     slug = models.SlugField(max_length=255, unique=True, verbose_name='اسلاگ')
@@ -50,14 +52,14 @@ class Product(models.Model):
     gender = models.CharField(choices=GenderChoices.choices, max_length=6, verbose_name='جنسیت')
 
     class VolumeChoices(models.TextChoices):
-        TEN = '10m', '10m'
-        TWENTY = '20m', '20m'
-        THIRTY = '30m', '30m'
-        FIFTY = '50m', '50m'
-        SIXTY = '60m', '60m'
-        HUNDRED = '100m', '100m'
-        HUNDRED_TWENTY = '120m', '120m'
-        HUNDRED_FIFTY = '150m', '150m'
+        TEN = '10m', '۱۰ میل'
+        TWENTY = '20m', '۲۰ میل'
+        THIRTY = '30m', '۳۰ میل'
+        FIFTY = '50m', '۵۰ میل'
+        SIXTY = '60m', '۶۰ میل'
+        HUNDRED = '100m', '۱۰۰ میل'
+        HUNDRED_TWENTY = '120m', '۱۲۰ میل'
+        HUNDRED_FIFTY = '150m', '۱۵۰ میل'
     volume = models.CharField(choices=VolumeChoices.choices, max_length=4, verbose_name='حجم')
 
     class TypeChoices(models.TextChoices):
@@ -70,7 +72,7 @@ class Product(models.Model):
 
     pid = models.CharField(max_length=6, unique=True, verbose_name='کد محصول')
 
-    price = models.PositiveIntegerField(default=0, verbose_name='قیمت محصول')
+    price = models.PositiveIntegerField(default=0, verbose_name='قیمت محصول', help_text='به تومان')
     discount = models.IntegerField(default=-1, validators=[MinValueValidator(-1)], verbose_name='قیمت پس از تخفیف', help_text='-۱ برای لغو تخفیف')
 
     inventory = models.PositiveIntegerField(default=0, verbose_name='موجودی انبار')
@@ -100,9 +102,13 @@ class Product(models.Model):
     get_price.short_description = 'قیمت'
 
     def get_price_difference(self):
-        return self.price - self.discount
+        return int((self.discount / self.price) * 100)
+
     def get_smell(self):
-        return self.categories.smell.all()
+        return ', '.join([smell.get_value_display() for smell in self.smell.all()])
+
+    def get_absolute_url(self):
+        return reverse('shop:product-detail', kwargs={'slug': self.slug})
 
     class Meta:
         verbose_name = 'محصول'
@@ -117,7 +123,7 @@ class Product(models.Model):
 
 class Image(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name='محصولات')
-    image = models.ImageField(upload_to=product_dynamic_path, verbose_name='تصویر')
+    image = models.ImageField(upload_to=product_dynamic_path, verbose_name='تصویر', help_text='800*900')
     alt = models.CharField(verbose_name='تیتر', help_text='برای سئو')
 
     def __str__(self):

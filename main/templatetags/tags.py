@@ -1,7 +1,7 @@
-from unittest import case
-
+from django.utils import timezone
 from django import template
 import jdatetime
+from django.db.models import DateTimeField
 
 
 register = template.Library()
@@ -38,6 +38,20 @@ def to_jalali_verbose(value, only=None):
 
     except Exception:
         return ''
+
+
+@register.filter
+def is_new(value: DateTimeField):
+    return (value and timezone.now() - value).days < 3
+
+
+@register.filter
+def commafy(value):
+    try:
+        return "{:,}".format(int(value))
+    except (ValueError, TypeError):
+        return value
+
 
 
 @register.simple_tag(takes_context=True)

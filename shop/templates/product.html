@@ -1,0 +1,773 @@
+{% extends 'base.html' %}
+{% load tags %}
+{% load static %}
+{% load social_share %}
+
+{% block title %}
+    {{ product }}
+{% endblock %}
+
+{% block content %}
+    <main class="main single-product rtl text-right">
+        <div class="page-content">
+            <div class="container">
+                <nav class="breadcrumb-nav">
+                    <div class="container breadcrumb-nav-wrap">
+                        <ul class="breadcrumb ">
+                            <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
+                            <li><a href="#">محصولات</a></li>
+                            <li>{{ product }}</li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="row gutter-lg single-product-wrap">
+                    <div class="col-xl-9 col-lg-8">
+                        <div class="product product-single row mb-5">
+                            <div class="col-md-6">
+                                <div class="product-gallery">
+                                    <div class="product-single-carousel owl-carousel owl-theme owl-nav-inner row cols-1 gutter-no ltr">
+                                        {% for image in product.images.all %}
+                                            <figure class="product-image">
+                                                <picture>
+                                                    <source srcset="{{ image.image.url }}" type="image/webp">
+                                                    <img loading="lazy" decoding="async" src="{{ image.image.url }}"
+                                                         data-zoom-image="{{ image.image.url }}"
+                                                         alt="{{ image.alt }}" width="800" height="900">
+                                                </picture>
+                                            </figure>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="product-thumbs-wrap ltr">
+                                        <div class="product-thumbs">
+                                            {% for image in product.images.all %}
+                                                <div class="product-thumb {% if forloop.first %}active{% endif %}">
+                                                    <picture>
+                                                        <source srcset="{{ image.image.url }}" type="image/webp">
+                                                        <img loading="lazy" decoding="async" src="{{ image.image.url }}"
+                                                             alt="product thumbnail"
+                                                             width="150" height="169">
+                                                    </picture>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                        {#                                        <button class="thumb-up disabled"><i class="fa-light fa-chevron-right"></i></button>#}
+                                        {#                                        <button class="thumb-down disabled"><i class="fa-light fa-chevron-left"></i></button>#}
+                                    </div>
+                                    <div class="product-label-group">
+                                        {% if not product.inventory %}
+                                            <div class="sold-out">تمام شد</div>
+                                        {% else %}
+                                            {% if product.discount != -1 %}
+                                                <div class="discount">{{ product.get_price_difference }}% تخفیف</div>
+                                            {% endif %}
+                                            {% if product.created_at|is_new %}
+                                                <div class="new-label">جدید</div>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="product-details pt-3">
+                                    <h1 class="product-name">{{ product }}</h1>
+                                    <h3 class="product-name-en">{{ product.name_en }}</h3>
+                                    <div class="product-meta">
+                                        کد کالا :<span class="product-sku ml-3">{{ product.pid }}</span>
+                                        دسته بندی : <span
+                                            class="product-brand">{{ product.get_perfume_type_display }}</span>
+                                    </div>
+                                    <div class="product-price"> {{ product.get_price | commafy }} تومان</div>
+                                    <div class="ratings-container">
+                                        <a href="#product-tab-reviews" class="link-to-tab rating-reviews">
+                                            {% if product.inventory %}
+                                                ({{ product.inventory }} عدد موجود در انبار)
+                                            {% else %}
+                                                موجود نیست
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                    <p class="product-short-desc">
+                                        {{ product.short_description | safe }}
+                                    </p>
+                                    <div class="table-info">
+                                        <table class="table table-bordered table-striped">
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <span style="color: #000000;">سایز</span>
+                                                </td>
+                                                <td><span style="color: #000000;">{{ product.get_volume_display }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span style="color: #000000;">طبع</span>
+                                                </td>
+                                                <td>
+                                                    <span style="color: #000000;">{{ product.get_nature_display }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span style="color: #000000;">گروه بویایی</span>
+                                                </td>
+                                                <td>
+                                                    <span style="color: #000000;">{{ product.get_smell }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span style="color: #000000;">فصل</span></td>
+                                                <td>
+                                                    <span style="color: #000000;">{{ product.get_season_display }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span style="color: #000000;">جنسیت</span>
+                                                </td>
+                                                <td>
+                                                    <span style="color: #000000;">{{ product.get_gender_display }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span style="color: #000000;">نوع عطر</span>
+                                                </td>
+                                                <td>
+                                                    <span style="color: #000000;">{{ product.get_perfume_type_display }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td><span style="color: #000000;">طعم</span></td>
+                                                <td><span style="color: #000000;">{{ product.get_taste_display }}</span></td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="product-form product-color">
+                                        <label>رنگ:</label>
+                                        <div class="product-variations">
+                                            <a class="color" href="#" style="background-color: #b6471185"></a>
+                                            <a class="color" href="#" style="background-color: #35239c78"></a>
+                                            <a class="color" href="#" style="background-color: #57836d75"></a>
+                                            <a class="color" href="#" style="background-color: #fece337a"></a>
+                                        </div>
+                                    </div>
+                                    <div class="product-form product-size">
+                                        <label>سایز:</label>
+                                        <div class="product-form-group">
+                                            <div class="product-variations">
+                                                <a class="size" href="#">XL</a>
+                                                <a class="size" href="#">L</a>
+                                                <a class="size" href="#">M</a>
+                                                <a class="size" href="#">S</a>
+                                            </div>
+                                            <a href="#" class="product-variation-clean">پاک کردن همه</a>
+                                        </div>
+                                    </div>
+                                    <div class="product-variation-price">
+                                        <span>13,500,000 تومان </span>
+                                    </div>
+                                    {% if product.inventory %}
+                                        <hr class="product-divider">
+                                        <div class="product-form product-qty mb-3">
+                                            <div class="product-form-group">
+                                                    <div class="input-group">
+                                                        <button class="quantity-minus d-icon-minus"></button>
+                                                        <input class="quantity form-control b-r-0" type="number" min="1"
+                                                               max="{{ product.inventory }}">
+                                                        <button class="quantity-plus d-icon-plus"></button>
+                                                    </div>
+                                                    <button class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
+                                                        اضافه به خرید<i class="fa-light fa-basket-shopping-simple"></i>
+                                                    </button>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    <hr class="product-divider mb-3">
+                                    <div class="product-footer">
+                                        <p>اشتراک گذاری:&nbsp;</p>
+                                        <div class="social-links pl-4">
+                                            <a href="#" >واتساپ</a>
+                                            &nbsp;|&nbsp;
+                                            <a href="#" >تلگرام</a>
+                                        </div>
+                                        <span class="divider"></span>
+                                        <div class="product-action">
+                                            <a href="#" class="btn-product btn-wishlist ml-2">
+                                                <i class="fa-light fa-heart"></i> علاقه ها
+                                            </a>
+                                            <a href="#" class="btn-product btn-compare">
+                                                <i class="fa-light fa-scale-balanced"></i> مقایسه ها
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="service-wrapper">
+                            <div class="owl-carousel owl-theme row cols-xxl-4 cols-xl-3 cols-lg-2 cols-md-3 cols-sm-2 cols-1"
+                                 data-owl-options="{
+                                     'rtl':true,
+                                                'nav': false,
+                                                'auto': false,
+                                                'dots': false,
+                                                'loop': true,
+                                                'autoplay': true,
+                                                'responsive': {
+                                                    '0': {
+                                                        'items': 1,
+                                                        'autoplay': true
+                                                    },
+                                                    '576': {
+                                                        'items': 2,
+                                                        'autoplay': true
+                                                    },
+                                                    '768': {
+                                                        'items': 3
+                                                    },
+                                                    '992': {
+                                                        'items': 2
+                                                    },
+                                                    '1200': {
+                                                        'items': 3
+                                                    },
+                                                    '1600': {
+                                                        'items': 3
+                                                    }
+                                                }
+                                            }">
+                                <div class="icon-box icon-box-side icon-box1 icon-box-main">
+                                    <i class="icon-box-icon fa-light fa-truck-fast"></i>
+                                    <div class="icon-box-content">
+                                        <h4 class="icon-box-title lh-1">
+                                            حمل و نقل سریع و مرجوعی
+                                        </h4>
+                                        <p class="lh-1"> سراسر کشور</p>
+                                    </div>
+                                </div>
+                                <div class="icon-box icon-box-side icon-box2 icon-box-main">
+                                    <i class="icon-box-icon fa-light fa-timer"></i>
+                                    <div class="icon-box-content">
+                                        <h4 class="icon-box-title lh-1">
+                                            پشتیبانی
+                                        </h4>
+                                        <p class="lh-1">شبانه روزی </p>
+                                    </div>
+                                </div>
+                                <div class="icon-box icon-box-side icon-box3 icon-box-main">
+                                    <i class="icon-box-icon fa-light fa-badge-check"></i>
+                                    <div class="icon-box-content">
+                                        <h4 class="icon-box-title lh-1">
+                                            پرداخت 100% مطمئن
+                                        </h4>
+                                        <p class="lh-1"> در امنیت کامل</p>
+                                    </div>
+                                </div>
+                                <div class="icon-box icon-box-side icon-box4 icon-box-main">
+                                    <i class="icon-box-icon fa-light fa-tags"></i>
+                                    <div class="icon-box-content">
+                                        <h4 class="icon-box-title lh-1">
+                                            گارانتی مرجوعی
+                                        </h4>
+                                        <p class="lh-1">تضمین 3 روزه مرجوعی</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab tab-nav-simple product-tabs">
+                            <ul class="nav nav-tabs justify-content-center" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#product-tab-description">توضیحات</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#product-tab-reviews">نظر (1)</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active in" id="product-tab-description">
+                                    <div class="row mt-6">
+                                        <div class="col-12">
+                                            {{ product.description | safe }}
+                                        </div>
+                                        {% if product.video %}
+                                            <div class="col-12 mt-4">
+                                                <h5 class="description-title font-weight-semi-bold ls-m mb-5">
+                                                    ویدئو توضیحات
+                                                </h5>
+                                                <video
+                                                        controls
+                                                        preload="metadata"
+                                                        poster="{{ product.images.first.image.url }}"
+                                                        width="100%"
+                                                        height="auto"
+                                                        style="max-width: 559px; max-height: 370px;"
+                                                >
+                                                    <source src="{{ product.video.url }}" type="video/mp4">
+                                                    مرورگر شما از تگ ویدئو پشتیبانی نمی‌کند.
+                                                </video>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="tab-pane " id="product-tab-reviews">
+                                    <div class="row">
+                                        <div class="col-12 mb-6">
+                                            <div class="avg-rating-container">
+                                                <mark>5.0</mark>
+                                                <div class="avg-rating">
+                                                    <span class="avg-rating-title">میانگین امتیاز</span>
+                                                    <div class="ratings-container mb-0">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width:100%"></span>
+                                                            <span class="tooltiptext tooltip-top"></span>
+                                                        </div>
+                                                        <span class="rating-reviews">(از 27 نظر)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="ratings-list mb-2">
+                                                <div class="ratings-item">
+                                                    <div class="ratings-container mb-0">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width:100%"></span>
+                                                            <span class="tooltiptext tooltip-top"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rating-percent">
+                                                        <span style="width:100%;"></span>
+                                                    </div>
+                                                    <div class="progress-value">100%</div>
+                                                </div>
+                                                <div class="ratings-item">
+                                                    <div class="ratings-container mb-0">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width:80%"></span>
+                                                            <span class="tooltiptext tooltip-top">4.000 </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rating-percent">
+                                                        <span style="width:0%;"></span>
+                                                    </div>
+                                                    <div class="progress-value">0%</div>
+                                                </div>
+                                                <div class="ratings-item">
+                                                    <div class="ratings-container mb-0">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width:60%"></span>
+                                                            <span class="tooltiptext tooltip-top">4.000 </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rating-percent">
+                                                        <span style="width:0%;"></span>
+                                                    </div>
+                                                    <div class="progress-value">0%</div>
+                                                </div>
+                                                <div class="ratings-item">
+                                                    <div class="ratings-container mb-0">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width:40%"></span>
+                                                            <span class="tooltiptext tooltip-top">4.000 </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rating-percent">
+                                                        <span style="width:0%;"></span>
+                                                    </div>
+                                                    <div class="progress-value">0%</div>
+                                                </div>
+                                                <div class="ratings-item">
+                                                    <div class="ratings-container mb-0">
+                                                        <div class="ratings-full">
+                                                            <span class="ratings" style="width:20%"></span>
+                                                            <span class="tooltiptext tooltip-top">4.000 </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="rating-percent">
+                                                        <span style="width:0%;"></span>
+                                                    </div>
+                                                    <div class="progress-value">0%</div>
+                                                </div>
+                                            </div>
+                                            <textarea id="review-message" cols="15" rows="6" class="form-control mb-4"
+                                                      placeholder="دیدگاه شما *"></textarea>
+                                            <a class="btn btn-dark btn-rounded submit-review-toggle" href="#">
+                                                ارسال
+                                                نظر
+                                            </a>
+                                        </div>
+                                        <div class="col-12 comments pt-2 pb-10 border-no">
+                                            <ul class="comments-list">
+                                                <li>
+                                                    <div class="comment">
+                                                        <figure class="comment-media">
+                                                            <a href="#">
+                                                                <picture>
+                                                                    <source srcset="{% static 'images/blog/comments/2.webp' %}"
+                                                                            type="image/webp">
+                                                                    <img loading="lazy" decoding="async"
+                                                                         src="{% static 'images/blog/comments/2.jpg' %}" alt="avatar">
+                                                                </picture>
+                                                            </a>
+                                                        </figure>
+                                                        <div class="comment-body">
+                                                            <div class="comment-rating ratings-container">
+                                                                <div class="ratings-full">
+                                                                    <span class="ratings" style="width:100%"></span>
+                                                                    <span class="tooltiptext tooltip-top"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="comment-user">
+                                                                    <span class="comment-date">
+                                                                        نویسنده :   <span
+                                                                            class="font-weight-semi-bold text-dark">
+                                                                            سارا
+                                                                        </span> در
+                                                                        <span class="font-weight-semi-bold text-dark">
+                                                                            2 آبان 1402
+                                                                        </span>
+                                                                    </span>
+                                                            </div>
+                                                            <div class="comment-content mb-5">
+                                                                <p>
+                                                                    ادوپرفیوم میس دیور عطر کلاسیکی است که هرگز قدیمی
+                                                                    نمی‌شود و رایحه‌های منحصربه‌فردی دارد. میس دیور عطر
+                                                                    خنک،‌گلی و کاملا زنانه‌ای است که ترکیبی از رز، زنبق
+                                                                    دره‌ای، زنبق پودری و پئونی را در اختیارتان قرار
+                                                                    می‌دهد. مشک، وانیل و چوب صندل نیز، لایه‌های نهایی
+                                                                    این عطر را تشکیل می‌دهند.
+                                                                </p>
+                                                            </div>
+                                                            <div class="feeling mt-5">
+                                                                <button class="btn btn-link btn-icon-left btn-slide-up btn-infinite like ml-2">
+                                                                    <i class="fa fa-thumbs-up"></i>
+                                                                    لایک (<span class="count">0</span>)
+                                                                </button>
+                                                                <button class="btn btn-link btn-icon-left btn-slide-down btn-infinite unlike">
+                                                                    <i class="fa fa-thumbs-down"></i>
+                                                                    آنلایک (<span class="count">0</span>)
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                            {% if posts.has_other_pages %}
+                                                <ul class="pagination rtl">
+
+                                                    {# Previous button #}
+                                                    {% if posts.has_previous %}
+                                                        <li class="page-item">
+                                                            <a class="page-link page-link-prev" href="?{% query_transform page=posts.previous_page_number %}" aria-label="Previous">
+                                                                <i class="fa-light fa-angles-right"></i>قبلی
+                                                            </a>
+                                                        </li>
+                                                    {% else %}
+                                                        <li class="page-item disabled">
+                                                            <a class="page-link page-link-prev" href="#" tabindex="-1" aria-disabled="true" aria-label="Previous">
+                                                                <i class="fa-light fa-angles-right"></i>قبلی
+                                                            </a>
+                                                        </li>
+                                                    {% endif %}
+
+                                                    {# First page #}
+                                                    {% if posts.number > 2 %}
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="?{% query_transform page=1 %}">1</a>
+                                                        </li>
+                                                        {% if posts.number > 3 %}
+                                                            <li class="page-item disabled"><a class="page-link">...</a></li>
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                    {# Pages around current page #}
+                                                    {% for i in posts.paginator.page_range %}
+                                                        {% if i >= posts.number|add:'-1' and i <= posts.number|add:'1' %}
+                                                            {% if i == posts.number %}
+                                                                <li class="page-item active" aria-current="page">
+                                                                    <a class="page-link" href="#">{{ i }}</a>
+                                                                </li>
+                                                            {% else %}
+                                                                <li class="page-item">
+                                                                    <a class="page-link" href="?{% query_transform page=i %}">{{ i }}</a>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+
+                                                    {# Last page #}
+                                                    {% if posts.number < posts.paginator.num_pages|add:'-1' %}
+                                                        {% if posts.number < posts.paginator.num_pages|add:'-2' %}
+                                                            <li class="page-item disabled"><a class="page-link">...</a></li>
+                                                        {% endif %}
+                                                        <li class="page-item">
+                                                            <a class="page-link" href="?{% query_transform page=posts.paginator.num_pages %}">{{ posts.paginator.num_pages }}</a>
+                                                        </li>
+                                                    {% endif %}
+
+                                                    {# Next button #}
+                                                    {% if posts.has_next %}
+                                                        <li class="page-item">
+                                                            <a class="page-link page-link-next" href="?{% query_transform page=posts.next_page_number %}" aria-label="Next">
+                                                                بعدی<i class="fa-light fa-angles-left"></i>
+                                                            </a>
+                                                        </li>
+                                                    {% else %}
+                                                        <li class="page-item disabled">
+                                                            <a class="page-link page-link-next" href="#" tabindex="-1" aria-disabled="true" aria-label="Next">
+                                                                بعدی<i class="fa-light fa-angles-left"></i>
+                                                            </a>
+                                                        </li>
+                                                    {% endif %}
+                                                </ul>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <!-- End Comment  -->
+                                    <div class="review-form-section">
+                                        <div class="review-overlay"></div>
+                                        <div class="review-form-wrapper">
+                                            <div class="title-wrapper text-right">
+                                                <h3 class="title title-simple text-right text-normal">
+                                                    اضافه به بررسی ها
+                                                </h3>
+                                                <p>
+                                                    فیلد های ستاره دار الزامی هستند .*
+                                                </p>
+                                            </div>
+                                            <div class="rating-form">
+                                                <label for="rating" class="text-dark">امتیاز شما* </label>
+                                                <span class="rating-stars selected">
+                                                        <a class="star-1" href="#">1</a>
+                                                        <a class="star-2" href="#">2</a>
+                                                        <a class="star-3" href="#">3</a>
+                                                        <a class="star-4 active" href="#">4</a>
+                                                        <a class="star-5" href="#">5</a>
+                                                    </span>
+                                                <select name="rating" id="rating" required
+                                                        style="display: none;">
+                                                    <option value="">رتبه…</option>
+                                                    <option value="5">عالی</option>
+                                                    <option value="4">خوب</option>
+                                                    <option value="3">متوسط</option>
+                                                    <option value="2">بد نیست</option>
+                                                    <option value="1">خیلی ضعیف</option>
+                                                </select>
+                                            </div>
+                                            <form action="#">
+                                                    <textarea id="reply-message" cols="30" rows="6"
+                                                              class="form-control mb-4" placeholder="پیام*"
+                                                              required></textarea>
+                                                <div class="review-medias">
+                                                    <div class="file-input form-control image-input"
+                                                         style="background-image: url(images/product/placeholder.png);">
+                                                        <div class="file-input-wrapper">
+                                                        </div>
+                                                        <label class="btn-action btn-upload" title="Upload Media">
+                                                            <input type="file" accept=".png, .jpg, .jpeg"
+                                                                   name="themeparsi_comment_medias_image_1">
+                                                        </label>
+                                                        <label class="btn-action btn-remove" title="Remove Media">
+                                                        </label>
+                                                    </div>
+                                                    <div class="file-input form-control image-input"
+                                                         style="background-image: url(images/product/placeholder.png);">
+                                                        <div class="file-input-wrapper">
+                                                        </div>
+                                                        <label class=" btn-action btn-upload" title="Upload Media">
+                                                            <input type="file" accept=".png, .jpg, .jpeg"
+                                                                   name="themeparsi_comment_medias_image_2">
+                                                        </label>
+                                                        <label class="btn-action btn-remove" title="Remove Media">
+                                                        </label>
+                                                    </div>
+                                                    <div class="file-input form-control video-input"
+                                                         style="background-image: url(images/product/placeholder.png);">
+                                                        <video class="file-input-wrapper" controls=""></video>
+                                                        <label class="btn-action btn-upload" title="Upload Media">
+                                                            <input type="file" accept=".avi, .mp4"
+                                                                   name="themeparsi_comment_medias_video_1">
+                                                        </label>
+                                                        <label class="btn-action btn-remove" title="Remove Media">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <p> آپلود تصاویر و ویدیوها. حداکثر تعداد: 3، حجم: 2MB</p>
+                                                <button type="submit" class="btn btn-primary btn-rounded">
+                                                    ارسال<i class="fa-light fa-angles-right"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <!-- End Reply -->
+                                </div>
+                            </div>
+                        </div>
+                        <section class="pt-2 mt-10">
+                            <h2 class="title justify-content-center ls-normal">محصولات مرتبط</h2>
+                            <div class="owl-carousel owl-theme owl-nav-full row cols-2 cols-md-3 cols-lg-4"
+                                 data-owl-options="{
+                                     'rtl':true,
+                                    'items': 5,
+                                    'nav': false,
+                                    'loop': false,
+                                    'dots': true,
+                                    'margin': 20,
+                                    'responsive': {
+                                        '0': {
+                                            'items': 1
+                                        },
+                                        '576': {
+                                            'items': 2
+                                        },
+                                        '768': {
+                                            'items': 2
+                                        },
+                                        '992': {
+                                            'items': 2,
+                                            'nav': true
+                                        },
+                                        '1200': {
+                                            'items': 3,
+                                            'dots': false,
+                                            'nav': true
+                                        }
+                                    }
+                                }">
+                                {% for product in suggestion %}
+                                    <div class="product product-border text-center">
+                                        <figure class="product-media">
+                                            <a href="{{ product.get_absolute_url }}">
+                                                    <picture>
+                                                        <source srcset="{{ product.images.first.image.url }}" type="image/webp">
+                                                        <img loading="lazy" decoding="async" src="{{ product.images.first.image.url }}"
+                                                             alt="product"
+                                                             width="260" height="293">
+                                                    </picture>
+                                            </a>
+                                            <div class="product-action-vertical">
+                                                <a href="#" class="btn-product-icon btn-cart" data-toggle="modal"
+                                                   data-target="#addCartModal" title="اضافه به خرید">
+                                                    <i class="fa-light fa-basket-shopping-simple"></i>
+                                                </a>
+                                                <a href="#" class="btn-product-icon btn-wishlist"
+                                                   title="اضافه به علاقه مندی"><i class="fa-light fa-heart"></i></a>
+                                                <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
+                                                    <i class="fa-light fa-magnifying-glass"></i>
+                                                </a>
+                                                <a href="#" class="btn-product-icon btn-compare" title="Compare">
+                                                    <i class="fa-light fa-scale-balanced"></i>
+                                                </a>
+                                            </div>
+                                        </figure>
+                                        <div class="product-details rtl">
+                                            <h3 class="product-name">
+                                                <a href="{{ product.get_absolute_url }}">{{ product }}</a>
+                                            </h3>
+                                            <div class="product-price">
+                                                <span class="price">  {{ product.get_price | commafy }} تومان  </span>
+                                            </div>
+                                            <div class="ratings-container">
+                                                <div class="ratings-full">
+                                                    <span class="ratings" style="width:80%"></span>
+                                                    <span class="tooltiptext tooltip-top"></span>
+                                                </div>
+                                                <a href="{{ product.get_absolute_url }}" class="rating-reviews">( از 20 نظر )</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </section>
+                    </div>
+                    <aside class="col-xl-3 col-lg-4 sidebar right-sidebar sidebar-fixed sticky-sidebar-wrapper">
+                        <div class="sidebar-overlay"></div>
+                        <a class="sidebar-close" href="#"><i class="fa-light fa-xmark"></i></a>
+                        <a href="#" class="sidebar-toggle"><i class="fa-light fa-chevron-right"></i></a>
+                        <div class="sidebar-content">
+                            <div class="sticky-sidebar">
+                                <div class="widget widget-collapsible widget-vendor-info">
+                                    <h3 class="widget-title"> اطلاعات فنی </h3>
+                                    <ul class="widget-body filter-items">
+                                        {% for feature in product.features.all %}
+                                            <li class="store-name">
+                                                <span>{{ feature.key }}  :</span><span class="details"> {{ feature.value }}</span>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="widget widget-products">
+                                    <h4 class="widget-title lh-1 border-no ">
+                                        محصولات محبوب
+                                    </h4>
+                                    <div class="widget-body ">
+                                        <div class="owl-carousel owl-nav-top" data-owl-options="{
+                                     'rtl':true,
+                                                'items': 1,
+                                                'loop': true,
+                                                'nav': true,
+                                                'dots': false,
+                                                'margin': 20
+                                            }">
+                                            <div class="products-col rtl">
+                                                {% for product in most_viewed_col1 %}
+                                                    <div class="product product-list-sm text-center">
+                                                        <figure class="product-media">
+                                                            <a href="{{ product.get_absolute_url }}">
+                                                                <picture>
+                                                                    <source srcset="{{ product.images.first.image.url }}"
+                                                                            type="image/webp">
+                                                                    <img loading="lazy" decoding="async"
+                                                                         src="{{ product.images.first.image.url }}"
+                                                                         alt="product" width="165" height="184">
+                                                                </picture>
+                                                            </a>
+                                                        </figure>
+                                                        <div class="product-details rtl">
+                                                            <h3 class="product-name">
+                                                                <a href="{{ product.get_absolute_url }}">{{ product }}</a>
+                                                            </h3>
+                                                            <div class="product-price">
+                                                                <span class="price"> {{ product.get_price | commafy }} تومان </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div><!-- End Products Col -->
+                                            <div class="products-col rtl">
+                                                {% for product in most_viewed_col2 %}
+                                                    <div class="product product-list-sm text-center">
+                                                        <figure class="product-media">
+                                                            <a href="{{ product.get_absolute_url }}">
+                                                                <picture>
+                                                                    <source srcset="{{ product.images.first.image.url }}"
+                                                                            type="image/webp">
+                                                                    <img loading="lazy" decoding="async"
+                                                                         src="{{ product.images.first.image.url }}"
+                                                                         alt="product" width="165" height="184">
+                                                                </picture>
+                                                            </a>
+                                                        </figure>
+                                                        <div class="product-details rtl">
+                                                            <h3 class="product-name">
+                                                                <a href="{{ product.get_absolute_url }}">{{ product }}</a>
+                                                            </h3>
+                                                            <div class="product-price">
+                                                                <span class="price"> {{ product.get_price | commafy }} تومان </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div><!-- End Products Col -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Widget Products -->
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

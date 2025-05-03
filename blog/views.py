@@ -60,14 +60,14 @@ def post_detail_view(request, slug):
         all_posts = Post.objects.all()
 
         most_viewed = all_posts.exclude(id=post.id).order_by('-views')
-        suggestion = all_posts.filter(category=post.category).order_by('-created_at')
+        suggestion = all_posts.filter(category=post.category).exclude(id=post.id).order_by('-created_at')[:6]
         other_post = choice(all_posts.exclude(id=post.id) or most_viewed[:6])
         all_posts = list(all_posts.exclude(id=post.id))
         next_post = all_posts[list(all_posts).index(other_post) - 1]
 
         context = {
             'post': Post.objects.get(slug=slug),
-            'suggestion': suggestion.exclude(id=post.id)[:6],
+            'suggestion': suggestion,
             'other_post': other_post,
             'next_post': next_post,
             'most_viewed': most_viewed[:3],
