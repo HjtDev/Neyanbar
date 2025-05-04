@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 {% load tags %}
 {% load static %}
-{% load social_share %}
 
 {% block title %}
     {{ product }}
 {% endblock %}
 
 {% block content %}
+    <input type="hidden" name="product-id" value="{{ product.id }}">
     <main class="main single-product rtl text-right">
         <div class="page-content">
             <div class="container">
@@ -139,8 +139,20 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><span style="color: #000000;">طعم</span></td>
-                                                <td><span style="color: #000000;">{{ product.get_taste_display }}</span></td>
+                                                <td>
+                                                    <span style="color: #000000;">طعم</span>
+                                                </td>
+                                                <td>
+                                                    <span style="color: #000000;">{{ product.get_taste_display }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span style="color: #000000;">ماندگاری</span>
+                                                </td>
+                                                <td>
+                                                    <span style="color: #000000;">{{ product.get_durability_display }}</span>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -169,22 +181,26 @@
                                     <div class="product-variation-price">
                                         <span>13,500,000 تومان </span>
                                     </div>
-                                    {% if product.inventory %}
-                                        <hr class="product-divider">
-                                        <div class="product-form product-qty mb-3">
-                                            <div class="product-form-group">
-                                                    <div class="input-group">
-                                                        <button class="quantity-minus d-icon-minus"></button>
-                                                        <input class="quantity form-control b-r-0" type="number" min="1"
-                                                               max="{{ product.inventory }}">
-                                                        <button class="quantity-plus d-icon-plus"></button>
-                                                    </div>
-                                                    <button class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
-                                                        اضافه به خرید<i class="fa-light fa-basket-shopping-simple"></i>
-                                                    </button>
-                                            </div>
+                                    <hr class="product-divider">
+                                    <div class="product-form product-qty mb-3">
+                                        <div class="product-form-group">
+                                            {% if product.inventory %}
+                                                <div class="input-group">
+                                                    <button class="quantity-minus d-icon-minus"></button>
+                                                    <input class="quantity form-control b-r-0" type="number" min="1"
+                                                           max="{{ product.inventory }}">
+                                                    <button class="quantity-plus d-icon-plus"></button>
+                                                </div>
+                                                <button class="btn-product btn-cart text-normal ls-normal font-weight-semi-bold">
+                                                   اضافه به سبد خرید<i class="fa-light fa-basket-shopping-simple"></i>
+                                                </button>
+                                            {% else %}
+                                                <button class="btn btn-primary w-100 text-normal ls-normal font-weight-semi-bold">
+                                                    در صورت موجود اطلاع بده<i class="fa-light fa-message-sms"></i>
+                                                </button>
+                                            {% endif %}
                                         </div>
-                                    {% endif %}
+                                    </div>
                                     <hr class="product-divider mb-3">
                                     <div class="product-footer">
                                         <p>اشتراک گذاری:&nbsp;</p>
@@ -195,8 +211,8 @@
                                         </div>
                                         <span class="divider"></span>
                                         <div class="product-action">
-                                            <a href="#" class="btn-product btn-wishlist ml-2">
-                                                <i class="fa-light fa-heart"></i> علاقه ها
+                                            <a href="#" class="ml-2 btn-add-wishlist">
+                                                <i class="fa-light fa-heart-full like-icon" {% if request.user in product.liked_by.all %}style="color: red;"{% endif %}></i> علاقه ها
                                             </a>
                                             <a href="#" class="btn-product btn-compare">
                                                 <i class="fa-light fa-scale-balanced"></i> مقایسه ها
@@ -523,83 +539,6 @@
                                             {% endif %}
                                         </div>
                                     </div>
-                                    <!-- End Comment  -->
-                                    <div class="review-form-section">
-                                        <div class="review-overlay"></div>
-                                        <div class="review-form-wrapper">
-                                            <div class="title-wrapper text-right">
-                                                <h3 class="title title-simple text-right text-normal">
-                                                    اضافه به بررسی ها
-                                                </h3>
-                                                <p>
-                                                    فیلد های ستاره دار الزامی هستند .*
-                                                </p>
-                                            </div>
-                                            <div class="rating-form">
-                                                <label for="rating" class="text-dark">امتیاز شما* </label>
-                                                <span class="rating-stars selected">
-                                                        <a class="star-1" href="#">1</a>
-                                                        <a class="star-2" href="#">2</a>
-                                                        <a class="star-3" href="#">3</a>
-                                                        <a class="star-4 active" href="#">4</a>
-                                                        <a class="star-5" href="#">5</a>
-                                                    </span>
-                                                <select name="rating" id="rating" required
-                                                        style="display: none;">
-                                                    <option value="">رتبه…</option>
-                                                    <option value="5">عالی</option>
-                                                    <option value="4">خوب</option>
-                                                    <option value="3">متوسط</option>
-                                                    <option value="2">بد نیست</option>
-                                                    <option value="1">خیلی ضعیف</option>
-                                                </select>
-                                            </div>
-                                            <form action="#">
-                                                    <textarea id="reply-message" cols="30" rows="6"
-                                                              class="form-control mb-4" placeholder="پیام*"
-                                                              required></textarea>
-                                                <div class="review-medias">
-                                                    <div class="file-input form-control image-input"
-                                                         style="background-image: url(images/product/placeholder.png);">
-                                                        <div class="file-input-wrapper">
-                                                        </div>
-                                                        <label class="btn-action btn-upload" title="Upload Media">
-                                                            <input type="file" accept=".png, .jpg, .jpeg"
-                                                                   name="themeparsi_comment_medias_image_1">
-                                                        </label>
-                                                        <label class="btn-action btn-remove" title="Remove Media">
-                                                        </label>
-                                                    </div>
-                                                    <div class="file-input form-control image-input"
-                                                         style="background-image: url(images/product/placeholder.png);">
-                                                        <div class="file-input-wrapper">
-                                                        </div>
-                                                        <label class=" btn-action btn-upload" title="Upload Media">
-                                                            <input type="file" accept=".png, .jpg, .jpeg"
-                                                                   name="themeparsi_comment_medias_image_2">
-                                                        </label>
-                                                        <label class="btn-action btn-remove" title="Remove Media">
-                                                        </label>
-                                                    </div>
-                                                    <div class="file-input form-control video-input"
-                                                         style="background-image: url(images/product/placeholder.png);">
-                                                        <video class="file-input-wrapper" controls=""></video>
-                                                        <label class="btn-action btn-upload" title="Upload Media">
-                                                            <input type="file" accept=".avi, .mp4"
-                                                                   name="themeparsi_comment_medias_video_1">
-                                                        </label>
-                                                        <label class="btn-action btn-remove" title="Remove Media">
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                                <p> آپلود تصاویر و ویدیوها. حداکثر تعداد: 3، حجم: 2MB</p>
-                                                <button type="submit" class="btn btn-primary btn-rounded">
-                                                    ارسال<i class="fa-light fa-angles-right"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <!-- End Reply -->
                                 </div>
                             </div>
                         </div>
@@ -770,4 +709,8 @@
             </div>
         </div>
     </main>
+{% endblock %}
+
+{% block script %}
+    <script defer src="{% static 'js/product.js' %}"></script>
 {% endblock %}

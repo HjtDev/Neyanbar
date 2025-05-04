@@ -1,6 +1,46 @@
+from idlelib.rpc import request_queue
+from time import sleep
+
+from django.http import QueryDict, JsonResponse
 from django.shortcuts import render, redirect
 from django.db.models import Q
+from django.views.decorators.http import require_http_methods
 from shop.models import Product
+
+
+@require_http_methods(['PATCH'])
+def view_handler(request):
+    product_id = QueryDict(request.body).get('id')
+    try:
+        if product_id:
+            product = Product.objects.get(id=product_id)
+            product.views += 1
+            product.save()
+            return JsonResponse({'message': 'success'})
+        else:
+            return JsonResponse({'message': 'Post id required'}, status=400)
+    except Product.DoesNotExist:
+        return JsonResponse({'message': 'Post not found'}, status=404)
+
+
+@require_http_methods(['PATCH'])
+def like_handler(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({}, status=401)
+    product_id = QueryDict(request.body).get('id')
+    try:
+        if product_id:
+            product = Product.objects.get(id=product_id)
+            if request.user in product.liked_by.all():
+                product.liked_by.remove(request.user)
+                return JsonResponse({'like': False})
+            else:
+                product.liked_by.add(request.user)
+                return JsonResponse({'like': True})
+        else:
+            return JsonResponse({'message': 'Post id required'}, status=400)
+    except Product.DoesNotExist:
+        return JsonResponse({'message': 'Post not found'}, status=404)
 
 
 def product_view(request, slug):

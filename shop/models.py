@@ -45,6 +45,12 @@ class Product(models.Model):
         COLD = 'COLD', 'سرد'
     nature = models.CharField(choices=NatureChoices.choices, max_length=4, verbose_name='طبع')
 
+    class DurabilityChoices(models.TextChoices):
+        LOW = 'LOW', 'کم'
+        MEDIUM = 'MEDIUM', 'متوسط'
+        HIGH = 'HIGH', 'زیاد'
+    durability = models.CharField(choices=DurabilityChoices.choices, max_length=6, verbose_name='ماندگاری')
+
     class GenderChoices(models.TextChoices):
         MALE = 'MALE', 'مردانه'
         FEMALE = 'FEMALE', 'زنانه'
@@ -52,14 +58,14 @@ class Product(models.Model):
     gender = models.CharField(choices=GenderChoices.choices, max_length=6, verbose_name='جنسیت')
 
     class VolumeChoices(models.TextChoices):
-        TEN = '10m', '۱۰ میل'
-        TWENTY = '20m', '۲۰ میل'
-        THIRTY = '30m', '۳۰ میل'
-        FIFTY = '50m', '۵۰ میل'
-        SIXTY = '60m', '۶۰ میل'
-        HUNDRED = '100m', '۱۰۰ میل'
-        HUNDRED_TWENTY = '120m', '۱۲۰ میل'
-        HUNDRED_FIFTY = '150m', '۱۵۰ میل'
+        TEN = '10', '۱۰ میل'
+        TWENTY = '20', '۲۰ میل'
+        THIRTY = '30', '۳۰ میل'
+        FIFTY = '50', '۵۰ میل'
+        SIXTY = '60', '۶۰ میل'
+        HUNDRED = '100', '۱۰۰ میل'
+        HUNDRED_TWENTY = '120', '۱۲۰ میل'
+        HUNDRED_FIFTY = '150', '۱۵۰ میل'
     volume = models.CharField(choices=VolumeChoices.choices, max_length=4, verbose_name='حجم')
 
     class TypeChoices(models.TextChoices):
@@ -72,7 +78,7 @@ class Product(models.Model):
 
     pid = models.CharField(max_length=6, unique=True, verbose_name='کد محصول')
 
-    price = models.PositiveIntegerField(default=0, verbose_name='قیمت محصول', help_text='به تومان')
+    price = models.PositiveIntegerField(default=0, verbose_name='قیمت محصول', help_text='به ازای هر میل / به تومان')
     discount = models.IntegerField(default=-1, validators=[MinValueValidator(-1)], verbose_name='قیمت پس از تخفیف', help_text='-۱ برای لغو تخفیف')
 
     inventory = models.PositiveIntegerField(default=0, verbose_name='موجودی انبار')
@@ -97,7 +103,7 @@ class Product(models.Model):
         return self.name
 
     def get_price(self):
-        return self.price if self.discount == -1 else self.discount
+        return self.price * int(self.volume.strip('m')) if self.discount == -1 else self.discount * int(self.volume.strip('m'))
 
     get_price.short_description = 'قیمت'
 

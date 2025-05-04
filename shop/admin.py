@@ -44,8 +44,8 @@ class ProductAdmin(admin.ModelAdmin):
         ('دسته بندی ها', {
             'fields': (
                 'smell', 'season', 'taste',
-                'nature', 'gender', 'volume',
-                'perfume_type'
+                'nature', 'gender', 'durability',
+                'volume', 'perfume_type'
             ),
         }),
         ('گزارشات', {
