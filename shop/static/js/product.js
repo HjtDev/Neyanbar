@@ -43,6 +43,18 @@ $(document).ready(function() {
                 } else {
                     $('.like-icon').css('color', '');
                 }
+                themeparsi.Minipopup.init();
+                themeparsi.Minipopup.open({
+                    message: `محصول با موفقیت ${response.like ? 'به علاقه مندی ها اضافه شد':'از علاقه مندی ها حذف شد'}!`,
+                    productClass: 'product-wishlist',
+                    name: $('h1.product-name').text(),
+                    nameLink: window.location.href,
+                    imageSrc: $('.product-thumb picture source').attr('srcset'),
+                    imageLink: window.location.href,
+                    // price: "۲۵۰,۰۰۰ تومان",
+                    // count: 1,
+                    // actionTemplate: '<div class="action-group d-flex"><a href="/account/dashboard/#likes" class="btn btn-sm btn-outline btn-primary btn-rounded">علاقه‌مندی‌ها</a></div>'
+                });
             },
             error: function(xhr, status, error) {
                 console.log(error);
