@@ -138,7 +138,7 @@ def compare_list_handler(request):
     data = QueryDict(request.body)
     product_id = data.get('id')
     action = data.get('action')
-    
+
     try:
         if product_id and action:
             product = Product.objects.get(id=product_id)

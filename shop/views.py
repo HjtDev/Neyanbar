@@ -1,11 +1,9 @@
-from idlelib.rpc import request_queue
-from time import sleep
-
 from django.http import QueryDict, JsonResponse
 from django.shortcuts import render, redirect
-from django.db.models import Q
-from django.views.decorators.http import require_http_methods
-from shop.models import Product
+from django.db.models import Q, Avg
+from django.views.decorators.http import require_http_methods, require_POST
+from shop.models import Product, Comment
+from main.templatetags.tags import to_jalali_verbose
 
 
 @require_http_methods(['PATCH'])
@@ -45,7 +43,7 @@ def like_handler(request):
 
 def product_view(request, slug):
     try:
-        product = Product.objects.get(slug=slug)
+        product = Product.objects.prefetch_related('comments').get(slug=slug)
     except Product.DoesNotExist:
         return redirect('main:index')
 
@@ -63,10 +61,57 @@ def product_view(request, slug):
     most_viewed_col1 = all_products.order_by('-views')[:3]
     most_viewed_col2 = all_products.order_by('-views')[3:7]
 
+    average_rating = int(product.comments.filter(is_verified=True).aggregate(Avg('score'))['score__avg'])
+
     context = {
         'product': product,
         'suggestion': suggestion,
         'most_viewed_col1': most_viewed_col1,
         'most_viewed_col2': most_viewed_col2,
+        'rating': average_rating,
+        'verified_comment_count': product.comments.filter(is_verified=True).count(),
     }
     return render(request, 'product.html', context)
+
+
+@require_POST
+def comment_handler(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'message': 'You are not logged in'}, status=403)
+
+    product_id = request.POST.get('id')
+    content = request.POST.get('content')
+
+    if not content:
+        return JsonResponse({'error': 'Content is required'}, status=400)
+
+    try:
+        product = Product.objects.get(id=product_id)
+        comment = Comment.objects.create(content=content, product=product, user=request.user)
+        return JsonResponse({'name': str(request.user), 'profile': request.user.profile.url,
+                             'created_at': to_jalali_verbose(comment.created_at), 'id': comment.id}, status=200)
+    except Product.DoesNotExist:
+        return JsonResponse({'error': 'Product not found'}, status=404)
+
+
+@require_http_methods(['PATCH'])
+def comment_like(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'message': 'You are not logged in'}, status=403)
+
+    comment_id = QueryDict(request.body).get('id')
+    try:
+        if comment_id:
+            comment = Comment.objects.get(id=comment_id)
+            if request.user in comment.liked_by.all():
+                comment.liked_by.remove(request.user)
+                return JsonResponse({'like': False}, status=200)
+            else:
+                comment.liked_by.add(request.user)
+                return JsonResponse({'like': True}, status=200)
+        else:
+            return JsonResponse({'error': 'Comment id required'}, status=400)
+
+    except Comment.DoesNotExist:
+        return JsonResponse({'error': 'Comment not found'}, status=404)
+

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, ProductSmell, Image, Features, Brand
+from .models import Product, ProductSmell, Image, Features, Brand, Comment
 
 
 class ImageInline(admin.StackedInline):
@@ -10,6 +10,11 @@ class ImageInline(admin.StackedInline):
 class FeaturesInline(admin.StackedInline):
     model = Features
     extra = 1
+
+
+class CommentInline(admin.StackedInline):
+    model = Comment
+    extra = 0
 
 
 @admin.register(Product)
@@ -28,6 +33,7 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [
         ImageInline,
         FeaturesInline,
+        CommentInline,
     ]
 
     fieldsets = (
@@ -57,6 +63,16 @@ class ProductAdmin(admin.ModelAdmin):
     )
 
     readonly_fields = ('views', 'last_view', 'created_at', 'updated_at')
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'product', 'content', 'created_at', 'is_verified')
+    list_filter = ('user', 'product', 'created_at', 'is_verified')
+    search_fields = ('product__name', 'content')
+    ordering = ('-created_at',)
+    list_editable = ('is_verified',)
+    list_per_page = 15
 
 
 # @admin.register(Category)

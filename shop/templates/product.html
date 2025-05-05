@@ -298,7 +298,7 @@
                                     <a class="nav-link active" href="#product-tab-description">توضیحات</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#product-tab-reviews">نظر (1)</a>
+                                    <a class="nav-link" href="#product-tab-reviews">نظر ({{ verified_comment_count }})</a>
                                 </li>
                             </ul>
                             <div class="tab-content">
@@ -331,15 +331,15 @@
                                     <div class="row">
                                         <div class="col-12 mb-6">
                                             <div class="avg-rating-container">
-                                                <mark>5.0</mark>
+                                                <mark>{{ rating }}</mark>
                                                 <div class="avg-rating">
                                                     <span class="avg-rating-title">میانگین امتیاز</span>
                                                     <div class="ratings-container mb-0">
                                                         <div class="ratings-full">
-                                                            <span class="ratings" style="width:100%"></span>
+                                                            <span class="ratings" style="width:{% widthratio rating 1 20 %}%"></span>
                                                             <span class="tooltiptext tooltip-top"></span>
                                                         </div>
-                                                        <span class="rating-reviews">(از 27 نظر)</span>
+                                                        <span class="rating-reviews">(از {{ product.comments.count }} نظر)</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -356,117 +356,79 @@
                                                     </div>
                                                     <div class="progress-value">100%</div>
                                                 </div>
-                                                <div class="ratings-item">
-                                                    <div class="ratings-container mb-0">
-                                                        <div class="ratings-full">
-                                                            <span class="ratings" style="width:80%"></span>
-                                                            <span class="tooltiptext tooltip-top">4.000 </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="rating-percent">
-                                                        <span style="width:0%;"></span>
-                                                    </div>
-                                                    <div class="progress-value">0%</div>
-                                                </div>
-                                                <div class="ratings-item">
-                                                    <div class="ratings-container mb-0">
-                                                        <div class="ratings-full">
-                                                            <span class="ratings" style="width:60%"></span>
-                                                            <span class="tooltiptext tooltip-top">4.000 </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="rating-percent">
-                                                        <span style="width:0%;"></span>
-                                                    </div>
-                                                    <div class="progress-value">0%</div>
-                                                </div>
-                                                <div class="ratings-item">
-                                                    <div class="ratings-container mb-0">
-                                                        <div class="ratings-full">
-                                                            <span class="ratings" style="width:40%"></span>
-                                                            <span class="tooltiptext tooltip-top">4.000 </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="rating-percent">
-                                                        <span style="width:0%;"></span>
-                                                    </div>
-                                                    <div class="progress-value">0%</div>
-                                                </div>
-                                                <div class="ratings-item">
-                                                    <div class="ratings-container mb-0">
-                                                        <div class="ratings-full">
-                                                            <span class="ratings" style="width:20%"></span>
-                                                            <span class="tooltiptext tooltip-top">4.000 </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="rating-percent">
-                                                        <span style="width:0%;"></span>
-                                                    </div>
-                                                    <div class="progress-value">0%</div>
-                                                </div>
                                             </div>
+                                            <button class="tag rate" id="rate-1" data-rate="1">خیلی بد</button>
+                                            <button class="tag rate" id="rate-2" data-rate="2">بد</button>
+                                            <button class="tag rate" id="rate-3" data-rate="3" style="color: #05595B; border-color: #05595B;">متوسط</button>
+                                            <button class="tag rate" id="rate-4" data-rate="4">خوب</button>
+                                            <button class="tag rate" id="rate-5" data-rate="5">عالی</button>
+                                            <hr>
                                             <textarea id="review-message" cols="15" rows="6" class="form-control mb-4"
                                                       placeholder="دیدگاه شما *"></textarea>
-                                            <a class="btn btn-dark btn-rounded submit-review-toggle" href="#">
-                                                ارسال
-                                                نظر
-                                            </a>
+                                            {% if request.user.is_authenticated %}
+                                                <a class="btn btn-dark btn-rounded submit-review-toggle" href="#">
+                                                    ارسال
+                                                    نظر
+                                                </a>
+                                            {% else %}
+                                                <a class="btn btn-dark btn-rounded login-toggle" href="#">
+                                                    ورود به حساب
+                                                </a>
+                                            {% endif %}
                                         </div>
                                         <div class="col-12 comments pt-2 pb-10 border-no">
                                             <ul class="comments-list">
-                                                <li>
-                                                    <div class="comment">
-                                                        <figure class="comment-media">
-                                                            <a href="#">
-                                                                <picture>
-                                                                    <source srcset="{% static 'images/blog/comments/2.webp' %}"
-                                                                            type="image/webp">
-                                                                    <img loading="lazy" decoding="async"
-                                                                         src="{% static 'images/blog/comments/2.jpg' %}" alt="avatar">
-                                                                </picture>
-                                                            </a>
-                                                        </figure>
-                                                        <div class="comment-body">
-                                                            <div class="comment-rating ratings-container">
-                                                                <div class="ratings-full">
-                                                                    <span class="ratings" style="width:100%"></span>
-                                                                    <span class="tooltiptext tooltip-top"></span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="comment-user">
+                                                {% for comment in product.comments.all %}
+                                                    {% if comment.is_verified or comment.user == request.user %}
+                                                        <li>
+                                                            <div class="comment">
+                                                                <figure class="comment-media">
+                                                                    <a href="#">
+                                                                        <picture>
+                                                                            <source srcset="{{ comment.user.profile.url }}"
+                                                                                    type="image/webp">
+                                                                            <img loading="lazy" decoding="async"
+                                                                                 src="{{ comment.user.profile.url }}" alt="avatar">
+                                                                        </picture>
+                                                                    </a>
+                                                                </figure>
+                                                                <div class="comment-body">
+                                                                    <div class="comment-rating ratings-container">
+                                                                        <div class="ratings-full">
+                                                                            <span class="ratings" style="width:{% widthratio comment.score 1 20 %}%"></span>
+                                                                            <span class="tooltiptext tooltip-top"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="comment-user">
                                                                     <span class="comment-date">
                                                                         نویسنده :   <span
                                                                             class="font-weight-semi-bold text-dark">
-                                                                            سارا
+                                                                            {{ comment.user }}
                                                                         </span> در
                                                                         <span class="font-weight-semi-bold text-dark">
-                                                                            2 آبان 1402
+                                                                            {{ comment.created_at | to_jalali_verbose }}
                                                                         </span>
+                                                                        {% if not comment.is_verified %}
+                                                                            | <small>نظر شما در حال برسی می باشد</small>
+                                                                        {% endif %}
                                                                     </span>
+                                                                    </div>
+                                                                    <div class="comment-content mb-5">
+                                                                        <p>
+                                                                            {{ comment.content }}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="feeling mt-5">
+                                                                        <button class="btn btn-link btn-icon-left btn-slide-up btn-infinite ml-2 like-comment" data-id="{{ comment.id }}">
+                                                                            <i class="fa fa-thumbs-up"></i>
+                                                                            لایک (<span class="count">{{ comment.liked_by.count }}</span>)
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            <div class="comment-content mb-5">
-                                                                <p>
-                                                                    ادوپرفیوم میس دیور عطر کلاسیکی است که هرگز قدیمی
-                                                                    نمی‌شود و رایحه‌های منحصربه‌فردی دارد. میس دیور عطر
-                                                                    خنک،‌گلی و کاملا زنانه‌ای است که ترکیبی از رز، زنبق
-                                                                    دره‌ای، زنبق پودری و پئونی را در اختیارتان قرار
-                                                                    می‌دهد. مشک، وانیل و چوب صندل نیز، لایه‌های نهایی
-                                                                    این عطر را تشکیل می‌دهند.
-                                                                </p>
-                                                            </div>
-                                                            <div class="feeling mt-5">
-                                                                <button class="btn btn-link btn-icon-left btn-slide-up btn-infinite like ml-2">
-                                                                    <i class="fa fa-thumbs-up"></i>
-                                                                    لایک (<span class="count">0</span>)
-                                                                </button>
-                                                                <button class="btn btn-link btn-icon-left btn-slide-down btn-infinite unlike">
-                                                                    <i class="fa fa-thumbs-down"></i>
-                                                                    آنلایک (<span class="count">0</span>)
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
+                                                        </li>
+                                                    {% endif %}
+                                                {% endfor %}
                                             </ul>
                                             {% if posts.has_other_pages %}
                                                 <ul class="pagination rtl">

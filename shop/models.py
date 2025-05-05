@@ -1,5 +1,5 @@
 from django.core.exceptions import ValidationError
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.urls import reverse
 from tinymce.models import HTMLField
@@ -28,7 +28,7 @@ class Product(models.Model):
 
     brand = models.ForeignKey('Brand', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='برند')
 
-    smell = models.ManyToManyField('ProductSmell', blank=True, null=True, verbose_name='گروه بویایی')
+    smell = models.ManyToManyField('ProductSmell', verbose_name='گروه بویایی')
 
     class SeasonChoices(models.TextChoices):
         WINTER = 'WINTER', 'زمستانی'
@@ -194,3 +194,24 @@ class Brand(models.Model):
     class Meta:
         verbose_name = 'برند'
         verbose_name_plural = 'برند ها'
+
+
+class Comment(models.Model):
+    objects = models.Manager()
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='shop_comments', verbose_name='کاربر')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='comments', verbose_name='محصول')
+
+    score = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)], verbose_name='امتیاز')
+    content = models.TextField(max_length=320, verbose_name='متن')
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_verified = models.BooleanField(default=False, verbose_name='نمایش در سایت')
+
+    liked_by = models.ManyToManyField(User, related_name='comment_likes', blank=True, verbose_name='لایک ها')
+
+    def __str__(self):
+        return f'{self.user} - {self.product}'
+
+    class Meta:
+        verbose_name = 'کامنت'
+        verbose_name_plural = 'کامنت ها'
