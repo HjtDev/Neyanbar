@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout
+from django.db.models.fields import return_None
 from django.shortcuts import render, redirect
 from django.http.response import JsonResponse
 from django.views.decorators.http import require_POST, require_http_methods
@@ -8,6 +9,7 @@ from .models import User
 from random import randint
 from main.utilities import send_sms
 from django.http import QueryDict
+from shop.models import Product
 
 
 @require_POST
@@ -126,3 +128,44 @@ def edit_profile_view(request):
         request.user.save()
 
     return JsonResponse({}, status=200)
+
+
+@require_http_methods(['PATCH'])
+def compare_list_handler(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({}, status=401)
+
+    data = QueryDict(request.body)
+    product_id = data.get('id')
+    action = data.get('action')
+    
+    try:
+        if product_id and action:
+            product = Product.objects.get(id=product_id)
+            compare_list = request.user.compare_list
+            if action == 'update':
+                if product in compare_list.all():
+                    compare_list.remove(product)
+                    return JsonResponse({'added': False}, status=200)
+                else:
+                    if compare_list.count() == 4:
+                        return JsonResponse({'limit': True}, status=403)
+                    compare_list.add(product)
+                    return JsonResponse({'added': True}, status=200)
+            elif action == 'remove':
+                compare_list.remove(product)
+                return JsonResponse({}, status=200)
+            else:
+                return JsonResponse({'message': 'Invalid action.'}, status=400)
+        else:
+            return JsonResponse({'message': 'Product id and Action are required'}, status=400)
+
+    except Product.DoesNotExist:
+        return JsonResponse({'message': 'Product not found'}, status=404)
+
+
+def compare_list_view(request):
+    if not request.user.is_authenticated:
+        return redirect('main:index')
+
+    return render(request, 'compare.html', {'compare_list': request.user.compare_list.all()})

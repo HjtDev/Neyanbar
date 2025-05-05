@@ -12,4 +12,6 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('dashboard/', views.dashboard_view, name='dashboard'),
     path('dashboard/edit/', views.edit_profile_view, name='profile-edit'),
+    path('dashboard/compare/', views.compare_list_view, name='compare-list'),
+    path('dashboard/compare/action/', views.compare_list_handler, name='compare-handler'),
 ]

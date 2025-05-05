@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, ProductSmell, Image, Features
+from .models import Product, ProductSmell, Image, Features, Brand
 
 
 class ImageInline(admin.StackedInline):
@@ -14,11 +14,11 @@ class FeaturesInline(admin.StackedInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('pid', 'name', 'get_price', 'inventory', 'views', 'is_visible')
+    list_display = ('pid', 'name', 'brand', 'get_price', 'inventory', 'views', 'is_visible')
     list_filter = (
         'smell', 'season',  'taste',
         'nature', 'gender', 'volume',
-        'perfume_type', 'is_visible',
+        'perfume_type', 'is_visible', 'brand',
         'last_view', 'created_at','updated_at'
     )
     list_editable = ('is_visible',)
@@ -43,9 +43,9 @@ class ProductAdmin(admin.ModelAdmin):
         }),
         ('دسته بندی ها', {
             'fields': (
-                'smell', 'season', 'taste',
-                'nature', 'gender', 'durability',
-                'volume', 'perfume_type'
+                'smell', 'season', 'brand',
+                'taste', 'nature', 'gender',
+                'durability', 'volume', 'perfume_type'
             ),
         }),
         ('گزارشات', {
@@ -68,3 +68,10 @@ class ProductAdmin(admin.ModelAdmin):
 class ProductSmellAdmin(admin.ModelAdmin):
     list_display = ('value',)
     list_filter = ('value',)
+
+
+@admin.register(Brand)
+class BrandAdmin(admin.ModelAdmin):
+    list_display = ('name',)
+
+

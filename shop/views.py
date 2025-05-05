@@ -38,9 +38,9 @@ def like_handler(request):
                 product.liked_by.add(request.user)
                 return JsonResponse({'like': True})
         else:
-            return JsonResponse({'message': 'Post id required'}, status=400)
+            return JsonResponse({'message': 'Product id required'}, status=400)
     except Product.DoesNotExist:
-        return JsonResponse({'message': 'Post not found'}, status=404)
+        return JsonResponse({'message': 'Product not found'}, status=404)
 
 
 def product_view(request, slug):

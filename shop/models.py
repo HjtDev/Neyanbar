@@ -26,6 +26,8 @@ class Product(models.Model):
     name_en = models.CharField(max_length=100, verbose_name='اسم محصول', help_text='به انگلیسی')
     slug = models.SlugField(max_length=255, unique=True, verbose_name='اسلاگ')
 
+    brand = models.ForeignKey('Brand', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='برند')
+
     smell = models.ManyToManyField('ProductSmell', blank=True, null=True, verbose_name='گروه بویایی')
 
     class SeasonChoices(models.TextChoices):
@@ -108,7 +110,7 @@ class Product(models.Model):
     get_price.short_description = 'قیمت'
 
     def get_price_difference(self):
-        return int((self.discount / self.price) * 100)
+        return 100 - int((self.discount / self.price) * 100)
 
     def get_smell(self):
         return ', '.join([smell.get_value_display() for smell in self.smell.all()])
@@ -178,3 +180,17 @@ class ProductSmell(models.Model):
     class Meta:
         verbose_name = 'گروه بویایی'
         verbose_name_plural = 'گروه های بویایی'
+
+
+class Brand(models.Model):
+    objects = models.Manager()
+
+    name = models.CharField(verbose_name='نام برند', max_length=100)
+    slug = models.SlugField(verbose_name='اسلاگ', max_length=255)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'برند'
+        verbose_name_plural = 'برند ها'

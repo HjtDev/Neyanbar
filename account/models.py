@@ -41,6 +41,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=60, verbose_name='نام')
     profile = models.ImageField(upload_to=profile_directory_path, null=True, blank=True, verbose_name='پروفایل', help_text='60*60')
 
+    compare_list = models.ManyToManyField('shop.Product', related_name='users_compare_list', verbose_name='لیست مقایسه')
+
     is_active = models.BooleanField(default=True, verbose_name='دسترسی به حساب')
     is_staff = models.BooleanField(default=False, verbose_name='کارمند سایت')
     is_superuser = models.BooleanField(default=False, verbose_name='صاحب سایت')

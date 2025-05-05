@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load tags %}
+
+{% block title %}
+	مقایسه محصولات
+{% endblock %}
+
+{% block content %}
+    <main class="main rtl text-right">
+        <div class="page-header pl-4 pr-4">
+            <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبسایت ما</h3>
+            <h1 class="page-title font-weight-bold lh-1 text-white">لیست مقایسه ها</h1>
+        </div>
+        <nav class="breadcrumb-nav">
+            <div class="container breadcrumb-nav-wrap">
+                <ul class="breadcrumb ">
+                    <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
+                    <li>لیست مقایسه ها</li>
+                </ul>
+            </div>
+        </nav>
+        <div class="page-content compare-default compare-page">
+            <div class="container themeparsi-compare-table">
+                <div class="compare-row compare-basic">
+                    <div class="compare-col compare-field">
+                        محصولات
+                    </div>
+                    {% for product in compare_list %}
+                        <div class="compare-col compare-value delete-{{ product.id }}" id="title-{{ product.id }}" data-title="{{ product }}">
+                            <div class="product product-classic text-center">
+                                <figure class="product-media">
+                                    <a class="link-{{ product.id }}" href="{{ product.get_absolute_url }}">
+                                        <picture>
+                                            <source id="image-{{ product.id }}" srcset="{{ product.images.first.image.url }}" type="image/webp">
+                                            <img loading="lazy" decoding="async" src="{{ product.images.first.image.url }}" alt="product" width="280" height="315">
+                                        </picture>
+                                    </a>
+                                    {% if product.discount != -1 %}
+                                        <div class="product-label-group">
+                                            <label class="product-label label-sale">%{{ product.get_price_difference }} تخفیف</label>
+                                        </div>
+                                    {% endif %}
+                                </figure>
+                                <div class="product-details rtl">
+                                    <div class="product-action">
+                                        <a href="#" class="btn-product-icon btn-default " title="اضافه به سبد"
+                                           data-toggle="modal" data-target="#addCartModal">
+                                            <i class="fa-light fa-cart-shopping"></i>
+                                        </a>
+                                        <a href="#" class="btn-product-icon btn-default btn-add-wishlist" data-id="{{ product.id }}"
+                                           title="اضافه به علاقه مندی"><i class="fa-light fa-heart" id="like-icon-{{ product.id }}" {% if request.user in product.liked_by.all %}style="color: red;"{% endif %}></i></a>
+                                        <a href="#" class="btn-product-icon btn-default btn-remove-product" data-id="{{ product.id }}" title="Add to close">
+                                            <i class="fa-light fa-xmark"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="compare-row compare-title rtl text-right delete-{{ product.id }}">
+                    <div class="compare-col compare-field">
+                        عنوان
+                    </div>
+                        {% for product in compare_list %}
+                            <div class="compare-col compare-value delete-{{ product.id }}" data-title="Title">
+                                <a href="{{ product.get_absolute_url }}">{{ product }}</a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                <div class="compare-row compare-sku rtl text-right">
+                    <div class="compare-col compare-field">
+                        برند
+                    </div>
+                    {% for product in compare_list %}
+                        <div class="compare-col compare-value delete-{{ product.id }}" data-title="Sku">
+                            {{ product.brand }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="compare-row compare-pa_brands rtl text-right">
+                    <div class="compare-col compare-field">
+                        قیمت
+                    </div>
+                    {% for product in compare_list %}
+                        <div class="compare-col compare-value delete-{{ product.id }}" data-title="Brands">
+                            {{ product.get_price | commafy }} تومان
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="compare-row compare-pa_color  rtl text-right">
+                    <div class="compare-col compare-field">
+                        ماندگاری
+                    </div>
+                    {% for product in compare_list %}
+                        <div class="compare-col compare-value delete-{{ product.id }}" data-title="Color">
+                            {{ product.get_durability_display }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+                <div class="compare-row compare-type rtl text-right">
+                    <div class="compare-col compare-field">
+                        سایز
+                    </div>
+                    {% for product in compare_list %}
+                        <div class="compare-col compare-value delete-{{ product.id }}" data-title="Type">
+                            {{ product.get_volume_display }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="compare-row compare-availability rtl text-right">
+                    <div class="compare-col compare-field">
+                        دسترسی
+                    </div>
+                    {% for product in compare_list %}
+                        <div class="compare-col compare-value delete-{{ product.id }}" data-title="Availability">
+                            <p class="stock in-stock">{% if product.inventory %}{{ product.inventory }} موجودی{% else %}اتمام موجودی{% endif %}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="compare-row compare-description rtl text-right">
+                    <div class="compare-col compare-field">
+                        ویژگی:
+                    </div>
+                    {% for product in compare_list %}
+                        <div class="compare-col compare-value delete-{{ product.id }}" data-title="توضیحات">
+                            {% for feature in product.features.all %}
+                                {{ feature.key }}:{{ feature.value }} {% if not forloop.last %} - {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="compare-row compare-rating rtl text-right">
+                    <div class="compare-col compare-field">
+                        فصل
+                    </div>
+                    {% for product in compare_list %}
+                        <div class="compare-col compare-value delete-{{ product.id }}" data-title="Ratings & Reveiews">
+                            <div class="ratings-container">
+                               {{ product.get_season_display }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="compare-row compare-sku rtl text-right">
+                    <div class="compare-col compare-field">
+                        طعم
+                    </div>
+                    {% for product in compare_list %}
+                        <div class="compare-col compare-value delete-{{ product.id }}" data-title="Sku">
+                            {{ product.get_taste_display }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="compare-row compare-pa_brands rtl text-right">
+                    <div class="compare-col compare-field">
+                        طبع
+                    </div>
+                    {% for product in compare_list %}
+                        <div class="compare-col compare-value delete-{{ product.id }}" data-title="Brands">
+                            {{ product.get_nature_display }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="compare-row compare-pa_color  rtl text-right">
+                    <div class="compare-col compare-field">
+                        گروه بویایی
+                    </div>
+                    {% for product in compare_list %}
+                        <div class="compare-col compare-value delete-{{ product.id }}" data-title="Color">
+                            {{ product.get_smell }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="compare-row compare-pa_size  rtl text-right">
+                    <div class="compare-col compare-field">
+                        جنسیت
+                    </div>
+                    {% for product in compare_list %}
+                        <div class="compare-col compare-value delete-{{ product.id }}" data-title="Size">
+                            {{ product.get_gender_display }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block script %}
+    <script defer src="{% static 'js/compare.js' %}"></script>
+{% endblock %}

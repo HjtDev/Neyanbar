@@ -214,8 +214,8 @@
                                             <a href="#" class="ml-2 btn-add-wishlist">
                                                 <i class="fa-light fa-heart-full like-icon" {% if request.user in product.liked_by.all %}style="color: red;"{% endif %}></i> علاقه ها
                                             </a>
-                                            <a href="#" class="btn-product btn-compare">
-                                                <i class="fa-light fa-scale-balanced"></i> مقایسه ها
+                                            <a href="#" class="btn-compare-product">
+                                                <i class="fa-light fa-scale-balanced"></i> {% if product in request.user.compare_list.all %}حذف از لیست مقایسه{% else %}مقایسه{% endif %}
                                             </a>
                                         </div>
                                     </div>
