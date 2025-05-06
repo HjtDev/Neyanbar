@@ -24,7 +24,8 @@ urlpatterns = [
     path("tinymce/", include('tinymce.urls')),
     path('', include('main.urls', namespace='main')),
     path('account/', include('account.urls', namespace='account')),
-    path('blog/', include('blog.urls', namespace='blog'))
+    path('blog/', include('blog.urls', namespace='blog')),
+    path('shop/', include('shop.urls', namespace='shop'))
 ]
 
 if settings.DEBUG:
