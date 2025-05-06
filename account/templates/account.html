@@ -40,6 +40,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-right " href="#likes">لایک ها</a>
                         </li>
+                        {% if request.user.compare_list.exists %}
+                            <li class="nav-item">
+                                <a class="nav-link text-right " href="javascript: void(0)" onclick="window.location.href='{% url 'account:compare-list' %}'">لیست مقایسه ها</a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link text-right " href="#address">محصولات خریده شده</a>
                         </li>
@@ -145,10 +150,46 @@
                             </table>
                         </div>
                         <div class="tab-pane" id="likes">
-                            <p class="mb-4 text-body">هنوز دانلودی در دسترس نیست.</p>
-                            <a href="#" class="btn btn-link btn-underline">
-                                لیست محصولات<i class="fa-light fa-angles-right"></i>
-                            </a>
+                            {% if not request.user.liked_products.exists %}
+                                <p class="mb-4 text-body">هنوز هیچ محصولی رو اضافه نکردی!</p>
+                                <a href="#" class="btn btn-link btn-underline">
+                                    لیست محصولات<i class="fa-light fa-angles-right"></i>
+                                </a>
+                            {% else %}
+                                <table class="order-table">
+                                    <thead>
+                                    <tr>
+                                        <th>کد محصول</th>
+                                        <th> نام</th>
+                                        <th>برند</th>
+                                        <th>موجودی</th>
+                                        <th class="pl-2">اقدامات</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for product in request.user.liked_products.all %}
+                                        <tr>
+                                            <td class="order-number"><a href="{{ product.get_absolute_url }}">{{ product.pid }}</a></td>
+                                            <td class="order-date"><span>{{ product }}</span></td>
+                                            <td class="order-status"><span>{{ product.brand }}</span></td>
+                                            <td class="order-total">
+                                                <span>
+                                                    {% if product.inventory %}
+                                                        ({{ product.inventory }} عدد موجود در انبار)
+                                                    {% else %}
+                                                      موجود نیست
+                                                     {% endif %}
+                                                </span>
+                                            </td>
+                                            <td class="order-action">
+                                                <a href="{{ product.get_absolute_url }}"
+                                                   class="btn btn-link btn-underline">نمایش </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
                         </div>
                         <div class="tab-pane" id="address">
                             <p class="mb-2">
