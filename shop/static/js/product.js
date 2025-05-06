@@ -259,4 +259,109 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('.btn-suggestion-wishlist').click(function(e) {
+        e.preventDefault();
+
+        let btn = $(this);
+        let pid = btn.data('id');
+
+        btn.addClass('load-more-overlay loading');
+
+        $.ajax({
+            url: '/shop/like_handler/',
+            type: 'PATCH',
+            headers: {
+                'X-CSRFToken': csrf_token
+            },
+            data: {
+                'id': pid
+            },
+            success: function(response) {
+                btn.removeClass('load-more-overlay loading');
+                if(response.like) {
+                    $('#like-icon-' + pid).css('color', 'red')
+                } else {
+                    $('#like-icon-' + pid).css('color', '');
+                }
+                let link = $('#suggestion-title-' + pid);
+                themeparsi.Minipopup.init();
+                themeparsi.Minipopup.open({
+                    message: `محصول با موفقیت ${response.like ? 'به علاقه مندی ها اضافه شد':'از علاقه مندی ها حذف شد'}!`,
+                    productClass: 'product-wishlist',
+                    name: link.text(),
+                    nameLink: link.attr('href'),
+                    imageSrc: $('#image-' + pid).attr('srcset'),
+                    imageLink: link.attr('href'),
+                    // price: "۲۵۰,۰۰۰ تومان",
+                    // count: 1,
+                    actionTemplate: `<div class="action-group d-flex"><a href="${link.attr('href')}" class="btn btn-sm btn-outline btn-primary btn-rounded">مشاهده محصول</a></div>`
+                });
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+                btn.removeClass('load-more-overlay loading');
+                if(xhr.status === 401) {
+                    $('.login-toggle').click();
+                }
+            }
+        });
+    });
+
+    $('.btn-suggestion-compare').click(function(e) {
+        e.preventDefault();
+
+        let btn = $(this);
+        let pid = btn.data('id')
+
+        btn.addClass('load-more-overlay loading');
+        let link = $('#suggestion-title-' + pid);
+
+        $.ajax({
+            url: '/account/dashboard/compare/action/',
+            type: 'PATCH',
+            headers: {
+                'X-CSRFToken': csrf_token
+            },
+            data: {
+                'id': pid,
+                'action': 'update'
+            },
+            success: function(response) {
+                btn.removeClass('load-more-overlay loading');
+                themeparsi.Minipopup.init();
+                themeparsi.Minipopup.open({
+                    message: `محصول با موفقیت ${response.added ? 'به لیست مقایسه اضافه شد':'از لیست مقایسه حذف شد'}!`,
+                    productClass: 'product-wishlist',
+                    name: link.text(),
+                    nameLink: link.attr('href'),
+                    imageSrc: $('#image-' + pid).attr('srcset'),
+                    imageLink: link.attr('href'),
+                    // price: "۲۵۰,۰۰۰ تومان",
+                    count: 1,
+                    actionTemplate: '<div class="action-group d-flex"><a href="/account/dashboard/compare/" class="btn btn-sm btn-outline btn-primary btn-rounded">لیست مقایسه</a></div>'
+                });
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
+                btn.removeClass('load-more-overlay loading');
+                if(xhr.status === 401) {
+                    $('.login-toggle').click();
+                } else if(xhr.status === 403) {
+                    themeparsi.Minipopup.init();
+                    themeparsi.Minipopup.open({
+                        message: `لیست مقایسه شما پر است!`,
+                        productClass: 'product-wishlist',
+                        name: link.text(),
+                        nameLink: link.attr('href'),
+                        imageSrc: $('#image-' + pid).attr('srcset'),
+                        imageLink: link.attr('href'),
+                        // price: "۲۵۰,۰۰۰ تومان",
+                        count: 1,
+                        actionTemplate: '<div class="action-group d-flex"><a href="/account/dashboard/compare/" class="btn btn-sm btn-outline btn-primary btn-rounded">لیست مقایسه</a></div>'
+                    });
+                }
+            }
+        });
+    });
 });

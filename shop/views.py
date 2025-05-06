@@ -61,7 +61,7 @@ def product_view(request, slug):
     most_viewed_col1 = all_products.order_by('-views')[:3]
     most_viewed_col2 = all_products.order_by('-views')[3:7]
 
-    average_rating = int(product.comments.filter(is_verified=True).aggregate(Avg('score'))['score__avg'])
+    average_rating = int(product.comments.filter(is_verified=True).aggregate(Avg('score'))['score__avg'] or 3)
 
     context = {
         'product': product,

@@ -431,75 +431,6 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             </ul>
-                                            {% if posts.has_other_pages %}
-                                                <ul class="pagination rtl">
-
-                                                    {# Previous button #}
-                                                    {% if posts.has_previous %}
-                                                        <li class="page-item">
-                                                            <a class="page-link page-link-prev" href="?{% query_transform page=posts.previous_page_number %}" aria-label="Previous">
-                                                                <i class="fa-light fa-angles-right"></i>قبلی
-                                                            </a>
-                                                        </li>
-                                                    {% else %}
-                                                        <li class="page-item disabled">
-                                                            <a class="page-link page-link-prev" href="#" tabindex="-1" aria-disabled="true" aria-label="Previous">
-                                                                <i class="fa-light fa-angles-right"></i>قبلی
-                                                            </a>
-                                                        </li>
-                                                    {% endif %}
-
-                                                    {# First page #}
-                                                    {% if posts.number > 2 %}
-                                                        <li class="page-item">
-                                                            <a class="page-link" href="?{% query_transform page=1 %}">1</a>
-                                                        </li>
-                                                        {% if posts.number > 3 %}
-                                                            <li class="page-item disabled"><a class="page-link">...</a></li>
-                                                        {% endif %}
-                                                    {% endif %}
-
-                                                    {# Pages around current page #}
-                                                    {% for i in posts.paginator.page_range %}
-                                                        {% if i >= posts.number|add:'-1' and i <= posts.number|add:'1' %}
-                                                            {% if i == posts.number %}
-                                                                <li class="page-item active" aria-current="page">
-                                                                    <a class="page-link" href="#">{{ i }}</a>
-                                                                </li>
-                                                            {% else %}
-                                                                <li class="page-item">
-                                                                    <a class="page-link" href="?{% query_transform page=i %}">{{ i }}</a>
-                                                                </li>
-                                                            {% endif %}
-                                                        {% endif %}
-                                                    {% endfor %}
-
-                                                    {# Last page #}
-                                                    {% if posts.number < posts.paginator.num_pages|add:'-1' %}
-                                                        {% if posts.number < posts.paginator.num_pages|add:'-2' %}
-                                                            <li class="page-item disabled"><a class="page-link">...</a></li>
-                                                        {% endif %}
-                                                        <li class="page-item">
-                                                            <a class="page-link" href="?{% query_transform page=posts.paginator.num_pages %}">{{ posts.paginator.num_pages }}</a>
-                                                        </li>
-                                                    {% endif %}
-
-                                                    {# Next button #}
-                                                    {% if posts.has_next %}
-                                                        <li class="page-item">
-                                                            <a class="page-link page-link-next" href="?{% query_transform page=posts.next_page_number %}" aria-label="Next">
-                                                                بعدی<i class="fa-light fa-angles-left"></i>
-                                                            </a>
-                                                        </li>
-                                                    {% else %}
-                                                        <li class="page-item disabled">
-                                                            <a class="page-link page-link-next" href="#" tabindex="-1" aria-disabled="true" aria-label="Next">
-                                                                بعدی<i class="fa-light fa-angles-left"></i>
-                                                            </a>
-                                                        </li>
-                                                    {% endif %}
-                                                </ul>
-                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -541,7 +472,7 @@
                                         <figure class="product-media">
                                             <a href="{{ product.get_absolute_url }}">
                                                     <picture>
-                                                        <source srcset="{{ product.images.first.image.url }}" type="image/webp">
+                                                        <source id="image-{{ product.id }}" srcset="{{ product.images.first.image.url }}" type="image/webp">
                                                         <img loading="lazy" decoding="async" src="{{ product.images.first.image.url }}"
                                                              alt="product"
                                                              width="260" height="293">
@@ -552,19 +483,17 @@
                                                    data-target="#addCartModal" title="اضافه به خرید">
                                                     <i class="fa-light fa-basket-shopping-simple"></i>
                                                 </a>
-                                                <a href="#" class="btn-product-icon btn-wishlist"
-                                                   title="اضافه به علاقه مندی"><i class="fa-light fa-heart"></i></a>
-                                                <a href="#" class="btn-product-icon btn-quickview" title="نمایش ">
-                                                    <i class="fa-light fa-magnifying-glass"></i>
+                                                <a href="#" class="btn-product-icon btn-suggestion-wishlist" data-id="{{ product.id }}"
+                                                   title="اضافه به علاقه مندی"><i class="fa-light fa-heart" id="like-icon-{{ product.id }}" {% if request.user in product.liked_by.all %}style="color: red;" {% endif %}></i>
                                                 </a>
-                                                <a href="#" class="btn-product-icon btn-compare" title="Compare">
+                                                <a href="#" class="btn-product-icon btn-suggestion-compare" data-id="{{ product.id }}" title="مقایسه">
                                                     <i class="fa-light fa-scale-balanced"></i>
                                                 </a>
                                             </div>
                                         </figure>
                                         <div class="product-details rtl">
                                             <h3 class="product-name">
-                                                <a href="{{ product.get_absolute_url }}">{{ product }}</a>
+                                                <a href="{{ product.get_absolute_url }}" id="suggestion-title-{{ product.id }}">{{ product }}</a>
                                             </h3>
                                             <div class="product-price">
                                                 <span class="price">  {{ product.get_price | commafy }} تومان  </span>
