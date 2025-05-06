@@ -1,6 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.db.models import Min
 from django.urls import reverse
 from tinymce.models import HTMLField
 import os
@@ -27,6 +28,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=255, unique=True, verbose_name='اسلاگ')
 
     brand = models.ForeignKey('Brand', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='برند')
+    available_volumes = models.ManyToManyField('Volume', blank=True, verbose_name='حجم های موجود')
 
     smell = models.ManyToManyField('ProductSmell', verbose_name='گروه بویایی')
 
@@ -58,17 +60,6 @@ class Product(models.Model):
         FEMALE = 'FEMALE', 'زنانه'
         UNISEX = 'UNISEX', 'مشترک'
     gender = models.CharField(choices=GenderChoices.choices, max_length=6, verbose_name='جنسیت')
-
-    class VolumeChoices(models.TextChoices):
-        TEN = '10', '۱۰ میل'
-        TWENTY = '20', '۲۰ میل'
-        THIRTY = '30', '۳۰ میل'
-        FIFTY = '50', '۵۰ میل'
-        SIXTY = '60', '۶۰ میل'
-        HUNDRED = '100', '۱۰۰ میل'
-        HUNDRED_TWENTY = '120', '۱۲۰ میل'
-        HUNDRED_FIFTY = '150', '۱۵۰ میل'
-    volume = models.CharField(choices=VolumeChoices.choices, max_length=4, verbose_name='حجم')
 
     class TypeChoices(models.TextChoices):
         PERFUME = 'PERFUME', 'پرفیوم'
@@ -105,15 +96,18 @@ class Product(models.Model):
         return self.name
 
     def get_price(self):
-        return self.price * int(self.volume.strip('m')) if self.discount == -1 else self.discount * int(self.volume.strip('m'))
+        return self.price * int(self.available_volumes.aggregate(Min('volume'))['volume__min'] or 1) if self.discount == -1 else self.discount * int(self.available_volumes.aggregate(Min('volume'))['volume__min'] or 1)
 
-    get_price.short_description = 'قیمت'
+    get_price.short_description = 'کمترین قیمت موجود'
 
     def get_price_difference(self):
         return 100 - int((self.discount / self.price) * 100)
 
     def get_smell(self):
         return ', '.join([smell.get_value_display() for smell in self.smell.all()])
+
+    def get_volumes(self):
+        return ', '.join(list(volume for volume in self.available_volumes.values_list('name', flat=True)))
 
     def get_absolute_url(self):
         return reverse('shop:product-detail', kwargs={'slug': self.slug})
@@ -215,3 +209,17 @@ class Comment(models.Model):
     class Meta:
         verbose_name = 'کامنت'
         verbose_name_plural = 'کامنت ها'
+
+
+class Volume(models.Model):
+    objects = models.Manager()
+
+    name = models.CharField(verbose_name='اسم', max_length=100, help_text='مثال: ۱۰ میل')
+    volume = models.PositiveIntegerField(default=1, verbose_name='حجم', help_text='به میل')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'حجم'
+        verbose_name_plural = 'حجم ها'

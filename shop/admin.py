@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, ProductSmell, Image, Features, Brand, Comment
+from .models import Product, ProductSmell, Image, Features, Brand, Comment, Volume
 
 
 class ImageInline(admin.StackedInline):
@@ -22,7 +22,7 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ('pid', 'name', 'brand', 'get_price', 'inventory', 'views', 'is_visible')
     list_filter = (
         'smell', 'season',  'taste',
-        'nature', 'gender', 'volume',
+        'nature', 'gender', 'available_volumes',
         'perfume_type', 'is_visible', 'brand',
         'last_view', 'created_at','updated_at'
     )
@@ -51,7 +51,7 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': (
                 'smell', 'season', 'brand',
                 'taste', 'nature', 'gender',
-                'durability', 'volume', 'perfume_type'
+                'durability', 'available_volumes', 'perfume_type'
             ),
         }),
         ('گزارشات', {
@@ -91,3 +91,6 @@ class BrandAdmin(admin.ModelAdmin):
     list_display = ('name',)
 
 
+@admin.register(Volume)
+class VolumeAdmin(admin.ModelAdmin):
+    list_display = ('name',)

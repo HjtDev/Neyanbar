@@ -77,7 +77,7 @@
                                         دسته بندی : <span
                                             class="product-brand">{{ product.get_perfume_type_display }}</span>
                                     </div>
-                                    <div class="product-price"> {{ product.get_price | commafy }} تومان</div>
+                                    <div class="product-price" id="product-actual-price" data-price="{{ product.price }}" data-discount="{{ product.discount }}"> {{ product.get_price | commafy }} تومان</div>
                                     <div class="ratings-container">
                                         <a href="#product-tab-reviews" class="link-to-tab rating-reviews">
                                             {% if product.inventory %}
@@ -97,7 +97,7 @@
                                                 <td>
                                                     <span style="color: #000000;">سایز</span>
                                                 </td>
-                                                <td><span style="color: #000000;">{{ product.get_volume_display }}</span>
+                                                <td><span style="color: #000000;">{{ product.get_volumes }}</span>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -158,30 +158,22 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="product-form product-color">
-                                        <label>رنگ:</label>
-                                        <div class="product-variations">
-                                            <a class="color" href="#" style="background-color: #b6471185"></a>
-                                            <a class="color" href="#" style="background-color: #35239c78"></a>
-                                            <a class="color" href="#" style="background-color: #57836d75"></a>
-                                            <a class="color" href="#" style="background-color: #fece337a"></a>
-                                        </div>
-                                    </div>
-                                    <div class="product-form product-size">
-                                        <label>سایز:</label>
-                                        <div class="product-form-group">
-                                            <div class="product-variations">
-                                                <a class="size" href="#">XL</a>
-                                                <a class="size" href="#">L</a>
-                                                <a class="size" href="#">M</a>
-                                                <a class="size" href="#">S</a>
+                                    {% if product.available_volumes %}
+                                            <div class="product-form product-size">
+                                                <label>سایز(به میل):</label>
+                                                <div class="product-form-group">
+                                                    <div class="product-variations">
+                                                        {% for volume in product.available_volumes.all %}
+                                                            <a class="size" href="#">{{ volume.volume }}</a>
+                                                        {% endfor %}
+                                                    </div>
+                                                    <a href="#" class="product-variation-clean">پاک کردن همه</a>
+                                                </div>
                                             </div>
-                                            <a href="#" class="product-variation-clean">پاک کردن همه</a>
+                                        <div class="product-variation-price">
+                                            <span id="final-price">13,500,000 تومان </span>
                                         </div>
-                                    </div>
-                                    <div class="product-variation-price">
-                                        <span>13,500,000 تومان </span>
-                                    </div>
+                                    {% endif %}
                                     <hr class="product-divider">
                                     <div class="product-form product-qty mb-3">
                                         <div class="product-form-group">

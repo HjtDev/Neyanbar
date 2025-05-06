@@ -401,4 +401,19 @@ $(document).ready(function() {
             }
         });
     });
+
+    $('.size').click(function(e) {
+        e.preventDefault();
+
+        let value = $(this).text();
+        let price = $('#product-actual-price')
+        let discount = price.data('discount');
+        let base_price = Number(discount) === -1 ? price.data('price'):price.data('discount');
+
+        let final_price = Number(value) * Number(base_price);
+
+        setTimeout(function() {
+            $('#final-price').text(final_price.toLocaleString() + ' تومان');
+        }, 10);
+    });
 });
