@@ -9,5 +9,6 @@ urlpatterns = [
     path('like_handler/', views.like_handler, name='like_handler'),
     path('comment_handler/', views.comment_handler, name='comment_handler'),
     path('comment_like/', views.comment_like, name='comment_like'),
+    path('notify_me/', views.notify_me, name='notify_me'),
     path('products/detail/<slug>/', views.product_view, name='product-detail'),
 ]

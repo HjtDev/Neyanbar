@@ -115,3 +115,25 @@ def comment_like(request):
     except Comment.DoesNotExist:
         return JsonResponse({'error': 'Comment not found'}, status=404)
 
+
+@require_http_methods(['PATCH'])
+def notify_me(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'message': 'You are not logged in'}, status=403)
+
+    product_id = QueryDict(request.body).get('id')
+
+    try:
+        if product_id:
+            product = Product.objects.get(id=product_id)
+            if not request.user in product.remind_to.all():
+                product.remind_to.add(request.user)
+                return JsonResponse({'added': True}, status=200)
+            else:
+                product.remind_to.remove(request.user)
+                return JsonResponse({'added': False}, status=200)
+        else:
+            return JsonResponse({'message': 'Product id required'}, status=400)
+    except Product.DoesNotExist:
+        return JsonResponse({'message': 'Product not found'}, status=404)
+

@@ -39,14 +39,14 @@ $(document).ready(function() {
             },
             success: function(response) {
                 btn.removeClass('load-more-overlay loading');
-                if(response.like) {
+                if (response.like) {
                     $('.like-icon').css('color', 'red')
                 } else {
                     $('.like-icon').css('color', '');
                 }
                 themeparsi.Minipopup.init();
                 themeparsi.Minipopup.open({
-                    message: `محصول با موفقیت ${response.like ? 'به علاقه مندی ها اضافه شد':'از علاقه مندی ها حذف شد'}!`,
+                    message: `محصول با موفقیت ${response.like ? 'به علاقه مندی ها اضافه شد' : 'از علاقه مندی ها حذف شد'}!`,
                     productClass: 'product-wishlist',
                     name: $('h1.product-name').text(),
                     nameLink: window.location.href,
@@ -60,7 +60,7 @@ $(document).ready(function() {
             error: function(xhr, status, error) {
                 console.log(error);
                 btn.removeClass('load-more-overlay loading');
-                if(xhr.status === 401) {
+                if (xhr.status === 401) {
                     $('.login-toggle').click();
                 }
             }
@@ -85,7 +85,7 @@ $(document).ready(function() {
                 'action': 'update'
             },
             success: function(response) {
-                if(response.added) {
+                if (response.added) {
                     btn.html('<i class="fa-light fa-scale-balanced"></i> حذف از مقایسه ها');
                 } else {
                     btn.html('<i class="fa-light fa-scale-balanced"></i> مقایسه');
@@ -93,7 +93,7 @@ $(document).ready(function() {
                 btn.removeClass('load-more-overlay loading');
                 themeparsi.Minipopup.init();
                 themeparsi.Minipopup.open({
-                    message: `محصول با موفقیت ${response.added ? 'به لیست مقایسه اضافه شد':'از لیست مقایسه حذف شد'}!`,
+                    message: `محصول با موفقیت ${response.added ? 'به لیست مقایسه اضافه شد' : 'از لیست مقایسه حذف شد'}!`,
                     productClass: 'product-wishlist',
                     name: $('h1.product-name').text(),
                     nameLink: window.location.href,
@@ -107,9 +107,9 @@ $(document).ready(function() {
             error: function(xhr, status, error) {
                 console.log(error);
                 btn.removeClass('load-more-overlay loading');
-                if(xhr.status === 401) {
+                if (xhr.status === 401) {
                     $('.login-toggle').click();
-                } else if(xhr.status === 403) {
+                } else if (xhr.status === 403) {
                     themeparsi.Minipopup.init();
                     themeparsi.Minipopup.open({
                         message: `لیست مقایسه شما پر است!`,
@@ -145,7 +145,7 @@ $(document).ready(function() {
         let btn = $(this);
         let content = $('#review-message');
 
-        if(!content) {
+        if (!content) {
             return;
         }
 
@@ -241,10 +241,10 @@ $(document).ready(function() {
                 'X-CSRFToken': csrf_token
             },
             data: {
-              'id': comment_id
+                'id': comment_id
             },
             success: function(response) {
-                if(response.like) {
+                if (response.like) {
                     btn.children('.count').text(Number(btn.children('.count').text()) + 1);
                 } else {
                     btn.children('.count').text(Number(btn.children('.count').text()) - 1);
@@ -253,7 +253,7 @@ $(document).ready(function() {
             error: function(xhr, status, error) {
                 console.log(error);
 
-                if(xhr.status === 403) {
+                if (xhr.status === 403) {
                     $('.login-toggle').click();
                 }
             }
@@ -279,7 +279,7 @@ $(document).ready(function() {
             },
             success: function(response) {
                 btn.removeClass('load-more-overlay loading');
-                if(response.like) {
+                if (response.like) {
                     $('#like-icon-' + pid).css('color', 'red')
                 } else {
                     $('#like-icon-' + pid).css('color', '');
@@ -287,7 +287,7 @@ $(document).ready(function() {
                 let link = $('#suggestion-title-' + pid);
                 themeparsi.Minipopup.init();
                 themeparsi.Minipopup.open({
-                    message: `محصول با موفقیت ${response.like ? 'به علاقه مندی ها اضافه شد':'از علاقه مندی ها حذف شد'}!`,
+                    message: `محصول با موفقیت ${response.like ? 'به علاقه مندی ها اضافه شد' : 'از علاقه مندی ها حذف شد'}!`,
                     productClass: 'product-wishlist',
                     name: link.text(),
                     nameLink: link.attr('href'),
@@ -301,7 +301,7 @@ $(document).ready(function() {
             error: function(xhr, status, error) {
                 console.log(error);
                 btn.removeClass('load-more-overlay loading');
-                if(xhr.status === 401) {
+                if (xhr.status === 401) {
                     $('.login-toggle').click();
                 }
             }
@@ -331,7 +331,7 @@ $(document).ready(function() {
                 btn.removeClass('load-more-overlay loading');
                 themeparsi.Minipopup.init();
                 themeparsi.Minipopup.open({
-                    message: `محصول با موفقیت ${response.added ? 'به لیست مقایسه اضافه شد':'از لیست مقایسه حذف شد'}!`,
+                    message: `محصول با موفقیت ${response.added ? 'به لیست مقایسه اضافه شد' : 'از لیست مقایسه حذف شد'}!`,
                     productClass: 'product-wishlist',
                     name: link.text(),
                     nameLink: link.attr('href'),
@@ -345,9 +345,9 @@ $(document).ready(function() {
             error: function(xhr, status, error) {
                 console.log(error);
                 btn.removeClass('load-more-overlay loading');
-                if(xhr.status === 401) {
+                if (xhr.status === 401) {
                     $('.login-toggle').click();
-                } else if(xhr.status === 403) {
+                } else if (xhr.status === 403) {
                     themeparsi.Minipopup.init();
                     themeparsi.Minipopup.open({
                         message: `لیست مقایسه شما پر است!`,
@@ -361,6 +361,43 @@ $(document).ready(function() {
                         actionTemplate: '<div class="action-group d-flex"><a href="/account/dashboard/compare/" class="btn btn-sm btn-outline btn-primary btn-rounded">لیست مقایسه</a></div>'
                     });
                 }
+            }
+        });
+    });
+
+    $('.btn-notify-me').click(function(e) {
+        e.preventDefault();
+
+        let btn = $(this);
+
+        setButtonLoading(btn, true, 'در حال ثبت');
+
+        $.ajax({
+            url: '/shop/notify_me/',
+            type: 'PATCH',
+            headers: {
+                'X-CSRFToken': csrf_token
+            },
+            data: {
+                'id': product_id
+            },
+            success: function(response) {
+                setButtonLoading(btn, false, response.added ? 'منتظر موجود شدن':'در صورت موجود شدن اطلاع بده');
+                themeparsi.Minipopup.init();
+                themeparsi.Minipopup.open({
+                    message: response.added ? 'زمانی که این محصول موجود شد از طریق پیامک و ایمیل خبرسانی میشه':'از لیست خبررسانی حذف شد',
+                    productClass: 'product-wishlist',
+                    name: $('h1.product-name').text(),
+                    nameLink: window.location.href,
+                    imageSrc: $('.product-thumb picture source').attr('srcset'),
+                    imageLink: window.location.href,
+                    // price: "۲۵۰,۰۰۰ تومان",
+                    // count: 1,
+                    // actionTemplate: '<div class="action-group d-flex"><a href="/account/dashboard/#likes" class="btn btn-sm btn-outline btn-primary btn-rounded">علاقه‌مندی‌ها</a></div>'
+                });
+            },
+            error: function(xhr, status, error) {
+                console.log(error);
             }
         });
     });
