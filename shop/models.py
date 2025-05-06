@@ -28,7 +28,7 @@ class Product(models.Model):
     slug = models.SlugField(max_length=255, unique=True, verbose_name='اسلاگ')
 
     brand = models.ForeignKey('Brand', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='برند')
-    available_volumes = models.ManyToManyField('Volume', blank=True, verbose_name='حجم های موجود')
+    available_volumes = models.ManyToManyField('Volume', related_name='products', blank=True, verbose_name='حجم های موجود')
 
     smell = models.ManyToManyField('ProductSmell', verbose_name='گروه بویایی')
 
@@ -125,7 +125,7 @@ class Product(models.Model):
 
 class Image(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name='محصولات')
-    image = models.ImageField(upload_to=product_dynamic_path, verbose_name='تصویر', help_text='800*900')
+    image = models.ImageField(upload_to=product_dynamic_path, verbose_name='تصویر', help_text='800*900 | white BG')
     alt = models.CharField(verbose_name='تیتر', help_text='برای سئو')
 
     def __str__(self):
@@ -154,6 +154,8 @@ class Features(models.Model):
 
 
 class ProductSmell(models.Model):
+    objects = models.Manager()
+
     class SmellChoices(models.TextChoices):
         GOLFAM = 'GOLFAM', 'گلفام'
         WOODY = 'WOODY', 'چوبی'
@@ -180,6 +182,8 @@ class Brand(models.Model):
     objects = models.Manager()
 
     name = models.CharField(verbose_name='نام برند', max_length=100)
+    logo = models.ImageField(upload_to='Brands/Logo', verbose_name='لوگو', help_text='45*45 | white BG')
+    banner = models.ImageField(upload_to='Brands/Banner', verbose_name='بنر', help_text='285*336')
     slug = models.SlugField(verbose_name='اسلاگ', max_length=255)
 
     def __str__(self):

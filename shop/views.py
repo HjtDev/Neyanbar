@@ -1,9 +1,11 @@
+from django.db.models.functions import Coalesce
 from django.http import QueryDict, JsonResponse
 from django.shortcuts import render, redirect
-from django.db.models import Q, Avg
+from django.db.models import Q, Avg, Value, Count, IntegerField
 from django.views.decorators.http import require_http_methods, require_POST
-from shop.models import Product, Comment
+from shop.models import Product, Comment, Brand, Volume, ProductSmell
 from main.templatetags.tags import to_jalali_verbose
+from django.core.paginator import Paginator
 
 
 @require_http_methods(['PATCH'])
@@ -138,3 +140,57 @@ def notify_me(request):
     except Product.DoesNotExist:
         return JsonResponse({'message': 'Product not found'}, status=404)
 
+
+def product_list_view(request):
+    all_products = Product.objects.filter(is_visible=True).annotate(
+        average_rating=Coalesce(
+            Avg('comments__score', filter=Q(comments__is_verified=True)),
+            Value(3),
+            output_field=IntegerField()
+        ),
+        verified_comments_count=Count('comments', filter=Q(comments__is_verified=True))
+    ).order_by('-views')
+
+
+    for key in request.GET:
+        if 'brand' in key:
+            all_products = all_products.filter(brand__slug__in=request.GET.getlist(key))
+
+        if 'volumes' in key:
+            all_products = all_products.filter(available_volumes__in=Volume.objects.filter(volume__in=[int(v) for v in request.GET.getlist(key)])).distinct()
+
+        if 'smells' in key:
+            all_products = all_products.filter(smell__in=ProductSmell.objects.filter(value__in=request.GET.getlist(key))).distinct()
+
+        if 'seasons' in key:
+            all_products = all_products.filter(season__in=request.GET.getlist(key))
+
+        if 'tastes' in key:
+            all_products = all_products.filter(taste__in=request.GET.getlist(key))
+
+        if 'nature' in key:
+            all_products = all_products.filter(nature__in=request.GET.getlist(key))
+
+        if 'durability' in key:
+            all_products = all_products.filter(durability__in=request.GET.getlist(key))
+
+        if 'gender' in key:
+            all_products = all_products.filter(gender__in=request.GET.getlist(key))
+
+        if 'type' in key:
+            all_products = all_products.filter(perfume_type__in=request.GET.getlist(key))
+
+    page = int(request.GET.get('page', 1))
+    all_products = Paginator(all_products, 3)
+
+    context = {
+        'products': all_products.page(page),
+        'brands': Brand.objects.all(),
+        'volumes': Volume.objects.all(),
+        'smells': ProductSmell.objects.all(),
+    }
+
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return render(request, 'filter.html', {'products': all_products.object_list})
+
+    return render(request, 'product_list.html', context)

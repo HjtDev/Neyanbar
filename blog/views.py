@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.core.paginator import Paginator, PageNotAnInteger
+from django.core.paginator import Paginator
 from datetime import datetime
 import os
 from random import choice

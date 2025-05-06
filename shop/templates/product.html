@@ -16,7 +16,7 @@
                     <div class="container breadcrumb-nav-wrap">
                         <ul class="breadcrumb ">
                             <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
-                            <li><a href="#">محصولات</a></li>
+                            <li><a href="{% url 'shop:product-list' %}">محصولات</a></li>
                             <li>{{ product }}</li>
                         </ul>
                     </div>
@@ -153,6 +153,14 @@
                                                 </td>
                                                 <td>
                                                     <span style="color: #000000;">{{ product.get_durability_display }}</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span style="color: #000000;">برند</span>
+                                                </td>
+                                                <td>
+                                                    <span style="color: #000000;">{{ product.brand }}</span>
                                                 </td>
                                             </tr>
                                             </tbody>
