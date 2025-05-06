@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'shop.apps.ShopConfig',
     'tinymce',
+    'django_social_share',
 ]
 
 MIDDLEWARE = [

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load tags %}
+{% load social_share %}
 {% load static %}
 
 {% block title %}
@@ -205,9 +206,9 @@
                                     <div class="product-footer">
                                         <p>اشتراک گذاری:&nbsp;</p>
                                         <div class="social-links pl-4">
-                                            <a href="#" >واتساپ</a>
+                                            {% post_to_whatsapp product 'واتساپ' %}
                                             &nbsp;|&nbsp;
-                                            <a href="#" >تلگرام</a>
+                                            {% post_to_telegram '' product 'تلگرام' %}
                                         </div>
                                         <span class="divider"></span>
                                         <div class="product-action">
