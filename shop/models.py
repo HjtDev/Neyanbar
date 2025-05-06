@@ -198,7 +198,7 @@ class Comment(models.Model):
 
     score = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(5)], verbose_name='امتیاز')
     content = models.TextField(max_length=320, verbose_name='متن')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ایجاد')
     is_verified = models.BooleanField(default=False, verbose_name='نمایش در سایت')
 
     liked_by = models.ManyToManyField(User, related_name='comment_likes', blank=True, verbose_name='لایک ها')

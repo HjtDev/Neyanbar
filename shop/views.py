@@ -80,6 +80,7 @@ def comment_handler(request):
         return JsonResponse({'message': 'You are not logged in'}, status=403)
 
     product_id = request.POST.get('id')
+    score = int(request.POST.get('score'))
     content = request.POST.get('content')
 
     if not content:
@@ -87,7 +88,7 @@ def comment_handler(request):
 
     try:
         product = Product.objects.get(id=product_id)
-        comment = Comment.objects.create(content=content, product=product, user=request.user)
+        comment = Comment.objects.create(content=content, product=product, user=request.user, score=score)
         return JsonResponse({'name': str(request.user), 'profile': request.user.profile.url,
                              'created_at': to_jalali_verbose(comment.created_at), 'id': comment.id}, status=200)
     except Product.DoesNotExist:
