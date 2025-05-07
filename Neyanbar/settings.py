@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'blog.apps.BlogConfig',
     'shop.apps.ShopConfig',
+    'cart.apps.CartConfig',
     'tinymce',
     'django_social_share',
 ]
