@@ -1,4 +1,3 @@
-from django.db.models.functions import Coalesce
 from django.http import QueryDict, JsonResponse
 from django.shortcuts import render, redirect
 from django.db.models import Q, Avg, Count, FloatField, F, ExpressionWrapper
@@ -153,10 +152,7 @@ def product_list_view(request):
 
     for key in request.GET:
         if request.GET.get('brand'):  # index top brands
-            print('got brand')
             all_products = all_products.filter(brand__name=request.GET.get('brand'))
-            print(request.GET.get('brand'))
-            print(all_products)
         elif 'brand' in key:
             all_products = all_products.filter(brand__slug__in=request.GET.getlist(key))
 
