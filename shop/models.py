@@ -97,6 +97,8 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def get_raw_price(self):
+        return self.price * int(self.available_volumes.aggregate(Min('volume'))['volume__min'] or 1)
     def get_price(self):
         return self.price * int(self.available_volumes.aggregate(Min('volume'))['volume__min'] or 1) if self.discount == -1 else self.discount * int(self.available_volumes.aggregate(Min('volume'))['volume__min'] or 1)
 
@@ -127,7 +129,7 @@ class Product(models.Model):
 
 class Image(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name='محصولات')
-    image = models.ImageField(upload_to=product_dynamic_path, verbose_name='تصویر', help_text='800*900 | white BG')
+    image = models.ImageField(upload_to=product_dynamic_path, verbose_name='تصویر', help_text='No Background | .png or .webp')
     alt = models.CharField(verbose_name='تیتر', help_text='برای سئو')
 
     def __str__(self):

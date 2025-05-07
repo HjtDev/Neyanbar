@@ -152,7 +152,12 @@ def product_list_view(request):
 
 
     for key in request.GET:
-        if 'brand' in key:
+        if request.GET.get('brand'):  # index top brands
+            print('got brand')
+            all_products = all_products.filter(brand__name=request.GET.get('brand'))
+            print(request.GET.get('brand'))
+            print(all_products)
+        elif 'brand' in key:
             all_products = all_products.filter(brand__slug__in=request.GET.getlist(key))
 
         if 'volumes' in key:
