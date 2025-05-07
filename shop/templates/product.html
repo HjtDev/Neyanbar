@@ -74,6 +74,7 @@
                                     <h3 class="product-name-en">{{ product.name_en }}</h3>
                                     <div class="product-meta">
                                         کد کالا :<span class="product-sku ml-3">{{ product.pid }}</span>
+                                        امتیاز سایت :<span class="product-sku ml-3">{{ product.site_score }}/10</span>
                                         دسته بندی : <span
                                             class="product-brand">{{ product.get_perfume_type_display }}</span>
                                     </div>
@@ -500,7 +501,7 @@
                                             </div>
                                             <div class="ratings-container">
                                                 <div class="ratings-full">
-                                                    <span class="ratings" style="width:80%"></span>
+                                                    <span class="ratings" style="width:{% widthratio product.site_score 1 10 %}%"></span>
                                                     <span class="tooltiptext tooltip-top"></span>
                                                 </div>
                                                 <a href="{{ product.get_absolute_url }}" class="rating-reviews">( از 20 نظر )</a>

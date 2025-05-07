@@ -27,7 +27,7 @@ class Product(models.Model):
     name_en = models.CharField(max_length=100, verbose_name='اسم محصول', help_text='به انگلیسی')
     slug = models.SlugField(max_length=255, unique=True, verbose_name='اسلاگ')
 
-    brand = models.ForeignKey('Brand', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='برند')
+    brand = models.ForeignKey('Brand', on_delete=models.SET_NULL, related_name='products', blank=True, null=True, verbose_name='برند')
     available_volumes = models.ManyToManyField('Volume', related_name='products', blank=True, verbose_name='حجم های موجود')
 
     smell = models.ManyToManyField('ProductSmell', verbose_name='گروه بویایی')
@@ -80,6 +80,8 @@ class Product(models.Model):
     description = HTMLField(verbose_name='توضیحات اصلی')
 
     video = models.FileField(upload_to=product_dynamic_path, blank=True, null=True, validators=[video_validator], verbose_name='ویدیو توضیحات', help_text='.mp4')
+
+    site_score = models.IntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(10)], verbose_name='امتیاز سایت')
 
     views = models.PositiveIntegerField(default=0, verbose_name='بازدید ها')
     liked_by = models.ManyToManyField(User, blank=True, related_name='liked_products', verbose_name='کسانی که این محصول را پسندیده اند')

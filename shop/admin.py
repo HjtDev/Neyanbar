@@ -19,14 +19,14 @@ class CommentInline(admin.StackedInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('pid', 'name', 'brand', 'get_price', 'inventory', 'views', 'is_visible')
+    list_display = ('pid', 'name', 'brand', 'get_price', 'site_score', 'inventory', 'views', 'is_visible')
     list_filter = (
         'smell', 'season',  'taste',
         'nature', 'gender', 'available_volumes',
         'perfume_type', 'is_visible', 'brand',
-        'last_view', 'created_at','updated_at'
+        'site_score', 'last_view', 'created_at','updated_at'
     )
-    list_editable = ('is_visible',)
+    list_editable = ('is_visible', 'inventory', 'site_score')
     search_fields = ('pid', 'name', 'name_en', 'short_description', 'description')
     list_per_page = 20
     prepopulated_fields = {'slug': ('name_en',)}
@@ -55,8 +55,8 @@ class ProductAdmin(admin.ModelAdmin):
             ),
         }),
         ('گزارشات', {
-            'fields': ('inventory', 'liked_by', 'bought_by',
-                       'remind_to', 'views',
+            'fields': ('inventory', 'site_score', 'liked_by',
+                       'bought_by', 'remind_to', 'views',
                        'last_view', 'created_at', 'updated_at'),
             'classes': ('collapse',),
         }),

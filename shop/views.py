@@ -1,7 +1,7 @@
 from django.db.models.functions import Coalesce
 from django.http import QueryDict, JsonResponse
 from django.shortcuts import render, redirect
-from django.db.models import Q, Avg, Value, Count, IntegerField
+from django.db.models import Q, Avg, Count, FloatField, F, ExpressionWrapper
 from django.views.decorators.http import require_http_methods, require_POST
 from shop.models import Product, Comment, Brand, Volume, ProductSmell
 from main.templatetags.tags import to_jalali_verbose
@@ -143,13 +143,12 @@ def notify_me(request):
 
 def product_list_view(request):
     all_products = Product.objects.filter(is_visible=True).annotate(
-        average_rating=Coalesce(
-            Avg('comments__score', filter=Q(comments__is_verified=True)),
-            Value(3),
-            output_field=IntegerField()
-        ),
-        verified_comments_count=Count('comments', filter=Q(comments__is_verified=True))
-    ).order_by('-views')
+        verified_comments_count=Count('comments', filter=Q(comments__is_verified=True)),
+        order=ExpressionWrapper(
+            F('views') * .35 + F('site_score') * .65,
+            output_field=FloatField()
+        )
+    ).order_by('-order')
 
 
     for key in request.GET:
@@ -181,7 +180,7 @@ def product_list_view(request):
             all_products = all_products.filter(perfume_type__in=request.GET.getlist(key))
 
     page = int(request.GET.get('page', 1))
-    all_products = Paginator(all_products, 3)
+    all_products = Paginator(all_products.distinct(), 3)
 
     context = {
         'products': all_products.page(page),
