@@ -10,6 +10,17 @@ class Cart:
         else:
             self.cart = self.session['cart']
 
+        mark_to_delete = []
+        for pid, volumes in self.cart.items():
+            try:
+                if sum(quantity for quantity in volumes['volume'].values()) > Product.objects.get(id=pid).inventory:
+                    mark_to_delete.append(pid)
+            except Product.DoesNotExist:
+                mark_to_delete.append(pid)
+        if mark_to_delete:
+            [self.cart.pop(p) for p in mark_to_delete]
+            self.save()
+
     def save(self):
         self.session.modified = True
 
@@ -35,26 +46,32 @@ class Cart:
         finally:
             self.save()
 
-    def delete(self, pid: str, volume: str):
+    def delete(self, pid: str, volume: str = None):
         try:
-            del self.cart[pid]['volume'][volume]
+            if volume:
+                del self.cart[pid]['volume'][volume]
+            else:
+                del self.cart[pid]
         except KeyError as k:
             print(k)
         finally:
             self.save()
 
     def get_total_cost(self):
-            total = 0
-            for pid, options in self.cart.items():
-                try:
-                    product = Product.objects.get(id=int(pid))
-                    if Volume.objects.filter(volume__in=options['volume'].keys()).exists():
-                        for volume, quantity in options['volume'].items():
-                            total += product.get_volume_price(int(volume)) * int(quantity)
-                except (Product.DoesNotExist, Volume.DoesNotExist):
-                    self.delete(pid)
-            return total
-
+        total = 0
+        mark_to_delete = []
+        for pid, options in self.cart.items():
+            try:
+                product = Product.objects.get(id=int(pid))
+                if Volume.objects.filter(volume__in=options['volume'].keys()).exists():
+                    for volume, quantity in options['volume'].items():
+                        total += product.get_volume_price(int(volume)) * int(quantity)
+            except (Product.DoesNotExist, Volume.DoesNotExist):
+                mark_to_delete.append(pid)
+        if mark_to_delete:
+            [self.cart.pop(p) for p in mark_to_delete]
+            self.save()
+        return total
 
     def __len__(self):
         return sum(len(options.get('volume')) for options in self.cart.values())
