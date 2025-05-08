@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from shop.models import Product, Volume
 from django.template.loader import render_to_string
+from json import load, loads
 
 
 @require_http_methods(['PATCH'])
@@ -43,3 +44,25 @@ def add_view(request):
     except (Product.DoesNotExist, Volume.DoesNotExist) as e:
         print(e)
         return JsonResponse({'message': 'Invalid payload'}, status=400)
+
+
+@require_http_methods(['PATCH'])
+def update_view(request):
+    data = loads(request.body)
+    results = []
+    cart = Cart(request)
+    try:
+        for pid, options in data.items():
+            for volume, quantity in options.items():
+                results.append(cart.update(pid, int(volume), quantity, Product.objects.get(id=int(pid)).inventory))
+        if all(results):
+            cart.save()
+            return JsonResponse({'message': 'Success'}, status=200)
+        return JsonResponse({'message': 'Invalid payload'}, status=400)
+    except Product.DoesNotExist:
+        return JsonResponse({'message': 'Product Does Not Exist'}, status=400)
+
+
+
+def cart_view(request):
+    return render(request, 'cart.html')

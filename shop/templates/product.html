@@ -504,7 +504,7 @@
                                                     <span class="ratings" style="width:{% widthratio product.site_score 1 10 %}%"></span>
                                                     <span class="tooltiptext tooltip-top"></span>
                                                 </div>
-                                                <a href="{{ product.get_absolute_url }}" class="rating-reviews">( از 20 نظر )</a>
+                                                <a href="{{ product.get_absolute_url }}" class="rating-reviews">( {{ product.verified_comments_count }} نظر )</a>
                                             </div>
                                         </div>
                                     </div>

@@ -64,30 +64,32 @@
                     </div>
                 </div>
                 <div class="header-left ">
-                    <div class="dropdown cart-dropdown type2 off-canvas ml-0 mr-lg-2">
-                        <a href="#" class="cart-toggle label-block link">
-                            <i class="fa-light fa-shopping-bag"><span class="cart-count">{{ cart | length }}</span></i>
-                        </a>
-                        <div class="canvas-overlay"></div>
-                        <div class="dropdown-box">
-                            <div class="canvas-header">
-                                <h4 class="canvas-title">سبد خرید</h4>
-                                <a href="#" class="btn btn-dark btn-link btn-icon-right  btn-close">
-                                    بستن<i class="fa-light fa-xmark"></i>
-                                </a>
-                            </div>
-                            {% include 'partials/cart_list.html' with cart=cart %}
-                            <div class="cart-total">
-                                <label>جمع:</label>
-                                <span class="price total-cart-cost">{{ cart.get_total_cost | commafy }} تومان</span>
-                            </div>
-                            <div class="cart-action">
-                                <a href="#" class="btn btn-dark btn-link">نمایش خرید </a>
-                                <a href="#"
-                                   class="btn btn-dark mt-4  btn-rounded  btn-block btn-gradient"><span>پرداخت</span></a>
+                    {% if not '/cart' in request.path %}
+                        <div class="dropdown cart-dropdown type2 off-canvas ml-0 mr-lg-2">
+                            <a href="#" class="cart-toggle label-block link">
+                                <i class="fa-light fa-shopping-bag"><span class="cart-count">{{ cart | length }}</span></i>
+                            </a>
+                            <div class="canvas-overlay"></div>
+                            <div class="dropdown-box">
+                                <div class="canvas-header">
+                                    <h4 class="canvas-title">سبد خرید</h4>
+                                    <a href="#" class="btn btn-dark btn-link btn-icon-right  btn-close">
+                                        بستن<i class="fa-light fa-xmark"></i>
+                                    </a>
+                                </div>
+                                {% include 'partials/cart_list.html' with cart=cart %}
+                                <div class="cart-total">
+                                    <label>جمع:</label>
+                                    <span class="price total-cart-cost">{{ cart.get_total_cost | commafy }} تومان</span>
+                                </div>
+                                <div class="cart-action">
+                                    <a href="{% url 'cart:cart' %}" class="btn btn-dark btn-link">نمایش خرید </a>
+                                    <a href="#"
+                                       class="btn btn-dark mt-4  btn-rounded  btn-block btn-gradient"><span>پرداخت</span></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endif %}
                     <div class="login-wrap">
                         <div class="icon-box icon-box-side border-color-green">
                             <div class="icon-box-icon mr-0 mr-lg-2 d-lg-show">
@@ -1224,7 +1226,9 @@
 <script defer src="{% static 'plugin/jquery.floating/jquery.floating.min.js' %}"></script>
 <script defer src="{% static 'js/main.min.js' %}"></script>
 <script defer src="{% static 'js/login.js' %}"></script>
-<script defer src="{% static 'js/cart.js' %}"></script>
+{% if not '/cart' in request.path %}
+    <script defer src="{% static 'js/cart.js' %}"></script>
+{% endif %}
 {% block script %}{% endblock %}
 </body>
 </html>

@@ -29,6 +29,8 @@ class Cart:
         self.save()
 
     def add(self, pid: str, volume: int, quantity: int, max_quantity: int):
+        if not quantity or not max_quantity:
+            return False
         try:
             if Product.objects.get(id=int(pid)) and Volume.objects.get(volume=volume):
                 if self.cart.get(pid, None):
@@ -40,11 +42,23 @@ class Cart:
                         self.cart[pid]['volume'].update({volume: quantity})
                 else:
                     self.cart[pid] = {'volume': {volume: quantity}}
+                self.save()
                 return True
         except Product.DoesNotExist as e:
             print('error:', e)
-        finally:
-            self.save()
+        return False
+
+    def update(self, pid: str, volume: int, quantity: int, max_quantity: int):
+        if not quantity or not max_quantity:
+            self.delete(pid)
+            return False
+        try:
+            if Volume.objects.get(volume=volume):
+                self.cart[pid]['volume'][str(volume)] = quantity
+                return True
+        except (Product.DoesNotExist, Volume.DoesNotExist):
+            self.delete(pid)
+        return False
 
     def delete(self, pid: str, volume: str = None):
         try:
@@ -85,6 +99,7 @@ class Cart:
                         'product': product,
                         'volume': volume,
                         'quantity': quantity,
+                        'base_price': product.get_volume_price(int(volume)),
                         'cost': product.get_volume_price(int(volume)) * int(quantity)
                     }
             except (Product.DoesNotExist, Volume.DoesNotExist):

@@ -57,7 +57,13 @@ def product_view(request, slug):
         Q(taste=product.taste) |
         Q(nature=product.nature) |
         Q(smell__in=product.smell.all())
-    ).distinct().order_by('-created_at')[:6]
+    ).annotate(
+        verified_comments_count=Count('comments', filter=Q(comments__is_verified=True)),
+        order=ExpressionWrapper(
+            F('views') * .25 + F('site_score') * .75,
+            output_field=FloatField()
+        )
+    ).distinct().order_by('-order')[:6]
 
     most_viewed_col1 = all_products.order_by('-views')[:3]
     most_viewed_col2 = all_products.order_by('-views')[3:7]
