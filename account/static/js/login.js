@@ -172,7 +172,8 @@ $(document).ready(function () {
                     console.log('Register Successfull');
                     setButtonLoading(btn, true, 'خوش آمدید');
                     setTimeout(function() {
-                        window.location.href = '/account/dashboard/';
+                        // window.location.href = '/account/dashboard/';
+                        location.reload();
                     }, 1000);
                 }
             },

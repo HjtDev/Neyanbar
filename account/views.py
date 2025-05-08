@@ -1,5 +1,5 @@
 from django.contrib.auth import login, logout
-from django.db.models.fields import return_None
+from copy import deepcopy
 from django.shortcuts import render, redirect
 from django.http.response import JsonResponse
 from django.views.decorators.http import require_POST, require_http_methods
@@ -41,7 +41,9 @@ def login_complete_view(request):
             if not code:
                 return JsonResponse({'message': 'کد تایید منقضی شده است.'}, status=406)
             elif code == int(token):
+                cart = deepcopy(request.session.get('cart', {}))
                 login(request, user)
+                request.session['cart'] = cart
                 cache.delete(f'login-user-{user.id}')
                 return JsonResponse({'logged_in': True}, status=200)
             else:
@@ -89,7 +91,9 @@ def register_complete_view(request):
             return JsonResponse({'message': 'کد تایید منقضی شده است.'}, status=406)
         elif code == int(token):
             user = User.objects.create_user(phone=phone, name=name, email=email)
+            cart = deepcopy(request.session.get('cart', {}))
             login(request, user)
+            request.session['cart'] = cart
             cache.delete(f'register-user-{phone}')
             return JsonResponse({'logged_in': True}, status=200)
         else:
@@ -100,7 +104,9 @@ def register_complete_view(request):
 
 def logout_view(request):
     if request.user.is_authenticated:
+        cart = deepcopy(request.session.get('cart', {}))
         logout(request)
+        request.session['cart'] = cart
     return redirect('main:index')
 
 
