@@ -65,4 +65,6 @@ def update_view(request):
 
 
 def cart_view(request):
+    if not len(Cart(request)):
+        return render(request, 'cart-empty.html')
     return render(request, 'cart.html')
