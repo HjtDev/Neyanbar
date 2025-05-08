@@ -274,25 +274,27 @@
                     {% endfor %}
                 </div>
             </section>
-            <section class="banner parallax rtl text-right" data-option="{'offset': 400}"
-                     data-image-src="{% static 'images/parallax.jpg' %}">
-                <div class="container">
-                    <div class="banner-content text-center appear-animate" data-animation-options="{
+            {% if offer_title %}
+                <section class="banner parallax rtl text-right" data-option="{'offset': 400}"
+                         data-image-src="{{ offer_banner }}">
+                    <div class="container">
+                        <div class="banner-content text-center appear-animate" data-animation-options="{
                             'name': 'blurIn'
                         }">
-                        <h4 class="banner-subtitle mb-2 text-secondary font-weight-bold">تخفیف امروز</h4>
-                        <h3 class="banner-title mb-2 text-white font-weight-bolder ls-m">
-                            تمامی عطرهای زنانه
-                        </h3>
-                        <p class="text-white font-primary ls-normal mb-6">
-                            به مناسبت روز زن و مادر
-                        </p>
-                        <a href="product.html" class="btn btn-primary btn-lg">
-                            مشاهده و انتخاب <i class="fa-light fa-angles-left"></i>
-                        </a>
+                            <h4 class="banner-subtitle mb-2 text-secondary font-weight-bold">پیشنهاد امروز</h4>
+                            <h3 class="banner-title mb-2 text-white font-weight-bolder ls-m">
+                                {{ offer_title }}
+                            </h3>
+                            <p class="text-white font-primary ls-normal mb-6">
+                                {{ offer_event }}
+                            </p>
+                            <a href="{{ offer_link }}" class="btn btn-primary btn-lg">
+                                مشاهده و انتخاب <i class="fa-light fa-angles-left"></i>
+                            </a>
+                        </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            {% endif %}
             <section class="container rtl text-right">
                 <div class="service-list">
                     <div class="owl-carousel owl-theme owl-middle row cols-lg-4 cols-md-3 cols-sm-2 cols-2"

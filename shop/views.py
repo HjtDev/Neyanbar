@@ -157,37 +157,56 @@ def product_list_view(request):
 
 
     for key in request.GET:
-        if request.GET.get('brand'):  # index top brands
-            all_products = all_products.filter(brand__name=request.GET.get('brand'))
+        if request.GET.get('products'):
+            all_products = all_products.filter(slug__in=request.GET.get('products').split(';'))
+
+        if request.GET.get('brands'):
+            all_products = all_products.filter(brand__slug__in=request.GET.get('brands').split(';'))
         elif 'brand' in key:
             all_products = all_products.filter(brand__slug__in=request.GET.getlist(key))
 
-        if 'volumes' in key:
+        if request.GET.get('volumes'):
+            all_products = all_products.filter(available_volumes__in=Volume.objects.filter(volume__in=request.GET.get('volumes').split(';'))).distinct()
+        elif 'volumes' in key:
             all_products = all_products.filter(available_volumes__in=Volume.objects.filter(volume__in=[int(v) for v in request.GET.getlist(key)])).distinct()
 
-        if 'smells' in key:
+        if request.GET.get('smells'):
+            all_products = all_products.filter(smell__in=ProductSmell.objects.filter(value__in=request.GET.get('smells').split(';'))).distinct()
+        elif 'smells' in key:
             all_products = all_products.filter(smell__in=ProductSmell.objects.filter(value__in=request.GET.getlist(key))).distinct()
 
-        if 'seasons' in key:
+        if request.GET.get('seasons'):
+            all_products = all_products.filter(season__in=request.GET.get('seasons').split(';'))
+        elif 'seasons' in key:
             all_products = all_products.filter(season__in=request.GET.getlist(key))
 
-        if 'tastes' in key:
+        if request.GET.get('taste'):
+            all_products = all_products.filter(taste__in=request.GET.get('taste').split(';'))
+        elif 'tastes' in key:
             all_products = all_products.filter(taste__in=request.GET.getlist(key))
 
-        if 'nature' in key:
+        if request.GET.get('nature'):
+            all_products = all_products.filter(nature__in=request.GET.get('nature').split(';'))
+        elif 'nature' in key:
             all_products = all_products.filter(nature__in=request.GET.getlist(key))
 
-        if 'durability' in key:
+        if request.GET.get('durability'):
+            all_products = all_products.filter(durability__in=request.GET.get('durability').split(';'))
+        elif 'durability' in key:
             all_products = all_products.filter(durability__in=request.GET.getlist(key))
 
-        if 'gender' in key:
+        if request.GET.get('gender'):
+            all_products = all_products.filter(gender__in=request.GET.get('gender').split(';'))
+        elif 'gender' in key:
             all_products = all_products.filter(gender__in=request.GET.getlist(key))
 
-        if 'type' in key:
+        if request.GET.get('type'):
+            all_products = all_products.filter(perfume_type__in=request.GET.get('type').split(';'))
+        elif 'type' in key:
             all_products = all_products.filter(perfume_type__in=request.GET.getlist(key))
 
     page = int(request.GET.get('page', 1))
-    all_products = Paginator(all_products.distinct(), 3)
+    all_products = Paginator(all_products.distinct(), 6)
 
     context = {
         'products': all_products.page(page),

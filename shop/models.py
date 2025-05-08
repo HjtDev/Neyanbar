@@ -170,7 +170,7 @@ class ProductSmell(models.Model):
         FRUITY = 'FRUITY', 'میوه ای'
         CITRUS = 'CITRUS', 'مرکباتی'
         MARINE = 'MARINE', 'دریایی'
-        ORIENTAL = 'ORIENTAL', 'شرقی'
+        ORIENTAL = 'EASTERN', 'شرقی'
         SPICY = 'SPICY', 'ادویه ای'
         FOUGERE = 'FOUGERE', 'فوژه'
         LEATHERY = 'LEATHERY', 'چرمی'

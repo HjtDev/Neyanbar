@@ -2,6 +2,7 @@ from django.db.models import Count, Min, Max, Q, ExpressionWrapper, Case, When, 
 from django.shortcuts import render
 from blog.models import Post
 from shop.models import Product, Brand
+from .models import Setting
 
 
 def home_view(request):
@@ -26,6 +27,14 @@ def home_view(request):
                 output_field=IntegerField()
             )
         ).order_by('-products__site_score')[:4],
-        'top_products': all_products.order_by('-site_score')[:6]
+        'top_products': all_products.order_by('-site_score')[:6],
     }
+    settings = Setting.objects.first()
+    if settings.show_offer:
+        context.update({
+            'offer_title': settings.title,
+            'offer_event': settings.event,
+            'offer_link': settings.get_offer_link(),
+            'offer_banner': settings.banner.url,
+        })
     return render(request, 'index.html', context)
