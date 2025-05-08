@@ -102,6 +102,10 @@ class Product(models.Model):
     def get_price(self):
         return self.price * int(self.available_volumes.aggregate(Min('volume'))['volume__min'] or 1) if self.discount == -1 else self.discount * int(self.available_volumes.aggregate(Min('volume'))['volume__min'] or 1)
 
+    def get_volume_price(self, volume):
+        return self.price * volume if self.discount == -1 else self.discount * volume
+
+
     get_price.short_description = 'کمترین قیمت موجود'
 
     def get_price_difference(self):
@@ -185,10 +189,10 @@ class ProductSmell(models.Model):
 class Brand(models.Model):
     objects = models.Manager()
 
-    name = models.CharField(verbose_name='نام برند', max_length=100)
+    name = models.CharField(verbose_name='نام برند', unique=True, max_length=100)
     logo = models.ImageField(upload_to='Brands/Logo', verbose_name='لوگو', help_text='45*45 | white BG')
     banner = models.ImageField(upload_to='Brands/Banner', verbose_name='بنر', help_text='285*336')
-    slug = models.SlugField(verbose_name='اسلاگ', max_length=255)
+    slug = models.SlugField(verbose_name='اسلاگ', unique=True, max_length=255)
 
     def __str__(self):
         return self.name
@@ -222,8 +226,8 @@ class Comment(models.Model):
 class Volume(models.Model):
     objects = models.Manager()
 
-    name = models.CharField(verbose_name='اسم', max_length=100, help_text='مثال: ۱۰ میل')
-    volume = models.PositiveIntegerField(default=1, verbose_name='حجم', help_text='به میل')
+    name = models.CharField(verbose_name='اسم', unique=True, max_length=100, help_text='مثال: ۱۰ میل')
+    volume = models.PositiveIntegerField(default=1, unique=True, verbose_name='حجم', help_text='به میل')
 
     def __str__(self):
         return self.name

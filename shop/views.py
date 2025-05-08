@@ -1,4 +1,3 @@
-from django.db.models.functions import Coalesce
 from django.http import QueryDict, JsonResponse
 from django.shortcuts import render, redirect
 from django.db.models import Q, Avg, Count, FloatField, F, ExpressionWrapper
@@ -58,7 +57,13 @@ def product_view(request, slug):
         Q(taste=product.taste) |
         Q(nature=product.nature) |
         Q(smell__in=product.smell.all())
-    ).distinct().order_by('-created_at')[:6]
+    ).annotate(
+        verified_comments_count=Count('comments', filter=Q(comments__is_verified=True)),
+        order=ExpressionWrapper(
+            F('views') * .25 + F('site_score') * .75,
+            output_field=FloatField()
+        )
+    ).distinct().order_by('-order')[:6]
 
     most_viewed_col1 = all_products.order_by('-views')[:3]
     most_viewed_col2 = all_products.order_by('-views')[3:7]
@@ -153,10 +158,7 @@ def product_list_view(request):
 
     for key in request.GET:
         if request.GET.get('brand'):  # index top brands
-            print('got brand')
             all_products = all_products.filter(brand__name=request.GET.get('brand'))
-            print(request.GET.get('brand'))
-            print(all_products)
         elif 'brand' in key:
             all_products = all_products.filter(brand__slug__in=request.GET.getlist(key))
 

@@ -408,7 +408,7 @@ $(document).ready(function() {
         let value = $(this).text();
         let price = $('#product-actual-price')
         let discount = price.data('discount');
-        let base_price = Number(discount) === -1 ? price.data('price'):price.data('discount');
+        let base_price = Number(discount) === -1 ? price.data('price'):discount;
 
         let final_price = Number(value) * Number(base_price);
 
