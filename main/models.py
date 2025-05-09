@@ -1,7 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.urls import reverse
-
+from django.core.cache import cache
 from shop.models import Product, Brand
 
 
@@ -75,6 +75,11 @@ class Setting(models.Model):
 
     def __str__(self):
         return 'تنظیمات'
+
+    def save(self, *args, **kwargs):
+        cache.set('post_fee', self.post_fee)
+        cache.set('tax_fee', self.tax_fee)
+        return super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = verbose_name_plural = 'تنظیمات'
