@@ -14,9 +14,9 @@ class Setting(models.Model):
     tax_fee = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(100)], verbose_name='مالیات', help_text='به درصد')
 
     show_offer = models.BooleanField(default=False, verbose_name='نمایش پیشنهاد')
-    title = models.CharField(max_length=30, blank=True, verbose_name='تیتر پیشنهاد')
+    title = models.CharField(max_length=50, blank=True, verbose_name='تیتر پیشنهاد')
     event = models.CharField(max_length=100, blank=True, verbose_name='(مناسبت/علت تخفیف) پیشنهاد')
-    products = models.CharField(max_length=50, blank=True, verbose_name='محصولات انتخاب شده', help_text='بر اساس لیست پیشنهاد های مجاز')
+    products = models.CharField(blank=True, verbose_name='محصولات انتخاب شده', help_text='بر اساس لیست پیشنهاد های مجاز')
     banner = models.ImageField(upload_to='offers/', blank=True, verbose_name='بنر')
 
     def get_offer_link(self):
@@ -46,6 +46,32 @@ class Setting(models.Model):
         elif self.products.startswith('type:'):
             return reverse('shop:product-list') + f'?type={args}'
         return ''
+
+    def get_offer_products(self):
+        if not self.show_offer or not self.products:
+            return []
+        args = self.products.split(':')[1].split(';')
+        if self.products.startswith('products:'):
+            return Product.objects.filter(slug__in=args)
+        elif self.products.startswith('brands:'):
+            return Product.objects.filter(brand__slug__in=args)
+        elif self.products.startswith('volumes:'):
+            return Product.objects.filter(available_volumes__volume__in=args)
+        elif self.products.startswith('smells'):
+            return Product.objects.filter(smell__value__in=args)
+        elif self.products.startswith('seasons:'):
+            return Product.objects.filter(season__in=args)
+        elif self.products.startswith('tastes:'):
+            return Product.objects.filter(taste__in=args)
+        elif self.products.startswith('nature'):
+            return Product.objects.filter(nature__in=args)
+        elif self.products.startswith('durability:'):
+            return Product.objects.filter(durability__in=args)
+        elif self.products.startswith('gender'):
+            return Product.objects.filter(gender__in=args)
+        elif self.products.startswith('type:'):
+            return Product.objects.filter(type__in=args)
+        return []
 
     def __str__(self):
         return 'تنظیمات'
