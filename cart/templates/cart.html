@@ -22,9 +22,14 @@
         </nav>
         <div class="page-content cat-wrap">
             <div class="step-by pr-4 pl-4">
-                <h3 class="title title-simple title-step active"><a href="{% url 'cart:cart' %}">1. سبد خرید</a></h3>
-                <h3 class="title title-simple title-step"><a href="#">2. صورت حساب</a></h3>
-                <h3 class="title title-simple title-step"><a>3. تکمیل خرید</a></h3>
+                    <h3 class="title title-simple title-step active"><a href="{% url 'cart:cart' %}">1. سبد خرید</a></h3>
+                    <h3 class="title title-simple title-step"><a>2. صورت حساب</a></h3>
+                {% if not request.user.is_authenticated %}
+                    <h3 class="title title-simple title-step"><a>3. احراز هویت</a></h3>
+                    <h3 class="title title-simple title-step"><a>4. تکمیل خرید</a></h3>
+                {% else %}
+                    <h3 class="title title-simple title-step"><a>3. تکمیل خرید</a></h3>
+                {% endif %}
             </div>
             <div class="container">
                 <div class="row">
