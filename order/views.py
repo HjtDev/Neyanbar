@@ -163,6 +163,7 @@ def order_submit(request):
                 credit_card = CreditCart.objects.get(token=credit_token)
                 if credit_card.buy(total_cost):
                     if request.session.get('discount'):
+                        Discount.objects.get(id=request.session['discount']).users.add(request.user)
                         del request.session['discount']
                     order.user = request.user
                     order.status = Order.StatusChoices.PENDING
@@ -183,6 +184,9 @@ def order_submit(request):
         else:
             order.user = request.user
             order.save()
+            if request.session.get('discount'):
+                Discount.objects.get(id=request.session['discount']).users.add(request.user)
+                del request.session['discount']
             print('*' * 30)
             print('REDIRECTED TO PAYMENT PAGE')
             print('*' * 30)
@@ -219,7 +223,8 @@ def verify_order(request):
         cart, discount, order_session = {}, deepcopy(request.session.get('discount', None)), deepcopy(request.session.get('order', None))
         login(request, user)
         request.session['cart'] = cart
-        request.session['discount'] = discount
+        if discount:
+            Discount.objects.get(id=discount).users.add(user)
         request.session['order'] = order_session
 
         payment_method = request.session['order'].get('payment_method')

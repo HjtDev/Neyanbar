@@ -5,7 +5,8 @@ from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 from shop.models import Product, Volume
 from django.template.loader import render_to_string
-from json import load, loads
+from json import loads
+from order.models import Discount
 
 
 @require_http_methods(['PATCH'])
@@ -68,3 +69,17 @@ def cart_view(request):
     if not len(Cart(request)):
         return render(request, 'cart-empty.html')
     return render(request, 'cart.html')
+
+
+@require_http_methods(['GET'])
+def apply_discount(request):
+    token = request.GET.get('token')
+    try:
+        discount = Discount.objects.get(token=token)
+        valid, message = discount.is_valid(request.user)
+        if valid:
+            request.session['discount'] = discount.id
+            return JsonResponse({})
+        return JsonResponse({'btn': message}, status=403)
+    except Discount.DoesNotExist:
+        return JsonResponse({'btn': 'این کد تخفیف نا معتبر است'}, status=404)

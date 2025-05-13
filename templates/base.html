@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="header-left ">
-                    {% if not '/cart' in request.path %}
+                    {% if not '/cart' in request.path and request.path != '/order/' %}
                         <div class="dropdown cart-dropdown type2 off-canvas ml-0 mr-lg-2">
                             <a href="#" class="cart-toggle label-block link">
                                 <i class="fa-light fa-shopping-bag"><span class="cart-count">{{ cart | length }}</span></i>
