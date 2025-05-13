@@ -37,7 +37,7 @@ def profile_directory_path(instance, filename):
 
 class User(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField(max_length=11, unique=True, verbose_name='شماره تلفن')
-    email = models.EmailField(max_length=255, unique=True, blank=True, null=True, verbose_name='ایمیل')
+    email = models.EmailField(max_length=255, blank=True, null=True, verbose_name='ایمیل')
     name = models.CharField(max_length=60, verbose_name='نام')
     profile = models.ImageField(upload_to=profile_directory_path, null=True, blank=True, verbose_name='پروفایل', help_text='60*60')
 

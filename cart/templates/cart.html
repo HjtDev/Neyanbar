@@ -22,9 +22,14 @@
         </nav>
         <div class="page-content cat-wrap">
             <div class="step-by pr-4 pl-4">
-                <h3 class="title title-simple title-step active"><a href="{% url 'cart:cart' %}">1. سبد خرید</a></h3>
-                <h3 class="title title-simple title-step"><a href="#">2. صورت حساب</a></h3>
-                <h3 class="title title-simple title-step"><a>3. تکمیل خرید</a></h3>
+                    <h3 class="title title-simple title-step active"><a href="{% url 'cart:cart' %}">1. سبد خرید</a></h3>
+                    <h3 class="title title-simple title-step"><a>2. صورت حساب</a></h3>
+                {% if not request.user.is_authenticated %}
+                    <h3 class="title title-simple title-step"><a>3. احراز هویت</a></h3>
+                    <h3 class="title title-simple title-step"><a>4. تکمیل خرید</a></h3>
+                {% else %}
+                    <h3 class="title title-simple title-step"><a>3. تکمیل خرید</a></h3>
+                {% endif %}
             </div>
             <div class="container">
                 <div class="row">
@@ -83,12 +88,19 @@
                             </tbody>
                         </table>
                         <div class="cart-actions mb-6 pt-4">
-                            <a href="shop-classic-filter.html" class="btn btn-dark btn-md btn-rounded btn-icon-left btn-gradient ml-4 mb-4">
+                            <a href="{% url 'shop:product-list' %}" class="btn btn-dark btn-md btn-rounded btn-icon-left btn-gradient ml-4 mb-4">
                                 ادامه خرید<i class="fa-light fa-angles-left"></i>
                             </a>
                             <button type="submit"
                                     class="btn btn-outline btn-dark btn-md btn-rounded btn-disabled save-cart">
                                 بروزرسانی سبد خرید
+                            </button>
+                        </div>
+                        <div class="cart-coupon-box mb-8">
+                            <h4 class="title coupon-title ls-m"> کد تخفیف</h4>
+                            <input type="text" name="coupon_code" class="input-text form-control text-grey ls-m mb-4" id="discount_token" value="" placeholder="سریال تخفیف را وارد کنید">
+                            <button type="submit" class="btn btn-md btn-rounded btn-outline {% if request.user.is_authenticated %}submit_token{% else %}login-toggleظ{% endif %}">
+                                اعمال تخفیف
                             </button>
                         </div>
                     </div>
@@ -116,7 +128,7 @@
                                         </td>
                                     </tr>
                                 </table>
-                                <a href="#" class="btn btn-dark btn-checkout btn-rounded btn-md btn-block btn-gradient" data-toggle="modal" data-target="#addCartModal" title="اضافه به خرید"> صورت حساب </a>
+                                <a href="{% url 'order:order' %}" class="btn btn-dark btn-checkout btn-rounded btn-md btn-block btn-gradient" data-toggle="modal" data-target="#addCartModal" title="اضافه به خرید"> تکمیل خرید </a>
                             </div>
                         </div>
                     </aside>

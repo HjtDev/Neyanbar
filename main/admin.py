@@ -11,6 +11,10 @@ class SettingAdmin(admin.ModelAdmin):
             'fields': ['site_access'],
             'classes': ['collapse', 'tab-site-access'],
         }),
+        (_('سفارشات'), {
+            'fields': ['order_waiting_days', 'orders_per_day', 'order_days_limit'],
+            'classes': ['collapse', 'tab-order-fields'],
+        }),
         (_('هزینه ها'), {
             'fields': ['post_fee', 'tax_fee'],
             'classes': ['collapse', 'tab-fee-fields'],

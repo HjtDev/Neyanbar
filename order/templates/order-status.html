@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load tags %}
+
+{% block title %}
+	وضعیت سفارش
+{% endblock %}
+
+{% block content %}
+    <main class="main rtl text-right">
+        <div class="page-header pl-4 pr-4">
+            <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبسایت ما</h3>
+            <h1 class="page-title font-weight-bold lh-1 text-white">وضعیت سفارش</h1>
+        </div>
+        <nav class="breadcrumb-nav">
+            <div class="container breadcrumb-nav-wrap">
+                <ul class="breadcrumb ">
+                    <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
+                    <li>وضعیت سفارش</li>
+                </ul>
+            </div>
+        </nav>
+        <div class="page-content  order">
+            <div class="container">
+                <div class="order-message mr-auto ml-auto">
+                    <div class="icon-box d-inline-flex align-items-center">
+                        <div class="icon-box-icon mb-0">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
+                                 enable-background="new 0 0 50 50" xml:space="preserve">
+								<g>
+								<path fill="none" stroke-width="3" stroke-linecap="round"
+                                      stroke-linejoin="bevel" stroke-miterlimit="10" d="
+											M33.3,3.9c-2.7-1.1-5.6-1.8-8.7-1.8c-12.3,0-22.4,10-22.4,22.4c0,12.3,10,22.4,22.4,22.4c12.3,0,22.4-10,22.4-22.4
+											c0-0.7,0-1.4-0.1-2.1"></path>
+                                    <polyline fill="none" stroke-width="4" stroke-linecap="round"
+                                              stroke-linejoin="bevel" stroke-miterlimit="10" points="
+											48,6.9 24.4,29.8 17.2,22.3 	"></polyline>
+									</g>
+								</svg>
+                        </div>
+                        <div class="icon-box-content text-right">
+                            <h5 class="icon-box-title font-weight-bold">متشکریم از خرید شما!</h5>
+                            <p class="lh-1 ls-m">اطلاعات سفارش: {{ order.order_id }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-results">
+                    <div class="overview-item">
+                        <span>کد سفارش:</span>
+                        <strong>{{ order.order_id }}</strong>
+                    </div>
+                    <div class="overview-item">
+                        <span>وضعیت:</span>
+                        <strong>{{ order.get_status_display }}</strong>
+                    </div>
+                    <div class="overview-item">
+                        <span> تحویل  :</span>
+                        <strong>{{ order.receive_time | to_jalali_verbose }}</strong>
+                    </div>
+                    <div class="overview-item">
+                        <span>شماره تلفن:</span>
+                        <strong>{{ order.phone }}</strong>
+                    </div>
+                    <div class="overview-item">
+                        <span>کد پستی:</span>
+                        <strong>{{ order.postal_code }}</strong>
+                    </div>
+                    <div class="overview-item">
+                        <span> جمع:</span>
+                        <strong> {{ order.get_total_cost | commafy }} تومان </strong>
+                    </div>
+                </div>
+                <h2 class="title title-simple text-right pt-4 font-weight-bold">جزئیات فاکتور</h2>
+                <div class="order-details">
+                    <table class="order-details-table">
+                        <thead>
+                        <tr class="summary-subtotal">
+                            <td>
+                                <h3 class="summary-subtitle">محصول</h3>
+                            </td>
+                            <td></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in order.items.all %}
+                            <tr>
+                                <td class="product-name">
+                                    {{ item.product }}<span>
+											<i class="fa-light fa-times"></i>
+											{{ item.quantity }}
+										</span>
+                                </td>
+                                <td class="product-price"> {{ item.price | commafy }} تومان </td>
+                            </tr>
+                        {% endfor %}
+                        <tr class="summary-subtotal">
+                            <td>
+                                <h4 class="summary-subtitle">جمع محصولات:</h4>
+                            </td>
+                            <td class="summary-subtotal-price"> {{ total_before_tax | commafy }} تومان </td>
+                        </tr>
+                        <tr class="summary-subtotal">
+                            <td>
+                                <h4 class="summary-subtitle">روش پرداخت:</h4>
+                            </td>
+                            <td class="summary-subtotal-price">{{ order.transactions.first.get_payment_type_display }}</td>
+                        </tr>
+                        <tr class="summary-subtotal">
+                            <td>
+                                <h4 class="summary-subtitle"> جمع (پس از تخفیف ها و مالیات):</h4>
+                            </td>
+                            <td>
+                                <p class="summary-total-price"> {{ order.get_total_cost | commafy }} تومان </p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h2 class="title title-simple text-right pt-10 mb-2">آدرس مقصد</h2>
+                <div class="address-info pb-8 mb-6">
+                    <p class="address-detail pb-2">
+                        {{ order.province }}<br>
+                        {{ order.city }}<br>
+                        {{ order.address }}
+                    </p>
+                    {% if order.email %}
+                        <p class="email">{{ order.email }}</p>
+                    {% endif %}
+                </div>
+                <a href="{% url 'shop:product-list' %}" class="btn btn-icon-right btn-dark btn-back btn-rounded btn-md mb-4 btn-checkout btn-gradient">
+                    بازگشت به فروشگاه<i class="fa-light fa-angles-left"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+{% endblock %}

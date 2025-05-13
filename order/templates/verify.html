@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+	احراز هویت
+{% endblock %}
+
+{% block content %}
+    <main class="main rtl text-right">
+        <div class="page-header pl-4 pr-4">
+            <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبسایت ما</h3>
+            <h1 class="page-title font-weight-bold lh-1 text-white">احراز هویت</h1>
+            <p class="page-desc text-white mb-0">
+        </div>
+        <nav class="breadcrumb-nav">
+            <div class="container breadcrumb-nav-wrap">
+                <ul class="breadcrumb ">
+                    <li><a href="{% url 'main:index' %}">خانه</a></li>
+                    <li><a href="{% url 'cart:cart' %}">سبد خرید</a></li>
+                    <li><a href="{% url 'order:order' %}">صورت حساب</a></li>
+                    <li>ورود</li>
+                </ul>
+            </div>
+        </nav>
+        <div class="page-content">
+            <div class="step-by pr-4 pl-4">
+                <h3 class="title title-simple title-step"><a href="{% url 'cart:cart' %}">1. سبد خرید</a></h3>
+                <h3 class="title title-simple title-step"><a>2. صورت حساب</a></h3>
+                <h3 class="title title-simple title-step active"><a>3. احراز هویت</a></h3>
+                <h3 class="title title-simple title-step"><a>4. تکمیل خرید</a></h3>
+            </div>
+            <div class="container section-bottom-margin">
+                <div class="login-popup">
+                    <div class="form-box">
+                        <div class="container-fluid title-wrap">
+                            <h2 class="title title-center mt-4 ">احراز هویت</h2>
+                            <h5 class="title-info">
+                                <span></span>
+                                <picture><source srcset="{% static 'images/perfume/15.webp' %}" type="image/webp"><img src="{% static 'images/perfume/15.png' %}"></picture>
+                                <span></span>
+                            </h5>
+                        </div>
+                        <div id="signin">
+                            <form method="post">
+                                {% csrf_token %}
+                                <div class="form-group mb-4">
+                                    <label>کد تایید <i class="fa-light fa-star-of-life"></i></label>
+                                    <input type="text" class="form-control text-left" id="token" name="token" placeholder="۱۲۳۴"
+                                           required />
+                                </div>
+                                <button class="btn btn-md btn-block btn-gradient" type="submit">
+                                    تایید
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
