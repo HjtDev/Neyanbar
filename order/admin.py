@@ -21,12 +21,14 @@ class TransactionInline(admin.StackedInline):
 class OrderAdmin(admin.ModelAdmin):
     inlines = [OrderItemInline, TransactionInline]
 
-    list_display = ('order_id', 'name', 'phone', 'status', 'receive_type', 'created_at')
+    list_display = ('order_id', 'name', 'phone', 'status', 'receive_time', 'created_at')
     list_filter = (
+        'user',
         'status',
         'receive_type',
         'province',
         'city',
+        'receive_time',
         'created_at',
         'not_for_me',
     )
@@ -43,7 +45,7 @@ class OrderAdmin(admin.ModelAdmin):
             'fields': ('receive_type', 'receive_time', 'not_for_me', 'province', 'city', 'address', 'postal_code')
         }),
         (_('اطلاعات مشتری'), {
-            'fields': ('name', 'phone', 'email')
+            'fields': ('user', 'name', 'phone', 'email')
         }),
     )
 

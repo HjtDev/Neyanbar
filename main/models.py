@@ -10,6 +10,9 @@ class Setting(models.Model):
 
     site_access = models.BooleanField(default=True, verbose_name='دسترسی به سایت', help_text='دسترسی همه کاربران از سایت قطع می شود.')
 
+    order_waiting_days = models.PositiveIntegerField(default=3, verbose_name='زودترین زمان ثبت سفارش', help_text='تعداد روز های مورد نیاز برای پردازش هر سفارش')
+    orders_per_day = models.PositiveIntegerField(default=1, verbose_name='بیشترین تعداد سفارش در یک روز')
+    order_days_limit = models.PositiveIntegerField(default=3, verbose_name='تعداد روز های قابل انتخاب برای دریافت سفارش')
     post_fee = models.PositiveIntegerField(default=10, validators=[MinValueValidator(10)], verbose_name='کرایه پست', help_text='به تومان')
     tax_fee = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(100)], verbose_name='مالیات', help_text='به درصد')
 
@@ -75,11 +78,6 @@ class Setting(models.Model):
 
     def __str__(self):
         return 'تنظیمات'
-
-    def save(self, *args, **kwargs):
-        cache.set('post_fee', self.post_fee)
-        cache.set('tax_fee', self.tax_fee)
-        return super().save(*args, **kwargs)
 
     class Meta:
         verbose_name = verbose_name_plural = 'تنظیمات'

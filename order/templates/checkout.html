@@ -1,0 +1,241 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load tags %}
+{% load tz %}
+
+{% block title %}
+	صورت حساب
+{% endblock %}
+
+{% block content %}
+    <main class="main rtl text-right">
+        <div class="page-header pl-4 pr-4">
+            <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبسایت ما</h3>
+            <h1 class="page-title font-weight-bold lh-1 text-white"> صورت حساب </h1>
+        </div>
+        <nav class="breadcrumb-nav">
+            <div class="container breadcrumb-nav-wrap">
+                <ul class="breadcrumb ">
+                    <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
+                    <li> صورت حساب</li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="page-content">
+            <div class="step-by pr-4 pl-4">
+                <h3 class="title title-simple title-step"><a href="{% url 'cart:cart' %}">1. سبد خرید</a></h3>
+                <h3 class="title title-simple title-step active"><a>2. صورت حساب</a></h3>
+                {% if not request.user.is_authenticated %}
+                    <h3 class="title title-simple title-step"><a>3. احراز هویت</a></h3>
+                    <h3 class="title title-simple title-step"><a>4. تکمیل خرید</a></h3>
+                {% else %}
+                    <h3 class="title title-simple title-step"><a>3. تکمیل خرید</a></h3>
+                {% endif %}
+            </div>
+            <div class="container checkout">
+                <form action="#" class="form">
+                    <div class="row">
+                        <div class="col-lg-8 mb-6 mb-lg-0 pr-lg-4">
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <label>نام و نام خانوادگی <i class="fa-light fa-star-of-life"></i></label>
+                                    <input type="text" class="form-control" name="name" id="name" required />
+                                </div>
+                                <div class="col-xs-6">
+                                    <label>تلفن <i class="fa-light fa-star-of-life"></i></label>
+                                    <input type="text" class="form-control text-left" name="phone" id="phone" minlength="11" maxlength="11" required />
+                                </div>
+                            </div>
+                            <label>ایمیل (اختیاری)<i class="fa-light fa-star-of-life"></i></label>
+                            <input type="text" class="form-control text-left" name="email-address" id="email-address" required />
+                            <label>استان <i class="fa-light fa-star-of-life"></i></label>
+                            <div class="select-box">
+                                <select id="province-select" name="province" class="form-control">
+                                    <option value="" disabled selected>استان را انتخاب کنید</option>
+                                    <option value="آذربایجان شرقی">آذربایجان شرقی</option>
+                                    <option value="آذربایجان غربی">آذربایجان غربی</option>
+                                    <option value="اردبیل">اردبیل</option>
+                                    <option value="اصفهان">اصفهان</option>
+                                    <option value="البرز">البرز</option>
+                                    <option value="ایلام">ایلام</option>
+                                    <option value="بوشهر">بوشهر</option>
+                                    <option value="تهران">تهران</option>
+                                    <option value="چهارمحال و بختیاری">چهارمحال و بختیاری</option>
+                                    <option value="خراسان جنوبی">خراسان جنوبی</option>
+                                    <option value="خراسان رضوی">خراسان رضوی</option>
+                                    <option value="خراسان شمالی">خراسان شمالی</option>
+                                    <option value="خوزستان">خوزستان</option>
+                                    <option value="زنجان">زنجان</option>
+                                    <option value="سمنان">سمنان</option>
+                                    <option value="سیستان و بلوچستان">سیستان و بلوچستان</option>
+                                    <option value="فارس">فارس</option>
+                                    <option value="قزوین">قزوین</option>
+                                    <option value="قم">قم</option>
+                                    <option value="کردستان">کردستان</option>
+                                    <option value="کرمان">کرمان</option>
+                                    <option value="کرمانشاه">کرمانشاه</option>
+                                    <option value="کهگیلویه و بویراحمد">کهگیلویه و بویراحمد</option>
+                                    <option value="گلستان">گلستان</option>
+                                    <option value="گیلان">گیلان</option>
+                                    <option value="لرستان">لرستان</option>
+                                    <option value="مازندران">مازندران</option>
+                                    <option value="مرکزی">مرکزی</option>
+                                    <option value="هرمزگان">هرمزگان</option>
+                                    <option value="همدان">همدان</option>
+                                    <option value="یزد">یزد</option>
+                                </select>
+                            </div>
+                            <div class="select-box" style="margin-top: 10px;">
+                                <select id="city-select" name="city" class="form-control" disabled>
+                                    <option value="" disabled selected>ابتدا استان را انتخاب کنید</option>
+                                </select>
+                            </div>
+
+                            <label>آدرس خیابان <i class="fa-light fa-star-of-life"></i></label>
+                            <input type="text" class="form-control" name="address1" id="address" required
+                                   placeholder="نام محله ، نام خیابان ، کوچه" />
+
+                            <label>کد پستی <i class="fa-light fa-star-of-life"></i></label>
+                            <input type="text" class="form-control text-left" name="postal_code" id="postal_code" minlength="10" maxlength="10" required />
+
+                            <div class="form-checkbox mb-6">
+                                <input type="checkbox" class="custom-checkbox" id="different-address"
+                                       name="different-address">
+                                <label class="form-control-label ls-s" for="different-address">
+                                    آدرس یکی از نزدیکان
+                                </label>
+                            </div>
+                            <h2 class="title title-simple ">اطلاعات تکمیلی</h2>
+                            <label>یاداشت های سفارش (اختیاری)</label>
+                            <textarea class="form-control pb-2 pt-2 mb-0" cols="30" rows="5" id="description"
+                                      placeholder="نکاتی در مورد سفارش شما، به عنوان مثال یاداشت های ویژه برای تحویل"></textarea>
+                        </div>
+                        <aside class="col-lg-4 sticky-sidebar-wrapper">
+                            <div class="sticky-sidebar mt-1" data-sticky-options="{'bottom': 50}">
+                                <div class="summary pt-5">
+                                    <h3 class="title title-simple">سفارش شما</h3>
+                                    <table class="order-table order-table-wrap">
+                                        <thead>
+                                        <tr>
+                                            <th>محصول</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for item in cart %}
+                                            <tr>
+                                                <td class="product-name">
+                                                    {{ item.product }} - {{ item.volume }} گرم<span class="product-quantity">×&nbsp;{{ item.quantity }}</span>
+                                                </td>
+                                                <td class="product-total text-body cart-item" data-id="{{ item.product.id }}" data-price="{{ item.cost }}">{{ item.cost | commafy }} تومان</td>
+                                            </tr>
+                                        {% endfor %}
+                                        <tr class="summary-subtotal">
+                                            <td>
+                                                <h4 class="summary-subtitle">جمع محصولات </h4>
+                                            </td>
+                                            <td class="summary-subtotal-price pb-0 pt-0 without-discount" data-price="{{ cart.get_total_cost }}">
+                                                {{ cart.get_total_cost | commafy }} تومان
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="product-name">
+                                                هزینه پست
+                                            </td>
+                                            <td class="product-total text-body" id="post-fee" data-price="{{ post_fee }}">{{ post_fee | commafy }} تومان</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="product-name">
+                                                مالیات بر ارزش افزوده
+                                            </td>
+                                            <td class="product-total text-body" id="tax-fee" data-price="{{ tax_fee }}">{{ tax_fee }} درصد</td>
+                                        </tr>
+                                        {% if applied_discount %}
+                                            <tr>
+                                                <td class="product-name">
+                                                    تخفیف
+                                                </td>
+                                                <td class="product-total text-body" id="applied-discount" data-price="{{ applied_discount }}">{{ applied_discount }} درصد</td>
+                                            </tr>
+                                        {% endif %}
+                                        <tr class="summary-total">
+                                            <td class="pb-0">
+                                                <h4 class="summary-subtitle">جمع نهایی</h4>
+                                            </td>
+                                            <td class=" pt-0 pb-0">
+                                                <p class="summary-total-price ls-s text-primary" data-price="{{ final_price }}">{{ final_price | commafy }} تومان</p>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="payment accordion radio-type">
+                                        <h4 class="summary-subtitle ls-m pb-3">نحوه پرداخت </h4>
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <a href="#collapse1"
+                                                   class="collapse text-body text-normal ls-m">
+                                                    درگاه پرداخت
+                                                </a>
+                                            </div>
+                                            <div id="collapse1" class="expanded" style="display: block;">
+                                                <div class="card-body ls-m">
+                                                    به راحتی از طریق درگاه پرداخت امن زرین پال خرید خود را انجام دهید
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <a href="#collapse2" class="expand text-body text-normal ls-m">
+                                                    با کارت اعتباری
+                                                </a>
+                                            </div>
+                                            <div id="collapse2" class="collapsed">
+                                                <div class="card-body ls-m">
+                                                    در صورتی که توکن شما اعتبار نداشته باشد سفارش در وضعیت پرداخت نشده می ماند تا بعدا پرداخت کنید
+                                                    <input type="text" name="credit_token" class="input-text form-control text-grey ls-m" id="credit_token" value="" maxlength="10" placeholder="توکن خود را وارد کنید">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="payment accordion radio-type">
+                                        <h4 class="summary-subtitle ls-m pb-3">زمان تحویل</h4>
+                                        {% for date in dates %}
+                                            <div class="card">
+                                                <div class="card-header">
+                                                    <a href="#collapse{{ forloop.counter | add:3 }}"
+                                                       class="expand text-body text-normal ls-m order-date" data-value="{{ date | date:'d m Y' }}">
+                                                        {{ date | to_jalali_verbose }}
+                                                    </a>
+                                                </div>
+                                                <div id="collapse{{ forloop.counter | add:3 }}" class="collapsed" style="display: block;">
+                                                    <div class="card-body ls-m">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    <div class="form-checkbox mt-4 mb-5">
+                                        <input type="checkbox" class="custom-checkbox" id="terms-condition"
+                                               name="terms-condition" onclick="document.getElementById('submit-order').disabled = !this.checked"/>
+                                        <label class="form-control-label" for="terms-condition">
+                                            من شرایط و ضوابط وبسایت را خوانده ام و با آن موافقم .<a href="#">
+                                        </a>
+                                        </label>
+                                    </div>
+                                    <button class="btn btn-md btn-block btn-gradient" id="submit-order" disabled>
+                                        ثبت سفارش
+                                    </button>
+                                </div>
+                            </div>
+                        </aside>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block script %}
+    <script defer src="{% static 'js/order.js' %}"></script>
+{% endblock %}

@@ -1,7 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from shop.models import Product, Volume
-from django.core.cache import cache
+from main.models import Setting
 from account.models import User
 from django.utils import timezone
 
@@ -24,6 +24,7 @@ class Order(models.Model):
         REJECTED = 'REJECTED', 'لغو شد'
 
     order_id = models.CharField(max_length=12, unique=True, verbose_name='کد سفارش')
+    user = models.ForeignKey(User, related_name='orders', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='کاربر')
     name = models.CharField(max_length=100, verbose_name='نام و نام خانوادگی')
     phone = models.CharField(max_length=11, verbose_name='شماره تلفن')
     email = models.EmailField(max_length=255, blank=True, null=True, verbose_name='ایمیل')
@@ -32,9 +33,9 @@ class Order(models.Model):
     address = models.CharField(max_length=300, blank=True, verbose_name='آدرس')
     postal_code = models.CharField(max_length=10, blank=True, verbose_name='کد پستی')
     not_for_me = models.BooleanField(default=False, verbose_name='سفارش برای شخص دیگری است')
-    receive_type = models.CharField(max_length=13, choices=ReceiveChoices.choices, verbose_name='نوع دریافت')
+    receive_type = models.CharField(max_length=13, choices=ReceiveChoices.choices, default=ReceiveChoices.POST, verbose_name='نوع دریافت')
     receive_time = models.DateField(blank=True, null=True, verbose_name='زمان دریافت')
-    status = models.CharField(max_length=17, choices=StatusChoices.choices, verbose_name='وضعیت')
+    status = models.CharField(max_length=17, choices=StatusChoices.choices, default=StatusChoices.NOT_PAID, verbose_name='وضعیت')
     description = models.TextField(max_length=500, blank=True, verbose_name='توضیحات سفارش')
 
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='زمان ثبت سفارش')
@@ -43,7 +44,8 @@ class Order(models.Model):
         return f'Order {self.order_id}'
 
     def get_total_cost(self):
-        return sum(item.price for item in self.items.all()) + cache.get('post_fee', 10) + cache.get('tax_fee', 10)
+        settings = Setting.objects.first()
+        return int(sum(item.price for item in self.items.all()) * (1 + settings.tax_fee / 100) + settings.post_fee)
 
     class Meta:
         verbose_name = 'سفارش'
@@ -98,7 +100,7 @@ class Discount(models.Model):
                                                                                        1] == 'all' else User.objects.filter(
             id__in=self.get_list(users)).exclude(id__in=self.get_list(excluded_users))
 
-    def is_valid(self, user) -> tuple[bool, str]:
+    def is_valid(self, user) -> tuple[bool, str | Product]:
         if self.is_expired():
             return False, 'زمان این تخفیف به پایان رسیده است'
 
@@ -108,9 +110,13 @@ class Discount(models.Model):
         if user not in self.get_selected_users():
             return False, 'این تخفیف شامل شما نمی شود'
 
-        return True, ''
+        selected_products = self.selected.split('|')[:2]
+        products, excluded_products = selected_products[0], selected_products[1]
+        if products.split(':')[1] == 'all':
+            return True, Product.objects.all().exclude(slug__in=self.get_list(excluded_products))
+        return True, Product.objects.filter(slug__in=self.get_list(products)).exclude(slug__in=self.get_list(excluded_products))
 
-    def get_price(self, product: Product, volume: Volume):
+    def get_price(self, product: Product, volume):
         # products:<<slug1;slug2;...> or all>|p_exclude:<slug1;slug2;...
         selected_products = self.selected.split('|')[:2]
         products, excluded_products = selected_products[0], selected_products[1]
@@ -122,8 +128,8 @@ class Discount(models.Model):
                 slug__in=self.get_list(excluded_products))
         discount = 1 - (self.value / 100)
         return int(
-            product.get_volume_price(volume.volume) * discount if product in all_products else product.get_volume_price(
-                volume.volume))
+            product.get_volume_price(volume) * discount if product in all_products else product.get_volume_price(
+                volume))
 
     class Meta:
         verbose_name = 'تخفیف'
@@ -159,11 +165,11 @@ class Transaction(models.Model):
         GATEWAY = 'GATEWAY', 'از طریق درگاه پرداخت'
         CREDIT = 'CREDIT', 'با کارت اعتباری'
 
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, verbose_name='برای سفارش')
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, related_name='transactions', null=True, verbose_name='برای سفارش')
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='توسط')
     payment_type = models.CharField(max_length=21, choices=PaymentChoices.choices, verbose_name='نوع پرداخت')
     paid_amount = models.IntegerField(verbose_name='هزینه دریافتی')
-    content = models.TextField(verbose_name='توضیحات')
+    content = models.TextField(verbose_name='توضیحات', blank=True)
 
     def __str__(self):
         return f'{self.order} - {self.user}'
