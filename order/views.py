@@ -258,3 +258,16 @@ def verify_order(request):
         return redirect('account:dashboard')
     else:
         return render(request, 'verify.html')
+
+
+def order_status(request, order_id):
+    try:
+        order = Order.objects.prefetch_related('transactions').get(order_id=order_id)
+        context = {
+            'order': order,
+            'total_before_tax': sum(item.price for item in order.items.all()),
+        }
+        return render(request, 'order-status.html', context)
+    except Order.DoesNotExist:
+        return redirect('main:index')
+
