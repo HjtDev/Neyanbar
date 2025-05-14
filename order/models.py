@@ -1,5 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
+from django.template.context_processors import request
+
 from shop.models import Product, Volume
 from main.models import Setting
 from account.models import User
@@ -42,6 +44,13 @@ class Order(models.Model):
 
     def __str__(self):
         return f'Order {self.order_id}'
+
+    def save(self, *args, **kwargs):
+        if self.user and self.items.exists():
+            for item in self.items.all():
+                if self.user not in item.product.bought_by.all():
+                    item.product.bought_by.add(self.user)
+
 
     def get_total_cost(self):
         settings = Setting.objects.first()

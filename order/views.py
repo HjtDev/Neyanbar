@@ -140,10 +140,8 @@ def order_submit(request):
                 )
                 total_cost += price
         except Discount.DoesNotExist:
-            print('deleting discount')
             del request.session['discount']
     else:
-        print('adding items to order manually')
         for item in cart:
             price = item['product'].get_volume_price(int(item['volume'])) * int(item['quantity'])
             OrderItem.objects.create(

@@ -1206,7 +1206,7 @@
             <li>
                 <a href="contact.html"><i class="fa-light fa-phone"></i><span>تماس با ما</span></a>
             </li>
-            <li class="{% if not request.user.is_authenticated %}login-toggle{% endif %}"><a href="{% url 'account:dashboard' %}#likes"><i class="fa-light fa-heart"></i><span>علاقه مندی</span></a></li>
+            <li class="{% if not request.user.is_authenticated %}login-toggle{% endif %}"><a href="{% url 'account:dashboard' %}"><i class="fa-light fa-user"></i><span>داشبورد</span></a></li>
             <li>
                 <a class="white" href="{% url 'shop:product-list' %}"><i
                         class="fa-light fa-shopping-cart"></i><span>فروشگاه</span></a>

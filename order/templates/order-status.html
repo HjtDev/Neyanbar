@@ -48,6 +48,8 @@
                                 {% else %}
                                     {% if order.status == 'NOT_PAID' %}
                                         در انتظار پرداخت
+                                    {% elif order.status == 'REJECTED' %}
+                                        سفارش شما لغو شده است
                                     {% else %}
                                         متشکریم از خرید شما!
                                     {% endif %}

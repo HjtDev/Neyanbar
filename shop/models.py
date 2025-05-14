@@ -91,7 +91,7 @@ class Product(models.Model):
 
     views = models.PositiveIntegerField(default=0, verbose_name='بازدید ها')
     liked_by = models.ManyToManyField(User, blank=True, related_name='liked_products', verbose_name='کسانی که این محصول را پسندیده اند')
-    bought_by = models.ManyToManyField(User, blank=True, related_name='saved_products', verbose_name='کسانی که این محصول را خریده اند')
+    bought_by = models.ManyToManyField(User, blank=True, related_name='bought_products', verbose_name='کسانی که این محصول را خریده اند')
     remind_to = models.ManyToManyField(User, blank=True, related_name='reminder_products', verbose_name='کسانی که منتظر موجود شدن این محصول هستند')
 
     is_visible = models.BooleanField(default=False, verbose_name='نمایش در سایت')
