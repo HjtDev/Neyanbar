@@ -175,6 +175,11 @@ def product_list_view(request):
         elif 'smells' in key:
             all_products = all_products.filter(smell__in=ProductSmell.objects.filter(value__in=request.GET.getlist(key))).distinct()
 
+        if request.GET.get('spreads'):
+            all_products = all_products.filter(spread__in=request.GET.get('spreads').split(';'))
+        elif 'spreads' in key:
+            all_products = all_products.filter(spread__in=request.GET.getlist(key))
+
         if request.GET.get('seasons'):
             all_products = all_products.filter(season__in=request.GET.get('seasons').split(';'))
         elif 'seasons' in key:

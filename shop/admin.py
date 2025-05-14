@@ -21,10 +21,11 @@ class CommentInline(admin.StackedInline):
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('pid', 'name', 'brand', 'get_price', 'site_score', 'inventory', 'views', 'is_visible')
     list_filter = (
-        'smell', 'season',  'taste',
-        'nature', 'gender', 'available_volumes',
-        'perfume_type', 'is_visible', 'brand',
-        'site_score', 'last_view', 'created_at','updated_at'
+        'smell', 'season', 'spread',
+        'taste', 'nature', 'gender',
+        'available_volumes', 'perfume_type', 'is_visible',
+        'brand', 'site_score',
+        'last_view', 'created_at','updated_at'
     )
     list_editable = ('is_visible', 'inventory', 'site_score')
     search_fields = ('pid', 'name', 'name_en', 'short_description', 'description')
@@ -49,9 +50,9 @@ class ProductAdmin(admin.ModelAdmin):
         }),
         ('دسته بندی ها', {
             'fields': (
-                'smell', 'season', 'brand',
-                'taste', 'nature', 'gender',
-                'durability', 'available_volumes', 'perfume_type'
+                'smell', 'season', 'spread',
+                'brand', 'taste', 'nature',
+                'gender', 'durability', 'available_volumes', 'perfume_type'
             ),
         }),
         ('گزارشات', {
