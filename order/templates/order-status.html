@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load tags %}
+{% load static %}
 
 {% block title %}
 	وضعیت سفارش
@@ -39,7 +40,19 @@
 								</svg>
                         </div>
                         <div class="icon-box-content text-right">
-                            <h5 class="icon-box-title font-weight-bold">متشکریم از خرید شما!</h5>
+                            <h5 class="icon-box-title font-weight-bold">
+                                {% if messages %}
+                                    {% for message in messages %}
+                                    	{{ message }}
+                                    {% endfor %}
+                                {% else %}
+                                    {% if order.status == 'NOT_PAID' %}
+                                        در انتظار پرداخت
+                                    {% else %}
+                                        متشکریم از خرید شما!
+                                    {% endif %}
+                                {% endif %}
+                            </h5>
                             <p class="lh-1 ls-m">اطلاعات سفارش: {{ order.order_id }}</p>
                         </div>
                     </div>
@@ -47,7 +60,7 @@
                 <div class="order-results">
                     <div class="overview-item">
                         <span>کد سفارش:</span>
-                        <strong>{{ order.order_id }}</strong>
+                        <strong id="order_id">{{ order.order_id }}</strong>
                     </div>
                     <div class="overview-item">
                         <span>وضعیت:</span>
@@ -130,7 +143,54 @@
                 <a href="{% url 'shop:product-list' %}" class="btn btn-icon-right btn-dark btn-back btn-rounded btn-md mb-4 btn-checkout btn-gradient">
                     بازگشت به فروشگاه<i class="fa-light fa-angles-left"></i>
                 </a>
+
+                {% if order.status == 'NOT_PAID' %}
+                    <hr>
+                    <aside class="col-lg-4 sticky-sidebar-wrapper">
+                        <div class="sticky-sidebar mt-1" data-sticky-options="{'bottom': 50}">
+                            <div class="summary pt-5">
+                                <h3 class="title title-simple">پرداخت</h3>
+                                <div class="payment accordion radio-type">
+                                    <h4 class="summary-subtitle ls-m pb-3">نحوه پرداخت </h4>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a href="#collapse1"
+                                               class="collapse text-body text-normal ls-m">
+                                                درگاه پرداخت
+                                            </a>
+                                        </div>
+                                        <div id="collapse1" class="expanded payment-type" style="display: block;">
+                                            <div class="card-body ls-m">
+                                                به راحتی از طریق درگاه پرداخت امن زرین پال خرید خود را انجام دهید
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a href="#collapse2" class="expand text-body text-normal ls-m">
+                                                با کارت اعتباری
+                                            </a>
+                                        </div>
+                                        <div id="collapse2" class="collapsed payment-type">
+                                            <div class="card-body ls-m">
+                                                <p id="response">در صورت که از وضعیت کارت اعتباری خود اطمینان ندارید می توانید از بخش کارت هدیه وضعیت ان را برسی کنید</p>
+                                                <input type="text" name="credit_token" class="input-text form-control text-grey ls-m" id="credit_token" value="" maxlength="10" placeholder="توکن خود را وارد کنید">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-md btn-block btn-gradient mt-3 {% if request.user.is_authenticated %}pay-order{% else %}login-toggle{% endif %}">
+                                        پرداخت
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                {% endif %}
             </div>
         </div>
     </main>
+{% endblock %}
+
+{% block script %}
+    <script defer src="{% static 'js/order-status.js' %}"></script>
 {% endblock %}

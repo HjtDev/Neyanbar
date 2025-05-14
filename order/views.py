@@ -1,7 +1,9 @@
 from copy import deepcopy
 from datetime import timedelta
 
+from django.contrib import messages
 from django.contrib.auth import login
+from django.urls import reverse
 
 from account.forms import validate_phone, validate_email
 from django.http import JsonResponse
@@ -126,9 +128,7 @@ def order_submit(request):
     total_cost = 0
     if request.session.get('discount'):
         try:
-            print('found discount')
             discount = Discount.objects.get(id=request.session['discount'])
-            print('adding items to order')
             for item in cart:
                 price = discount.get_price(item['product'], int(item['volume'])) * int(item['quantity'])
                 OrderItem.objects.create(
@@ -158,13 +158,13 @@ def order_submit(request):
     print(f'{total_cost=}')
     cart.clear()
     if request.user.is_authenticated:
+        if request.session.get('discount'):
+            Discount.objects.get(id=request.session['discount']).users.add(request.user)
+            del request.session['discount']
         if payment_method == 'CREDIT':
             try:
                 credit_card = CreditCart.objects.get(token=credit_token)
                 if credit_card.buy(total_cost):
-                    if request.session.get('discount'):
-                        Discount.objects.get(id=request.session['discount']).users.add(request.user)
-                        del request.session['discount']
                     order.user = request.user
                     order.status = Order.StatusChoices.PENDING
                     order.save()
@@ -174,13 +174,13 @@ def order_submit(request):
                         payment_type=Transaction.PaymentChoices.CREDIT,
                         paid_amount=total_cost,
                     )
-                    return JsonResponse({'message': 'پرداخت موفقیت آمیز'}, status=400)
+                    return JsonResponse({'redirect': reverse('order:order_status', kwargs={'order_id': order.order_id})})
                 else:
-                    order.delete()
-                    return JsonResponse({'message': 'اعتبار کارت شما ناکافی است'}, status=400)
+                    messages.error(request, 'کارت اعتباری شما شارژ کافی برای انجام این تراکنش را ندارد')
+                    return JsonResponse({'redirect': reverse('order:order_status', kwargs={'order_id': order.order_id})})
             except CreditCart.DoesNotExist:
-                order.delete()
-                return JsonResponse({'message': 'توکن کارت اعتباری شما نامعتبر است'}, status=400)
+                messages.error(request, 'کارت اعتباری نامعتبر است')
+                return JsonResponse({'redirect': reverse('order:order_status', kwargs={'order_id': order.order_id})})
         else:
             order.user = request.user
             order.save()
@@ -190,7 +190,7 @@ def order_submit(request):
             print('*' * 30)
             print('REDIRECTED TO PAYMENT PAGE')
             print('*' * 30)
-            return JsonResponse({'message': 'درگاه پرداخت'}, status=400)
+            return JsonResponse({'redirect': reverse('order:order_status', kwargs={'order_id': order.order_id})})
 
     else:
         request.session['order'] = {'id': order.id, 'payment_method': payment_method, 'credit_token': credit_token, 'total_cost': total_cost}
@@ -205,11 +205,10 @@ def verify_order(request):
     if request.method == 'POST':
         token = request.POST.get('token')
         phone = cache.get(f'order-{token}')
+        order = Order.objects.get(id=request.session['order'].get('id'))
         if not phone:
-            print('false token')
-            return redirect('order:order')
-        else:
-            order = Order.objects.get(id=request.session['order'].get('id'))
+            messages.error(request, 'کد تایید نامعتبر بود')
+            return redirect('order:order_status', order_id=order.order_id)
 
         try:  # user already exists and login is successful
             user = User.objects.get(phone=phone)
@@ -225,6 +224,7 @@ def verify_order(request):
         request.session['cart'] = cart
         if discount:
             Discount.objects.get(id=discount).users.add(user)
+            del request.session['discount']
         request.session['order'] = order_session
 
         payment_method = request.session['order'].get('payment_method')
@@ -236,8 +236,6 @@ def verify_order(request):
             try:
                 credit_card = CreditCart.objects.get(token=credit_token)
                 if credit_card.buy(total_cost):
-                    if request.session.get('discount'):
-                        del request.session['discount']
                     order.status = Order.StatusChoices.PENDING
                     order.user = user
                     order.save()
@@ -247,20 +245,20 @@ def verify_order(request):
                         payment_type=Transaction.PaymentChoices.CREDIT,
                         paid_amount=total_cost,
                     )
-                    print('PAID with credit cart successfully')
+                    return redirect('order:order_status', order_id=order.order_id)
                 else:
-                    print('canceled because credit card does not have enough charge')
-                    order.delete()
+                    messages.error(request, 'کارت اعتباری شما شارژ کافی برای انجام این تراکنش را ندارد')
+                    return redirect('order:order_status', order_id=order.order_id)
             except CreditCart.DoesNotExist:
-                order.delete()
-                print('false credit card')
+                messages.error(request, 'کارت اعتباری نامعتبر است')
+                return redirect('order:order_status', order_id=order.order_id)
         else:
             order.user = user
             order.save()
             print('*' * 30)
             print('REDIRECTED TO GATEWAY PAGE')
             print('*' * 30)
-        return redirect('account:dashboard')
+        return JsonResponse({'redirect': reverse('order:order_status', kwargs={'order_id': order.order_id})})
     else:
         return render(request, 'verify.html')
 
@@ -275,4 +273,56 @@ def order_status(request, order_id):
         return render(request, 'order-status.html', context)
     except Order.DoesNotExist:
         return redirect('main:index')
+
+
+@require_POST
+def pay_order(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({'message': 'شما باید ابتدا یک حساب کاربری بسازید'}, status=401)
+
+    order_id = request.POST.get('order_id')
+    payment_method = request.POST.get('payment_type')
+    credit_token = request.POST.get('credit_token')
+    order = None
+    discount = None
+
+    try:
+        order = Order.objects.get(order_id=order_id)
+    except Order.DoesNotExist:
+        return JsonResponse({'message': 'این سفارش وجود ندارد'}, status=404)
+
+    if order.status == Order.StatusChoices.NOT_PAID:
+
+        total_cost = order.get_total_cost()
+        print(f'{total_cost=}')
+
+        if payment_method == 'GATEWAY':
+            print('*' * 30)
+            print('REDIRECTED TO GATEWAY PAGE')
+            print('*' * 30)
+            order.user = request.user
+            order.save()
+            return JsonResponse({'message': f'successful payment from gateway {total_cost}'}, status=400)
+        elif payment_method == 'CREDIT':
+            try:
+                credit_card = CreditCart.objects.get(token=credit_token)
+                if credit_card.buy(total_cost):
+                    order.status = Order.StatusChoices.PENDING
+                    order.user = request.user
+                    order.save()
+                    Transaction.objects.create(
+                        user=request.user,
+                        order=order,
+                        payment_type=Transaction.PaymentChoices.CREDIT,
+                        paid_amount=total_cost,
+                    )
+                    return JsonResponse({})
+                else:
+                    return JsonResponse({'message': 'کارت اعتباری شما شارژ کافی برای این تراکنش را ندارد'}, status=403)
+            except CreditCart.DoesNotExist:
+                return JsonResponse({'message': 'کارت اعتباری شما نا معتبر است'}, status=404)
+        else:
+            return JsonResponse({'message': 'لطفا نوع پرداخت را انتخاب کنید'}, status=400)
+    else:
+        return JsonResponse({'message': 'این سفارش قبلا پرداخت شده است'}, status=403)
 

@@ -78,8 +78,12 @@ def apply_discount(request):
         discount = Discount.objects.get(token=token)
         valid, message = discount.is_valid(request.user)
         if valid:
-            request.session['discount'] = discount.id
-            return JsonResponse({})
+            cart = Cart(request)
+            for item in cart:
+                if item['product'] in message:
+                    request.session['discount'] = discount.id
+                    return JsonResponse({})
+            return JsonResponse({'btn': 'هیچ یک از محصولات لیست شما شامل این تخفیف نمی شود'}, status=404)
         return JsonResponse({'btn': message}, status=403)
     except Discount.DoesNotExist:
         return JsonResponse({'btn': 'این کد تخفیف نا معتبر است'}, status=404)

@@ -52,7 +52,7 @@ class OrderAdmin(admin.ModelAdmin):
 @admin.register(Discount)
 class DiscountAdmin(admin.ModelAdmin):
     list_display = ('token', 'value', 'expire_at')
-    list_filter = ('expire_at',)
+    list_filter = ('expire_at', 'users')
     search_fields = ('token', 'selected')
     ordering = ('-expire_at',)
 
