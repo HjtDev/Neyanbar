@@ -93,7 +93,7 @@ def comment_view(request):
 
     try:
         post = Post.objects.get(id=post_id)
-        if not post.comments.filter(user=request).exist():
+        if not post.comments.filter(user=request.user).exists():
             comment = Comment.objects.create(content=content, post=post, user=request.user)
             return JsonResponse({'name': str(request.user), 'profile': request.user.profile.url,
                                  'created_at': to_jalali_verbose(comment.created_at)}, status=200)
@@ -127,7 +127,7 @@ def post_list_view(request):
         filters.append(f'جستوجو برای {search_query}')
 
     page = int(request.GET.get('page', 1))
-    post = Paginator(all_posts, 2)
+    post = Paginator(posts, 2)
 
     most_viewed = all_posts.order_by('-views')
     # most_viewed = all_posts.exclude(id__in=[p.id for p in post.object_list]).order_by('-views')  # separates most_viewed from current page posts
