@@ -169,7 +169,7 @@
                         }
                     }">
                     {% for brand in top_brands %}
-                        <a href="{% url 'shop:product-list' %}?brand={{ brand }}">
+                        <a href="{{ brand.get_absolute_url }}">
                             <div class="banner1 banner-discount">
                                 <div class="banner banner-fixed overlay-zoom appear-animate" data-animation-options="{
                                 'name': 'zoomInShorter',
@@ -366,7 +366,7 @@
                     <section class="product-wrapper bg-main container appear-animate rtl text-right">
                         <div class="row">
                             <div class="col-lg-3 col-md-4 col-sm-6">
-                                <a href="{% url 'shop:product-list' %}?brand={{ brand.name }}">
+                                <a href="{{ brand.get_absolute_url }}">
                                     <div class="banner banner-fixed overlay-zoom b-r-20">
                                         <figure>
                                             <picture>
@@ -500,7 +500,7 @@
                     <section class="product-wrapper bg-main container appear-animate rtl text-right">
                         <div class="row">
                             <div class="col-lg-3 col-md-4 col-sm-6">
-                                <a href="{% url 'shop:product-list' %}?brand={{ brand }}">
+                                <a href="{{ brand.get_absolute_url }}">
                                     <div class="banner banner-fixed overlay-zoom b-r-20">
                                         <figure>
                                             <picture>
@@ -720,12 +720,9 @@
                             }
                         }
                     }">
-                    <picture><source srcset="{% static 'images/brand/brand-1.webp' %}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{% static 'images/brand/brand-1.png' %}" alt="Brand" width="180" height="100" /></picture>
-                    <picture><source srcset="{% static 'images/brand/brand-2.webp' %}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{% static 'images/brand/brand-2.png' %}" alt="Brand" width="180" height="100" /></picture>
-                    <picture><source srcset="{% static 'images/brand/brand-3.webp' %}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{% static 'images/brand/brand-3.png' %}" alt="Brand" width="180" height="100" /></picture>
-                    <picture><source srcset="{% static 'images/brand/brand-4.webp' %}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{% static 'images/brand/brand-4.png' %}" alt="Brand" width="180" height="100" /></picture>
-                    <picture><source srcset="{% static 'images/brand/brand-5.webp' %}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{% static 'images/brand/brand-5.png' %}" alt="Brand" width="180" height="100" /></picture>
-                    <picture><source srcset="{% static 'images/brand/brand-6.webp' %}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{% static 'images/brand/brand-6.png' %}" alt="Brand" width="180" height="100" /></picture>
+                    {% for brand in all_brand %}
+                        <picture><source srcset="{{ brand.logo.url }}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{{ brand.logo.url }}" alt="Brand" width="180" height="100" /></picture>
+                    {% endfor %}
                 </div>
             </section>
         </div>

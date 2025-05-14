@@ -50,6 +50,13 @@ $(document).ready(function() {
             }
         });
 
+        let selected_spread = [];
+        $('.spread-select').each(function() {
+            if($(this).hasClass('active')) {
+                selected_spread.push($(this).data('value'));
+            }
+        });
+
         let selected_gender = [];
         $('.gender-select').each(function() {
             if($(this).hasClass('active')) {
@@ -68,6 +75,7 @@ $(document).ready(function() {
             selected_brands.length === 0 &&
             selected_volumes.length === 0 &&
             selected_smells.length === 0 &&
+            selected_spread.length === 0 &&
             selected_seasons.length === 0 &&
             selected_tastes.length === 0 &&
             selected_nature.length === 0 &&
@@ -86,6 +94,7 @@ $(document).ready(function() {
                 'brands': selected_brands,
                 'volumes': selected_volumes,
                 'smells': selected_smells,
+                'spreads': selected_spread,
                 'seasons': selected_seasons,
                 'tastes': selected_tastes,
                 'nature': selected_nature,

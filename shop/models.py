@@ -32,6 +32,12 @@ class Product(models.Model):
 
     smell = models.ManyToManyField('ProductSmell', verbose_name='گروه بویایی')
 
+    class SpreadChoices(models.TextChoices):
+        LOW = 'LOW', 'کم'
+        MEDIUM = 'MEDIUM', 'متوسط'
+        HIGH = 'HIGH', 'زیاد'
+    spread = models.CharField(choices=SpreadChoices.choices, max_length=6, verbose_name='پخش بو')
+
     class SeasonChoices(models.TextChoices):
         WINTER = 'WINTER', 'زمستانی'
         SUMMER = 'SUMMER', 'تابستانی'
@@ -71,7 +77,7 @@ class Product(models.Model):
 
     pid = models.CharField(max_length=6, unique=True, verbose_name='کد محصول')
 
-    price = models.PositiveIntegerField(default=0, verbose_name='قیمت محصول', help_text='به ازای هر میل / به تومان')
+    price = models.PositiveIntegerField(default=0, verbose_name='قیمت محصول', help_text='به ازای هر گرم / به تومان')
     discount = models.IntegerField(default=-1, validators=[MinValueValidator(-1)], verbose_name='قیمت پس از تخفیف', help_text='-۱ برای لغو تخفیف')
 
     inventory = models.PositiveIntegerField(default=0, verbose_name='موجودی انبار')
@@ -96,6 +102,11 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if any(ch.isupper() for ch in self.slug):
+            self.slug = self.slug.lower()
+        return super().save(*args, **kwargs)
 
     def get_raw_price(self):
         return self.price * int(self.available_volumes.aggregate(Min('volume'))['volume__min'] or 1)
@@ -197,6 +208,14 @@ class Brand(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('shop:product-list') + f'?brands={self.slug}'
+
+    def save(self, *args, **kwargs):
+        if any(ch.isupper() for ch in self.slug):
+            self.slug = self.slug.lower()
+        return super().save(*args, **kwargs)
+
     class Meta:
         verbose_name = 'برند'
         verbose_name_plural = 'برند ها'
@@ -226,8 +245,8 @@ class Comment(models.Model):
 class Volume(models.Model):
     objects = models.Manager()
 
-    name = models.CharField(verbose_name='اسم', unique=True, max_length=100, help_text='مثال: ۱۰ میل')
-    volume = models.PositiveIntegerField(default=1, unique=True, verbose_name='حجم', help_text='به میل')
+    name = models.CharField(verbose_name='اسم', unique=True, max_length=100, help_text='مثال: ۱۰ گرم')
+    volume = models.PositiveIntegerField(default=1, unique=True, verbose_name='حجم', help_text='به گرم')
 
     def __str__(self):
         return self.name

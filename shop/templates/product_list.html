@@ -145,32 +145,40 @@
                         <div class="sidebar-content">
                             <div class="sticky-sidebar" data-sticky-options="{'top': 10}">
                                 <div class="widget widget-collapsible">
-                                    <h3 class="widget-title">حجم ها</h3>
-                                    <ul class="widget-body filter-items">
+                                    <h3 class="widget-title collapsed collapsed">حجم ها</h3>
+                                    <ul class="widget-body filter-items" style="display: none;">
                                         {% for volume in volumes %}
                                             <li class="volume-select" data-volume="{{ volume.volume }}"><a class="active-filter" href="#">{{ volume }}</a></li>
                                         {% endfor %}
                                     </ul>
                                 </div>
                                 <div class="widget widget-collapsible">
-                                    <h3 class="widget-title">گروه های بویایی</h3>
-                                    <ul class="widget-body filter-items">
+                                    <h3 class="widget-title collapsed">گروه های بویایی</h3>
+                                    <ul class="widget-body filter-items" style="display: none;">
                                         {% for smell in smells %}
                                             <li class="smell-select" data-value="{{ smell.value }}"><a class="active-filter" href="#">{{ smell.get_value_display }}</a></li>
                                         {% endfor %}
                                     </ul>
                                 </div>
                                 <div class="widget widget-collapsible">
-                                    <h3 class="widget-title">فصل</h3>
-                                    <ul class="widget-body filter-items">
+                                    <h3 class="widget-title collapsed">پخش بو</h3>
+                                    <ul class="widget-body filter-items" style="display: none;">
+                                        <li class="spread-select" data-value="LOW"><a class="active-filter" href="#">کم</a></li>
+                                        <li class="spread-select" data-value="MEDIUM"><a class="active-filter" href="#">متوسط</a></li>
+                                        <li class="spread-select" data-value="HIGH"><a class="active-filter" href="#">زیاد</a></li>
+                                    </ul>
+                                </div>
+                                <div class="widget widget-collapsible">
+                                    <h3 class="widget-title collapsed">فصل</h3>
+                                    <ul class="widget-body filter-items" style="display: none;">
                                         <li class="season-select" data-value="SUMMER"><a class="active-filter" href="#">تابستانی</a></li>
                                         <li class="season-select" data-value="WINTER"><a class="active-filter" href="#">زمستانی</a></li>
                                     </ul>
                                 </div>
                                 </div>
                                 <div class="widget widget-collapsible">
-                                    <h3 class="widget-title">طعم</h3>
-                                    <ul class="widget-body filter-items">
+                                    <h3 class="widget-title collapsed">طعم</h3>
+                                    <ul class="widget-body filter-items" style="display: none;">
                                         <li class="taste-select" data-value="SPICY"><a class="active-filter" href="#">تند</a></li>
                                         <li class="taste-select" data-value="SWEET"><a class="active-filter" href="#">شیرین</a></li>
                                         <li class="taste-select" data-value="BITTER"><a class="active-filter" href="#">تلخ</a></li>
@@ -178,31 +186,31 @@
                                     </ul>
                                 </div>
                                 <div class="widget widget-collapsible">
-                                    <h3 class="widget-title">طبع</h3>
-                                    <ul class="widget-body filter-items">
+                                    <h3 class="widget-title collapsed">طبع</h3>
+                                    <ul class="widget-body filter-items" style="display: none;">
                                         <li class="nature-select" data-value="COLD"><a class="active-filter" href="#">سرد</a></li>
                                         <li class="nature-select" data-value="WARM"><a class="active-filter" href="#">گرم</a></li>
                                     </ul>
                                 </div>
                                 <div class="widget widget-collapsible">
-                                    <h3 class="widget-title">ماندگاری</h3>
-                                    <ul class="widget-body filter-items">
+                                    <h3 class="widget-title collapsed">ماندگاری</h3>
+                                    <ul class="widget-body filter-items" style="display: none;">
                                         <li class="durability-select" data-value="LOW"><a class="active-filter" href="#">کم</a></li>
                                         <li class="durability-select" data-value="MEDIUM"><a class="active-filter" href="#">متوسط</a></li>
                                         <li class="durability-select" data-value="HIGH"><a class="active-filter" href="#">زیاد</a></li>
                                     </ul>
                                 </div>
                                 <div class="widget widget-collapsible">
-                                    <h3 class="widget-title">جنیسیت</h3>
-                                    <ul class="widget-body filter-items">
+                                    <h3 class="widget-title collapsed">جنیسیت</h3>
+                                    <ul class="widget-body filter-items" style="display: none;">
                                         <li class="gender-select" data-value="MALE"><a class="active-filter" href="#">مردانه</a></li>
                                         <li class="gender-select" data-value="FEMALE"><a class="active-filter" href="#">زنانه</a></li>
                                         <li class="gender-select" data-value="UNISEX"><a class="active-filter" href="#">مشترک</a></li>
                                     </ul>
                                 </div>
                                 <div class="widget widget-collapsible">
-                                    <h3 class="widget-title">نوع</h3>
-                                    <ul class="widget-body filter-items">
+                                    <h3 class="widget-title collapsed">نوع</h3>
+                                    <ul class="widget-body filter-items" style="display: none;">
                                         <li class="type-select" data-value="PERFUME"><a class="active-filter" href="#">پرفیوم</a></li>
                                         <li class="type-select" data-value="EAU_DE_PARFUM"><a class="active-filter" href="#">ادوپرفیوم</a></li>
                                         <li class="type-select" data-value="EAU_DE_TOILETTE"><a class="active-filter" ref="#">ادوتویلت</a></li>
@@ -211,8 +219,8 @@
                                     </ul>
                                 </div>
                                 <div class="widget widget-collapsible ">
-                                    <h3 class="widget-title">برند</h3>
-                                    <div class="row brand-side-wrap widget-body filter-items">
+                                    <h3 class="widget-title collapsed">برند</h3>
+                                    <div class="row brand-side-wrap widget-body filter-items" style="display: none;">
                                         {% for brand in brands %}
                                             <div class="brand-side col-xl-4 col-lg-6" data-brand="{{ brand.slug }}">
                                                 <a class="active-filter" href="#">
