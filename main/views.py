@@ -1,8 +1,10 @@
 from django.db.models import Count, Min, Max, Q, ExpressionWrapper, Case, When, F, IntegerField
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from blog.models import Post
 from shop.models import Product, Brand
 from .models import Setting
+from order.models import CreditCart
+from uuid import uuid4
 
 
 def home_view(request):
@@ -38,3 +40,46 @@ def home_view(request):
             'offer_banner': settings.banner.url,
         })
     return render(request, 'index.html', context)
+
+
+def credit_card_view(request):
+    if not request.user.is_authenticated:
+        return render(request, 'credit-card-empty.html')
+    credit_card = None
+
+    try:
+        credit_card = CreditCart.objects.get(created_by=request.user)
+        return render(request, 'credit-card.html', {'credit_card': credit_card})
+    except CreditCart.DoesNotExist:
+        return render(request, 'credit-card-empty.html')
+
+
+def credit_card_create_view(request):
+    if not request.user.is_authenticated or CreditCart.objects.filter(created_by=request.user).exists():
+        return redirect('main:credit_card')
+
+    CreditCart.objects.create(
+        token=str(uuid4())[:10],
+        credit=0,
+        created_by=request.user,
+    )
+
+    return redirect('main:credit_card')
+
+
+def credit_card_charge_view(request, charge):
+    if not request.user.is_authenticated:
+        return redirect('main:credit_card')
+    credit_card = None
+    try:
+        credit_card = CreditCart.objects.get(created_by=request.user)
+        if charge in ('100000', '250000', '500000', '750000', '1000000', '5000000', '10000000', '15000000', '20000000'):
+            print('*' * 30)
+            print('REDIRECTED TO GATEWAY PAGE')
+            print('*' * 30)
+            credit_card.credit += int(charge)
+            credit_card.save()
+    except CreditCart.DoesNotExist:
+        return redirect(request, 'credit-card-empty.html')
+
+    return redirect('main:credit_card')

@@ -325,4 +325,3 @@ def pay_order(request):
             return JsonResponse({'message': 'لطفا نوع پرداخت را انتخاب کنید'}, status=400)
     else:
         return JsonResponse({'message': 'این سفارش قبلا پرداخت شده است'}, status=403)
-

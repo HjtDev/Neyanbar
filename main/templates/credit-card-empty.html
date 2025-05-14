@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	کارت هدیه
+{% endblock %}
+        
+{% block content %}
+    <main class="main rtl text-right">
+        <div class="page-header pl-4 pr-4">
+            <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبسایت ما</h3>
+            <h1 class="page-title font-weight-bold lh-1 text-white">کارت اعتباری</h1>
+        </div>
+        <nav class="breadcrumb-nav">
+            <div class="container breadcrumb-nav-wrap">
+                <ul class="breadcrumb ">
+                    <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
+                    <li>لیست علاقه مندی خالی</li>
+                </ul>
+            </div>
+        </nav>
+        <div class="page-content wishlist-empty">
+            <div class="container">
+                <div class="main-content">
+                    <i class="fa-light fa-heart wishlist-icon"></i>
+                    {% if request.user.is_authenticated %}
+                        <h2 class="wishlist-description">شما هیچ کارت هدیه ای ندارید</h2>
+                        <a class="btn btn-primary btn-rounded" href="{% url 'main:credit_card_create' %}">ساختن کارت هدیه</a>
+                    {% else %}
+                        <h2 class="wishlist-description">برای ساخت کارت هدیه ابتدا وارد حساب کاربری خود شوید</h2>
+                        <a class="btn btn-primary btn-rounded login-toggle">ورود به حساب کاربری</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
