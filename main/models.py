@@ -36,6 +36,8 @@ class Setting(models.Model):
             return reverse('shop:product-list') + f'?volumes={args}'
         elif self.products.startswith('smells'):
             return reverse('shop:product-list') + f'?smells={args}'
+        elif self.products.startswith('spreads'):
+            return reverse('shop:product-list') + f'?spreads={args}'
         elif self.products.startswith('seasons:'):
             return reverse('shop:product-list') + f'?seasons={args}'
         elif self.products.startswith('tastes:'):
@@ -62,6 +64,8 @@ class Setting(models.Model):
             return Product.objects.filter(available_volumes__volume__in=args)
         elif self.products.startswith('smells'):
             return Product.objects.filter(smell__value__in=args)
+        elif self.products.startswith('spread'):
+            return Product.objects.filter(spread__in=args)
         elif self.products.startswith('seasons:'):
             return Product.objects.filter(season__in=args)
         elif self.products.startswith('tastes:'):
@@ -83,3 +87,13 @@ class Setting(models.Model):
         verbose_name = verbose_name_plural = 'تنظیمات'
 
 
+class Club(models.Model):
+    objects = models.Manager()
+    email = models.EmailField(max_length=255, unique=True, verbose_name='ایمیل')
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        verbose_name = 'باشگاه مشتریان'
+        verbose_name_plural = 'باشگاه مشتریان'

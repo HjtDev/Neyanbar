@@ -2,7 +2,7 @@ from django.db.models import Count, Min, Max, Q, ExpressionWrapper, Case, When, 
 from django.shortcuts import render, redirect
 from blog.models import Post
 from shop.models import Product, Brand
-from .models import Setting
+from .models import Setting, Club
 from order.models import CreditCart
 from uuid import uuid4
 
@@ -84,3 +84,14 @@ def credit_card_charge_view(request, charge):
         return redirect(request, 'credit-card-empty.html')
 
     return redirect('main:credit_card')
+
+
+def join_club_view(request):
+    email = request.GET.get('email')
+    if email:
+        print('im here bitch')
+        obj, created = Club.objects.get_or_create(email=email)
+        if created:
+            print('welcome to club')
+    return redirect('main:index')
+
