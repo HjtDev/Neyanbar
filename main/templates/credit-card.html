@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load tags %}
+
+{% block title %}
+	کارت هدیه
+{% endblock %}
+
+{% block content %}
+    <main class="main rtl text-right">
+        <div class="page-header pl-4 pr-4">
+            <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبسایت ما</h3>
+            <h1 class="page-title font-weight-bold lh-1 text-white">کارت اعتباری</h1>
+            <p class="page-desc text-white mb-0">برای ارسال کارت هدیه برای دیگران از توکن استفاده کنید</p>
+            <p class="page-desc text-white mb-0">با استفاده از توکن کارت هدیه(کارت اعتباری) می توانید خرید های خود را انجام دهید</p>
+        </div>
+        <nav class="breadcrumb-nav">
+            <div class="container breadcrumb-nav-wrap">
+                <ul class="breadcrumb ">
+                    <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
+                    <li>لیست علاقه مندی</li>
+                </ul>
+            </div>
+        </nav>
+        <div class="page-content">
+            <div class="container wishlist-wrap">
+                <table class="shop-table wishlist-table mt-2 mb-4">
+                    <thead>
+                    <tr>
+                        <th class="product-name"><span>توکن</span></th>
+                        <th></th>
+                        <th class="product-price"><span>باقیمانده</span></th>
+                        <th class="product-stock-status"><span>شارژ</span></th>
+                        <th class="product-add-to-cart"></th>
+                        <th class="product-remove"></th>
+                    </tr>
+                    </thead>
+                    <tbody class="wishlist-items-wrapper">
+                    <tr>
+                        <td class="product-thumbnail">
+                            <a>{{ credit_card.token }}</a>
+                        </td>
+                        <td class="product-name">
+                        </td>
+                        <td class="product-price">
+                            <span class="amount"> {{ credit_card.credit | commafy }} تومان </span>
+                        </td>
+                        <td class="product-stock-status">
+                            <select class="form-control" name="amount-select" id="amount-select">
+                                <option value="100000" selected>{{ 100000 | commafy }} تومان</option>
+                                <option value="250000">{{ 250000 | commafy }} تومان</option>
+                                <option value="500000">{{ 500000 | commafy }} تومان</option>
+                                <option value="750000">{{ 750000 | commafy }} تومان</option>
+                                <option value="1000000">{{ 1000000 | commafy }} تومان</option>
+                                <option value="2000000">{{ 2000000 | commafy }} تومان</option>
+                                <option value="5000000">{{ 5000000 | commafy }} تومان</option>
+                                <option value="10000000">{{ 10000000 | commafy }} تومان</option>
+                                <option value="15000000">{{ 15000000 | commafy }} تومان</option>
+                                <option value="20000000">{{ 20000000 | commafy }} تومان</option>
+                            </select>
+                        </td>
+                        <td class="product-add-to-cart">
+                            <button class="btn-product btn-primary btn-charge"><span>اعمال شارژ</span></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block script %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnCharge = document.querySelector('.btn-charge');
+            if (btnCharge) {
+                btnCharge.addEventListener('click', function(e) {
+                    const amountSelect = document.getElementById('amount-select');
+                    const charge = amountSelect ? amountSelect.value : '';
+                    if (charge) {
+                        location.href = `/credit-card/charge/${charge}`;
+                    }
+                });
+            }
+        });
+    </script>
+{% endblock %}
+        
