@@ -16,8 +16,8 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{{ request.build_absolute_uri }}" />
     <meta property="og:locale" content="fa_IR" />
-    <link rel="icon" type="image/png" href="{% static 'images/icons/favicon.png' %}">
-    <link rel="apple-touch-icon" type="image/png" href="{% static 'images/icons/favicon.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'images/icons/neyanbar-favicon.png' %}">
+    <link rel="apple-touch-icon" type="image/png" href="{% static 'images/icons/neyanbar-favicon.png' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'fonts/awesome/css/custom.css' %}">
     <link href="{% static 'fonts/vazir/font-vazir.css' %}" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="{% static 'plugin/animate/animate.min.css' %}">
@@ -42,8 +42,8 @@
                     </a>
                     <a href="{% url 'main:index' %}" class="logo">
                         <picture>
-                            <source srcset="{% static 'images/logo.webp' %}" type="image/webp">
-                            <img src="{% static 'images/logo.png' %}" alt="logo" width="153" height="44"/></picture>
+                            <source srcset="{% static 'images/logo-neyanbar.png' %}" type="image/webp">
+                            <img src="{% static 'images/logo-neyanbar.png' %}" alt="logo" width="153" height="44"/></picture>
                     </a>
                     <div class="header-search hs-simple">
                         <form action="{% url 'shop:product-list' %}" method="get" class="input-wrapper">
@@ -421,8 +421,8 @@
                     <div class="col-xxl-8 col-xl-7 col-lg-6">
                         <a href="{% url 'main:index' %}" class="logo-footer">
                             <picture>
-                                <source srcset="{% static 'images/logo-footer.webp' %}" type="image/webp">
-                                <img src="{% static 'images/logo-footer.png' %}" alt="logo-footer" width="153"
+                                <source srcset="{% static 'images/logo-neyanbar.png' %}" type="image/webp">
+                                <img src="{% static 'images/logo-neyanbar.png' %}" alt="logo-footer" width="153"
                                      height="44"/></picture>
                         </a>
                         <div class="widget-newsletter-info ">
