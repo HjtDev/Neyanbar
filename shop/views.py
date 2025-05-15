@@ -1,6 +1,6 @@
 from django.http import QueryDict, JsonResponse
 from django.shortcuts import render, redirect
-from django.db.models import Q, Avg, Count, FloatField, F, ExpressionWrapper
+from django.db.models import Q, Avg, Count, FloatField, F, ExpressionWrapper, Max
 from django.views.decorators.http import require_http_methods, require_POST
 from shop.models import Product, Comment, Brand, Volume, ProductSmell
 from main.templatetags.tags import to_jalali_verbose
@@ -157,6 +157,15 @@ def product_list_view(request):
 
 
     for key in request.GET:
+        if request.GET.get('search'):
+            all_products = all_products.filter(Q(name__icontains=request.GET.get('search')) | Q(name_en__icontains=request.GET.get('search')))
+
+        if request.GET.get('luxury'):
+            all_products = all_products.order_by('-price')
+
+        if request.GET.get('has-discount'):
+            all_products = all_products.filter(discount__gt=0)
+
         if request.GET.get('products'):
             all_products = all_products.filter(slug__in=request.GET.get('products').split(';'))
 
@@ -164,6 +173,9 @@ def product_list_view(request):
             all_products = all_products.filter(brand__slug__in=request.GET.get('brands').split(';'))
         elif 'brand' in key:
             all_products = all_products.filter(brand__slug__in=request.GET.getlist(key))
+
+        if request.GET.get('big'):
+            all_products = all_products.order_by('-available_volumes__volume')
 
         if request.GET.get('volumes'):
             all_products = all_products.filter(available_volumes__in=Volume.objects.filter(volume__in=request.GET.get('volumes').split(';'))).distinct()

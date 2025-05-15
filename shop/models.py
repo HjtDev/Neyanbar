@@ -192,6 +192,9 @@ class ProductSmell(models.Model):
     def __str__(self):
         return self.get_value_display()
 
+    def get_absolute_url(self):
+        return reverse('shop:product-list') + f'?smells={self.value}'
+
     class Meta:
         verbose_name = 'گروه بویایی'
         verbose_name_plural = 'گروه های بویایی'
@@ -250,6 +253,9 @@ class Volume(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('shop:product-list') + f'?volumes={self.volume}'
 
     class Meta:
         verbose_name = 'حجم'

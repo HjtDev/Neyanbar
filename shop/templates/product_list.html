@@ -201,7 +201,7 @@
                                     </ul>
                                 </div>
                                 <div class="widget widget-collapsible">
-                                    <h3 class="widget-title collapsed">جنیسیت</h3>
+                                    <h3 class="widget-title collapsed">جنسیت</h3>
                                     <ul class="widget-body filter-items" style="display: none;">
                                         <li class="gender-select" data-value="MALE"><a class="active-filter" href="#">مردانه</a></li>
                                         <li class="gender-select" data-value="FEMALE"><a class="active-filter" href="#">زنانه</a></li>
@@ -235,7 +235,7 @@
                                     </div>
                                 </div>
                                 <button class="btn btn-primary mb-2 w-100 apply-filters">اعمال فیلتر</button>
-                                <button class="btn btn-primary mb-2 w-100 remove-filters d-none" onclick="$(window).scrollTop(0);location.reload();">حذف فیلتر ها</button>
+                                <button class="btn btn-primary mb-2 w-100 remove-filters d-none" onclick="$(window).scrollTop(0);window.location.href='{% url 'shop:product-list' %}';">حذف فیلتر ها</button>
                             </div>
                         </div>
                     </aside>

@@ -23,46 +23,16 @@
             <section class="about-section pb-10 appear-animate">
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class="col-lg-4 mb-10 mb-lg-4 ">
-                            <h3 class="section-title lh-1 font-weight-bold">
-                                ارائه آمار کامل و کاربردی
-                            </h3>
-                            <p class="section-desc">
-                                آمار پیشرفت وبسایت  و آمار خدمات و مشتریان ما .
-                            </p>
-                        </div>
-                        <div class="col-lg-8 ">
+                        <div class="col-lg-12 ">
                             <div class="row">
-                                <div class="col-md-4 mb-4">
+                                <div class="col-md-12 mb-4">
                                     <div class="counter text-center text-dark">
-                                            <span class="count-to" data-fromvalue="0" data-tovalue="34"
+                                            <span class="count-to" data-fromvalue="0" data-tovalue="150"
                                                   data-duration="900" data-delimiter=",">0</span>
-                                        <h5 class="count-title">سال تجاری</h5>
+                                        <h5 class="count-title">انواع رایحه های مدرن و کلاسیک</h5>
                                         <p class="text-grey mb-0">
                                             در خدمت شما هستیم<br>
                                             وازاینکه ما را انتخاب کردید متشکریم .
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-4">
-                                    <div class="counter text-center text-dark">
-                                            <span class="count-to" data-fromvalue="0" data-tovalue="50"
-                                                  data-duration="900" data-delimiter=",">0</span>
-                                        <h5 class="count-title">طراحی برند</h5>
-                                        <p class="text-grey mb-0">
-                                            آمار طراحی برندها<br>
-                                            شامل خدمات و محصولات است.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 mb-4 ">
-                                    <div class="counter text-center text-dark">
-                                            <span class="count-to" data-fromvalue="0" data-tovalue="130"
-                                                  data-duration="900" data-delimiter=",">0</span>
-                                        <h5 class="count-title ">اعضا تیم</h5>
-                                        <p class="text-grey mb-0">
-                                            آمار تعداد اعضا تیم <br>
-                                            شامل اعضا اصلی و فرعی است .
                                         </p>
                                     </div>
                                 </div>
@@ -268,7 +238,7 @@
                                 }
                             }
                         }">
-                        {% for brand in brands %}
+                        {% for brand in all_brands %}
                             <figure class="brand-wrap">
                                 <picture><source srcset="{{ brand.logo.url }}" type="image/webp"><img loading="lazy" decoding="async" src="{{ brand.logo.url }}" alt="Brand" width="180" height="100" /></picture>
                             </figure>

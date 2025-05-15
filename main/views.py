@@ -30,7 +30,6 @@ def home_view(request):
             )
         ).order_by('-products__site_score')[:4],
         'top_products': all_products.order_by('-site_score')[:6],
-        'all_brand': all_brands
     }
     settings = Setting.objects.first()
     if settings.show_offer:
@@ -97,7 +96,7 @@ def join_club_view(request):
 
 
 def about_us_view(request):
-    return render(request, 'about-us.html', {'brands': Brand.objects.all()})
+    return render(request, 'about-us.html')
 
 
 def terms_view(request):
