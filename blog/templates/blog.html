@@ -6,6 +6,19 @@
     {{ post }}
 {% endblock %}
 
+{% block title_og %}
+    {{ post }}
+{% endblock %}
+
+{% block page_keywords %}
+    {{ post.tags.all|join:", " }}, {{ post.title }}, بلاگ نی عنبر, مقالات عطر, نکات عطرسازی
+{% endblock %}
+
+{% block page_description %}
+    {{ post.content|truncatechars:160 }}
+{% endblock %}
+
+
 {% block content %}
     <input type="hidden" name="post_id" data-id="{{ post.id }}">
     <main class="main single-product rtl text-right">

@@ -6,10 +6,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
     <title>نی عنبر | {% block title %}{% endblock %}</title>
-    <meta name="keywords" content="HTML5 Template {% block page_keywords %}{% endblock %}"/>
-    <meta name="description" content="{% block page_description %}{% endblock %}">
-    <meta name="author" content="M-dehghan marziye.dehghan8006@gmail.com">
+    <meta name="keywords" content="عطر, ادکلن, ادوپرفیوم, پرفیوم, ادوتویلت, بادی اسپلش, فروشگاه نی عنبر, عطر طبیعی, عطر اسلامی, رایحه طبیعی, عطر مردانه, عطر زنانه, عطر اورجینال, عطر گیاهی, عطر دست‌ساز, ادکلن طبیعی, فروشگاه عطر آنلاین, خرید عطر, عطر با کیفیت, عطر خاص, عطر ایرانی, عطر لوکس, رایحه ماندگار, عطر برند, عطر نیش, عطر ضد حساسیت, عطر با اسانس طبیعی, عطر با قیمت مناسب ,{% block page_keywords %}{% endblock %},"/>
+    <meta name="description" content="خوش آمديد به دنياى عطرها! فروشگاه نى عنبر، مجموعه اى خاص از عطرهاى باز طراحى شده و جستجويى براى احياى حس بى نظير از برندهاى محبوب، روايحى اصيل و ماندگار از كلاسيک تا مدرن. هر عطرى داستانى دارد كه منتظر شنيدن شماست، بگذاريد عطر مورد علاقه تان شما را تعريف كند. نى عنبر هر رايحه يک داستان{% block page_description %}{% endblock %}">
+    <meta name="author" content="Mohammad Hojjat Nikoobakht محمد حجت نیکوبخت m.h.nikoobakht@gmail.com">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="نی عنبر | {% block title_og %}{% endblock %}" />
+    <meta property="og:description" content="خوش آمديد به دنياى عطرها! فروشگاه نى عنبر، مجموعه ای خاص از عطرها..." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:locale" content="fa_IR" />
     <link rel="icon" type="image/png" href="{% static 'images/icons/favicon.png' %}">
+    <link rel="apple-touch-icon" type="image/png" href="{% static 'images/icons/favicon.png' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'fonts/awesome/css/custom.css' %}">
     <link href="{% static 'fonts/vazir/font-vazir.css' %}" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="{% static 'plugin/animate/animate.min.css' %}">
