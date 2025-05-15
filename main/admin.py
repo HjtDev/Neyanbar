@@ -55,10 +55,10 @@ class ClubAdmin(admin.ModelAdmin):
     list_per_page = 15
 
 
-@admin.register(FAQ)
-class FAQAdmin(admin.ModelAdmin):
-    list_display = ('id', 'question', 'is_visible')
-    list_filter = ('is_visible',)
-    search_fields = ('question', 'answer')
-    list_editable = ('is_visible',)
-    list_per_page = 15
+# @admin.register(FAQ)
+# class FAQAdmin(admin.ModelAdmin):
+#     list_display = ('id', 'question', 'is_visible')
+#     list_filter = ('is_visible',)
+#     search_fields = ('question', 'answer')
+#     list_editable = ('is_visible',)
+#     list_per_page = 15
