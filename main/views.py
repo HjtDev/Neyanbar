@@ -2,7 +2,7 @@ from django.db.models import Count, Min, Max, Q, ExpressionWrapper, Case, When, 
 from django.shortcuts import render, redirect
 from blog.models import Post
 from shop.models import Product, Brand
-from .models import Setting, Club
+from .models import Setting, Club, FAQ
 from order.models import CreditCart
 from uuid import uuid4
 
@@ -95,3 +95,14 @@ def join_club_view(request):
             print('welcome to club')
     return redirect('main:index')
 
+
+def about_us_view(request):
+    return render(request, 'about-us.html', {'brands': Brand.objects.all()})
+
+
+def terms_view(request):
+    return render(request, 'terms.html')
+
+
+def faq_view(request):
+    return render(request, 'faq.html', {'faq': FAQ.objects.filter(is_visible=True)})

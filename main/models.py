@@ -97,3 +97,16 @@ class Club(models.Model):
     class Meta:
         verbose_name = 'باشگاه مشتریان'
         verbose_name_plural = 'باشگاه مشتریان'
+
+
+class FAQ(models.Model):
+    objects = models.Manager()
+    question = models.CharField(max_length=255, verbose_name='سوال')
+    answer = models.TextField(verbose_name='جواب')
+    is_visible = models.BooleanField(default=True, verbose_name='نمایش در سایت')
+    def __str__(self):
+        return self.question
+
+    class Meta:
+        verbose_name = 'سوال متداول'
+        verbose_name_plural = 'سوالات متداول'
