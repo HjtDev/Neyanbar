@@ -1,7 +1,5 @@
 from copy import deepcopy
 from datetime import timedelta
-from http.client import HTTPS_PORT
-
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login
@@ -20,7 +18,7 @@ from main.models import Setting
 from datetime import datetime as dt
 from shop.models import Product, Volume
 from uuid import uuid4
-from main.utilities import send_sms
+from main.utilities import send_sms, LOGIN_VERIFY
 from random import randint
 from .zarinpal import start_payment, get_payment_obj, delete_payment
 import json
@@ -202,7 +200,7 @@ def order_submit(request):
         request.session['order'] = {'id': order.id, 'payment_method': payment_method, 'credit_token': credit_token, 'total_cost': total_cost}
         token = randint(1000, 9999)
         cache.set(f'order-{token}', phone, timeout=30)
-        send_sms(phone, token)
+        send_sms(phone, LOGIN_VERIFY, token)
         return JsonResponse({'success': True})
 
 

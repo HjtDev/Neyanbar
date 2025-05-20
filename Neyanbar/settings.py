@@ -9,16 +9,17 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 '''
-import os.path
 from pathlib import Path
 from django.contrib import admin
+from melipayamak import Api
+import os.path
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Environment variables
-env = environ.Env()
+ENV = environ.Env()
 environ.Env.read_env(BASE_DIR / '.env')
 
 
@@ -26,12 +27,12 @@ environ.Env.read_env(BASE_DIR / '.env')
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY = ENV('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.bool('DEBUG', default=True)
+DEBUG = ENV.bool('DEBUG', default=True)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
+ALLOWED_HOSTS = ENV.list('ALLOWED_HOSTS', default=[])
 
 
 # Application definition
@@ -94,9 +95,9 @@ WSGI_APPLICATION = 'Neyanbar.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PASSWORD'),
+        'NAME': ENV('DB_NAME'),
+        'USER': ENV('DB_USER'),
+        'PASSWORD': ENV('DB_PASSWORD'),
     }
 }
 
@@ -201,6 +202,12 @@ AUTH_USER_MODEL = 'account.User'
 
 # Zarinpal
 
-MERCHANT = env('MERCHANT')
+MERCHANT = ENV('MERCHANT')
 
-SANDBOX = env.bool('SANDBOX', default=False)
+SANDBOX = ENV.bool('SANDBOX', default=False)
+
+# Melypayamak
+
+SMS_USERNAME = ENV('SMS_USERNAME')
+SMS_PASSWORD = ENV('SMS_PASSWORD')
+SMS = Api(SMS_USERNAME, SMS_PASSWORD).sms()

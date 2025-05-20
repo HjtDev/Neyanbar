@@ -1,6 +1,5 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
-
 from main.templatetags.tags import to_jalali_verbose
 from main.utilities import send_sms
 from .models import Order, OrderItem, Discount, CreditCart, Transaction
@@ -53,13 +52,13 @@ class OrderAdmin(admin.ModelAdmin):
     )
 
 
-def discount_notify_everyone(modeladmin, request, queryset):
-    for item in queryset:
-        users = item.get_selected_users()
-        for user in users:
-            send_sms(user.phone, f' {item.token}تخفیف ویژه فقط تا {to_jalali_verbose(item.date)} کد تخفیف:')
-
-discount_notify_everyone.short_description = 'ارسال پیامک'
+# def discount_notify_everyone(modeladmin, request, queryset):
+#     for item in queryset:
+#         users = item.get_selected_users()
+#         for user in users:
+#             send_sms(user.phone, f' {item.token}تخفیف ویژه فقط تا {to_jalali_verbose(item.date)} کد تخفیف:')
+#
+# discount_notify_everyone.short_description = 'ارسال پیامک'
 
 @admin.register(Discount)
 class DiscountAdmin(admin.ModelAdmin):
@@ -67,7 +66,7 @@ class DiscountAdmin(admin.ModelAdmin):
     list_filter = ('expire_at', 'users')
     search_fields = ('token', 'selected')
     ordering = ('-expire_at',)
-    actions = [discount_notify_everyone]
+    # actions = [discount_notify_everyone]
 
     fieldsets = (
         (_('اطلاعات تخفیف'), {
