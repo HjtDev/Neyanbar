@@ -64,7 +64,11 @@
                                                 <h4 class="banner-subtitle ls-normal font-primary font-weight-bold text-grey slide-animate mb-8 mb-md-5 mb-sm-2 mb-xs-2 pb-2"
                                                     data-animation-options="{'name': 'fadeInUpShorter', 'duration': '.7s', 'delay': '.4s'}">
                                                     <span class=" text-secondary">
-                                                        %{{ title_product.get_price_difference }} تخفیف
+                                                        {% if title_product.discount != -1 %}
+                                                            %{{ title_product.get_price_difference }} تخفیف
+                                                        {% else %}
+                                                            {{ title_product.name }}
+                                                        {% endif %}
                                                     </span>
                                                 </h4>
                                                 <a href="{{ title_product.get_absolute_url }}"

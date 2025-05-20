@@ -13,9 +13,10 @@ def home_view(request):
         verified_comments_count=Count('comments', filter=Q(comments__is_verified=True))
     )
     all_brands = Brand.objects.prefetch_related('products').all()
+    title_products = all_products.filter(discount__gt=-1)
     context = {
         'posts': Post.objects.select_related('user').filter(is_visible=True).order_by('-created_at')[:6],
-        'title_product': all_products.filter(discount__gt=-1).order_by('-views')[0],
+        'title_product': title_products.order_by('-views')[0] if title_products.exists() else all_products.order_by('-views')[0],
         'top_brands': all_brands.filter(products__is_visible=True).annotate(
             max_discount=Max('products__discount'),
             min_price=Min('products__price'),
