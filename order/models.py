@@ -43,9 +43,10 @@ class Order(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='زمان ثبت سفارش')
 
     def __str__(self):
-        return f'Order {self.order_id}'
+        return f'{self.order_id}سفارش '
 
     def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
         if self.user and self.items.exists():
             for item in self.items.all():
                 if self.user not in item.product.bought_by.all():

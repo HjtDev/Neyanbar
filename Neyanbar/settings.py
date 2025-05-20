@@ -198,3 +198,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # User model
 
 AUTH_USER_MODEL = 'account.User'
+
+# Zarinpal
+
+MERCHANT = env('MERCHANT')
+
+SANDBOX = env.bool('SANDBOX', default=False)

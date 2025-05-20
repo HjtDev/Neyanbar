@@ -5,6 +5,7 @@ from shop.models import Product, Brand
 from .models import Setting, Club, FAQ
 from order.models import CreditCart
 from uuid import uuid4
+from order.zarinpal import start_payment
 
 
 def home_view(request):
@@ -77,8 +78,7 @@ def credit_card_charge_view(request, charge):
             print('*' * 30)
             print('REDIRECTED TO GATEWAY PAGE')
             print('*' * 30)
-            credit_card.credit += int(charge)
-            credit_card.save()
+            return start_payment(request, credit_card.pk, False, charge)
     except CreditCart.DoesNotExist:
         return redirect(request, 'credit-card-empty.html')
 
