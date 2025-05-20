@@ -401,8 +401,8 @@ def zarinpal_verify(request):
             response_json = response.json()
             reference_id = response_json['RefID']
             if response_json['Status'] == 100:
+                messages.success(request, 'خرید موفق')
                 if isinstance(obj, Order):
-                    messages.success(request, 'خرید موفق')
                     obj.status = Order.StatusChoices.PENDING
                     obj.user = request.user
                     obj.save()
