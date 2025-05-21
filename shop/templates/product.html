@@ -7,12 +7,16 @@
     {{ product }}
 {% endblock %}
 
+{% block title_og %}
+    {{ product }}
+{% endblock %}
+
 {% block page_keywords %}
     {{ product.name }}, {{ product.name_en }}, عطر, ادکلن, پرفیوم, فروشگاه نی عنبر, عطر طبیعی, عطر اسلامی, عطر دست‌ساز, {{ product.name }} اصل, خرید {{ product.name }},
 {% endblock %}
 
 {% block page_description %}
-    {{ product.content|truncatechars:160 }}
+    {{ product }}
 {% endblock %}
 
 {% block content %}

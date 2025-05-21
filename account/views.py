@@ -169,7 +169,7 @@ def compare_list_handler(request):
                     return JsonResponse({'added': True}, status=200)
             elif action == 'remove':
                 compare_list.remove(product)
-                return JsonResponse({}, status=200)
+                return JsonResponse({'empty': compare_list.exists()}, status=200)
             else:
                 return JsonResponse({'message': 'Invalid action.'}, status=400)
         else:
@@ -182,5 +182,10 @@ def compare_list_handler(request):
 def compare_list_view(request):
     if not request.user.is_authenticated:
         return redirect('main:index')
+
+    compare_list = request.user.compare_list.all()
+
+    if not compare_list.exists():
+        return redirect('shop:product-list')
 
     return render(request, 'compare.html', {'compare_list': request.user.compare_list.all()})
