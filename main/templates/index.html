@@ -6,6 +6,18 @@
 	صفحه اصلی
 {% endblock %}
 
+{% block title_og %}
+	صفحه اصلی
+{% endblock %}
+
+{% block page_keywords %}
+    عطر, ادکلن, پرفیوم, ادوپرفیوم, ادوتویلت, بادی اسپلش, فروشگاه نی عنبر, عطر طبیعی, عطر اسلامی, عطر دست‌ساز, عطر ایرانی, رایحه اصیل, عطرهای نیش, عطر لوکس, خرید عطر آنلاین, بهترین عطرها,
+{% endblock %}
+
+{% block page_description %}
+    خوش آمدید به فروشگاه نی عنبر؛ مجموعه‌ای منحصر به فرد از عطرهای طبیعی، اسلامی و دست‌ساز با رایحه‌های اصیل و ماندگار. بهترین برندها و عطرهای نیش را با ما تجربه کنید.
+{% endblock %}
+
 {% block content %}
     <main class="main rtl text-right">
         <div class="page-content">
@@ -52,7 +64,11 @@
                                                 <h4 class="banner-subtitle ls-normal font-primary font-weight-bold text-grey slide-animate mb-8 mb-md-5 mb-sm-2 mb-xs-2 pb-2"
                                                     data-animation-options="{'name': 'fadeInUpShorter', 'duration': '.7s', 'delay': '.4s'}">
                                                     <span class=" text-secondary">
-                                                        %{{ title_product.get_price_difference }} تخفیف
+                                                        {% if title_product.discount != -1 %}
+                                                            %{{ title_product.get_price_difference }} تخفیف
+                                                        {% else %}
+                                                            {{ title_product.name }}
+                                                        {% endif %}
                                                     </span>
                                                 </h4>
                                                 <a href="{{ title_product.get_absolute_url }}"
@@ -470,13 +486,13 @@
             {% endfor %}
             <section class="container parallax-wrap rtl text-right">
                 <div class="banner video-banner b-r-20"
-                     style="background-image: url('static/images/cta.jpg'); background-color: #4e4743; ">
+                     style="background-image: url('{% static 'images/video.jpg' %}'); background-color: #4e4743; ">
                     <div class="banner-content appear-animate text-center">
                         <h4 class="banner-subtitle ls-normal font-weight-normal font-secondary text-white appear-animate"
                             data-animation-options="{
                                 'name': 'fadeInDownShorter'
                             }">
-                            خرید از نی عنبر
+                            خوش آمديد به دنياى عطرها!
                         </h4>
                         <h3 class="banner-title text-white font-weight-bold mb-5 appear-animate"
                             data-animation-options="{
@@ -484,12 +500,12 @@
                                 'delay': '.4s',
                                 'duration': '1.4s'
                             }">
-                            و چرا باید از این وبسایت خرید کرد !
+                            فروشگاه نى عنبر، مجموعه اى خاص از عطرهاى باز طراحى شده و جستجويى براى احياى حس بى نظير از برندهاى محبوب، روايحى اصيل و ماندگار از كلاسيک تا مدرن. هر عطرى داستانى دارد كه منتظر شنيدن شماست، بگذاريد عطر مورد علاقه تان شما را تعريف كند.
                         </h3>
                         <a class="btn-play btn-iframe text-white appear-animate" data-animation-options="{
                                 'name': 'fadeIn',
                                 'delay': '.8s'
-                            }" href="{% static 'video/perfume.mp4' %}">
+                            }" href="{% static 'video/neyanbar.mp4' %}">
                             <i class="fa-light fa-play"></i>
                         </a>
                     </div>
@@ -601,7 +617,7 @@
                             </div>
                         </div>
                         <div class="d-lg-block d-flex justify-content-center form-container col-lg-6 col-xs-12">
-                            <form action="#" method="get"
+                            <form action="{% url 'main:join_club' %}" method="get"
                                   class="input-wrapper input-wrapper-inline ml-lg-auto appear-animate"
                                   data-animation-options="{'name': 'fadeInRightShorter'}">
                                 <input type="email" class="form-control font-primary form-solid text-left"
@@ -679,7 +695,7 @@
                     {% endfor %}
                 </div>
             </section>
-            <section class="container m-b-10 ">
+            <section class="container m-b-10" id="brands-section">
                 <div class="title-wrapper">
                     <div class="container-fluid title-wrap">
                         <h2 class="title">برندهای ما</h2>
@@ -720,7 +736,7 @@
                             }
                         }
                     }">
-                    {% for brand in all_brand %}
+                    {% for brand in all_brands %}
                         <picture><source srcset="{{ brand.logo.url }}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{{ brand.logo.url }}" alt="Brand" width="180" height="100" /></picture>
                     {% endfor %}
                 </div>

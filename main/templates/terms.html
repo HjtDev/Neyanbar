@@ -1,0 +1,209 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+	شرایط و ضوابط
+{% endblock %}
+
+{% block title_og %}
+	شرایط و ضوابط
+{% endblock %}
+
+{% block page_keywords %}
+    شرایط و ضوابط, قوانین فروشگاه, قوانین استفاده, سیاست‌های نی عنبر, قوانین خرید, شرایط استفاده, قوانین بازگشت کالا, فروشگاه نی عنبر, مقررات سایت,
+{% endblock %}
+
+{% block page_description %}
+    صفحه شرایط و ضوابط فروشگاه نی عنبر شامل قوانین استفاده، خرید، بازگشت کالا و سیاست‌های مربوط به خدمات ما. لطفاً این قوانین را به دقت مطالعه کنید.
+{% endblock %}
+
+{% block content %}
+    <main class="main rtl text-right">
+        <div class="page-header pl-4 pr-4">
+            <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبسایت ما</h3>
+            <h1 class="page-title font-weight-bold lh-1 text-white">شرایط و ضوابط</h1>
+        </div>
+        <nav class="breadcrumb-nav">
+            <div class="container breadcrumb-nav-wrap">
+                <ul class="breadcrumb ">
+                    <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
+                    <li>شرایط و ضوابط</li>
+                </ul>
+            </div>
+        </nav>
+        <div class="page-content">
+
+            <section class="customer-section appear-animate">
+                <div class="container customer-wrap">
+                    <div class="row align-items-center">
+                        <div class="col-md-7 mb-4 ">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/custom/img6.jpg' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/custom/img6.jpg' %}" alt="Happy Customer" width="580"  height="507" class="banner-radius" style="background-color: #BDD0DE;" />
+                                </picture>
+                            </figure>
+                        </div>
+                        <div class="col-md-5 mb-4  text-right">
+                            <div class="container-fluid title-right-wrap">
+                                <h2 class="title-right">استفاده از فروشگاه</h2>
+                                <h5 class="title-info-right">
+                                    <span></span>
+                                    <picture><source srcset="/static/images/perfume/15.webp" type="image/webp"><img src="/static/images/perfume/15.png"></picture>
+                                    <span></span>
+                                </h5>
+                            </div>
+                            <p class="section-desc text-grey">
+                                استفاده از فروشگاه اینترنتی نی عنبر به هر شکل، به معنای آگاهی و قبول شرایط مندرج در این بخش است؛ از این رو خواهشمند است موارد زیر را مطالعه فرمایید. توجه داشته باشید که ثبت سفارش در هر زمان به معنی پذیرفتن کامل همه شرایط و قوانین این فروشگاه از سوی کاربر است و شرایط و قوانین مندرج، به عنوان توافق‏‌های قبلی به حساب می آید. اصول و رویه‏‌های فروشگاه اینترنتی نی عنبرمنطبق با قوانین جمهوری اسلامی ایران، قانون تجارت الکترونیک و قانون حمایت از حقوق مصرف کننده است و کاربر نیز موظف به رعایت قوانین مرتبط خواهد بود 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="store-section pb-10 appear-animate">
+                <div class="container store-wrap">
+                    <div class="row align-items-center ">
+                        <div class="col-md-6 order-md-first mb-4 text-right">
+                            <div class="container-fluid title-right-wrap">
+                                <h2 class="title-right">صحت اطلاعات</h2>
+                                <h5 class="title-info-right">
+                                    <span></span>
+                                    <picture><source srcset="/static/images/perfume/15.webp" type="image/webp"><img src="/static/images/perfume/15.png"></picture>
+                                    <span></span>
+                                </h5>
+                            </div>
+                            <p class="section-desc text-grey">
+                                لازم است که مشتریان در هنگام ثبت سفارش اطلاعات خود را با دقت و به درستی وارد نمایند، در غیراین صورت مسئولیت بروز هر گونه مشکل و زیان احتمالی بر عهده ایشان است. علاوه بر این سفارش های ثبت شده تنها به شخص معرفی شده در فرم اطلاعات مشتری و با کنترل کارت شناسایی انجام می پذیرد؛ شخص معرفی شده می تواند شخص کاربر و یا فرد مورد تایید وی باشد.
+                            </p>
+                        </div>
+                        <div class="col-md-6 mb-4 store-img">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/custom/img7.jpg' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/custom/img7.jpg' %}" alt="Our Store" width="580" height="507" class="banner-radius" style="background-color: #DEE6E8;" />
+                                </picture>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="customer-section appear-animate">
+                <div class="container customer-wrap">
+                    <div class="row align-items-center">
+                        <div class="col-md-7 mb-4 ">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/custom/img8.jpg' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/custom/img8.jpg' %}" alt="Happy Customer" width="580"  height="507" class="banner-radius" style="background-color: #BDD0DE;" />
+                                </picture>
+                            </figure>
+                        </div>
+                        <div class="col-md-5 mb-4  text-right">
+                            <div class="container-fluid title-right-wrap">
+                                <h2 class="title-right">لغو سفارش</h2>
+                                <h5 class="title-info-right">
+                                    <span></span>
+                                    <picture><source srcset="/static/images/perfume/15.webp" type="image/webp"><img src="/static/images/perfume/15.png"></picture>
+                                    <span></span>
+                                </h5>
+                            </div>
+                            <p class="section-desc text-grey">
+                                در صورتی که موجودی محصولی در فروشگاه به پایان برسد، حتی پس از سفارش‌‏گذاری مشتری، حق کنسل کردن آن سفارش و یا استرداد وجه سفارش برای فروشگاه ایترنتی میثم عطر محفوظ است. 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="customer-section appear-animate">
+                <div class="container customer-wrap">
+                    <div class="row align-items-center">
+                        <div class="col-md-7 mb-4 ">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/custom/img10.jpg' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/custom/img10.jpg' %}" alt="Happy Customer" width="580"  height="507" class="banner-radius" style="background-color: #BDD0DE;" />
+                                </picture>
+                            </figure>
+                        </div>
+                        <div class="col-md-5 mb-4  text-right">
+                            <div class="container-fluid title-right-wrap">
+                                <h2 class="title-right">مشکلات</h2>
+                                <h5 class="title-info-right">
+                                    <span></span>
+                                    <picture><source srcset="/static/images/perfume/15.webp" type="image/webp"><img src="/static/images/perfume/15.png"></picture>
+                                    <span></span>
+                                </h5>
+                            </div>
+                            <p class="section-desc text-grey">
+                                در صورت بروز خطا در درج قیمت کالاهای موجود، فروشگاه اینترنتی میثم عطر می تواند سفارش ثبت شده مشتری را ابطال و وجه دریافتی را به حساب اعلام شده توسط مشتری واریز نماید
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="store-section pb-10 appear-animate">
+                <div class="container store-wrap">
+                    <div class="row align-items-center ">
+                        <div class="col-md-6 order-md-first mb-4 text-right">
+                            <div class="container-fluid title-right-wrap">
+                                <h2 class="title-right">بازگشت وجه</h2>
+                                <h5 class="title-info-right">
+                                    <span></span>
+                                    <picture><source srcset="/static/images/perfume/15.webp" type="image/webp"><img src="/static/images/perfume/15.png"></picture>
+                                    <span></span>
+                                </h5>
+                            </div>
+                            <p class="section-desc text-grey">
+                                در صورت بروز مشکل در پردازش نهایی خرید مانند اتمام موجودی کالا یا انصراف مشتری، مبلغ پرداخت شده طی ۲۴ الی ۴۸ ساعت کاری به حساب مشتری برگشت داده خواهد شد.
+                            </p>
+                        </div>
+                        <div class="col-md-6 mb-4 store-img">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/custom/img9.jpg' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/custom/img9.jpg' %}" alt="Our Store" width="580" height="507" class="banner-radius" style="background-color: #DEE6E8;" />
+                                </picture>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="customer-section appear-animate">
+                <div class="container customer-wrap">
+                    <div class="row align-items-center">
+                        <div class="col-md-7 mb-4 ">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/custom/img8.jpg' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/custom/img8.jpg' %}" alt="Happy Customer" width="580"  height="507" class="banner-radius" style="background-color: #BDD0DE;" />
+                                </picture>
+                            </figure>
+                        </div>
+                        <div class="col-md-5 mb-4  text-right">
+                            <div class="container-fluid title-right-wrap">
+                                <h2 class="title-right">تعویض کالا</h2>
+                                <h5 class="title-info-right">
+                                    <span></span>
+                                    <picture><source srcset="/static/images/perfume/15.webp" type="image/webp"><img src="/static/images/perfume/15.png"></picture>
+                                    <span></span>
+                                </h5>
+                            </div>
+                            <p class="section-desc text-grey">
+                                تعویض کالای خریداری شده تا ۷ روز پس از خرید، در صورتی امکان پذیر است که اشکال یا ایرادی در کالا وجود داشته باشد، یا کالا با اطلاعات مندرج در وبسایت مطابقت نداشته باشد؛ علاوه بر این لازم است کالا از حالت پلمپ خارج نشده، تست و یا استفاده نشده باشد.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+{% endblock %}
+
+{% block script %}
+    <script defer src="{% static 'plugin/jquery.count-to/jquery-numerator.min.js' %}"></script>
+{% endblock %}

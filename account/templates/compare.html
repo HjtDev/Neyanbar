@@ -6,6 +6,18 @@
 	مقایسه محصولات
 {% endblock %}
 
+{% block title_og %}
+	مقایسه محصولات
+{% endblock %}
+
+{% block page_keywords %}
+    لیست مقایسه, مقایسه محصولات, مقایسه عطرها, محصولات ذخیره شده, مقایسه ادکلن, خرید عطر, افزودن به سبد خرید, فروشگاه نی عنبر, عطرهای محبوب, انتخاب عطر, خرید آسان عطر,
+{% endblock %}
+
+{% block page_description %}
+    در صفحه لیست مقایسه نی عنبر، محصولات ذخیره شده خود را به راحتی مقایسه کنید و بهترین عطر را انتخاب نمایید. با امکان افزودن سریع به سبد خرید، تجربه خریدی آسان و مطمئن را داشته باشید.
+{% endblock %}
+
 {% block content %}
     <main class="main rtl text-right">
         <div class="page-header pl-4 pr-4">
@@ -44,7 +56,7 @@
                                 </figure>
                                 <div class="product-details rtl">
                                     <div class="product-action">
-                                        <a href="#" class="btn-product-icon btn-default " title="اضافه به سبد"
+                                        <a href="#" class="btn-product-icon btn-default add-to-cart" data-id="{{ product.id }}" title="اضافه به سبد"
                                            data-toggle="modal" data-target="#addCartModal">
                                             <i class="fa-light fa-cart-shopping"></i>
                                         </a>

@@ -6,6 +6,10 @@
 	وضعیت سفارش
 {% endblock %}
 
+{% block page_description %}
+    وضعیت سفارش شما در فروشگاه نی عنبر. آخرین اطلاعات مربوط به سفارش و ارسال را مشاهده کنید.
+{% endblock %}
+
 {% block content %}
     <main class="main rtl text-right">
         <div class="page-header pl-4 pr-4">
@@ -48,6 +52,8 @@
                                 {% else %}
                                     {% if order.status == 'NOT_PAID' %}
                                         در انتظار پرداخت
+                                    {% elif order.status == 'REJECTED' %}
+                                        سفارش شما لغو شده است
                                     {% else %}
                                         متشکریم از خرید شما!
                                     {% endif %}

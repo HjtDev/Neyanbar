@@ -1,4 +1,5 @@
 from django.contrib import admin
+from main.utilities import send_sms, PRODUCT_NOTIFY_ME
 from .models import Product, ProductSmell, Image, Features, Brand, Comment, Volume
 
 
@@ -16,6 +17,14 @@ class CommentInline(admin.StackedInline):
     model = Comment
     extra = 0
 
+
+def notify_product_available(modeladmin, request, queryset):
+    for product in queryset:
+        for user in product.remind_to.all():
+            send_sms(user.phone, PRODUCT_NOTIFY_ME, user.name, product.name)
+        product.remind_to.clear()
+
+notify_product_available.short_description = 'ارسال پیامک موجودی'
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -36,6 +45,7 @@ class ProductAdmin(admin.ModelAdmin):
         FeaturesInline,
         CommentInline,
     ]
+    actions = [notify_product_available]
 
     fieldsets = (
         ('اطلاعات محصول', {

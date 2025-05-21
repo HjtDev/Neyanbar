@@ -9,6 +9,7 @@ from django.shortcuts import reverse
 
 
 class Tag(models.Model):
+    objects = models.Manager()
     name = models.CharField(max_length=60, verbose_name='تگ')
     slug = models.SlugField(max_length=60, unique=True, verbose_name='اسلاگ')
 
@@ -21,6 +22,7 @@ class Tag(models.Model):
 
 
 class Category(models.Model):
+    objects = models.Manager()
     name = models.CharField(max_length=60, verbose_name='دسته بندی')
     slug = models.SlugField(max_length=60, unique=True, verbose_name='اسلاگ')
 
@@ -47,6 +49,7 @@ def user_directory_path(instance, filename):
 
 
 class Post(models.Model):
+    objects = models.Manager()
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='posts', verbose_name='نویسنده')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, verbose_name='دسته بندی', blank=True, null=True, related_name='posts')
     thumbnail = models.ImageField(upload_to=user_directory_path, verbose_name='تصویر تیتر', help_text='880*450')
@@ -73,6 +76,7 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
+    objects = models.Manager()
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_comments', verbose_name='کاربر')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments', verbose_name='پست')
     content = models.TextField(max_length=320, verbose_name='متن')

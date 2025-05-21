@@ -6,6 +6,14 @@
 	احراز هویت
 {% endblock %}
 
+{% block page_keywords %}
+    تأیید سفارش, تأیید اطلاعات, ثبت سفارش, فروشگاه نی عنبر, صفحه تأیید,
+{% endblock %}
+
+{% block page_description %}
+    لطفاً اطلاعات خود را تأیید کنید تا سفارش شما در فروشگاه نی عنبر ثبت شود. فرآیند سریع و امن برای تکمیل خرید شما.
+{% endblock %}
+
 {% block content %}
     <main class="main rtl text-right">
         <div class="page-header pl-4 pr-4">
@@ -46,7 +54,7 @@
                                 {% csrf_token %}
                                 <div class="form-group mb-4">
                                     <label>کد تایید <i class="fa-light fa-star-of-life"></i></label>
-                                    <input type="text" class="form-control text-left" id="token" name="token" placeholder="۱۲۳۴"
+                                    <input type="number" class="form-control text-left" id="token" name="token" placeholder="۱۲۳۴"
                                            required />
                                 </div>
                                 <button class="btn btn-md btn-block btn-gradient" type="submit">

@@ -7,7 +7,7 @@ from django.core.cache import cache
 from .forms import validate_phone, validate_email
 from .models import User
 from random import randint
-from main.utilities import send_sms
+from main.utilities import send_sms, LOGIN_VERIFY
 from django.http import QueryDict
 from shop.models import Product
 
@@ -22,7 +22,7 @@ def login_view(request):
                 return JsonResponse({'message': 'لطفا حداقل ۳۰ ثانیه برای دریافت کد جدید صبر کنید.'}, status=403)
             token = randint(1000, 9999)
             cache.set(f'login-user-{user.id}', token, timeout=30)
-            send_sms(phone, token)
+            send_sms(phone, LOGIN_VERIFY, token)
             return JsonResponse({'token_sent': True}, status=200)
         else:
             return JsonResponse({'message': 'شماره تلفن اشتباه است.'}, status=400)
@@ -75,7 +75,7 @@ def register_view(request):
             return JsonResponse({'message': 'لطفا حداقل ۳۰ ثانیه برای دریافت کد جدید صبر کنید.'}, status=403)
         token = randint(1000, 9999)
         cache.set(f'register-user-{phone}', token, timeout=30)
-        send_sms(phone, token)
+        send_sms(phone, LOGIN_VERIFY, token)
         return JsonResponse({'token_sent': True}, status=200)
     else:
         return JsonResponse({'message': 'شماره تلفن اشتباه است.'}, status=400)

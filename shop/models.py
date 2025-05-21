@@ -91,7 +91,7 @@ class Product(models.Model):
 
     views = models.PositiveIntegerField(default=0, verbose_name='بازدید ها')
     liked_by = models.ManyToManyField(User, blank=True, related_name='liked_products', verbose_name='کسانی که این محصول را پسندیده اند')
-    bought_by = models.ManyToManyField(User, blank=True, related_name='saved_products', verbose_name='کسانی که این محصول را خریده اند')
+    bought_by = models.ManyToManyField(User, blank=True, related_name='bought_products', verbose_name='کسانی که این محصول را خریده اند')
     remind_to = models.ManyToManyField(User, blank=True, related_name='reminder_products', verbose_name='کسانی که منتظر موجود شدن این محصول هستند')
 
     is_visible = models.BooleanField(default=False, verbose_name='نمایش در سایت')
@@ -192,6 +192,9 @@ class ProductSmell(models.Model):
     def __str__(self):
         return self.get_value_display()
 
+    def get_absolute_url(self):
+        return reverse('shop:product-list') + f'?smells={self.value}'
+
     class Meta:
         verbose_name = 'گروه بویایی'
         verbose_name_plural = 'گروه های بویایی'
@@ -250,6 +253,9 @@ class Volume(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('shop:product-list') + f'?volumes={self.volume}'
 
     class Meta:
         verbose_name = 'حجم'

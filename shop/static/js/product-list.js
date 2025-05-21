@@ -1,5 +1,10 @@
 $(document).ready(function() {
     $(window).scrollTop(0);
+
+    if(window.location.search) {
+        $('.remove-filters').removeClass('d-none');
+    }
+
     $('.apply-filters').click(function(e) {
         let selected_brands = []
         $('.brand-side').each(function() {
