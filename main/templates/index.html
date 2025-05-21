@@ -18,6 +18,45 @@
     خوش آمدید به فروشگاه نی عنبر؛ مجموعه‌ای منحصر به فرد از عطرهای طبیعی، اسلامی و دست‌ساز با رایحه‌های اصیل و ماندگار. بهترین برندها و عطرهای نیش را با ما تجربه کنید.
 {% endblock %}
 
+{% block header %}
+    <style>
+        #videoModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 10px;
+            z-index: 10000;
+            width: 90vw;
+            max-width: 600px;
+            height: auto;
+            max-height: 80vh;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        #videoModal video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            max-height: 70vh;
+        }
+
+        @media (max-width: 400px) {
+            #videoModal {
+                width: 95vw;
+                padding: 5px;
+            }
+
+            #videoModal video {
+                max-height: 60vh;
+            }
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
     <main class="main rtl text-right">
         <div class="page-content">
@@ -502,7 +541,7 @@
                             }">
                             فروشگاه نى عنبر، مجموعه اى خاص از عطرهاى باز طراحى شده و جستجويى براى احياى حس بى نظير از برندهاى محبوب، روايحى اصيل و ماندگار از كلاسيک تا مدرن. هر عطرى داستانى دارد كه منتظر شنيدن شماست، بگذاريد عطر مورد علاقه تان شما را تعريف كند.
                         </h3>
-                        <a class="btn-play btn-iframe text-white appear-animate" data-animation-options="{
+                        <a class="btn-play text-white appear-animate" data-animation-options="{
                                 'name': 'fadeIn',
                                 'delay': '.8s'
                             }" href="{% static 'video/neyanbar.mp4' %}">
@@ -511,6 +550,21 @@
                     </div>
                 </div>
             </section>
+            <!-- Video Modal -->
+            <div id="videoModal">
+                <video id="modalVideo" controls style="width: 100%; height: auto; border-radius: 8px;">
+                    <source src="" type="video/mp4"/>
+                    مرورگر شما از این ویدیو پشتیبانی نمی کند.
+                </video>
+                <button id="closeVideo" style="
+                                                position: absolute;
+                                                top: 3px; right: 10px;
+                                                background: transparent;
+                                                border: none;
+                                                color: white;
+                                                font-size: 5rem;
+                                                cursor: pointer;">&times;</button>
+            </div>
             {% for brand in top_brands %}
             	{% if forloop.counter == 3 %}
                     <section class="product-wrapper bg-main container appear-animate rtl text-right">
@@ -745,3 +799,63 @@
     </main>
 {% endblock %}
 
+{% block script %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const playButtons = document.querySelectorAll('.btn-play');
+
+            playButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+
+                    const videoUrl = button.getAttribute('href');
+                    if (!videoUrl) return;
+
+                    const modal = document.getElementById('videoModal');
+                    const video = document.getElementById('modalVideo');
+                    const closeBtn = document.getElementById('closeVideo');
+
+                    // Set video source and load
+                    video.querySelector('source').src = videoUrl;
+                    video.load();
+
+                    // Set starting volume to 50%
+                    video.volume = 0.35;
+
+                    video.play();
+                    modal.style.display = 'block';
+
+                    // Close modal function
+                    function closeModal() {
+                        video.pause();
+                        video.currentTime = 0;
+                        modal.style.display = 'none';
+
+                        closeBtn.removeEventListener('click', closeModal);
+                        modal.removeEventListener('click', outsideClick);
+                        document.removeEventListener('keydown', escClose);
+                    }
+
+                    // Close button click
+                    closeBtn.addEventListener('click', closeModal);
+
+                    // Close modal if clicking outside video
+                    function outsideClick(e) {
+                        if (e.target === modal) {
+                            closeModal();
+                        }
+                    }
+                    modal.addEventListener('click', outsideClick);
+
+                    // Close modal on ESC key press
+                    function escClose(e) {
+                        if (e.key === 'Escape' || e.key === 'Esc') {
+                            closeModal();
+                        }
+                    }
+                    document.addEventListener('keydown', escClose);
+                });
+            });
+        });
+    </script>
+{% endblock %}
