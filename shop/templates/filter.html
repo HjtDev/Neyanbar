@@ -1,0 +1,47 @@
+{% load tags %}
+
+<div class="row cols-2 cols-md-3 cols-xs-2 product-wrapper">
+    {% for product in products %}
+        <div class="product-wrap">
+            <div class="product product-border text-center">
+                <figure class="product-media">
+                    <a href="{{ product.get_absolute_url }}">
+                        <picture>
+                            <source id="image-{{ product.id }}" srcset="{{ product.images.first.image.url }}" type="image/webp">
+                            <img loading="lazy" decoding="async" src="{{ product.images.first.image.url }}" alt="product" width="260"
+                                 height="293">
+                        </picture>
+                    </a>
+                    <div class="product-action-vertical">
+                        <a href="#" class="btn-product-icon add-to-cart" data-toggle="modal" data-id="{{ product.id }}"
+                           data-target="#addCartModal" title="اضافه به خرید">
+                            <i class="fa-light fa-basket-shopping-simple"></i>
+                        </a>
+                        <a href="#" class="btn-product-icon btn-list-wishlist" data-id="{{ product.id }}" title="اضافه به علاقه مندی">
+                            <i class="fa-light fa-heart" id="like-icon-{{ product.id }}" {% if request.user in product.liked_by.all %}style="color: red;"{% endif %}></i>
+                        </a>
+                        <a href="#" class="btn-product-icon btn-list-compare" data-id="{{ product.id }}" title="مقایسه">
+                            <i class="fa-light fa-scale-balanced"></i>
+                        </a>
+                    </div>
+                </figure>
+                <div class="product-details rtl">
+                    <h3 class="product-name">
+                        <a id="list-title-{{ product.id }}" href="{{ product.get_absolute_url }}">{{ product }}</a>
+                    </h3>
+                    <div class="product-price">
+                        <p class="price">{{ product.get_price | commafy }} تومان </p>
+                    </div>
+                    <div class="ratings-container">
+                        <div class="ratings-full">
+                            <span class="ratings" style="width:{% widthratio product.site_score 1 10 %}%"></span>
+                            <span class="tooltiptext tooltip-top"></span>
+                        </div>
+                        <a href="{{ product.get_absolute_url }}" class="rating-reviews">(
+                            {{ product.verified_comments_count }}نظر )</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

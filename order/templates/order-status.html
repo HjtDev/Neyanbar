@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+{% load tags %}
+{% load static %}
+
+{% block title %}
+	وضعیت سفارش
+{% endblock %}
+
+{% block page_description %}
+    وضعیت سفارش شما در فروشگاه نی عنبر. آخرین اطلاعات مربوط به سفارش و ارسال را مشاهده کنید.
+{% endblock %}
+
+{% block content %}
+    <main class="main rtl text-right">
+        <div class="page-header pl-4 pr-4">
+            <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبسایت ما</h3>
+            <h1 class="page-title font-weight-bold lh-1 text-white">وضعیت سفارش</h1>
+        </div>
+        <nav class="breadcrumb-nav">
+            <div class="container breadcrumb-nav-wrap">
+                <ul class="breadcrumb ">
+                    <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
+                    <li>وضعیت سفارش</li>
+                </ul>
+            </div>
+        </nav>
+        <div class="page-content  order">
+            <div class="container">
+                <div class="order-message mr-auto ml-auto">
+                    <div class="icon-box d-inline-flex align-items-center">
+                        <div class="icon-box-icon mb-0">
+                            <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                 xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50"
+                                 enable-background="new 0 0 50 50" xml:space="preserve">
+								<g>
+								<path fill="none" stroke-width="3" stroke-linecap="round"
+                                      stroke-linejoin="bevel" stroke-miterlimit="10" d="
+											M33.3,3.9c-2.7-1.1-5.6-1.8-8.7-1.8c-12.3,0-22.4,10-22.4,22.4c0,12.3,10,22.4,22.4,22.4c12.3,0,22.4-10,22.4-22.4
+											c0-0.7,0-1.4-0.1-2.1"></path>
+                                    <polyline fill="none" stroke-width="4" stroke-linecap="round"
+                                              stroke-linejoin="bevel" stroke-miterlimit="10" points="
+											48,6.9 24.4,29.8 17.2,22.3 	"></polyline>
+									</g>
+								</svg>
+                        </div>
+                        <div class="icon-box-content text-right">
+                            <h5 class="icon-box-title font-weight-bold">
+                                {% if messages %}
+                                    {% for message in messages %}
+                                    	{{ message }}
+                                    {% endfor %}
+                                {% else %}
+                                    {% if order.status == 'NOT_PAID' %}
+                                        در انتظار پرداخت
+                                    {% elif order.status == 'REJECTED' %}
+                                        سفارش شما لغو شده است
+                                    {% else %}
+                                        متشکریم از خرید شما!
+                                    {% endif %}
+                                {% endif %}
+                            </h5>
+                            <p class="lh-1 ls-m">اطلاعات سفارش: {{ order.order_id }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-results">
+                    <div class="overview-item">
+                        <span>کد سفارش:</span>
+                        <strong id="order_id">{{ order.order_id }}</strong>
+                    </div>
+                    <div class="overview-item">
+                        <span>وضعیت:</span>
+                        <strong>{{ order.get_status_display }}</strong>
+                    </div>
+                    <div class="overview-item">
+                        <span> تحویل  :</span>
+                        <strong>{{ order.receive_time | to_jalali_verbose }}</strong>
+                    </div>
+                    <div class="overview-item">
+                        <span>شماره تلفن:</span>
+                        <strong>{{ order.phone }}</strong>
+                    </div>
+                    <div class="overview-item">
+                        <span>کد پستی:</span>
+                        <strong>{{ order.postal_code }}</strong>
+                    </div>
+                    <div class="overview-item">
+                        <span> جمع:</span>
+                        <strong> {{ order.get_total_cost | commafy }} تومان </strong>
+                    </div>
+                </div>
+                <h2 class="title title-simple text-right pt-4 font-weight-bold">جزئیات فاکتور</h2>
+                <div class="order-details">
+                    <table class="order-details-table">
+                        <thead>
+                        <tr class="summary-subtotal">
+                            <td>
+                                <h3 class="summary-subtitle">محصول</h3>
+                            </td>
+                            <td></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in order.items.all %}
+                            <tr>
+                                <td class="product-name">
+                                    {{ item.product }}<span>
+											<i class="fa-light fa-times"></i>
+											{{ item.quantity }}
+										</span>
+                                </td>
+                                <td class="product-price"> {{ item.price | commafy }} تومان </td>
+                            </tr>
+                        {% endfor %}
+                        <tr class="summary-subtotal">
+                            <td>
+                                <h4 class="summary-subtitle">جمع محصولات:</h4>
+                            </td>
+                            <td class="summary-subtotal-price"> {{ total_before_tax | commafy }} تومان </td>
+                        </tr>
+                        <tr class="summary-subtotal">
+                            <td>
+                                <h4 class="summary-subtitle">روش پرداخت:</h4>
+                            </td>
+                            <td class="summary-subtotal-price">{{ order.transactions.first.get_payment_type_display }}</td>
+                        </tr>
+                        <tr class="summary-subtotal">
+                            <td>
+                                <h4 class="summary-subtitle"> جمع (پس از تخفیف ها و مالیات):</h4>
+                            </td>
+                            <td>
+                                <p class="summary-total-price"> {{ order.get_total_cost | commafy }} تومان </p>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h2 class="title title-simple text-right pt-10 mb-2">آدرس مقصد</h2>
+                <div class="address-info pb-8 mb-6">
+                    <p class="address-detail pb-2">
+                        {{ order.province }}<br>
+                        {{ order.city }}<br>
+                        {{ order.address }}
+                    </p>
+                    {% if order.email %}
+                        <p class="email">{{ order.email }}</p>
+                    {% endif %}
+                </div>
+                <a href="{% url 'shop:product-list' %}" class="btn btn-icon-right btn-dark btn-back btn-rounded btn-md mb-4 btn-checkout btn-gradient">
+                    بازگشت به فروشگاه<i class="fa-light fa-angles-left"></i>
+                </a>
+
+                {% if order.status == 'NOT_PAID' %}
+                    <hr>
+                    <aside class="col-lg-4 sticky-sidebar-wrapper">
+                        <div class="sticky-sidebar mt-1" data-sticky-options="{'bottom': 50}">
+                            <div class="summary pt-5">
+                                <h3 class="title title-simple">پرداخت</h3>
+                                <div class="payment accordion radio-type">
+                                    <h4 class="summary-subtitle ls-m pb-3">نحوه پرداخت </h4>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a href="#collapse1"
+                                               class="collapse text-body text-normal ls-m">
+                                                درگاه پرداخت
+                                            </a>
+                                        </div>
+                                        <div id="collapse1" class="expanded payment-type" style="display: block;">
+                                            <div class="card-body ls-m">
+                                                به راحتی از طریق درگاه پرداخت امن زرین پال خرید خود را انجام دهید
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <a href="#collapse2" class="expand text-body text-normal ls-m">
+                                                با کارت اعتباری
+                                            </a>
+                                        </div>
+                                        <div id="collapse2" class="collapsed payment-type">
+                                            <div class="card-body ls-m">
+                                                <p id="response">در صورت که از وضعیت کارت اعتباری خود اطمینان ندارید می توانید از بخش کارت هدیه وضعیت ان را برسی کنید</p>
+                                                <input type="text" name="credit_token" class="input-text form-control text-grey ls-m" id="credit_token" value="" maxlength="10" placeholder="توکن خود را وارد کنید">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-md btn-block btn-gradient mt-3 {% if request.user.is_authenticated %}pay-order{% else %}login-toggle{% endif %}">
+                                        پرداخت
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block script %}
+    <script defer src="{% static 'js/order-status.js' %}"></script>
+{% endblock %}

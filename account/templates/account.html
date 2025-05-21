@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load tags %}
+
+{% block title %}
+	{{ request.user.name }}
+{% endblock %}
+
+{% block title_og %}
+	{{ request.user.name }}
+{% endblock %}
+
+{% block page_keywords %}
+    داشبورد مدیریتی, پنل مدیریت, مدیریت حساب, گزارشات, تنظیمات کاربری, کنترل پنل, مدیریت کاربران, مدیریت سفارشات, مدیریت محصولات, مدیریت, داشبورد کاربری
+{% endblock %}
+
+{% block page_description %}
+    صفحه داشبورد مدیریتی شما در فروشگاه نی عنبر. دسترسی آسان به سفارشات، اطلاعات حساب کاربری، لیست علاقه‌مندی‌ها و مدیریت تنظیمات شخصی برای تجربه‌ای بهتر و سریع‌تر در دنیای عطرها.
+{% endblock %}
+
+
+{% block content %}
+    <main class="main rtl text-right">
+        <div class="page-header pl-4 pr-4">
+            <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبسایت ما</h3>
+            <h1 class="page-title font-weight-bold lh-1 text-white">
+                حساب کاربری
+            </h1>
+            <p class="page-desc text-white mb-0">
+                در زیر اطلاعاتی در مورد حساب کاربری خواهید داشت
+            </p>
+        </div>
+        <nav class="breadcrumb-nav">
+            <div class="container breadcrumb-nav-wrap">
+                <ul class="breadcrumb ">
+                    <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
+                    <li>
+                        حساب کاربری
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div class="page-content">
+            <div class="container account-main">
+                <h2 class="title title-center mb-10">حساب کاربری</h2>
+                <div class="tab tab-vertical gutter-lg">
+                    <ul class="nav nav-tabs mb-4 col-lg-3 col-md-4 nav-tabs-account mr-0" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link text-right active" href="#dashboard">داشبورد</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-right" href="#orders">سفارشات</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-right " href="#likes">لایک ها</a>
+                        </li>
+                        {% if request.user.compare_list.exists %}
+                            <li class="nav-item">
+                                <a class="nav-link text-right " href="javascript: void(0)" onclick="window.location.href='{% url 'account:compare-list' %}'">لیست مقایسه ها</a>
+                            </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link text-right " href="#address">محصولات خریده شده</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-right " href="#account">جزئیات کاربری</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-right" href="{% url 'account:logout' %}" onclick="window.location.href='{% url 'account:logout' %}';">خروج</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content col-lg-9 col-md-8">
+                        <div class="tab-pane active" id="dashboard">
+                            <p class="mb-0">
+                                سلام <span>{{ request.user.name }} عزیز</span>( <a href="{% url 'account:logout' %}"
+                                                                                                     class="text-primary">
+                                خروج
+                            </a>)
+                            </p>
+                            <p class="mb-8">
+                                از داشبورد حساب خود می توانید <a href="#orders">سفارشات</a> اخیر خود را مشاهده کنید.
+                            </p>
+                            <a href="{% url 'shop:product-list' %}" class="btn btn-dark btn-rounded btn-md btn-gradient">
+                                رفتن به فروشگاه <i class="fa-light fa-angles-right"></i>
+                            </a>
+                        </div>
+                        <div class="tab-pane" id="orders">
+                            <table class="order-table">
+                                <thead>
+                                <tr>
+                                    <th>سفارش</th>
+                                    <th> تحویل</th>
+                                    <th>وضعیت</th>
+                                    <th>جمع</th>
+                                    <th class="pl-2">اقدامات</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% if request.user.orders.exists %}
+                                    {% for order in request.user.orders.all %}
+                                        <tr>
+                                            <td class="order-number"><a href="#">{{ order.order_id }}</a></td>
+                                            <td class="order-date"><span>{{ order.receive_time | to_jalali_verbose }}</span></td>
+                                            <td class="order-status"><span>{{ order.get_status_display }}</span></td>
+                                            <td class="order-total"><span>{{ order.get_total_cost | commafy }} تومان</span></td>
+                                            <td class="order-action">
+                                                <a href="{% url 'order:order_status' order.order_id %}"
+                                                   class="btn btn-link btn-underline">نمایش </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                {% endif %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane" id="likes">
+                            {% if not request.user.liked_products.exists %}
+                                <p class="mb-4 text-body">هنوز هیچ محصولی رو اضافه نکردی!</p>
+                                <a href="{% url 'shop:product-list' %}" class="btn btn-link btn-underline">
+                                    لیست محصولات<i class="fa-light fa-angles-right"></i>
+                                </a>
+                            {% else %}
+                                <table class="order-table">
+                                    <thead>
+                                    <tr>
+                                        <th>کد محصول</th>
+                                        <th> نام</th>
+                                        <th>برند</th>
+                                        <th>موجودی</th>
+                                        <th class="pl-2">اقدامات</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for product in request.user.liked_products.all %}
+                                        <tr>
+                                            <td class="order-number"><a href="{{ product.get_absolute_url }}">{{ product.pid }}</a></td>
+                                            <td class="order-date"><span>{{ product }}</span></td>
+                                            <td class="order-status"><span>{{ product.brand }}</span></td>
+                                            <td class="order-total">
+                                                <span>
+                                                    {% if product.inventory %}
+                                                        ({{ product.inventory }} عدد موجود در انبار)
+                                                    {% else %}
+                                                      موجود نیست
+                                                     {% endif %}
+                                                </span>
+                                            </td>
+                                            <td class="order-action">
+                                                <a href="{{ product.get_absolute_url }}"
+                                                   class="btn btn-link btn-underline">نمایش </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        </div>
+                        <div class="tab-pane" id="address">
+                            {% if not request.user.bought_products.exists %}
+                                <p class="mb-4 text-body">هنوز هیچ محصولی رو نخریدی!</p>
+                                <a href="{% url 'shop:product-list' %}" class="btn btn-link btn-underline">
+                                    لیست محصولات<i class="fa-light fa-angles-right"></i>
+                                </a>
+                            {% else %}
+                                <table class="order-table">
+                                    <thead>
+                                    <tr>
+                                        <th>کد محصول</th>
+                                        <th> نام</th>
+                                        <th>برند</th>
+                                        <th>موجودی</th>
+                                        <th class="pl-2">اقدامات</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for product in request.user.bought_products.all %}
+                                        <tr>
+                                            <td class="order-number"><a href="{{ product.get_absolute_url }}">{{ product.pid }}</a></td>
+                                            <td class="order-date"><span>{{ product }}</span></td>
+                                            <td class="order-status"><span>{{ product.brand }}</span></td>
+                                            <td class="order-total">
+                                                <span>
+                                                    {% if product.inventory %}
+                                                        ({{ product.inventory }} عدد موجود در انبار)
+                                                    {% else %}
+                                                        موجود نیست
+                                                    {% endif %}
+                                                </span>
+                                            </td>
+                                            <td class="order-action">
+                                                <a href="{{ product.get_absolute_url }}"
+                                                   class="btn btn-link btn-underline">نمایش </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                        </div>
+                        <div class="tab-pane" id="account">
+                                <div class="row mb-5">
+                                    <div class="col-sm-12">
+                                        <label>نام </label>
+                                        <input type="text" class="form-control" id="name" name="name" value="{{ request.user.name }}">
+                                        <small class="d-block form-text mb-5 mt-3 name-error d-none"></small>
+                                    </div>
+                                </div>
+                                <label>شماره تلفن</label>
+                                <input type="text" class="form-control mb-0 text-left" name="phone" value="{{ request.user.phone }}" disabled>
+                                <small class="d-block form-text mb-5 mt-3">
+                                    شماره تلفن قابل تغییر نمی باشد.
+                                </small>
+                                <label>ایمیل</label>
+                                <input type="email" class="form-control text-left" id="email" name="email" value="{{ request.user.email }}"
+                                       placeholder="ایمیل">
+                                <small class="d-block form-text mb-5 mt-3 email-error d-none"></small>
+                                <button class="btn btn-dark btn-rounded btn-md btn-gradient mt-4 save-profile">
+                                    ذخیره تغییرات
+                                </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block script %}
+    <script defer src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,233 @@
+﻿{% extends 'base.html' %}
+{% load tags %}
+
+{% block title %}
+	وبلاگ
+{% endblock %}
+
+{% block title_og %}
+	وبلاگ
+{% endblock %}
+
+{% block page_keywords %}
+    مقالات عطر, بلاگ عطر, نکات عطرسازی, راهنمای خرید عطر, اخبار عطر, بررسی عطرها, عطرهای محبوب, رایحه‌ها, فروشگاه نی عنبر, عطر طبیعی, عطر اسلامی,
+{% endblock %}
+
+{% block page_description %}
+    در بلاگ نی عنبر جدیدترین مقالات، نکات تخصصی و راهنمای خرید عطر را بخوانید. با ما همراه باشید تا دنیای رایحه‌ها و عطرهای طبیعی و اسلامی را بهتر بشناسید.
+{% endblock %}
+
+
+{% block content %}
+    <main class="main single-product rtl text-right">
+        <div class="page-header pl-4 pr-4">
+            <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبسایت ما</h3>
+            <h1 class="page-title font-weight-bold lh-1 text-white">وبلاگ</h1>
+            {% if filters %}
+                <p class="page-desc text-white mb-0">
+                    فیلتر های اعمال شده <br>
+                    {% for filter in filters %}
+                        {{ filter }}<br>
+                    {% endfor %}
+                </p>
+            {% endif %}
+        </div>
+        <nav class="breadcrumb-nav">
+            <div class="container breadcrumb-nav-wrap">
+                <ul class="breadcrumb ">
+                    <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
+                    <li>وبلاگ</li>
+                </ul>
+            </div>
+        </nav>
+        <div class="page-content">
+            <div class="container blog-wrap">
+                <div class="row gutter-lg">
+                    <div class="col-xl-9 col-lg-8">
+                        <div class="posts">
+                            {% for post in posts %}
+                                <article class="post post-classic mb-7">
+                                    <figure class="post-media overlay-zoom">
+                                        <a href="{{ post.get_absolute_url }}">
+                                            <picture><source srcset="{{ post.thumbnail.url }}" type="image/webp">
+                                            <img loading="lazy" decoding="async" src="{{ post.thumbnail.url }}" width="870" height="420" alt="post" /></picture>
+                                        </a>
+                                    </figure>
+                                    <div class="post-details rtl">
+                                        <div class="post-meta">
+                                            نوسینده <a href="?{% query_transform author=post.user.name %}" class="post-author">{{ post.user }} </a>
+                                            تاریخ  <a href="#" class="post-date">{{ post.created_at | to_jalali_verbose }}</a>
+                                            | <a href="#" class="post-comment"><span>{{ post.comments.count }}</span>  نظر </a>
+                                        </div>
+                                        <h4 class="post-title">
+                                            <a href="{{ post.get_absolute_url }}">
+                                                {{ post }}
+                                            </a>
+                                        </h4>
+                                        <p class="post-content">
+                                            {{ post.short_content }}
+                                        </p>
+                                        <a href="{{ post.get_absolute_url }}" class="btn btn-link btn-underline ">
+                                            بیشتر<i class="fa-light fa-angles-left"></i>
+                                        </a>
+                                    </div>
+                                </article>
+                            {% endfor %}
+                        </div>
+
+                        {% if posts.has_other_pages %}
+                            <ul class="pagination rtl">
+
+                                {# Previous button #}
+                                {% if posts.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link page-link-prev" href="?{% query_transform page=posts.previous_page_number %}" aria-label="Previous">
+                                            <i class="fa-light fa-angles-right"></i>قبلی
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-prev" href="#" tabindex="-1" aria-disabled="true" aria-label="Previous">
+                                            <i class="fa-light fa-angles-right"></i>قبلی
+                                        </a>
+                                    </li>
+                                {% endif %}
+
+                                {# First page #}
+                                {% if posts.number > 2 %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?{% query_transform page=1 %}">1</a>
+                                    </li>
+                                    {% if posts.number > 3 %}
+                                        <li class="page-item disabled"><a class="page-link">...</a></li>
+                                    {% endif %}
+                                {% endif %}
+
+                                {# Pages around current page #}
+                                {% for i in posts.paginator.page_range %}
+                                    {% if i >= posts.number|add:'-1' and i <= posts.number|add:'1' %}
+                                        {% if i == posts.number %}
+                                            <li class="page-item active" aria-current="page">
+                                                <a class="page-link" href="#">{{ i }}</a>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?{% query_transform page=i %}">{{ i }}</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endif %}
+                                {% endfor %}
+
+                                {# Last page #}
+                                {% if posts.number < posts.paginator.num_pages|add:'-1' %}
+                                    {% if posts.number < posts.paginator.num_pages|add:'-2' %}
+                                        <li class="page-item disabled"><a class="page-link">...</a></li>
+                                    {% endif %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?{% query_transform page=posts.paginator.num_pages %}">{{ posts.paginator.num_pages }}</a>
+                                    </li>
+                                {% endif %}
+
+                                {# Next button #}
+                                {% if posts.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link page-link-next" href="?{% query_transform page=posts.next_page_number %}" aria-label="Next">
+                                            بعدی<i class="fa-light fa-angles-left"></i>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled">
+                                        <a class="page-link page-link-next" href="#" tabindex="-1" aria-disabled="true" aria-label="Next">
+                                            بعدی<i class="fa-light fa-angles-left"></i>
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        {% endif %}
+
+                    </div>
+                    <aside class="col-xl-3 col-lg-4 sidebar right-sidebar sidebar-fixed sticky-sidebar-wrapper">
+                        <div class="sidebar-overlay"></div>
+                        <a class="sidebar-close" href="#"><i class="fa-light fa-xmark"></i></a>
+                        <a href="#" class="sidebar-toggle"><i class="fa-light fa-chevron-right"></i></a>
+                        <div class="sidebar-content">
+                            <div class="sticky-sidebar">
+                                {% if filters %}
+                                    <div class="widget widget-search border-no mb-2 w-100">
+                                        <a href="?" class="btn btn-primary btn-rounded w-100">حذف فیلتر ها</a>
+                                    </div>
+                                {% endif %}
+                                <div class="widget widget-search border-no mb-2">
+                                    <form type="GET" class="input-wrapper input-wrapper-inline btn-absolute">
+                                        <input type="text" class="form-control" name="search" autocomplete="off"
+                                               placeholder="جستجو در وبلاگ" required/>
+                                        <button class="btn btn-search btn-link" type="submit">
+                                            <i class="fa-light fa-magnifying-glass"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="widget widget-collapsible border-no">
+                                    <h3 class="widget-title">دسته بندی وبلاگ ها</h3>
+                                    <ul class="widget-body filter-items search-ul">
+                                        {% for category in categories %}
+                                            <li><a href="?{% query_transform category=category.slug page=None %}">{{ category.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="widget widget-collapsible">
+                                    <h3 class="widget-title">پست های محبوب</h3>
+                                    <div class="widget-body ">
+                                        <div class="post-col">
+                                            {% for post in most_viewed %}
+                                                <div class="post post-list-sm">
+                                                    <figure class="post-media">
+                                                        <a href="{{ post.get_absolute_url }}">
+                                                            <picture>
+                                                                <source srcset="{{ post.thumbnail.url }}" type="image/webp">
+                                                                <img loading="lazy" decoding="async"
+                                                                     src="{{ post.thumbnail.url }}" width="90" height="90"
+                                                                     alt="post"/>
+                                                            </picture>
+                                                        </a>
+                                                    </figure>
+                                                    <div class="post-details rtl">
+                                                        <div class="post-meta">
+                                                            <a href="#" class="post-date"> تاریخ {{ post.created_at | to_jalali_verbose }}</a>
+                                                        </div>
+                                                        <h4 class="post-title">
+                                                            <a href="{{ post.get_absolute_url }}">
+                                                                {{ post }}
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="widget widget-collapsible">
+                                    <h3 class="widget-title">درباره ما</h3>
+                                    <div class="widget-body ">
+                                        <p>
+                                            به روز ترین عطر ها را ازما بخواهید.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="widget widget-posts widget-collapsible">
+                                    <h3 class="widget-title">برچسب ها</h3>
+                                    <div class="widget-body ">
+                                        {% for tag in tags %}
+                                            <a href="?{% query_transform tag=tag.slug page=None %}" class="tag">{{ tag.name }}</a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+

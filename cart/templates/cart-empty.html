@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}
+	سبد خرید
+{% endblock %}
+
+{% block title_og %}
+	سبد خرید
+{% endblock %}
+
+{% block page_keywords %}
+    سبد خرید, خرید آنلاین, پرداخت اینترنتی, محصولات انتخاب شده, فروشگاه نی عنبر, عطر در سبد خرید, افزودن به سبد خرید, تسویه حساب, خرید آسان, خرید عطر آنلاین,
+{% endblock %}
+
+{% block page_description %}
+    در صفحه سبد خرید نی عنبر، محصولات انتخابی خود را مشاهده و مدیریت کنید. با فرآیند ساده و امن خرید، به راحتی سفارش خود را ثبت و پرداخت نمایید.
+{% endblock %}
+
+{% block content %}
+    <main class="main rtl text-right">
+        <div class="page-header pl-4 pr-4">
+            <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبسایت ما</h3>
+            <h1 class="page-title font-weight-bold lh-1 text-white">سبد خرید ( خالی )</h1>
+        </div>
+        <nav class="breadcrumb-nav">
+            <div class="container breadcrumb-nav-wrap">
+                <ul class="breadcrumb ">
+                    <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
+                    <li>سبد خرید ( خالی )</li>
+                </ul>
+            </div>
+        </nav>
+        <div class="page-content cart-empty section-bottom-padding">
+            <div class="container">
+                <div class="main-content">
+                    <i class="fa-light fa-cart-shopping cart-icon"></i>
+                    <h2 class="cart-descri">هیچ محصولی به <b class="text-blue">سبد خرید</b> اضافه نشده است</h2>
+                    <a class="btn btn-dark btn-rounded btn-order btn-checkout btn-md  btn-gradient" href="{% url 'shop:product-list' %}">
+                        فروشگاه
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

@@ -1,0 +1,769 @@
+{% load static %}
+{% load tags %}
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>نی عنبر | {% block title %}{% endblock %}</title>
+    <meta name="keywords" content="عطر, ادکلن, ادوپرفیوم, پرفیوم, ادوتویلت, بادی اسپلش, فروشگاه نی عنبر, عطر طبیعی, عطر اسلامی, رایحه طبیعی, عطر مردانه, عطر زنانه, عطر اورجینال, عطر گیاهی, عطر دست‌ساز, ادکلن طبیعی, فروشگاه عطر آنلاین, خرید عطر, عطر با کیفیت, عطر خاص, عطر ایرانی, عطر لوکس, رایحه ماندگار, عطر برند, عطر نیش, عطر ضد حساسیت, عطر با اسانس طبیعی, عطر با قیمت مناسب ,{% block page_keywords %}{% endblock %},"/>
+    <meta name="description" content="خوش آمديد به دنياى عطرها! فروشگاه نى عنبر، مجموعه اى خاص از عطرهاى باز طراحى شده و جستجويى براى احياى حس بى نظير از برندهاى محبوب، روايحى اصيل و ماندگار از كلاسيک تا مدرن. هر عطرى داستانى دارد كه منتظر شنيدن شماست، بگذاريد عطر مورد علاقه تان شما را تعريف كند. نى عنبر هر رايحه يک داستان{% block page_description %}{% endblock %}">
+    <meta name="author" content="Mohammad Hojjat Nikoobakht محمد حجت نیکوبخت m.h.nikoobakht@gmail.com">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="نی عنبر | {% block title_og %}{% endblock %}" />
+    <meta property="og:description" content="خوش آمديد به دنياى عطرها! فروشگاه نى عنبر، مجموعه ای خاص از عطرها..." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:locale" content="fa_IR" />
+    <link rel="icon" type="image/png" href="{% static 'images/icons/neyanbar-favicon.png' %}">
+    <link rel="apple-touch-icon" type="image/png" href="{% static 'images/icons/neyanbar-favicon.png' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/awesome/css/custom.css' %}">
+    <link href="{% static 'fonts/vazir/font-vazir.css' %}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/animate/animate.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/owl-carousel/owl.carousel.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'plugin/sticky-icon/stickyicon.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main-min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/button-spinner.css' %}">
+    {% block header %}{% endblock %}
+</head>
+<body>
+<div class="bg-loader">
+    <div class="loader"></div>
+</div>
+{% csrf_token %}
+<div class="page-wrapper">
+    <header class="header rtl text-right">
+        <div class="header-middle">
+            <div class="container">
+                <div class="header-right">
+                    <a href="#" class="mobile-menu-toggle">
+                        <i class="fa-light fa-bars"></i>
+                    </a>
+                    <a href="{% url 'main:index' %}" class="logo">
+                        <picture>
+                            <source srcset="{% static 'images/logo-neyanbar.png' %}" type="image/webp">
+                            <img src="{% static 'images/logo-neyanbar.png' %}" alt="logo" width="153" height="44"/></picture>
+                    </a>
+                    <div class="header-search hs-simple">
+                        <form action="{% url 'shop:product-list' %}" method="get" class="input-wrapper">
+                            <input type="text" class="form-control" name="search" autocomplete="off"
+                                   placeholder="جستجو ..." required
+                                   oninvalid="this.setCustomValidity('نام محصول مورد نظر را تایپ نمایید .');"
+                                   onchange="try{setCustomValidity('')}catch(e){};"
+                                   x-moz-errormessage="نام محصول مورد نظر را تایپ نمایید ."/>
+                            <button class="btn btn-search" type="submit" title="submit-button">
+                                <i class="fa-light fa-magnifying-glass"></i>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="icon-box icon-box-side phone-box">
+                        <div class="icon-box-icon mr-0 mr-lg-2">
+                            <a href="tel:989211761306">
+                                <i class="fa-light fa-phone"></i>
+                            </a>
+                        </div>
+                        <div class="icon-box-content d-lg-show">
+                            <h4 class="icon-box-title text-dark text-normal">
+                                <a href="#" class=" d-inline-block">تلفن پاسخگو</a>
+                            </h4>
+                            <p><a href="tel:989211761306"> ٠٩٢١١٧٦١٣٠٦ </a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-left ">
+                    {% if not '/cart' in request.path and request.path != '/order/' %}
+                        <div class="dropdown cart-dropdown type2 off-canvas ml-0 mr-lg-2">
+                            <a href="#" class="cart-toggle label-block link">
+                                <i class="fa-light fa-shopping-bag"><span class="cart-count">{{ cart | length }}</span></i>
+                            </a>
+                            <div class="canvas-overlay"></div>
+                            <div class="dropdown-box">
+                                <div class="canvas-header">
+                                    <h4 class="canvas-title">سبد خرید</h4>
+                                    <a href="#" class="btn btn-dark btn-link btn-icon-right  btn-close">
+                                        بستن<i class="fa-light fa-xmark"></i>
+                                    </a>
+                                </div>
+                                {% include 'partials/cart_list.html' with cart=cart %}
+                                <div class="cart-total">
+                                    <label>جمع:</label>
+                                    <span class="price total-cart-cost">{{ cart.get_total_cost | commafy }} تومان</span>
+                                </div>
+                                <div class="cart-action">
+                                    <a href="{% url 'cart:cart' %}" class="btn btn-dark btn-link">نمایش خرید </a>
+                                    <a href="{% url 'order:order' %}"
+                                       class="btn btn-dark mt-4  btn-rounded  btn-block btn-gradient"><span>پرداخت</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="login-wrap">
+                        <div class="icon-box icon-box-side border-color-green">
+                            <div class="icon-box-icon mr-0 mr-lg-2 d-lg-show">
+                                <i class="fa-light fa-user"></i>
+                            </div>
+                            <div class="icon-box-content ">
+{#                                <h4 class="icon-box-title text-dark text-normal">#}
+{#                                    <a href="#signin" class="login-toggle link-to-tab">ورود</a>#}
+{#                                    <span class="delimiter">/</span>#}
+{#                                    <a href="#register" class="register-toggle link-to-tab mr-0">ثبت نام</a>#}
+{#                                </h4>#}
+                                <p><a href="{% if request.user.is_authenticated %}{% url 'account:dashboard' %}">داشبورد{% else %}" class="login-toggle">حساب کاربری{% endif %}</a></p>
+                            </div>
+                        </div>
+                        <div class="dropdown login-dropdown off-canvas">
+                            <div class="canvas-overlay"></div>
+                            <div class="dropdown-box scrollable">
+                                <div class="login-popup">
+                                    <div class="form-box">
+                                        <div class="tab tab-nav-simple tab-nav-boxed form-tab">
+                                            <ul class="nav nav-tabs nav-fill align-items-center border-no justify-content-center"
+                                                role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active border-no lh-1 ls-normal"
+                                                       href="#signin">ورود </a>
+                                                </li>
+                                                <li class="delimiter">یا</li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link border-no lh-1 ls-normal"
+                                                       href="#register"> ثبت نام</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="signin">
+                                                    <div class="form-group mb-3">
+                                                        <input type="text" class="form-control text-left"
+                                                               id="signin-phone"
+                                                               name="signin-phone"
+                                                               minlength="11"
+                                                               maxlength="11"
+                                                               placeholder="شماره تلفن">
+                                                        <input type="text" class="form-control text-left d-none"
+                                                               id="token"
+                                                               name="token"
+                                                               minlength="4"
+                                                               maxlength="4"
+                                                               placeholder="کد تایید">
+                                                    </div>
+                                                    <div class="form-footer">
+                                                        <a id="login-response" class="d-none"></a>
+                                                    </div>
+                                                    <button class="btn btn-rounded btn-dark btn-block btn-gradient btn-login">
+                                                        ورود
+                                                    </button>
+                                                    <button class="btn btn-rounded btn-dark btn-block btn-gradient btn-submit-token d-none">
+                                                        تایید
+                                                    </button>
+                                                </div>
+                                                <div class="tab-pane" id="register">
+                                                    <div class="form-group mb-3">
+                                                        <input type="text" class="form-control text-left"
+                                                               id="register-name"
+                                                               name="register-name"
+                                                               minlength="1"
+                                                               maxlength="60"
+                                                               placeholder="نام و نام خانوادگی">
+                                                    </div>
+                                                    <div class="form-group mb-3">
+                                                        <input type="text" class="form-control text-left"
+                                                               id="register-email"
+                                                               name="register-email"
+                                                               minlength="1"
+                                                               maxlength="255"
+                                                               placeholder="ایمیل">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control text-left"
+                                                               id="register-phone"
+                                                               name="register-phone"
+                                                               minlength="11"
+                                                               maxlength="11"
+                                                               placeholder="شماره تلفن">
+                                                        <input type="text" class="form-control text-left d-none"
+                                                               id="register-token"
+                                                               name="token"
+                                                               minlength="4"
+                                                               maxlength="4"
+                                                               placeholder="کد تایید">
+                                                    </div>
+                                                    <div class="form-footer">
+                                                        <a id="register-response" class="d-none"></a>
+                                                        <div class="form-checkbox">
+                                                            <p class="form-control-label">
+                                                                ثبت نام شما به معنای پذیرش <b>شرایط و ضوابط</b> سایت است.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <button class="btn btn-rounded btn-dark btn-block btn-gradient btn-register">
+                                                        ثبت نام
+                                                    </button>
+                                                    <button class="btn btn-rounded btn-dark btn-block btn-gradient btn-submit-register-token d-none">
+                                                        تایید
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+{#                                    <button title="Close (Esc)" type="button" class="mfp-close"><span>×</span></button>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="header-bottom sticky-header fix-top sticky-content d-lg-show">
+            <div class="container">
+                <div class="header-right">
+                    <div class="dropdown category-dropdown" data-visible="true">
+                        <a href="#" class="category-toggle" role="button" data-toggle="dropdown"
+                           data-display="static" title="دسته بندی ها را مرور کنید">
+                            <i class="fa-light fa-bars-staggered"></i>
+                            <span>دسته بندی ها </span>
+                        </a>
+                        <div class="dropdown-box">
+                            <ul class="menu vertical-menu category-menu">
+                                <li>
+                                    <a href="{% url 'shop:product-list' %}">
+                                        <i class="fa-light fa-wine-bottle"></i>عطر
+                                    </a>
+                                    <ul class="megamenu">
+                                        <li>
+                                            <h4 class="menu-title">عطر زنانه</h4>
+                                            <hr class="divider">
+                                            <ul>
+                                                <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=BITTER"> عطر زنانه تلخ</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=SPICY">عطر زنانه تند </a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=SWEET">عطر زنانه شیرین</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=SOUR">عطر زنانه ترش</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?gender=FEMALE">همه عطرهای زنانه</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <h4 class="menu-title">عطر مردانه</h4>
+                                            <hr class="divider">
+                                            <ul>
+                                                <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=BITTER"> عطر مردانه تلخ</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=SPICY">عطر مردانه تند </a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=SWEET">عطر مردانه شیرین</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=SOUR">عطر مردانه ترش</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?gender=MALE">همه عطرهای مردانه</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <div class="banner-fixed menu-banner menu-banner4 content-middle">
+                                                <figure>
+                                                    <picture>
+                                                        <source srcset="{% static 'images/menu/banner-4.webp' %}" type="image/webp">
+                                                        <img loading="lazy" decoding="async"
+                                                             src="{% static 'images/menu/banner-4.jpg' %}" alt="Menu Banner"
+                                                             width="235" height="347"/></picture>
+                                                </figure>
+                                                <div class="banner-content rtl">
+                                                    <h4 class="banner-subtitle mb-2 font-weight-normal">
+                                                        ترند های جدید
+                                                    </h4>
+                                                    <h3 class="banner-title ls-m">
+                                                        عطرهای <br>یونیسکس <br>مشترک
+                                                    </h3>
+                                                    <a href="{% url 'shop:product-list' %}?gender=UNISEX"
+                                                       class="btn btn-md btn-block btn-gradient">
+                                                        مشاهده و انتخاب
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="{% url 'shop:product-list' %}?big=volumes">
+                                        <i class="fa-light fa-jug"></i>ادکلن سایز بزرگ
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'main:credit_card' %}">
+                                        <i class="fa-light fa-gift"></i>گیفت
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'shop:product-list' %}?luxury=products">
+                                        <i class="fa-light fa-box-heart"></i>عطر لوکس
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'shop:product-list' %}?has-discount=true">
+                                        <i class="fa-light fa-badge-percent"></i>عطر های تخفیف دار
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'shop:product-list' %}" class="font-weight-semi-bold text-primary ls-25">
+                                        مشاهده همه دسته ها<i class="fa-light fa-chevron-square-left"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <nav class="main-nav ml-4">
+                        <ul class="menu menu-active-underline">
+                            <li class="active">
+                                <a href="{% url 'main:index' %}">صفحات اصلی</a>
+                                <ul>
+                                    <li><a href="{% url 'main:index' %}">خانه</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}">فروشگاه</a></li>
+                                    <li><a href="{% url 'blog:post-list' %}">وبلاگ</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{% url 'blog:post-list' %}"> وبلاگ</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'shop:product-list' %}"> فروشگاه</a>
+                            </li>
+                            {% if request.user.is_authenticated %}
+                                <li>
+                                    <a href="{% url 'account:dashboard' %}"> حساب کاربری</a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="#" class="login-toggle"> ورود</a>
+                                </li>
+                            {% endif %}
+                            <li class="submenu submenu-container">
+                                <a href="{% url 'shop:product-list' %}">دسته بندی </a>
+                                <div class="megamenu">
+                                    <div class="row">
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <h4 class="menu-title">ویژگی ها</h4>
+                                            <ul>
+                                                <li><a href="{% url 'shop:product-list' %}?durability=HIGH">ماندگاری زیاد</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?spreads=HIGH">پخش بوی زیاد</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?spreads=MEDIUM">پخش بوی متوسط</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?spreads=LOW">پخش بوی کم</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?seasons=SUMMER">تابستانی</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?seasons=WINTER">زمستانی</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?nature=WARM">عطرهای گرم</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?nature=COLD">عطرهای سرد</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?gender=MALE">مردانه</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?gender=FEMALE">زنانه</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?gender=UNISEX">مشترک</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <h4 class="menu-title">برند ها</h4>
+                                            <ul>
+                                                {% for brand in all_brands %}
+                                                    <li><a href="{{ brand.get_absolute_url }}">{{ brand }}</a></li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <h4 class="menu-title">طعم ها</h4>
+                                            <ul>
+                                                {% for smell in all_smells %}
+                                                    <li><a href="{{ smell.get_absolute_url }}">{{ smell }}</a></li>
+                                                {% endfor %}
+
+                                            </ul>
+                                        </div>
+                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3 menu-banner menu-banner1 banner banner-fixed">
+                                            <figure>
+                                                <picture>
+                                                    <source srcset="{% static 'images/menu/banner-1.webp' %}" type="image/webp">
+                                                    <img loading="lazy" decoding="async" src="{% static 'images/menu/banner-1.jpg' %}"
+                                                         alt="Menu banner" width="221"
+                                                         height="330"/></picture>
+                                            </figure>
+                                            <div class="banner-content y-50 text-right rtl">
+                                                <h4 class="banner-subtitle font-weight-bold text-primary ls-m">
+                                                    فروش
+                                                </h4>
+                                                <h3 class="banner-title font-weight-bold">
+                                                    <span class="">با</span>تخفیف های ویژه
+                                                </h3>
+                                                <a href="{% url 'shop:product-list' %}?has-discount=true"
+                                                   class="btn btn-md btn-block btn-gradient">
+                                                    مشاهده و انتخاب <i class="fa-light fa-angles-left"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="{% url 'cart:cart' %}">سبد خرید</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'order:order' %}">سفارش</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'main:terms' %}">شرایط و ضوابط</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'main:about_us' %}">درباره ما</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="header-left percent-wrap">
+                    <a class="percent-main" href="{% url 'shop:product-list' %}?has-discount=true"><i class="fa-light fa-badge-percent"></i> پیشنهاد ویژه</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% block content %}
+
+    {% endblock %}
+    <footer class="footer appear-animate rtl text-right">
+        <div class="container">
+            <div class="footer-top">
+                <div class="row align-items-center">
+                    <div class="col-xxl-8 col-xl-7 col-lg-6">
+                        <a href="{% url 'main:index' %}" class="logo-footer">
+                            <picture>
+                                <source srcset="{% static 'images/logo-neyanbar.png' %}" type="image/webp">
+                                <img src="{% static 'images/logo-neyanbar.png' %}" alt="logo-footer" width="153"
+                                     height="44"/></picture>
+                        </a>
+                        <div class="widget-newsletter-info ">
+                            <ul>
+                                <li><span class="font-weight-bold ml-2">تلفن :</span><span class="">٠٩٢١١٧٦١٣٠٦</span>
+                                </li>
+                                <li><span class="font-weight-bold ml-2">ایمیل :</span><span
+                                        class="">neyanbar.brand@gmail.com</span></li>
+                            </ul>
+                        </div>
+                        <!-- End FooterLogo -->
+                    </div>
+                    <div class="col-xxl-4 col-xl-5 col-lg-6 widget-newsletter">
+                        <form action="{% url 'main:join_club' %}" method="get" class="input-wrapper-inline mx-auto mx-lg-0">
+                            <input type="email" class="form-control text-left" name="email" id="email"
+                                   placeholder="آدرس ایمیل ..." required/>
+                            <button class="btn btn-primary btn-rounded btn-md mr-2" type="submit">
+                                عضویت<i class="fa-light fa-angles-left"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-middle">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="widget widget-info">
+                            <h4 class="widget-title">اطلاعات تماس</h4>
+                            <ul class="widget-body ">
+                                <li>
+                                    <label>تلفن:</label>
+                                    <a href="tel:989211761306">تلفن : ٠٩٢١١٧٦١٣٠٦ </a>
+                                </li>
+                                <li>
+                                    <label>ایمیل:</label>
+                                    <a href="mailto:neyanbar.brand@gmail.com">neyanbar.brand@gmail.com</a>
+                                </li>
+                                <li>
+                                    <label>آدرس :</label>
+                                    <a href="#">تهران، اتوبان ستارى، مجتمع كوروش مال</a>
+                                </li>
+                                <li>
+                                    <label>روزها / ساعت کاری:</label>
+                                </li>
+                                <li>
+                                    <a href="#"> شنبه تا چهارشنبه / 10:00 صبح تا 8:00 شب</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <div class="widget">
+                            <h4 class="widget-title"> حساب کاربری من</h4>
+                            <ul class="widget-body ">
+                                <li>
+                                    <a href="{% url 'account:dashboard' %}"> سفارش من را پیگیری کنید</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'cart:cart' %}">نمایش خرید </a>
+                                </li>
+                                {% if not request.user.is_authenticated %}
+                                    <li>
+                                        <a href="#" class="login-toggle">ورود</a>
+                                    </li>
+                                {% endif %} 
+                                <li>
+                                    <a href="{% url 'account:compare-list' %}">لیست مقایسه</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <div class="widget">
+                            <h4 class="widget-title">درباره ما</h4>
+                            <ul class="widget-body ">
+                                <li>
+                                    <a href="{% url 'main:about_us' %}">درباره ما</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'main:terms' %}">شرایط و ضوابط</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-2 col-md-6">
+                        <div class="widget">
+                            <h4 class="widget-title">صفحات های مهم</h4>
+                            <ul class="widget-body ">
+                                <li>
+                                    <a href="{% url 'main:index' %}">خانه</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'shop:product-list' %}">فروشگاه</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'blog:post-list' %}">وبلاگ</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'account:dashboard' %}">داشبورد</a>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="widget widget-instagram pr-lg-10 mb-0 mb-md-6">
+                            <h4 class="widget-title">نمادهای اعتماد</h4>
+                            <figure class="widget-body row rtl">
+                                <div class="nemad-box">
+                                    <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=611100&Code=4kKrqoglm1JUh4PpnpLUSIHKZtW7bdeq'><img loading="lazy" referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=611100&Code=4kKrqoglm1JUh4PpnpLUSIHKZtW7bdeq' alt='' style='cursor:pointer' code='4kKrqoglm1JUh4PpnpLUSIHKZtW7bdeq'></a>
+                                </div>
+                                <div class="nemad-box" id="zarinpal">
+                                    <script src="https://www.zarinpal.com/webservice/TrustCode" type="text/javascript"></script>
+                                </div>
+                            </figure>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-middle-main">
+                <div class="container footer-middle-wrap">
+                    <div class="col-lg-4 footer-middle-main-right">
+                        <h5>ما را در مجازی دنبال کنید</h5>
+                    </div>
+                    <div class="col-lg-6 footer-middle-main-left">
+                        <div class="social-links inline-links">
+                            <a href="https://www.instagram.com/neyanbar/" class="social-link"><img src="{% static 'images/social/instagram.png' %}"/></a>
+                            <a href="https://t.me/neyanbar" class="social-link"><img src="{% static 'images/social/telegram.png' %}"/></a>
+                            <a href="tel:989211761306" class="social-link"><img src="{% static 'images/social/whatsapp.png' %}"/></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="footer-right">
+                        <figure class="payment">
+                            <picture>
+                                <source srcset="{% static 'images/payment.webp' %}" type="image/webp">
+                                <img src="{% static 'images/payment.png' %}" alt="payment" width="159" height="29"/></picture>
+                        </figure>
+                    </div>
+                    <div class="footer-center">
+                        <p class="copyright">فروشگاه آنلاین نی عنبر &copy; ۱۴۰۴ کلیه حقوق محفوظ است. - ساخته شده توسط <a
+                                href="https://mhnikoobakht.dev" class="btn-link">محمد حجت نیکوبخت</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+<div class="sticky-footer sticky-content fix-bottom rtl text-right">
+    <a href="{% url 'main:index' %}" class="sticky-link">
+        <i class="fa-light fa-home"></i>
+        <span>خانه</span>
+    </a>
+    <a href="{% url 'shop:product-list' %}" class="sticky-link">
+        <i class="fa-light fa-sliders-up"></i>
+        <span>فروشگاه</span>
+    </a>
+    <a href="{% url 'blog:post-list' %}" class="sticky-link">
+        <i class="fa-light fa-mail-bulk"></i>
+        <span>وبلاگ</span>
+    </a>
+    {% if request.user.is_authenticated %}
+        <a href="{% url 'account:dashboard' %}" class="sticky-link">
+            <i class="fa-light fa-user"></i>
+            <span>داشبورد</span>
+        </a>
+    {% else %}
+        <a href="#" class="sticky-link login-toggle">
+            <i class="fa-light fa-user"></i>
+            <span>ورود</span>
+        </a>
+    {% endif %}
+    <div class="header-search hs-toggle dir-up">
+        <a href="#" class="search-toggle sticky-link">
+            <i class="fa-light fa-magnifying-glass"></i>
+            <span>جستجو</span>
+        </a>
+        <form action="{% url 'shop:product-list' %}" method="get" class="input-wrapper">
+            <input type="text" class="form-control" name="search" autocomplete="off"
+                   placeholder="جستجو ..." required/>
+            <button class="btn btn-search" type="submit">
+                <i class="fa-light fa-magnifying-glass"></i>
+            </button>
+        </form>
+    </div>
+</div>
+<a id="scroll-top" href="#top" title="Top" role="button" class="scroll-top"><i class="fa-light fa-arrow-up"></i></a>
+
+<div class="mobile-menu-wrapper">
+    <div class="mobile-menu-overlay">
+    </div>
+
+    <a class="mobile-menu-close" href="#"><i class="fa-light fa-xmark"></i></a>
+
+    <div class="mobile-menu-container scrollable">
+        <form action="#" class="input-wrapper">
+            <input type="text" class="form-control" name="search" autocomplete="off"
+                   placeholder="جستجو ..." required/>
+            <button class="btn btn-search" type="submit">
+                <i class="fa-light fa-magnifying-glass"></i>
+            </button>
+        </form>
+
+        <div class="tab tab-nav-simple tab-nav-center tab-nav-boxed">
+            <ul class="nav nav-tabs nav-fill" role="tablist">
+                <li class="nav-item">
+                    <a href="#tab-21" class="nav-link active">اصلی</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#tab-11" class="nav-link">دسته بندی</a>
+                </li>
+            </ul>
+        </div>
+        <div class="mobile-menu mmenu-anim tab-content">
+            <div class="tab-pane" id="tab-11">
+                <ul>
+                    <li>
+                        <a href="{% url 'shop:product-list' %}" class="active"><i
+                                class="fa-light fa-wine-bottle"></i>عطرها</a>
+                        <ul>
+                            <li>
+                                <a href="{% url 'shop:product-list' %}">عطر های زنانه</a>
+                                <ul>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=BITTER"> عطر زنانه تلخ</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=SPICY">عطر زنانه تند </a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=SWEET">عطر زنانه شیرین</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=SOUR">عطر زنانه ترش</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=FEMALE">همه عطرهای زنانه</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{% url 'shop:product-list' %}">عطر های مردانه</a>
+                                <ul>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=BITTER"> عطر مردانه تلخ</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=SPICY">عطر مردانه تند </a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=SWEET">عطر مردانه شیرین</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=SOUR">عطر مردانه ترش</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=MALE">همه عطرهای مردانه</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{% url 'shop:product-list' %}">عطر های مشترک</a>
+                                <ul>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=UNISEX&tastes=BITTER"> عطر مشترک تلخ</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=UNISEX&tastes=SPICY">عطر مشترک تند </a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=UNISEX&tastes=SWEET">عطر مشترک شیرین</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=UNISEX&tastes=SOUR">عطر مشترک ترش</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=UNISEX">همه عطرهای مشترک</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><a href="{% url 'shop:product-list' %}?big=volumes"><i class="fa-light fa-jug"></i>ادکلن سایز بزرگ</a></li>
+                    <li><a href="{% url 'main:credit_card' %}"><i class="fa-light fa-gift"></i>گیفت</a></li>
+                    <li><a href="{% url 'shop:product-list' %}?luxury=products"><i class="fa-light fa-box-heart"></i>عطرلوکس</a></li>
+                    <li><a href="{% url 'shop:product-list' %}?has-discount=true"><i class="fa-light fa-badge-percent"></i>عطرهای تخفیف دار</a></li>
+                </ul>
+            </div>
+            <div class="tab-pane active" id="tab-21">
+                <ul>
+                    <li>
+                        <a href="{% url 'main:index' %}">صفحات </a>
+                        <ul>
+                            <li><a href="{% url 'main:index' %}">خانه</a></li>
+                            <li><a href="{% url 'shop:product-list' %}">فروشگاه</a></li>
+                            <li><a href="{% url 'blog:post-list' %}">وبلاگ</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{% url 'blog:post-list' %}"> وبلاگ</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'shop:product-list' %}"> فروشگاه</a>
+                    </li>
+                    {% if request.user.is_authenticated %}
+                        <li>
+                            <a href="{% url 'account:dashboard' %}"> حساب کاربری</a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a href="#" class="login-toggle"> ورود</a>
+                        </li>
+                    {% endif %}
+                    <li>
+                        <a href="{% url 'cart:cart' %}">سبد خرید</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'order:order' %}">سفارش</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'main:terms' %}">شرایط و ضوابط</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'main:about_us' %}">درباره ما</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="sticky-icons-wrapper rtl">
+    <div class="sticky-icon-links">
+        <ul>
+            <li><a href="{% url 'main:index' %}"><i class="fa-light fa-home"></i><span>خانه</span></a></li>
+            <li>
+                <a href="{% url 'main:about_us' %}"><i class="fa-light fa-phone"></i><span>تماس با ما</span></a>
+            </li>
+            <li class="{% if not request.user.is_authenticated %}login-toggle{% endif %}"><a href="{% url 'account:dashboard' %}"><i class="fa-light fa-user"></i><span>داشبورد</span></a></li>
+            <li>
+                <a class="white" href="{% url 'shop:product-list' %}"><i
+                        class="fa-light fa-shopping-cart"></i><span>فروشگاه</span></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<script defer src="{% static 'plugin/jquery/jquery.min.js' %}"></script>
+<script defer src="{% static 'plugin/jquery.plugin/jquery.plugin.min.js' %}"></script>
+<script defer src="{% static 'plugin/owl-carousel/owl.carousel.min.js' %}"></script>
+<script defer src="{% static 'plugin/elevatezoom/jquery.elevatezoom.min.js' %}"></script>
+<script defer src="{% static 'plugin/parallax/parallax.min.js' %}"></script>
+<script defer src="{% static 'plugin/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+<script defer src="{% static 'plugin/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+<script defer src="{% static 'plugin/photoswipe/photoswipe.min.js' %}"></script>
+<script defer src="{% static 'plugin/photoswipe/photoswipe-ui-default.min.js' %}"></script>
+<script defer src="{% static 'plugin/jquery.floating/jquery.floating.min.js' %}"></script>
+<script defer src="{% static 'js/main.min.js' %}"></script>
+<script defer src="{% static 'js/login.js' %}"></script>
+{% if not '/cart' in request.path %}
+    <script defer src="{% static 'js/cart.js' %}"></script>
+{% endif %}
+{% block script %}{% endblock %}
+<script type="text/javascript">
+    !function(){var i="u41Hbz",a=window,d=document;function g(){var g=d.createElement("script"),s="https://www.goftino.com/widget/"+i,l=localStorage.getItem("goftino_"+i);g.async=!0,g.src=l?s+"?o="+l:s;d.getElementsByTagName("head")[0].appendChild(g);}"complete"===d.readyState?g():a.attachEvent?a.attachEvent("onload",g):a.addEventListener("load",g,!1);}();
+</script>
+</body>
+</html>

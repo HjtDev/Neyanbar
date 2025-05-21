@@ -1,0 +1,30 @@
+{% load tags %}
+
+<div class="cart-list">
+    {% for item in cart %}
+        <div class="products scrollable" id="cart-item-{{ item.product.id }}">
+            <div class="product product-cart">
+                <figure class="product-media">
+                    <a href="{{ item.product.get_absolute_url }}">
+                        <picture>
+                            <source srcset="{{ item.product.images.first.image.url }}" type="image/webp">
+                            <img loading="lazy" decoding="async" src="{{ item.product.images.first.image.url }}"
+                                 alt="product" width="80"
+                                 height="88"/></picture>
+                    </a>
+                    <button class="btn btn-link btn-close btn-cart-remove" data-id="{{ item.product.id }}" data-volume="{{ item.volume }}">
+                        <i class="fa-light fa-xmark"></i>
+                    </button>
+                </figure>
+                <div class="product-detail">
+                    <a href="{{ item.product.get_absolute_url }}" class="product-name">{{ item.product }}</a>
+                    <small>{{ item.volume }} گرم</small>
+                    <div class="price-box">
+                        <span class="product-quantity">{{ item.quantity }}</span>
+                        <span class="product-price">{{ item.cost | commafy }} تومان</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

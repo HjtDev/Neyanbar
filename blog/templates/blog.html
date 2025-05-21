@@ -1,0 +1,332 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% load tags %}
+
+{% block title %}
+    {{ post }}
+{% endblock %}
+
+{% block title_og %}
+    {{ post }}
+{% endblock %}
+
+{% block page_keywords %}
+    {{ post.tags.all|join:", " }}, {{ post.title }}, بلاگ نی عنبر, مقالات عطر, نکات عطرسازی
+{% endblock %}
+
+{% block page_description %}
+    {{ post.content|truncatechars:160 }}
+{% endblock %}
+
+
+{% block content %}
+    <input type="hidden" name="post_id" data-id="{{ post.id }}">
+    <main class="main single-product rtl text-right">
+        <div class="page-content">
+            <div class="page-header pl-4 pr-4">
+                <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبلاگ ما</h3>
+                <h1 class="page-title font-weight-bold lh-1 text-white">{{ post }}</h1>
+            </div>
+            <nav class="breadcrumb-nav">
+                <div class="container breadcrumb-nav-wrap">
+                    <ul class="breadcrumb ">
+                        <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
+                        <li><a href="{% url 'blog:post-list' %}">وبلاگ</a></li>
+                        <li>{{ post }}</li>
+                    </ul>
+                </div>
+            </nav>
+            <div class="container  blog-wrap">
+                <div class="row gutter-lg">
+                    <div class="col-xl-9 col-lg-8">
+                        <article class="post-single">
+                            <figure class="post-media">
+                                <a href="#">
+                                    <picture>
+                                        <source srcset="{{ post.thumbnail.url }}" type="image/webp">
+                                        <img loading="lazy" decoding="async" src="{{ post.thumbnail.url }}" width="880"
+                                             height="450" alt="post"/>
+                                    </picture>
+                                </a>
+                            </figure>
+                            <div class="post-details rtl">
+                                <div class="post-meta">
+                                    نویسنده : : <a href="{% url 'blog:post-list' %}?author={{ post.user.name }}" class="post-author">{{ post.user.name }}</a>
+                                    تاریخ انتشار: <a href="#" class="post-date">{{ post.created_at | to_jalali_verbose }}</a>
+                                    | <a href="#" class="post-comment"><span>{{ verified_comment_count }}</span> دیدگاه</a>
+                                </div>
+                                <h4 class="post-title">
+                                    <a href="#">
+                                        {{ post }}
+                                    </a>
+                                </h4>
+                                <div class="post-body mb-7">
+                                    <p class="mb-5">
+                                        {{ post.content | safe }}
+                                    </p>
+                                </div>
+                                <div class="post-author-detail">
+                                    <figure class="author-media">
+                                        <a href="#">
+                                            <picture>
+                                                <source srcset="{{ post.user.profile.url }}" type="image/webp">
+                                                <img loading="lazy" decoding="async" src="{{ post.user.profile.url }}"
+                                                     alt="avatar" width="50"
+                                                     height="50">
+                                            </picture>
+                                        </a>
+                                    </figure>
+                                    <div class="author-body">
+                                        <div class="author-header d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <span class="author-title">نویسنده :   </span>
+                                                <h4 class="author-name font-weight-bold mb-0">{{ post.user }}</h4>
+                                            </div>
+                                            <div>
+                                                <a href="#" class="author-link font-weight-semi-bold">
+                                                    سایر پست های {{ post.user }} <i class="fa-light fa-angles-left"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="author-content">
+                                            <p class="mb-0">
+                                                {{ post.author_comment | safe }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Author Detail -->
+                                <div class="post-footer mt-3 mb-3">
+                                    <div class="post-tags">
+                                        {% for tag in post.tags.all %}
+                                            <a href="#" class="tag">{{ tag.name }}</a>
+                                        {% endfor %}
+
+                                    </div>
+                                    <div class="social-icons">
+                                        <a href="#" class="social-icon social-facebook"
+                                           title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                                        <a href="#" class="social-icon social-twitter"
+                                           title="Twitter"><i class="fab fa-twitter"></i></a>
+                                        <a href="#" class="social-icon social-pinterest"
+                                           title="Pinterest"><i class="fab fa-pinterest-p"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <nav class="page-nav">
+                            <a class="pager-link pager-link-prev" href="{{ other_post.get_absolute_url }}">
+                                مشاهده پست های دیگر
+                                <span class="pager-link-title">{{ other_post }}</span>
+                            </a>
+                            <a class="pager-link pager-link-next" href="{{ next_post.get_absolute_url }}">
+                                مشاهده پست بعدی
+                                <span class="pager-link-title">{{ next_post }}</span>
+                            </a>
+                        </nav>
+                        <!-- End Page Navigation -->
+                        <div class="related-posts">
+                            <div class="title-wrapper">
+                                <div class="container-fluid title-wrap">
+                                    <h2 class="title">پست های مرتبط </h2>
+                                    <h5 class="title-info">
+                                        <span></span>
+                                        <picture>
+                                            <source srcset="{% static 'images/perfume/15.webp' %}" type="image/webp">
+                                            <img src="{% static 'images/perfume/15.png' %}"></picture>
+                                        <span></span>
+                                    </h5>
+                                </div>
+                            </div>
+                            <div class="owl-carousel owl-theme row cols-lg-3 cols-sm-2" data-owl-options="{
+                                    'rtl':true,
+                                    'items': 1,
+                                    'margin': 20,
+                                    'loop': false,
+                                    'responsive': {
+                                        '576': {
+                                            'items': 2
+                                        },
+                                        '768': {
+                                            'items': 2
+                                        },
+                                        '1200': {
+                                            'items': 3
+                                        }
+                                    }
+                                }">
+                                {% for post in suggestion %}
+                                    <div class="post">
+                                        <figure class="post-media">
+                                            <a href="{{ post.get_absolute_url }}">
+                                                <picture>
+                                                    <source srcset="{{ post.thumbnail.url }}" type="image/webp">
+                                                    <img loading="lazy" decoding="async" src="{{ post.thumbnail.url }}"
+                                                         width="380" height="250"
+                                                         alt="post"/>
+                                                </picture>
+                                            </a>
+                                            <div class="post-calendar">
+                                                <span class="post-day">{{ post.created_at | to_jalali_verbose:'d' }}</span>
+                                                <span class="post-month">{{ post.created_at | to_jalali_verbose:'m' }}</span>
+                                            </div>
+                                        </figure>
+                                        <div class="post-details rtl">
+                                            <h4 class="post-title">
+                                                <a href="{{ post.get_absolute_url }}">
+                                                    {{ post }}
+                                                </a>
+                                            </h4>
+                                            <p class="post-content">
+                                                {{ post.short_content }}
+                                            </p>
+                                            <a href="{{ post.get_absolute_url }}"
+                                               class="btn btn-link btn-underline ">
+                                                بیشتر<i class="fa-light fa-angles-left"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="comments">
+                            <h3 class="title title-simple text-right text-normal font-weight-bold">{{ verified_comment_count }} دیدگاه</h3>
+                            <ul id="comment-list">
+                                {% for comment in post.comments.all %}
+                                    {% if comment.is_verified or comment.user == request.user %}
+                                        <li>
+                                            <div class="comment">
+                                                <figure class="comment-media">
+                                                    <a>
+                                                        <picture>
+                                                            <source srcset="{{ comment.user.profile.url }}" type="image/webp">
+                                                            <img loading="lazy" decoding="async"
+                                                                 src="{{ comment.user.profile.url }}" alt="avatar">
+                                                        </picture>
+                                                    </a>
+                                                </figure>
+                                                <div class="comment-body rtl text-right">
+                                                    <div class="comment-user">
+                                                        <span class="comment-date">{{ comment.created_at | to_jalali_verbose }}</span>
+                                                        <h4><a href="#">{{ comment.user }}{% if not comment.is_verified %} | <small>نظر شما در حال برسی می باشد</small>{% endif %}</a></h4>
+                                                    </div>
+                                                    <div class="comment-content mb-2">
+                                                        <p>
+                                                            {{ comment.content }}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <!-- End Comment  -->
+                        <div class="reply rtl text-right">
+                            <div class="title-wrapper">
+                                <h3 class="title title-simple text-right text-normal">دیدگاه خود را بنویسید</h3>
+                                <p class="text-right">پر کردن موارد ستاره دار الزامی است *</p>
+                                <p class="d-none text-right comment-response">شما به سقف تعداد دیگاه برای این پست رسیده اید !</p>
+                            </div>
+                            <textarea id="reply-message" cols="30" rows="6" class="form-control mb-4"
+                                      placeholder="دیدگاه شما *"></textarea>
+                            {% if request.user.is_authenticated %}
+                                <button type="submit" class="btn btn-primary btn-rounded btn-comment">
+                                    ثبت دیدگاه <i class="fa-light fa-angles-right"></i>
+                                </button>
+                            {% else %}
+                                <button type="submit" class="btn btn-primary btn-rounded login-toggle">
+                                    ورود به حساب
+                                </button>
+                            {% endif %}
+                        </div>
+                        <!-- End Reply -->
+                    </div>
+                    <aside class="col-xl-3 col-lg-4 sidebar right-sidebar sidebar-fixed sticky-sidebar-wrapper">
+                        <div class="sidebar-overlay"></div>
+                        <a class="sidebar-close" href="#"><i class="fa-light fa-xmark"></i></a>
+                        <a href="#" class="sidebar-toggle"><i class="fa-light fa-chevron-right"></i></a>
+                        <div class="sidebar-content">
+                            <div class="sticky-sidebar">
+                                {% if filters %}
+                                    <div class="widget widget-search border-no mb-2 w-100">
+                                        <a href="{% url 'blog:post-list' %}?" class="btn btn-primary btn-rounded w-100">حذف فیلتر ها</a>
+                                    </div>
+                                {% endif %}
+                                <div class="widget widget-search border-no mb-2">
+                                    <form action="{% url 'blog:post-list' %}" type="GET" class="input-wrapper input-wrapper-inline btn-absolute">
+                                        <input type="text" class="form-control" name="search" autocomplete="off"
+                                               placeholder="جستجو در وبلاگ" required/>
+                                        <button class="btn btn-search btn-link" type="submit">
+                                            <i class="fa-light fa-magnifying-glass"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="widget widget-collapsible border-no">
+                                    <h3 class="widget-title">دسته بندی وبلاگ ها</h3>
+                                    <ul class="widget-body filter-items search-ul">
+                                        {% for category in categories %}
+                                            <li><a href="{% url 'blog:post-list' %}?{% query_transform category=category.slug page=None %}">{{ category.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="widget widget-collapsible">
+                                    <h3 class="widget-title">پست های محبوب</h3>
+                                    <div class="widget-body ">
+                                        <div class="post-col">
+                                            {% for post in most_viewed %}
+                                                <div class="post post-list-sm">
+                                                    <figure class="post-media">
+                                                        <a href="{{ post.get_absolute_url }}">
+                                                            <picture>
+                                                                <source srcset="{{ post.thumbnail.url }}" type="image/webp">
+                                                                <img loading="lazy" decoding="async"
+                                                                     src="{{ post.thumbnail.url }}" width="90" height="90"
+                                                                     alt="post"/>
+                                                            </picture>
+                                                        </a>
+                                                    </figure>
+                                                    <div class="post-details rtl">
+                                                        <div class="post-meta">
+                                                            <a href="#" class="post-date"> تاریخ {{ post.created_at | to_jalali_verbose }}</a>
+                                                        </div>
+                                                        <h4 class="post-title">
+                                                            <a href="{{ post.get_absolute_url }}">
+                                                                {{ post }}
+                                                            </a>
+                                                        </h4>
+                                                    </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="widget widget-collapsible">
+                                    <h3 class="widget-title">درباره ما</h3>
+                                    <div class="widget-body ">
+                                        <p>
+                                            به روز ترین عطر ها را ازما بخواهید.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="widget widget-posts widget-collapsible">
+                                    <h3 class="widget-title">برچسب ها</h3>
+                                    <div class="widget-body ">
+                                        {% for tag in tags %}
+                                            <a href="{% url 'blog:post-list' %}?{% query_transform tag=tag.slug page=None %}" class="tag">{{ tag.name }}</a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block script %}
+    <script defer src="{% static 'js/blog.js' %}"></script>
+{% endblock %}

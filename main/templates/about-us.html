@@ -1,0 +1,268 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+	درباره ما
+{% endblock %}
+
+{% block title_og %}
+	درباره ما
+{% endblock %}
+
+{% block page_keywords %}
+    درباره ما, فروشگاه نی عنبر, عطر طبیعی, عطر اسلامی, عطر دست‌ساز, عطر ایرانی, عطر با کیفیت, رایحه اصیل, عطرهای نیش, برند نی عنبر, عطرهای لوکس, فروشگاه عطر آنلاین,
+{% endblock %}
+
+{% block page_description %}
+    فروشگاه نی عنبر، پیشرو در عرضه عطرهای طبیعی و اسلامی با رایحه‌های اصیل و دست‌ساز. با ما در دنیای عطرها همراه شوید و داستان هر رایحه را کشف کنید.
+{% endblock %}
+
+
+{% block content %}
+    <main class="main rtl text-right">
+        <div class="page-header pl-4 pr-4">
+            <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبسایت ما</h3>
+            <h1 class="page-title font-weight-bold lh-1 text-white">درباره ما</h1>
+        </div>
+        <nav class="breadcrumb-nav">
+            <div class="container breadcrumb-nav-wrap">
+                <ul class="breadcrumb ">
+                    <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
+                    <li>درباره ما</li>
+                </ul>
+            </div>
+        </nav>
+        <div class="page-content">
+            <section class="about-section pb-10 appear-animate">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-12 ">
+                            <div class="row">
+                                <div class="col-md-12 mb-4">
+                                    <div class="counter text-center text-dark">
+                                            <span class="count-to" data-fromvalue="0" data-tovalue="150"
+                                                  data-duration="900" data-delimiter=",">0</span>
+                                        <h5 class="count-title">انواع رایحه های مدرن و کلاسیک</h5>
+                                        <p class="text-grey mb-0">
+                                            در خدمت شما هستیم<br>
+                                            وازاینکه ما را انتخاب کردید متشکریم .
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="customer-section appear-animate">
+                <div class="container customer-wrap">
+                    <div class="row align-items-center">
+                        <div class="col-md-7 mb-4 ">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/custom/img1.jpg' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/custom/img1.jpg' %}" alt="Happy Customer" width="580"  height="507" class="banner-radius" style="background-color: #BDD0DE;" />
+                                </picture>
+                            </figure>
+                        </div>
+                        <div class="col-md-5 mb-4  text-right">
+                            <div class="container-fluid title-right-wrap">
+                                <h2 class="title-right">درباره نی عنبر</h2>
+                                <h5 class="title-info-right">
+                                    <span></span>
+                                    <picture><source srcset="/static/images/perfume/15.webp" type="image/webp"><img src="/static/images/perfume/15.png"></picture>
+                                    <span></span>
+                                </h5>
+                            </div>
+                            <p class="section-desc text-grey">
+                                به فروشگاه عطر و ادکلن نى عنبر خوش آمدید!
+                                در دنیای مدرن امروزی، عطر نه‌تنها یک عنصر زیبایی و خوشبوکننده است، بلکه یک هنر و یک تجربه احساسی نیز محسوب می‌شود. ما در نى عنبر به دنبال ایجاد یک ارتباط عمیق با مشتریان خود هستیم و به شما کمک می‌کنیم تا رایحه‌ای را پیدا کنید که با هویت و شخصیت شما هماهنگ باشد.
+                            </p>
+                            <a href="{% url 'shop:product-list' %}" class="btn btn-dark btn-link btn-underline ls-m">
+                                از فروشگاه ما دیدن کنید <i class="fa-light fa-angles-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="store-section pb-10 appear-animate">
+                <div class="container store-wrap">
+                    <div class="row align-items-center ">
+                        <div class="col-md-6 order-md-first mb-4 text-right">
+                            <div class="container-fluid title-right-wrap">
+                                <h2 class="title-right">چشم انداز ما</h2>
+                                <h5 class="title-info-right">
+                                    <span></span>
+                                    <picture><source srcset="/static/images/perfume/15.webp" type="image/webp"><img src="/static/images/perfume/15.png"></picture>
+                                    <span></span>
+                                </h5>
+                            </div>
+                            <p class="section-desc text-grey">
+                                ما به عنوان یک فروشگاه پیشرو در زمینه صنعت عطر و ادکلن، به دنبال ترویج عطرسازی طبیعی و اسلامی هستیم. غیر از ایجاد عطرهای هارمونیک و طبیعی، بر آن هستیم که روایتی ناب از فرهنگ اسلامی و ایرانی را به تصویر بکشیم. ما عقیده داریم که عطر، گویای داستان‌های زندگی و احساسات است و هر رایحه‌ای می‌تواند خاطراتی خاص را زنده کند.
+                            </p>
+                            <a href="{% url 'main:index' %}" class="btn btn-dark btn-link btn-underline ls-m">
+                                از فروشگاه  ما دیدن کنید <i class="fa-light fa-angles-left"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-4 store-img">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/custom/img2.jpg' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/custom/img2.jpg' %}" alt="Our Store" width="580" height="507" class="banner-radius" style="background-color: #DEE6E8;" />
+                                </picture>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="customer-section appear-animate">
+                <div class="container customer-wrap">
+                    <div class="row align-items-center">
+                        <div class="col-md-7 mb-4 ">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/custom/img3.jpg' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/custom/img3.jpg' %}" alt="Happy Customer" width="580"  height="507" class="banner-radius" style="background-color: #BDD0DE;" />
+                                </picture>
+                            </figure>
+                        </div>
+                        <div class="col-md-5 mb-4  text-right">
+                            <div class="container-fluid title-right-wrap">
+                                <h2 class="title-right">محصولات ما</h2>
+                                <h5 class="title-info-right">
+                                    <span></span>
+                                    <picture><source srcset="/static/images/perfume/15.webp" type="image/webp"><img src="/static/images/perfume/15.png"></picture>
+                                    <span></span>
+                                </h5>
+                            </div>
+                            <p class="section-desc text-grey">
+                                تمامی محصولات ما با دقت و توجه به جزئیات تهیه شده‌اند. ما به شکل خاصی بر روی بازطراحی (ری برند و رى ليبلينگ) و عطرسازی طبیعی با بسته بندى هاى يونيک و خاص تمرکز داریم كه در ترکیبات آن‌ها از اسانس‌های طبیعی، گیاهی و مواد اولیه برتر و با کیفیت بهره گرفته شده است. ما همچنین به تاثیرات مثبت این عطرها بر روح و روان افراد اهمیت می‌دهیم.
+                            </p>
+                            <a href="{% url 'shop:product-list' %}" class="btn btn-dark btn-link btn-underline ls-m">
+                                از فروشگاه ما دیدن کنید <i class="fa-light fa-angles-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="store-section pb-10 appear-animate">
+                <div class="container store-wrap">
+                    <div class="row align-items-center ">
+                        <div class="col-md-6 order-md-first mb-4 text-right">
+                            <div class="container-fluid title-right-wrap">
+                                <h2 class="title-right">چرا ما؟</h2>
+                                <h5 class="title-info-right">
+                                    <span></span>
+                                    <picture><source srcset="/static/images/perfume/15.webp" type="image/webp"><img src="/static/images/perfume/15.png"></picture>
+                                    <span></span>
+                                </h5>
+                            </div>
+                            <p class="section-desc text-grey">
+                                - دقت در انتخاب مواد اولیه: ما فقط از مواد طبیعی و با کیفیت استفاده می‌کنیم تا بهترین تجربه را برای شما به ارمغان آوریم.
+                                - تعهد به فرهنگ اسلامی: عطرهای ما با الهام از سنت‌های اسلامی و فرهنگ غنی ایرانی تولید شده‌اند و تمام تلاش ما در جهت حفظ این میراث است.
+                                - توجه به مشتری: ما به نظرات و خواسته‌های شما اهمیت می‌دهیم و در تلاشیم بهترین خدمات را به شما ارائه دهیم.
+                            </p>
+                            <a href="{% url 'main:index' %}" class="btn btn-dark btn-link btn-underline ls-m">
+                                از فروشگاه  ما دیدن کنید <i class="fa-light fa-angles-left"></i>
+                            </a>
+                        </div>
+                        <div class="col-md-6 mb-4 store-img">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/custom/img4.jpg' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/custom/img4.jpg' %}" alt="Our Store" width="580" height="507" class="banner-radius" style="background-color: #DEE6E8;" />
+                                </picture>
+                            </figure>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="customer-section appear-animate">
+                <div class="container customer-wrap">
+                    <div class="row align-items-center">
+                        <div class="col-md-7 mb-4 ">
+                            <figure>
+                                <picture>
+                                    <source srcset="{% static 'images/custom/img5.jpg' %}" type="image/webp">
+                                    <img loading="lazy" decoding="async" src="{% static 'images/custom/img5.jpg' %}" alt="Happy Customer" width="580"  height="507" class="banner-radius" style="background-color: #BDD0DE;" />
+                                </picture>
+                            </figure>
+                        </div>
+                        <div class="col-md-5 mb-4  text-right">
+                            <div class="container-fluid title-right-wrap">
+                                <h2 class="title-right">اهداف ما</h2>
+                                <h5 class="title-info-right">
+                                    <span></span>
+                                    <picture><source srcset="/static/images/perfume/15.webp" type="image/webp"><img src="/static/images/perfume/15.png"></picture>
+                                    <span></span>
+                                </h5>
+                            </div>
+                            <p class="section-desc text-grey">
+                                ما در نى عنبر با هدف ارتقاء تجربه عطرسازی طبیعی و اسلامی و ارتباط با مشتریان خود از طریق محصولات باکیفیت و خدمات صمیمانه کار می‌کنیم. می‌خواهیم به شما کمک کنیم تا عطر مناسبی بیابید که بیان‌کننده شخصیت و شیوه زندگی شما باشد.اگر به دنبال عطرهایی با کیفیت بالا و رایحه‌های پیچیده هستید، از طرف دیگر، اگر قیمت و دسترسی سريع به محصول مدنظر شماست، و فروشگاهى كه بتواند گزینه‌های خاص و منحصر به فردی ارائه دهد که برای کسانی که به دنبال تجربه‌ای جدید هستند جذاب باشد. بى شک نى عنبر اين تجربه خاص و دلپذير را در اختيار شما خواهد گذاشت.
+                            </p>
+                            <a href="{% url 'shop:product-list' %}" class="btn btn-dark btn-link btn-underline ls-m">
+                                از فروشگاه ما دیدن کنید <i class="fa-light fa-angles-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="brand-section grey-section appear-animate">
+                <div class="container ltr">
+                    <div class="title-wrapper">
+                        <div class="container-fluid title-wrap">
+                            <h2 class="title">برندهای ما </h2>
+                            <h5 class="title-info">
+                                <span></span>
+                                <picture><source srcset="/static/images/perfume/15.webp" type="image/webp"><img src="/static/images/perfume/15.png"></picture>
+                                <span></span>
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="owl-carousel owl-theme row cols-xl-6 cols-lg-5 cols-md-4 cols-sm-3 cols-2 "
+                         data-owl-options="{
+                             'rtl':true,
+                            'nav': false,
+                            'dots': false,
+                             'loop': true,
+                             'autoplay': true,
+                            'margin': 20,
+                            'responsive': {
+                                '0': {
+                                    'items': 2
+                                },
+                                '576': {
+                                    'items': 3
+                                },
+                                '768': {
+                                    'items': 4
+                                },
+                                '992': {
+                                    'items': 5
+                                },
+                                '1200': {
+                                    'items': 6
+                                }
+                            }
+                        }">
+                        {% for brand in all_brands %}
+                            <figure class="brand-wrap">
+                                <picture><source srcset="{{ brand.logo.url }}" type="image/webp"><img loading="lazy" decoding="async" src="{{ brand.logo.url }}" alt="Brand" width="180" height="100" /></picture>
+                            </figure>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+{% endblock %}
+
+{% block script %}
+    <script defer src="{% static 'plugin/jquery.count-to/jquery-numerator.min.js' %}"></script>
+{% endblock %}
