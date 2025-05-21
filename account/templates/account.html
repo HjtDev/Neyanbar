@@ -44,7 +44,7 @@
             <div class="container account-main">
                 <h2 class="title title-center mb-10">حساب کاربری</h2>
                 <div class="tab tab-vertical gutter-lg">
-                    <ul class="nav nav-tabs mb-4 col-lg-3 col-md-4 nav-tabs-account mr-0" role="tablist">
+                    <ul class="nav nav-tabs mb-4 col-lg-3 col-md-4 nav-tabs-account" style="margin-right: 0;" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link text-right active" href="#dashboard">داشبورد</a>
                         </li>
@@ -56,7 +56,11 @@
                         </li>
                         {% if request.user.compare_list.exists %}
                             <li class="nav-item">
-                                <a class="nav-link text-right " href="javascript: void(0)" onclick="window.location.href='{% url 'account:compare-list' %}'">لیست مقایسه ها</a>
+                                <a class="nav-link text-right " href="javascript: void(0)" onclick="window.location.href='{% url 'account:compare-list' %}'">لیست مقایسه</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link text-right " href="javascript: void(0)">لیست مقایسه (خالی)</a>
                             </li>
                         {% endif %}
                         <li class="nav-item">
