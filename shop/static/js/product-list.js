@@ -111,6 +111,7 @@ $(document).ready(function() {
                 // console.log(response);
                 $('.product-wrapper').replaceWith(response);
                 $('.pagination').addClass('d-none');
+                $('.sidebar-close').click();
                 $(window).scrollTop(0);
             },
             error: function(xhr, status, error) {
