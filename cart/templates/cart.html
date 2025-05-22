@@ -58,7 +58,7 @@
                             </thead>
                             <tbody>
                             {% for item in cart %}
-                                <tr id="row-{{ item.product.id }}-{{ item.volume }}">
+                                <tr id="row-{{ item.product.id }}-{{ item.volume }}" class="cart-row">
                                     <td class="product-thumbnail">
                                         <figure>
                                             <a href="{{ item.product.get_absolute_url }}">
