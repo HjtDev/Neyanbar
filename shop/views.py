@@ -158,7 +158,7 @@ def product_list_view(request):
 
     for key in request.GET:
         if request.GET.get('search'):
-            all_products = all_products.filter(Q(name__icontains=request.GET.get('search')) | Q(name_en__icontains=request.GET.get('search')))
+            all_products = all_products.filter(Q(name__icontains=request.GET.get('search')) | Q(name_en__icontains=request.GET.get('search')) | Q(pid__icontains=request.GET.get('search')))
 
         if request.GET.get('luxury'):
             all_products = all_products.order_by('-price')
