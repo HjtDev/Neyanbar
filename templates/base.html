@@ -217,94 +217,6 @@
         <div class="header-bottom sticky-header fix-top sticky-content d-lg-show">
             <div class="container">
                 <div class="header-right">
-                    <div class="dropdown category-dropdown" data-visible="true">
-                        <a href="#" class="category-toggle" role="button" data-toggle="dropdown"
-                           data-display="static" title="دسته بندی ها را مرور کنید">
-                            <i class="fa-light fa-bars-staggered"></i>
-                            <span>دسته بندی ها </span>
-                        </a>
-                        <div class="dropdown-box">
-                            <ul class="menu vertical-menu category-menu">
-                                <li>
-                                    <a href="{% url 'shop:product-list' %}">
-                                        <i class="fa-light fa-wine-bottle"></i>عطر
-                                    </a>
-                                    <ul class="megamenu">
-                                        <li>
-                                            <h4 class="menu-title">عطر زنانه</h4>
-                                            <hr class="divider">
-                                            <ul>
-                                                <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=BITTER"> عطر زنانه تلخ</a></li>
-                                                <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=SPICY">عطر زنانه تند </a></li>
-                                                <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=SWEET">عطر زنانه شیرین</a></li>
-                                                <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=SOUR">عطر زنانه ترش</a></li>
-                                                <li><a href="{% url 'shop:product-list' %}?gender=FEMALE">همه عطرهای زنانه</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <h4 class="menu-title">عطر مردانه</h4>
-                                            <hr class="divider">
-                                            <ul>
-                                                <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=BITTER"> عطر مردانه تلخ</a></li>
-                                                <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=SPICY">عطر مردانه تند </a></li>
-                                                <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=SWEET">عطر مردانه شیرین</a></li>
-                                                <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=SOUR">عطر مردانه ترش</a></li>
-                                                <li><a href="{% url 'shop:product-list' %}?gender=MALE">همه عطرهای مردانه</a></li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <div class="banner-fixed menu-banner menu-banner4 content-middle">
-                                                <figure>
-                                                    <picture>
-                                                        <source srcset="{% static 'images/menu/banner-4.webp' %}" type="image/webp">
-                                                        <img loading="lazy" decoding="async"
-                                                             src="{% static 'images/menu/banner-4.jpg' %}" alt="Menu Banner"
-                                                             width="235" height="347"/></picture>
-                                                </figure>
-                                                <div class="banner-content rtl">
-                                                    <h4 class="banner-subtitle mb-2 font-weight-normal">
-                                                        ترند های جدید
-                                                    </h4>
-                                                    <h3 class="banner-title ls-m">
-                                                        عطرهای <br>یونیسکس <br>مشترک
-                                                    </h3>
-                                                    <a href="{% url 'shop:product-list' %}?gender=UNISEX"
-                                                       class="btn btn-md btn-block btn-gradient">
-                                                        مشاهده و انتخاب
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <a href="{% url 'shop:product-list' %}?big=volumes">
-                                        <i class="fa-light fa-jug"></i>ادکلن سایز بزرگ
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'main:credit_card' %}">
-                                        <i class="fa-light fa-gift"></i>گیفت
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'shop:product-list' %}?luxury=products">
-                                        <i class="fa-light fa-box-heart"></i>عطر لوکس
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'shop:product-list' %}?has-discount=true">
-                                        <i class="fa-light fa-badge-percent"></i>عطر های تخفیف دار
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'shop:product-list' %}" class="font-weight-semi-bold text-primary ls-25">
-                                        مشاهده همه دسته ها<i class="fa-light fa-chevron-square-left"></i>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
                     <nav class="main-nav ml-4">
                         <ul class="menu menu-active-underline">
                             <li class="active">
@@ -321,50 +233,70 @@
                             <li>
                                 <a href="{% url 'shop:product-list' %}"> فروشگاه</a>
                             </li>
-                            {% if request.user.is_authenticated %}
-                                <li>
-                                    <a href="{% url 'account:dashboard' %}"> حساب کاربری</a>
-                                </li>
-                            {% else %}
-                                <li>
-                                    <a href="#" class="login-toggle"> ورود</a>
-                                </li>
-                            {% endif %}
+                            <li>
+                                <a href="{% url 'main:credit_card' %}">کارت هدیه</a>
+                            </li>
                             <li class="submenu submenu-container">
                                 <a href="{% url 'shop:product-list' %}">دسته بندی </a>
                                 <div class="megamenu">
                                     <div class="row">
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
-                                            <h4 class="menu-title">ویژگی ها</h4>
+                                        <div class="col-3">
+                                            <h4 class="menu-title">عطر های ویژه</h4>
                                             <ul>
-                                                <li><a href="{% url 'shop:product-list' %}?durability=HIGH">ماندگاری زیاد</a></li>
-                                                <li><a href="{% url 'shop:product-list' %}?spreads=HIGH">پخش بوی زیاد</a></li>
-                                                <li><a href="{% url 'shop:product-list' %}?spreads=MEDIUM">پخش بوی متوسط</a></li>
-                                                <li><a href="{% url 'shop:product-list' %}?spreads=LOW">پخش بوی کم</a></li>
-                                                <li><a href="{% url 'shop:product-list' %}?seasons=SUMMER">تابستانی</a></li>
-                                                <li><a href="{% url 'shop:product-list' %}?seasons=WINTER">زمستانی</a></li>
-                                                <li><a href="{% url 'shop:product-list' %}?nature=WARM">عطرهای گرم</a></li>
-                                                <li><a href="{% url 'shop:product-list' %}?nature=COLD">عطرهای سرد</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?luxury=products">لوکس</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?big=volumes">حجم زیاد</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?has-discount=true">تخفیف دار</a></li>
+                                            </ul>
+                                            <hr>
+                                            <h4 class="menu-title">جنسیت</h4>
+                                            <ul>
                                                 <li><a href="{% url 'shop:product-list' %}?gender=MALE">مردانه</a></li>
                                                 <li><a href="{% url 'shop:product-list' %}?gender=FEMALE">زنانه</a></li>
                                                 <li><a href="{% url 'shop:product-list' %}?gender=UNISEX">مشترک</a></li>
                                             </ul>
-                                        </div>
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
+                                            <hr>
                                             <h4 class="menu-title">برند ها</h4>
                                             <ul>
                                                 {% for brand in all_brands %}
-                                                    <li><a href="{{ brand.get_absolute_url }}">{{ brand }}</a></li>
+                                                    {% if forloop.counter < 3 %}
+                                                        <li><a href="{{ brand.get_absolute_url }}">{{ brand }}</a></li>
+                                                    {% elif forloop.counter == 3 %}
+                                                        <li>
+                                                            <a href="{% url 'shop:product-list' %}" class="font-weight-semi-bold text-primary ls-25">
+                                                                مشاهده برند ها
+                                                            </a>
+                                                        </li>
+                                                    {% endif %}
                                                 {% endfor %}
                                             </ul>
                                         </div>
-                                        <div class="col-6 col-sm-4 col-md-4 col-lg-3">
-                                            <h4 class="menu-title">طعم ها</h4>
+                                        <div class="col-3">
+                                            <h4 class="menu-title">گروه های بویایی</h4>
                                             <ul>
                                                 {% for smell in all_smells %}
                                                     <li><a href="{{ smell.get_absolute_url }}">{{ smell }}</a></li>
                                                 {% endfor %}
-
+                                            </ul>
+                                        </div>
+                                        <div class="col-3">
+                                            <h4 class="menu-title">فصل ها</h4>
+                                            <ul>
+                                                <li><a href="{% url 'shop:product-list' %}?seasons=SUMMER">بهار - تابستان</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?seasons=WINTER">پاییز - زمستان</a></li>
+                                            </ul>
+                                            <hr>
+                                            <h4 class="menu-title">طبع ها</h4>
+                                            <ul>
+                                                <li><a href="{% url 'shop:product-list' %}?nature=WARM">گرم</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?nature=COLD">خنک</a></li>
+                                            </ul>
+                                            <hr>
+                                            <h4 class="menu-title">طعم ها</h4>
+                                            <ul>
+                                                <li><a href="{% url 'shop:product-list' %}?tastes=SWEET">شیرین</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?tastes=SOUR">ترش</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?tastes=BITTER">تلخ</a></li>
+                                                <li><a href="{% url 'shop:product-list' %}?tastes=SPICY">تند</a></li>
                                             </ul>
                                         </div>
                                         <div class="col-6 col-sm-4 col-md-4 col-lg-3 menu-banner menu-banner1 banner banner-fixed">
@@ -626,7 +558,7 @@
     <a class="mobile-menu-close" href="#"><i class="fa-light fa-xmark"></i></a>
 
     <div class="mobile-menu-container scrollable">
-        <form action="#" class="input-wrapper">
+        <form action="{% url 'shop:product-list' %}" method="get" class="input-wrapper">
             <input type="text" class="form-control" name="search" autocomplete="off"
                    placeholder="جستجو ..." required/>
             <button class="btn btn-search" type="submit">
@@ -637,66 +569,87 @@
         <div class="tab tab-nav-simple tab-nav-center tab-nav-boxed">
             <ul class="nav nav-tabs nav-fill" role="tablist">
                 <li class="nav-item">
-                    <a href="#tab-21" class="nav-link active">اصلی</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#tab-11" class="nav-link">دسته بندی</a>
+                    <a href="#tab-21" class="nav-link active">نی عنبر</a>
                 </li>
             </ul>
         </div>
         <div class="mobile-menu mmenu-anim tab-content">
-            <div class="tab-pane" id="tab-11">
-                <ul>
-                    <li>
-                        <a href="{% url 'shop:product-list' %}" class="active"><i
-                                class="fa-light fa-wine-bottle"></i>عطرها</a>
-                        <ul>
-                            <li>
-                                <a href="{% url 'shop:product-list' %}">عطر های زنانه</a>
-                                <ul>
-                                    <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=BITTER"> عطر زنانه تلخ</a></li>
-                                    <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=SPICY">عطر زنانه تند </a></li>
-                                    <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=SWEET">عطر زنانه شیرین</a></li>
-                                    <li><a href="{% url 'shop:product-list' %}?gender=FEMALE&tastes=SOUR">عطر زنانه ترش</a></li>
-                                    <li><a href="{% url 'shop:product-list' %}?gender=FEMALE">همه عطرهای زنانه</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="{% url 'shop:product-list' %}">عطر های مردانه</a>
-                                <ul>
-                                    <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=BITTER"> عطر مردانه تلخ</a></li>
-                                    <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=SPICY">عطر مردانه تند </a></li>
-                                    <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=SWEET">عطر مردانه شیرین</a></li>
-                                    <li><a href="{% url 'shop:product-list' %}?gender=MALE&tastes=SOUR">عطر مردانه ترش</a></li>
-                                    <li><a href="{% url 'shop:product-list' %}?gender=MALE">همه عطرهای مردانه</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="{% url 'shop:product-list' %}">عطر های مشترک</a>
-                                <ul>
-                                    <li><a href="{% url 'shop:product-list' %}?gender=UNISEX&tastes=BITTER"> عطر مشترک تلخ</a></li>
-                                    <li><a href="{% url 'shop:product-list' %}?gender=UNISEX&tastes=SPICY">عطر مشترک تند </a></li>
-                                    <li><a href="{% url 'shop:product-list' %}?gender=UNISEX&tastes=SWEET">عطر مشترک شیرین</a></li>
-                                    <li><a href="{% url 'shop:product-list' %}?gender=UNISEX&tastes=SOUR">عطر مشترک ترش</a></li>
-                                    <li><a href="{% url 'shop:product-list' %}?gender=UNISEX">همه عطرهای مشترک</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="{% url 'shop:product-list' %}?big=volumes"><i class="fa-light fa-jug"></i>ادکلن سایز بزرگ</a></li>
-                    <li><a href="{% url 'main:credit_card' %}"><i class="fa-light fa-gift"></i>گیفت</a></li>
-                    <li><a href="{% url 'shop:product-list' %}?luxury=products"><i class="fa-light fa-box-heart"></i>عطرلوکس</a></li>
-                    <li><a href="{% url 'shop:product-list' %}?has-discount=true"><i class="fa-light fa-badge-percent"></i>عطرهای تخفیف دار</a></li>
-                </ul>
-            </div>
             <div class="tab-pane active" id="tab-21">
                 <ul>
                     <li>
-                        <a href="{% url 'main:index' %}">صفحات </a>
+                        <a href="{% url 'main:index' %}">صفحات اصلی</a>
                         <ul>
                             <li><a href="{% url 'main:index' %}">خانه</a></li>
                             <li><a href="{% url 'shop:product-list' %}">فروشگاه</a></li>
                             <li><a href="{% url 'blog:post-list' %}">وبلاگ</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="{% url 'main:index' %}">دسته بندی ها</a>
+                        <ul>
+                            <li>
+                                <a href="">عطر های ویژه</a>
+                                <ul>
+                                    <li><a href="{% url 'shop:product-list' %}?luxury=products">لوکس</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?big=volumes">حجم زیاد</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?has-discount=true">تخفیف دار</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="">جنسیت</a>
+                                <ul>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=MALE">مردانه</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=FEMALE">زنانه</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?gender=UNISEX">مشترک</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="">برند ها</a>
+                                <ul>
+                                    {% for brand in all_brands %}
+                                        {% if forloop.counter < 3 %}
+                                            <li><a href="{{ brand.get_absolute_url }}">{{ brand }}</a></li>
+                                        {% elif forloop.counter == 3 %}
+                                            <li>
+                                                <a href="{% url 'shop:product-list' %}" class="font-weight-semi-bold text-primary ls-25">
+                                                    مشاهده برند ها
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="">گروه های بویایی</a>
+                                <ul>
+                                    {% for smell in all_smells %}
+                                        <li><a href="{{ smell.get_absolute_url }}">{{ smell }}</a></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="">فصل ها</a>
+                                <ul>
+                                    <li><a href="{% url 'shop:product-list' %}?seasons=SUMMER">بهار - تابستان</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?seasons=WINTER">پاییز - زمستان</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="">طبع ها</a>
+                                <ul>
+                                    <li><a href="{% url 'shop:product-list' %}?nature=WARM">گرم</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?nature=COLD">خنک</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="">طعم ها</a>
+                                <ul>
+                                    <li><a href="{% url 'shop:product-list' %}?tastes=SWEET">شیرین</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?tastes=SOUR">ترش</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?tastes=BITTER">تلخ</a></li>
+                                    <li><a href="{% url 'shop:product-list' %}?tastes=SPICY">تند</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li>
@@ -705,15 +658,9 @@
                     <li>
                         <a href="{% url 'shop:product-list' %}"> فروشگاه</a>
                     </li>
-                    {% if request.user.is_authenticated %}
-                        <li>
-                            <a href="{% url 'account:dashboard' %}"> حساب کاربری</a>
-                        </li>
-                    {% else %}
-                        <li>
-                            <a href="#" class="login-toggle"> ورود</a>
-                        </li>
-                    {% endif %}
+                    <li>
+                        <a href="{% url 'main:credit_card' %}">کارت هدیه</a>
+                    </li>
                     <li>
                         <a href="{% url 'cart:cart' %}">سبد خرید</a>
                     </li>
