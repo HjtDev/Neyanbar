@@ -34,9 +34,11 @@ $(document).ready(function () {
                     $('#signin-phone').addClass('d-none');
 
                     $('.btn-submit-token').removeClass('d-none');
+                    $('.btn-return').removeClass('d-none');
                     $('#token').removeClass('d-none');
 
                     $('#login-response').removeClass('d-none').text('کد تایید برای شما پیامک شد.');
+                    $('.spam-alert').removeClass('d-none');
                 }
             }, error: function (xhr, status, error) {
                 console.log(error);
@@ -48,6 +50,7 @@ $(document).ready(function () {
                 }
 
                 $('#login-response').removeClass('d-none').text(errorMsg);
+                $('.spam-alert').addClass('d-none');
             }
         });
     });
@@ -75,7 +78,7 @@ $(document).ready(function () {
                     setButtonLoading(btn, true, 'خوش آمدید');
                     setTimeout(function() {
                         // window.location.href = '/account/dashboard/';
-                        location.reload();
+                        window.location.href = window.location.origin + window.location.pathname; // same as a reload but removes the queries
                     }, 2000);
                 }
             },
@@ -129,9 +132,11 @@ $(document).ready(function () {
                     btn.addClass('d-none')
 
                     $('#register-token').removeClass('d-none');
+                    $('.btn-return').removeClass('d-none');
                     $('.btn-submit-register-token').removeClass('d-none');
 
                     $('#register-response').removeClass('d-none').text('کد تایید برای شما ارسال شد.');
+                    $('.spam-alert').removeClass('d-none');
                 }
             },
             error: function(xhr, status, error) {
@@ -173,7 +178,7 @@ $(document).ready(function () {
                     setButtonLoading(btn, true, 'خوش آمدید');
                     setTimeout(function() {
                         // window.location.href = '/account/dashboard/';
-                        location.reload();
+                        window.location.href = window.location.origin + window.location.pathname; // same as the reload but removes the queries
                     }, 1000);
                 }
             },
@@ -200,4 +205,28 @@ $(document).ready(function () {
             }
         });
     });
+
+    $('.btn-return').click(function(e) {
+        e.preventDefault();
+
+        const baseUrl = window.location.origin + window.location.pathname;
+
+        if ($('#register-token').hasClass('d-none')) {  // Login
+            window.location.href = baseUrl + '?login=true';
+        } else {  // Register
+            window.location.href = baseUrl + '?register=true';
+        }
+    });
+    setTimeout(function() {
+        if(window.location.search) {
+            const params = new URLSearchParams(window.location.search);
+            if(params.get('login') === 'true') {
+                console.log('trying to login')
+                $('.login-toggle').click();
+            } else if(params.get('register') === 'true') {
+                $('.login-toggle').click();
+                $('.register-sidebar-button').click();
+            }
+        }
+    }, 1000);
 });
