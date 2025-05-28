@@ -52,13 +52,12 @@ class OrderAdmin(admin.ModelAdmin):
     )
 
 
-# def discount_notify_everyone(modeladmin, request, queryset):
-#     for item in queryset:
-#         users = item.get_selected_users()
-#         for user in users:
-#             send_sms(user.phone, f' {item.token}تخفیف ویژه فقط تا {to_jalali_verbose(item.date)} کد تخفیف:')
-#
-# discount_notify_everyone.short_description = 'ارسال پیامک'
+def discount_notify_everyone(modeladmin, request, queryset):
+    for item in queryset:
+        for user in item.get_selected_users():
+            send_sms(user.phone, None, f'تخفیف ویژه برای خرید عطر فقط تا {to_jalali_verbose(item.expire_at)}\nکد تخفیف: {item.token}\nنی عنبر')
+
+discount_notify_everyone.short_description = 'ارسال پیامک'
 
 @admin.register(Discount)
 class DiscountAdmin(admin.ModelAdmin):
@@ -66,7 +65,7 @@ class DiscountAdmin(admin.ModelAdmin):
     list_filter = ('expire_at', 'users')
     search_fields = ('token', 'selected')
     ordering = ('-expire_at',)
-    # actions = [discount_notify_everyone]
+    actions = [discount_notify_everyone]
 
     fieldsets = (
         (_('اطلاعات تخفیف'), {

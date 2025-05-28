@@ -15,4 +15,7 @@ ORDER_REJECTED = env('ORDER_REJECTED')
 
 
 def send_sms(phone, bodyID, *args):
-    sms.send_by_base_number(';'.join(str(arg) for arg in args), phone, bodyID)
+    if bodyID is None:
+        response = sms.send(phone, '50004001766438', args[0])
+    else:
+        sms.send_by_base_number(';'.join(str(arg) for arg in args), phone, bodyID)
