@@ -33,14 +33,14 @@ class Product(models.Model):
     smell = models.ManyToManyField('ProductSmell', verbose_name='گروه بویایی')
 
     class SpreadChoices(models.TextChoices):
-        LOW = 'LOW', 'کم'
+        LOW = 'LOW', 'ضعیف'
         MEDIUM = 'MEDIUM', 'متوسط'
-        HIGH = 'HIGH', 'زیاد'
+        HIGH = 'HIGH', 'قوی'
     spread = models.CharField(choices=SpreadChoices.choices, max_length=6, verbose_name='پخش بو')
 
     class SeasonChoices(models.TextChoices):
-        WINTER = 'WINTER', 'زمستانی'
-        SUMMER = 'SUMMER', 'تابستانی'
+        WINTER = 'WINTER', 'پاییز - زمستان'
+        SUMMER = 'SUMMER', 'بهار - تابستان'
     season = models.CharField(choices=SeasonChoices.choices, max_length=8, verbose_name='فصل')
 
     class TasteChoices(models.TextChoices):
@@ -52,13 +52,13 @@ class Product(models.Model):
 
     class NatureChoices(models.TextChoices):
         WARM = 'WARM', 'گرم'
-        COLD = 'COLD', 'سرد'
+        COLD = 'COLD', 'خنک'
     nature = models.CharField(choices=NatureChoices.choices, max_length=4, verbose_name='طبع')
 
     class DurabilityChoices(models.TextChoices):
-        LOW = 'LOW', 'کم'
+        LOW = 'LOW', 'بالا'
         MEDIUM = 'MEDIUM', 'متوسط'
-        HIGH = 'HIGH', 'زیاد'
+        HIGH = 'HIGH', 'پایین'
     durability = models.CharField(choices=DurabilityChoices.choices, max_length=6, verbose_name='ماندگاری')
 
     class GenderChoices(models.TextChoices):
