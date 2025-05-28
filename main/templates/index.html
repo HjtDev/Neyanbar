@@ -531,7 +531,6 @@
                             data-animation-options="{
                                 'name': 'fadeInDownShorter'
                             }">
-                            خوش آمديد به دنياى عطرها!
                         </h4>
                         <h3 class="banner-title text-white font-weight-bold mb-5 appear-animate"
                             data-animation-options="{
@@ -539,7 +538,9 @@
                                 'delay': '.4s',
                                 'duration': '1.4s'
                             }">
-                            فروشگاه نى عنبر، مجموعه اى خاص از عطرهاى باز طراحى شده و جستجويى براى احياى حس بى نظير از برندهاى محبوب، روايحى اصيل و ماندگار از كلاسيک تا مدرن. هر عطرى داستانى دارد كه منتظر شنيدن شماست، بگذاريد عطر مورد علاقه تان شما را تعريف كند.
+                            {% if video_text %}
+                            	{{ video_text }}
+                            {% endif %}
                         </h3>
                         <a class="btn-play text-white appear-animate" data-animation-options="{
                                 'name': 'fadeIn',

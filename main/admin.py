@@ -23,6 +23,10 @@ class SettingAdmin(admin.ModelAdmin):
             'fields': ['show_offer', 'title', 'event', 'products', 'banner'],
             'classes': ['collapse', 'tab-offer-fields'],
         }),
+        (_('متن ها'), {
+            'fields': ['video_text', 'footer_text',],
+            'classes': ['collapse', 'tab-text-fields'],
+        }),
     ]
 
     def has_add_permission(self, request):

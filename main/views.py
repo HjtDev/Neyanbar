@@ -14,6 +14,7 @@ def home_view(request):
     )
     all_brands = Brand.objects.prefetch_related('products').all()
     title_products = all_products.filter(discount__gt=-1)
+    settings = Setting.objects.first()
     context = {
         'posts': Post.objects.select_related('user').filter(is_visible=True).order_by('-created_at')[:6],
         'title_product': title_products.order_by('-views')[0] if title_products.exists() else all_products.order_by('-views')[0],
@@ -32,8 +33,9 @@ def home_view(request):
             )
         ).order_by('-products__site_score')[:4],
         'top_products': all_products.order_by('-site_score')[:6],
+        'video_text': settings.video_text,
+        'footer_text': settings.footer_text,
     }
-    settings = Setting.objects.first()
     if settings.show_offer:
         context.update({
             'offer_title': settings.title,

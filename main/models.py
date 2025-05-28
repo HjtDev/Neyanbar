@@ -1,7 +1,6 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.urls import reverse
-from django.core.cache import cache
 from shop.models import Product, Brand
 
 
@@ -21,6 +20,9 @@ class Setting(models.Model):
     event = models.CharField(max_length=100, blank=True, verbose_name='(مناسبت/علت تخفیف) پیشنهاد')
     products = models.CharField(blank=True, verbose_name='محصولات انتخاب شده', help_text='بر اساس لیست پیشنهاد های مجاز')
     banner = models.ImageField(upload_to='offers/', blank=True, verbose_name='بنر')
+
+    video_text = models.CharField(max_length=150, blank=True, verbose_name='متن ویدیو')
+    footer_text = models.TextField(blank=True, verbose_name='متن فوتر')
 
     def get_offer_link(self):
         if not self.show_offer or not self.products:
