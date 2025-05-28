@@ -19,6 +19,7 @@
     <link rel="icon" type="image/png" href="{% static 'images/icons/neyanbar-favicon.png' %}">
     <link rel="apple-touch-icon" type="image/png" href="{% static 'images/icons/neyanbar-favicon.png' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'fonts/awesome/css/custom.css' %}">
+    <link href="{% static 'fonts/awesome/css/all.css' %}" rel="stylesheet"/>
     <link href="{% static 'fonts/vazir/font-vazir.css' %}" rel="stylesheet"/>
     <link rel="stylesheet" type="text/css" href="{% static 'plugin/animate/animate.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'plugin/owl-carousel/owl.carousel.min.css' %}">
@@ -591,24 +592,17 @@
         <span>خانه</span>
     </a>
     <a href="{% url 'shop:product-list' %}" class="sticky-link">
-        <i class="fa-light fa-sliders-up"></i>
+        <i class="fa-light fa-shopping-basket"></i>
         <span>فروشگاه</span>
     </a>
-    <a href="{% url 'blog:post-list' %}" class="sticky-link">
-        <i class="fa-light fa-mail-bulk"></i>
-        <span>وبلاگ</span>
+    <a href="{% url 'cart:cart' %}" class="sticky-link">
+        <i class="fa-light fa-shopping-cart"></i>
+        <span>سبد خرید</span>
     </a>
-    {% if request.user.is_authenticated %}
-        <a href="{% url 'account:dashboard' %}" class="sticky-link">
-            <i class="fa-light fa-user"></i>
-            <span>داشبورد</span>
-        </a>
-    {% else %}
-        <a href="#" class="sticky-link login-toggle">
-            <i class="fa-light fa-user"></i>
-            <span>ورود</span>
-        </a>
-    {% endif %}
+    <a href="{% url 'account:dashboard' %}" class="sticky-link {% if not request.user.is_authenticated %}login-toggle{% endif %}">
+        <i class="fa-light fa-user"></i>
+        <span>داشبورد</span>
+    </a>
     <div class="header-search hs-toggle dir-up">
         <a href="#" class="search-toggle sticky-link">
             <i class="fa-light fa-magnifying-glass"></i>
