@@ -213,9 +213,11 @@ def product_list_view(request):
             all_products = all_products.filter(durability__in=request.GET.getlist(key))
 
         if request.GET.get('gender'):
-            all_products = all_products.filter(gender__in=request.GET.get('gender').split(';'))
+            if 'UNISEX' not in request.GET.get('gender'):
+                all_products = all_products.filter(gender__in=request.GET.get('gender').split(';') + ['UNISEX'])
         elif 'gender' in key:
-            all_products = all_products.filter(gender__in=request.GET.getlist(key))
+            if 'UNISEX' not in request.GET.getlist(key):
+                all_products = all_products.filter(gender__in=request.GET.getlist(key, []) + ['UNISEX'])
 
         if request.GET.get('type'):
             all_products = all_products.filter(perfume_type__in=request.GET.get('type').split(';'))
