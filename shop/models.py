@@ -6,6 +6,7 @@ from django.urls import reverse
 from tinymce.models import HTMLField
 import os
 from account.models import User
+from main.utilities import send_sms, PRODUCT_NOTIFY_ME
 
 
 def product_dynamic_path(instance, filename):
@@ -103,10 +104,24 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    @classmethod
+    def from_db(cls, db, field_names, values):
+        instance = super().from_db(db, field_names, values)
+        instance._original_inventory = instance.inventory
+        return instance
+
     def save(self, *args, **kwargs):
+        if self.pk:
+            if not self._original_inventory and self.inventory:
+                for user in self.remind_to.all():
+                    send_sms(user.phone, PRODUCT_NOTIFY_ME, user.name, self.name)
+                self.remind_to.clear()
+
         if any(ch.isupper() for ch in self.slug):
             self.slug = self.slug.lower()
-        return super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
+        self._original_inventory = self.inventory  # update cached value after save
+
 
     def get_raw_price(self):
         return self.price * int(self.available_volumes.aggregate(Min('volume'))['volume__min'] or 1)
