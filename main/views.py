@@ -1,4 +1,5 @@
 from django.db.models import Count, Min, Max, Q, ExpressionWrapper, Case, When, F, IntegerField
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from blog.models import Post
 from shop.models import Product, Brand
@@ -99,11 +100,11 @@ def join_club_view(request):
 
 
 def about_us_view(request):
-    return render(request, 'about-us.html', {'objects': AboutUs.objects.all(), 'show_info': True})
+    return render(request, 'about-us.html', {'objects': AboutUs.objects.all(), 'show_info': True, 'title': 'درباره ما'})
 
 
 def terms_view(request):
-    return render(request, 'about-us.html', {'objects': Terms.objects.all(), 'show_info': False})
+    return render(request, 'about-us.html', {'objects': Terms.objects.all(), 'show_info': False, 'title': 'شرایط و ضوابط'})
 
 
 # def faq_view(request):
