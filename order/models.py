@@ -150,7 +150,7 @@ class CreditCart(models.Model):
     objects = models.Manager()
     token = models.CharField(max_length=10, verbose_name='توکن کارت')
     credit = models.PositiveIntegerField(verbose_name='اعتبار کارت')
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='ساخته شده توسط')
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='credit_cart', verbose_name='ساخته شده توسط')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='زمان ایجاد')
 
     def buy(self, price):

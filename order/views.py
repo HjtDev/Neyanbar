@@ -30,7 +30,6 @@ def order_view(request):
     if not len(cart):
         return render(request, 'cart-empty.html')
 
-
     setting = Setting.objects.first()
     context = {
         'post_fee': setting.post_fee,
@@ -41,7 +40,9 @@ def order_view(request):
             discount = Discount.objects.get(id=request.session['discount'])
             context.update({
                 'applied_discount': discount.value,
-                'final_price': sum(discount.get_price(item['product'], int(item['volume'])) * int(item['quantity']) for item in cart) * (1 + setting.tax_fee / 100) + setting.post_fee,
+                'final_price': sum(
+                    discount.get_price(item['product'], int(item['volume'])) * int(item['quantity']) for item in
+                    cart) * (1 + setting.tax_fee / 100) + setting.post_fee,
             })
         except Discount.DoesNotExist:
             del request.session['discount']
@@ -56,7 +57,8 @@ def order_view(request):
     minimum_days = setting.order_waiting_days
     available_days = []
     now = timezone.now().date()
-    orders = Order.objects.exclude(status__in=[Order.StatusChoices.SHIPPED, Order.StatusChoices.FINISHED, Order.StatusChoices.REJECTED]).all()
+    orders = Order.objects.exclude(
+        status__in=[Order.StatusChoices.SHIPPED, Order.StatusChoices.FINISHED, Order.StatusChoices.REJECTED]).all()
     while len(available_days) < setting.order_days_limit:
         target_day = now + timedelta(days=minimum_days)
         if orders.filter(receive_time=target_day).count() < setting.orders_per_day:
@@ -178,10 +180,12 @@ def order_submit(request):
                         payment_type=Transaction.PaymentChoices.CREDIT,
                         paid_amount=total_cost,
                     )
-                    return JsonResponse({'redirect': reverse('order:order_status', kwargs={'order_id': order.order_id})})
+                    return JsonResponse(
+                        {'redirect': reverse('order:order_status', kwargs={'order_id': order.order_id})})
                 else:
                     messages.error(request, 'کارت اعتباری شما شارژ کافی برای انجام این تراکنش را ندارد')
-                    return JsonResponse({'redirect': reverse('order:order_status', kwargs={'order_id': order.order_id})})
+                    return JsonResponse(
+                        {'redirect': reverse('order:order_status', kwargs={'order_id': order.order_id})})
             except CreditCart.DoesNotExist:
                 messages.error(request, 'کارت اعتباری نامعتبر است')
                 return JsonResponse({'redirect': reverse('order:order_status', kwargs={'order_id': order.order_id})})
@@ -197,7 +201,8 @@ def order_submit(request):
             return JsonResponse({'redirect': start_payment(request, order.order_id, True)}, status=200)
 
     else:
-        request.session['order'] = {'id': order.id, 'payment_method': payment_method, 'credit_token': credit_token, 'total_cost': total_cost}
+        request.session['order'] = {'id': order.id, 'payment_method': payment_method, 'credit_token': credit_token,
+                                    'total_cost': total_cost}
         token = randint(1000, 9999)
         cache.set(f'order-{token}', phone, timeout=30)
         send_sms(phone, LOGIN_VERIFY, token)
@@ -223,7 +228,8 @@ def verify_order(request):
                 phone=phone,
             )
 
-        cart, discount, order_session = {}, deepcopy(request.session.get('discount', None)), deepcopy(request.session.get('order', None))
+        cart, discount, order_session = {}, deepcopy(request.session.get('discount', None)), deepcopy(
+            request.session.get('order', None))
         login(request, user)
         request.session['cart'] = cart
         if discount:
@@ -336,18 +342,16 @@ def pay_order(request):
         return JsonResponse({'message': 'این سفارش قبلا پرداخت شده است'}, status=403)
 
 
-#? sandbox merchant
+# ? sandbox merchant
 if settings.SANDBOX:
     sandbox = 'sandbox'
 else:
     sandbox = 'www'
 
-
 ZP_API_REQUEST = f"https://{sandbox}.zarinpal.com/pg/rest/WebGate/PaymentRequest.json"
 ZP_API_VERIFY = f"https://{sandbox}.zarinpal.com/pg/rest/WebGate/PaymentVerification.json"
 ZP_API_STARTPAY = f"https://{sandbox}.zarinpal.com/pg/StartPay/"
 
-CallbackURL = 'http://127.0.0.1:8000/order/zarinpal/verify/'
 
 @login_required
 def zarinpal_request(request):
@@ -359,7 +363,7 @@ def zarinpal_request(request):
         "Amount": obj.get_total_cost() if isinstance(obj, Order) else int(request.session['start_credit_payment']),
         "Description": str(obj),
         "Phone": request.user.phone,
-        "CallbackURL": CallbackURL,
+        "CallbackURL": settings.CALLBACK_URL,
     }
     data = json.dumps(data)
     # set content length by data
@@ -370,7 +374,7 @@ def zarinpal_request(request):
             response_json = response.json()
             authority = response_json['Authority']
             if response_json['Status'] == 100:
-                return redirect(ZP_API_STARTPAY+authority)
+                return redirect(ZP_API_STARTPAY + authority)
             else:
                 messages.error(request, 'مشکلی در فرایند پرداخت پیش آمد')
     except requests.exceptions.Timeout:
@@ -424,4 +428,3 @@ def zarinpal_verify(request):
         messages.error(request, 'اتصال به درگاه پرداخت امکان پذیر نبود')
     delete_payment(request)
     return redirect('order:order_status', order_id=obj.order_id) if isinstance(obj, Order) else redirect('main:credit_card')
-

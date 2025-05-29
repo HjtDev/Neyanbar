@@ -48,15 +48,15 @@
                             <div class="row">
                                 <div class="col-xs-6">
                                     <label>نام و نام خانوادگی <i class="fa-light fa-star-of-life"></i></label>
-                                    <input type="text" class="form-control" name="name" id="name" required />
+                                    <input type="text" class="form-control" name="name" id="name" value="{{ request.user.name }}" required />
                                 </div>
                                 <div class="col-xs-6">
                                     <label>تلفن <i class="fa-light fa-star-of-life"></i></label>
-                                    <input type="text" class="form-control text-left" name="phone" id="phone" minlength="11" maxlength="11" required />
+                                    <input type="text" class="form-control text-left" value="{{ request.user.phone }}" name="phone" id="phone" minlength="11" maxlength="11" required />
                                 </div>
                             </div>
-                            <label>ایمیل (اختیاری)<i class="fa-light fa-star-of-life"></i></label>
-                            <input type="text" class="form-control text-left" name="email-address" id="email-address" required />
+                            <label>ایمیل (اختیاری)</label>
+                            <input type="text" class="form-control text-left" name="email-address" id="email-address" value="{{ request.user.email }}" required />
                             <label>استان <i class="fa-light fa-star-of-life"></i></label>
                             <div class="select-box">
                                 <select id="province-select" name="province" class="form-control">
@@ -101,11 +101,11 @@
                             </div>
 
                             <label>آدرس خیابان <i class="fa-light fa-star-of-life"></i></label>
-                            <input type="text" class="form-control" name="address1" id="address" required
+                            <input type="text" class="form-control" value="{{ request.user.orders.last.address }}" name="address1" id="address" required
                                    placeholder="نام محله ، نام خیابان ، کوچه" />
 
                             <label>کد پستی <i class="fa-light fa-star-of-life"></i></label>
-                            <input type="text" class="form-control text-left" name="postal_code" id="postal_code" minlength="10" maxlength="10" required />
+                            <input type="text" class="form-control text-left" name="postal_code" id="postal_code" value="{{ request.user.orders.last.postal_code }}" minlength="10" maxlength="10" required />
 
                             <div class="form-checkbox mb-6">
                                 <input type="checkbox" class="custom-checkbox" id="different-address"
@@ -201,7 +201,7 @@
                                             <div id="collapse2" class="collapsed">
                                                 <div class="card-body ls-m">
                                                     در صورتی که توکن شما اعتبار نداشته باشد سفارش در وضعیت پرداخت نشده می ماند تا بعدا پرداخت کنید
-                                                    <input type="text" name="credit_token" class="input-text form-control text-grey ls-m" id="credit_token" value="" maxlength="10" placeholder="توکن خود را وارد کنید">
+                                                    <input type="text" name="credit_token" class="input-text form-control text-grey ls-m" id="credit_token" value="{{ request.user.credit_cart.first.token }}" maxlength="10" placeholder="توکن خود را وارد کنید">
                                                 </div>
                                             </div>
                                         </div>
@@ -224,14 +224,12 @@
                                         {% endfor %}
                                     </div>
                                     <div class="form-checkbox mt-4 mb-5">
-                                        <input type="checkbox" class="custom-checkbox" id="terms-condition"
-                                               name="terms-condition" onclick="document.getElementById('submit-order').disabled = !this.checked"/>
-                                        <label class="form-control-label" for="terms-condition">
-                                            من شرایط و ضوابط وبسایت را خوانده ام و با آن موافقم .<a href="#">
-                                        </a>
+                                            <i class="fa-light fa-check-circle"></i>
+                                        <label>
+                                            ثبت سفارش شما به معنای پذیرش <a href="{% url 'main:terms' %}" class="btn-link">شرایط و ضوابط</a> سایت است.
                                         </label>
                                     </div>
-                                    <button class="btn btn-md btn-block btn-gradient" id="submit-order" disabled>
+                                    <button class="btn btn-md btn-block btn-gradient" id="submit-order">
                                         ثبت سفارش
                                     </button>
                                 </div>
@@ -246,4 +244,16 @@
 
 {% block script %}
     <script defer src="{% static 'js/order.js' %}"></script>
+    <script defer>
+        let lastProvince = '{{ request.user.orders.last.province | default:'' }}';
+        let lastCity = '{{ request.user.orders.last.city | default:'' }}'
+        if(lastProvince && lastCity) {
+            setTimeout(function() {
+                $('#province-select').val(lastProvince).trigger('change');
+                setTimeout(function() {
+                    $('#city-select').val(lastCity);
+                }, 50);
+            }, 50);
+        }
+    </script>
 {% endblock %}
