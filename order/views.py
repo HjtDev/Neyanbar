@@ -110,7 +110,7 @@ def order_submit(request):
         return JsonResponse({'message': 'لطفا نوع پرداخت خود را انتخاب کنید'}, status=400)
 
     if payment_method == 'CREDIT' and not credit_token:
-        return JsonResponse({'message': 'لطفا توکن کارت اعتباری خود را وارد کنید'}, status=400)
+        return JsonResponse({'message': 'لطفا توکن کارت هدیه خود را وارد کنید'}, status=400)
 
     if not payment_date:
         return JsonResponse({'message': 'لطفا یک تاریخ معتبر انتخاب کنید'}, status=400)
@@ -183,11 +183,11 @@ def order_submit(request):
                     return JsonResponse(
                         {'redirect': reverse('order:order_status', kwargs={'order_id': order.order_id})})
                 else:
-                    messages.error(request, 'کارت اعتباری شما شارژ کافی برای انجام این تراکنش را ندارد')
+                    messages.error(request, 'کارت هدیه شما شارژ کافی برای انجام این تراکنش را ندارد')
                     return JsonResponse(
                         {'redirect': reverse('order:order_status', kwargs={'order_id': order.order_id})})
             except CreditCart.DoesNotExist:
-                messages.error(request, 'کارت اعتباری نامعتبر است')
+                messages.error(request, 'کارت هدیه نامعتبر است')
                 return JsonResponse({'redirect': reverse('order:order_status', kwargs={'order_id': order.order_id})})
         else:
             order.user = request.user
@@ -260,10 +260,10 @@ def verify_order(request):
                     )
                     return redirect('order:order_status', order_id=order.order_id)
                 else:
-                    messages.error(request, 'کارت اعتباری شما شارژ کافی برای انجام این تراکنش را ندارد')
+                    messages.error(request, 'کارت هدیه شما شارژ کافی برای انجام این تراکنش را ندارد')
                     return redirect('order:order_status', order_id=order.order_id)
             except CreditCart.DoesNotExist:
-                messages.error(request, 'کارت اعتباری نامعتبر است')
+                messages.error(request, 'کارت هدیه نامعتبر است')
                 return redirect('order:order_status', order_id=order.order_id)
         else:
             order.user = user
@@ -333,9 +333,9 @@ def pay_order(request):
                     )
                     return JsonResponse({})
                 else:
-                    return JsonResponse({'message': 'کارت اعتباری شما شارژ کافی برای این تراکنش را ندارد'}, status=403)
+                    return JsonResponse({'message': 'کارت هدیه شما شارژ کافی برای این تراکنش را ندارد'}, status=403)
             except CreditCart.DoesNotExist:
-                return JsonResponse({'message': 'کارت اعتباری شما نا معتبر است'}, status=404)
+                return JsonResponse({'message': 'کارت هدیه شما نا معتبر است'}, status=404)
         else:
             return JsonResponse({'message': 'لطفا نوع پرداخت را انتخاب کنید'}, status=400)
     else:
