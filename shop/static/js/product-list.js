@@ -69,13 +69,6 @@ $(document).ready(function() {
             }
         });
 
-        let selected_type = [];
-        $('.type-select').each(function() {
-            if($(this).hasClass('active')) {
-                selected_type.push($(this).data('value'));
-            }
-        });
-
         if (
             selected_brands.length === 0 &&
             selected_volumes.length === 0 &&
@@ -85,8 +78,7 @@ $(document).ready(function() {
             selected_tastes.length === 0 &&
             selected_nature.length === 0 &&
             selected_durability.length === 0 &&
-            selected_gender.length === 0 &&
-            selected_type.length === 0
+            selected_gender.length === 0
         ) {
             location.reload();
         }
@@ -105,7 +97,6 @@ $(document).ready(function() {
                 'nature': selected_nature,
                 'durability': selected_durability,
                 'gender': selected_gender,
-                'type': selected_type
             },
             success: function(response) {
                 // console.log(response);

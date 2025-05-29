@@ -4,9 +4,10 @@ from django.db import models
 from django.db.models import Min
 from django.urls import reverse
 from tinymce.models import HTMLField
-import os
 from account.models import User
 from main.utilities import send_sms, PRODUCT_NOTIFY_ME
+import re
+import os
 
 
 def product_dynamic_path(instance, filename):
@@ -80,6 +81,7 @@ class Product(models.Model):
 
     price = models.PositiveIntegerField(default=0, verbose_name='قیمت محصول', help_text='به ازای هر گرم / به تومان')
     discount = models.IntegerField(default=-1, validators=[MinValueValidator(-1)], verbose_name='قیمت پس از تخفیف', help_text='-۱ برای لغو تخفیف')
+    reset_discount_at = models.DateTimeField(blank=True, null=True, verbose_name='تاریخ پایان تخفیف')
 
     inventory = models.PositiveIntegerField(default=0, verbose_name='موجودی انبار')
 
@@ -138,7 +140,7 @@ class Product(models.Model):
         return 100 - int((self.discount / self.price) * 100)
 
     def get_smell(self):
-        return ', '.join([smell.get_value_display() for smell in self.smell.all()])
+        return ', '.join([smell.name for smell in self.smell.all()])
 
     def get_volumes(self):
         return ', '.join(list(volume for volume in self.available_volumes.values_list('name', flat=True)))
@@ -190,25 +192,13 @@ class Features(models.Model):
 class ProductSmell(models.Model):
     objects = models.Manager()
 
-    class SmellChoices(models.TextChoices):
-        GOLFAM = 'GOLFAM', 'گلفام'
-        WOODY = 'WOODY', 'چوبی'
-        FRUITY = 'FRUITY', 'میوه ای'
-        CITRUS = 'CITRUS', 'مرکباتی'
-        MARINE = 'MARINE', 'دریایی'
-        ORIENTAL = 'EASTERN', 'شرقی'
-        SPICY = 'SPICY', 'ادویه ای'
-        FOUGERE = 'FOUGERE', 'فوژه'
-        LEATHERY = 'LEATHERY', 'چرمی'
-        MEDITERRANEAN = 'MEDITERRANEAN', 'مدیترانه ای'
-        AROMATIC = 'AROMATIC', 'آروماتیک'
-    value = models.CharField(choices=SmellChoices.choices, max_length=15, verbose_name='گروه بویایی')
+    name = models.CharField(max_length=50, verbose_name='گروه بویایی')
 
     def __str__(self):
-        return self.get_value_display()
+        return self.name
 
     def get_absolute_url(self):
-        return reverse('shop:product-list') + f'?smells={self.value}'
+        return reverse('shop:product-list') + f'?smells={self.name}'
 
     class Meta:
         verbose_name = 'گروه بویایی'
@@ -268,6 +258,10 @@ class Volume(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_name(self):
+        number = re.search(r'[\d\u06F0-\u06F9]+', self.name).group()
+        return number if number else self.volume
 
     def get_absolute_url(self):
         return reverse('shop:product-list') + f'?volumes={self.volume}'

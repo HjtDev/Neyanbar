@@ -53,7 +53,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.DO_NOTHING, related_name='posts', verbose_name='نویسنده')
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, verbose_name='دسته بندی', blank=True, null=True, related_name='posts')
     thumbnail = models.ImageField(upload_to=user_directory_path, verbose_name='تصویر تیتر', help_text='880*450')
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255, verbose_name='تیتر')
     short_content = models.TextField(max_length=320, verbose_name='توضیحات کوتاه', help_text='پیش نمایش متن | حداکثر ۳۲۰ کاراکتر', blank=True)
     content = HTMLField(verbose_name='متن')
     author_comment = HTMLField(verbose_name='نظر نویسنده', blank=True, null=True)
@@ -80,7 +80,7 @@ class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_comments', verbose_name='کاربر')
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments', verbose_name='پست')
     content = models.TextField(max_length=320, verbose_name='متن')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='تاریخ ایجاد')
     is_verified = models.BooleanField(default=False, verbose_name='نمایش در سایت')
 
     def __str__(self):

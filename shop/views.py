@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.http import QueryDict, JsonResponse
 from django.shortcuts import render, redirect
 from django.db.models import Q, Avg, Count, FloatField, F, ExpressionWrapper, Max
@@ -14,6 +15,7 @@ def view_handler(request):
         if product_id:
             product = Product.objects.get(id=product_id)
             product.views += 1
+            product.last_view = timezone.now()
             product.save()
             return JsonResponse({'message': 'success'})
         else:
@@ -43,10 +45,16 @@ def like_handler(request):
 
 
 def product_view(request, slug):
+    product: Product | None = None
     try:
         product = Product.objects.prefetch_related('comments').get(slug=slug)
     except Product.DoesNotExist:
         return redirect('main:index')
+
+    if product.reset_discount_at and product.discount != -1 and product.reset_discount_at < timezone.now():
+        product.reset_discount_at = None
+        product.discount = -1
+        product.save()
 
     all_products = Product.objects.filter(is_visible=True).exclude(id=product.id)
 
@@ -55,8 +63,7 @@ def product_view(request, slug):
 
     suggestion = all_products.filter(
         Q(taste=product.taste) |
-        Q(nature=product.nature) |
-        Q(smell__in=product.smell.all())
+        Q(nature=product.nature)
     ).annotate(
         verified_comments_count=Count('comments', filter=Q(comments__is_verified=True)),
         order=ExpressionWrapper(
@@ -68,7 +75,7 @@ def product_view(request, slug):
     most_viewed_col1 = all_products.order_by('-views')[:3]
     most_viewed_col2 = all_products.order_by('-views')[3:7]
 
-    average_rating = int(product.comments.filter(is_verified=True).aggregate(Avg('score'))['score__avg'] or 3)
+    average_rating = int(product.comments.aggregate(Avg('score'))['score__avg'] or 3)
 
     context = {
         'product': product,
@@ -76,7 +83,6 @@ def product_view(request, slug):
         'most_viewed_col1': most_viewed_col1,
         'most_viewed_col2': most_viewed_col2,
         'rating': average_rating,
-        'verified_comment_count': product.comments.filter(is_verified=True).count(),
     }
     return render(request, 'product.html', context)
 
@@ -161,7 +167,7 @@ def product_list_view(request):
             all_products = all_products.filter(Q(name__icontains=request.GET.get('search')) | Q(name_en__icontains=request.GET.get('search')) | Q(pid__icontains=request.GET.get('search')))
 
         if request.GET.get('luxury'):
-            all_products = all_products.order_by('-price')
+            all_products = all_products.order_by('-site_score')
 
         if request.GET.get('has-discount'):
             all_products = all_products.filter(discount__gt=0)
@@ -183,9 +189,9 @@ def product_list_view(request):
             all_products = all_products.filter(available_volumes__in=Volume.objects.filter(volume__in=[int(v) for v in request.GET.getlist(key)])).distinct()
 
         if request.GET.get('smells'):
-            all_products = all_products.filter(smell__in=ProductSmell.objects.filter(value__in=request.GET.get('smells').split(';'))).distinct()
+            all_products = all_products.filter(smell__in=ProductSmell.objects.filter(name__in=request.GET.get('smells').split(';'))).distinct()
         elif 'smells' in key:
-            all_products = all_products.filter(smell__in=ProductSmell.objects.filter(value__in=request.GET.getlist(key))).distinct()
+            all_products = all_products.filter(smell__in=ProductSmell.objects.filter(name__in=request.GET.getlist(key))).distinct()
 
         if request.GET.get('spreads'):
             all_products = all_products.filter(spread__in=request.GET.get('spreads').split(';'))

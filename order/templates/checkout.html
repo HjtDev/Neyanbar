@@ -134,7 +134,7 @@
                                         {% for item in cart %}
                                             <tr>
                                                 <td class="product-name">
-                                                    {{ item.product }} - {{ item.volume }} گرم<span class="product-quantity">×&nbsp;{{ item.quantity }}</span>
+                                                    {{ item.product }} - {{ item.volume_name }} گرم<span class="product-quantity">×&nbsp;{{ item.quantity }}</span>
                                                 </td>
                                                 <td class="product-total text-body cart-item" data-id="{{ item.product.id }}" data-price="{{ item.cost }}">{{ item.cost | commafy }} تومان</td>
                                             </tr>

@@ -1,8 +1,9 @@
 from django.db.models import Count, Min, Max, Q, ExpressionWrapper, Case, When, F, IntegerField
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from blog.models import Post
 from shop.models import Product, Brand
-from .models import Setting, Club, FAQ
+from .models import Setting, AboutUs, Terms, PerfumeRequest
 from order.models import CreditCart
 from uuid import uuid4
 from order.zarinpal import start_payment
@@ -49,11 +50,11 @@ def home_view(request):
 def credit_card_view(request):
     if not request.user.is_authenticated:
         return render(request, 'credit-card-empty.html')
-    credit_card = None
+    credit_cart = None
 
     try:
-        credit_card = CreditCart.objects.get(created_by=request.user)
-        return render(request, 'credit-card.html', {'credit_card': credit_card})
+        credit_cart = CreditCart.objects.filter(created_by=request.user)
+        return render(request, 'credit-card.html', {'credit_carts': credit_cart})
     except CreditCart.DoesNotExist:
         return render(request, 'credit-card-empty.html')
 
@@ -88,23 +89,20 @@ def credit_card_charge_view(request, charge):
     return redirect('main:credit_card')
 
 
-def join_club_view(request):
-    email = request.GET.get('email')
-    if email:
-        print('im here bitch')
-        obj, created = Club.objects.get_or_create(email=email)
-        if created:
-            print('welcome to club')
+def perfume_request_view(request):
+    p_request = request.GET.get('request')
+    if p_request:
+        PerfumeRequest.objects.get_or_create(text=p_request)
     return redirect('main:index')
 
 
 def about_us_view(request):
-    return render(request, 'about-us.html')
+    return render(request, 'about-us.html', {'objects': AboutUs.objects.all(), 'show_info': True, 'title': 'درباره ما'})
 
 
 def terms_view(request):
-    return render(request, 'terms.html')
+    return render(request, 'about-us.html', {'objects': Terms.objects.all(), 'show_info': False, 'title': 'شرایط و ضوابط'})
 
 
-def faq_view(request):
-    return render(request, 'faq.html', {'faq': FAQ.objects.filter(is_visible=True)})
+# def faq_view(request):
+#     return render(request, 'faq.html', {'faq': FAQ.objects.filter(is_visible=True)})

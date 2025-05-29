@@ -48,6 +48,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-right active" href="#dashboard">داشبورد</a>
                         </li>
+                        {% if request.user.is_superuser %}
+                            <li class="nav-item">
+                                <a class="nav-link text-right" href="#stats">آمار سایت</a>
+                            </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link text-right" href="#orders">سفارشات</a>
                         </li>
@@ -88,6 +93,106 @@
                                 رفتن به فروشگاه <i class="fa-light fa-angles-right"></i>
                             </a>
                         </div>
+                        {% if request.user.is_superuser %}
+                            <div class="tab-pane" id="stats">
+                                <table class="order-table">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>بازدید کل فروشگاه</td>
+                                        <td></td>
+                                        <td>{{ total_shop_views }} بازدید</td>
+                                    </tr>
+                                    <tr>
+                                        <td>بازدید کل وبلاگ</td>
+                                        <td></td>
+                                        <td>{{ total_blog_views }} بازدید</td>
+                                    </tr>
+                                    <tr>
+                                        <td>بازدید کل سایت</td>
+                                        <td></td>
+                                        <td>{{ total_views }} بازدید</td>
+                                    </tr>
+                                    <tr>
+                                        <td>پر بازدید ترین پست</td>
+                                        <td>{{ most_seen_post }}</td>
+                                        <td>
+                                            <a href="{{ most_seen_post.get_absolute_url }}"
+                                               class="btn btn-link btn-underline">نمایش </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>پر بازدید ترین محصول</td>
+                                        <td>{{ most_seen_product }}</td>
+                                        <td>
+                                            <a href="{{ most_seen_product.get_absolute_url }}"
+                                               class="btn btn-link btn-underline">نمایش </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>پر فروش ترین محصول</td>
+                                        <td>{{ most_sold_product }}</td>
+                                        <td>
+                                            <a href="{{ most_sold_product.get_absolute_url }}"
+                                               class="btn btn-link btn-underline">نمایش </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>پر فروش ترین حجم ها</td>
+                                        <td>{% for volume in most_sold_volume %}{{ volume }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+                                        <td>
+                                            <a href="{% url 'shop:product-list' %}?volumes={% for volume in most_sold_volume %}{{ volume.volume }}{% if not forloop.last %};{% endif %}{% endfor %}"
+                                               class="btn btn-link btn-underline">نمایش </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>سفارشات کل</td>
+                                        <td>{{ alltime_order_count }} مورد</td>
+                                        <td>{{ alltime_total | commafy }} تومان</td>
+                                    </tr>
+                                    <tr>
+                                        <td>سفارشات امروز</td>
+                                        <td>{{ today_orders_count }} مورد</td>
+                                        <td>{{ today_total | commafy }} تومان</td>
+                                    </tr>
+                                    <tr>
+                                        <td>سفارشات ۷ روز گذشته</td>
+                                        <td>{{ last_week_orders_count }} مورد</td>
+                                        <td>{{ last_week_total | commafy }} تومان</td>
+                                    </tr>
+                                    <tr>
+                                        <td>سفارشات ۳۰ روز گذشته</td>
+                                        <td>{{ last_month_orders_count }} مورد</td>
+                                        <td>{{ last_month_total | commafy }} تومان</td>
+                                    </tr>
+                                    <tr>
+                                        <td>سفارشات ۹۰ روز گذشته</td>
+                                        <td>{{ last_season_orders_count }} مورد</td>
+                                        <td>{{ last_season_total | commafy }} تومان</td>
+                                    </tr>
+                                    <tr>
+                                        <td>سفارشات ۳۶۵ روز گذشته</td>
+                                        <td>{{ last_year_orders_count }} مورد</td>
+                                        <td>{{ last_year_total | commafy }} تومان</td>
+                                    </tr>
+                                    <tr>
+                                        <td>بزرگ ترین تراکنش سایت</td>
+                                        <td>توسط {{ biggest_transaction.user }} - {{ biggest_transaction.paid_amount | commafy }} تومان</td>
+                                        <td>
+                                            <a href="{% url 'order:order_status' biggest_transaction.order.order_id %}"
+                                               class="btn btn-link btn-underline">نمایش </a>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
                         <div class="tab-pane" id="orders">
                             <table class="order-table">
                                 <thead>
