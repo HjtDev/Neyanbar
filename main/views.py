@@ -2,7 +2,7 @@ from django.db.models import Count, Min, Max, Q, ExpressionWrapper, Case, When, 
 from django.shortcuts import render, redirect
 from blog.models import Post
 from shop.models import Product, Brand
-from .models import Setting, Club, FAQ
+from .models import Setting, Club, AboutUs, Terms
 from order.models import CreditCart
 from uuid import uuid4
 from order.zarinpal import start_payment
@@ -99,12 +99,12 @@ def join_club_view(request):
 
 
 def about_us_view(request):
-    return render(request, 'about-us.html')
+    return render(request, 'about-us.html', {'objects': AboutUs.objects.all(), 'show_info': True})
 
 
 def terms_view(request):
-    return render(request, 'terms.html')
+    return render(request, 'about-us.html', {'objects': Terms.objects.all(), 'show_info': False})
 
 
-def faq_view(request):
-    return render(request, 'faq.html', {'faq': FAQ.objects.filter(is_visible=True)})
+# def faq_view(request):
+#     return render(request, 'faq.html', {'faq': FAQ.objects.filter(is_visible=True)})

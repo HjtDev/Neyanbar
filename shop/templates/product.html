@@ -195,11 +195,11 @@
                                     </div>
                                     {% if product.available_volumes %}
                                             <div class="product-form product-size">
-                                                <label>سایز(به گرم):</label>
+                                                <label>حجم(به گرم):</label>
                                                 <div class="product-form-group">
                                                     <div class="product-variations">
                                                         {% for volume in product.available_volumes.all %}
-                                                            <a class="size" href="#">{{ volume.volume }}</a>
+                                                            <a class="size" href="#">{{ volume.get_name }}</a>
                                                         {% endfor %}
                                                     </div>
                                                     <a href="#" class="product-variation-clean">پاک کردن همه</a>

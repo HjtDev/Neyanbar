@@ -168,7 +168,7 @@
                                     <h3 class="widget-title collapsed">گروه های بویایی</h3>
                                     <ul class="widget-body filter-items" style="display: none;">
                                         {% for smell in smells %}
-                                            <li class="smell-select" data-value="{{ smell.value }}"><a class="active-filter" href="#">{{ smell.get_value_display }}</a></li>
+                                            <li class="smell-select" data-value="{{ smell.name }}"><a class="active-filter" href="#">{{ smell }}</a></li>
                                         {% endfor %}
                                     </ul>
                                 </div>

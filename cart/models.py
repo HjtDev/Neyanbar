@@ -91,6 +91,7 @@ class Cart:
         return sum(len(options.get('volume')) for options in self.cart.values())
 
     def __iter__(self):
+        mark_to_delete = []
         for pid, options in self.cart.items():
             try:
                 product = Product.objects.get(id=pid)
@@ -98,9 +99,11 @@ class Cart:
                     yield {
                         'product': product,
                         'volume': volume,
+                        'volume_name': Volume.objects.get(volume=int(volume)).get_name(),
                         'quantity': quantity,
                         'base_price': product.get_volume_price(int(volume)),
                         'cost': product.get_volume_price(int(volume)) * int(quantity)
                     }
-            except (Product.DoesNotExist, Volume.DoesNotExist):
-                self.delete(pid)
+            except (Product.DoesNotExist, Volume.DoesNotExist, RuntimeError):
+                mark_to_delete.append(pid)
+        [self.cart.pop(pid) for pid in mark_to_delete]

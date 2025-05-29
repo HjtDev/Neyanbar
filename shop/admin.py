@@ -95,8 +95,8 @@ class CommentAdmin(admin.ModelAdmin):
 
 @admin.register(ProductSmell)
 class ProductSmellAdmin(admin.ModelAdmin):
-    list_display = ('value',)
-    list_filter = ('value',)
+    list_display = ('name',)
+    list_filter = ('name',)
 
 
 @admin.register(Brand)

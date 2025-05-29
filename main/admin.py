@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
-from .models import Setting, Club, FAQ
+from .models import Setting, Club, AboutUs, Terms
 from django.shortcuts import redirect
 
 
@@ -57,6 +57,17 @@ class ClubAdmin(admin.ModelAdmin):
     list_display = ('id', 'email')
     search_fields = ('email',)
     list_per_page = 15
+
+
+@admin.register(AboutUs)
+class AboutUsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title')
+    search_fields = ('title', 'description')
+
+@admin.register(Terms)
+class TermsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title')
+    search_fields = ('title', 'description')
 
 
 # @admin.register(FAQ)

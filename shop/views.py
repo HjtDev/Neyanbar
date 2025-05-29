@@ -63,8 +63,7 @@ def product_view(request, slug):
 
     suggestion = all_products.filter(
         Q(taste=product.taste) |
-        Q(nature=product.nature) |
-        Q(smell__in=product.smell.all())
+        Q(nature=product.nature)
     ).annotate(
         verified_comments_count=Count('comments', filter=Q(comments__is_verified=True)),
         order=ExpressionWrapper(
@@ -190,9 +189,9 @@ def product_list_view(request):
             all_products = all_products.filter(available_volumes__in=Volume.objects.filter(volume__in=[int(v) for v in request.GET.getlist(key)])).distinct()
 
         if request.GET.get('smells'):
-            all_products = all_products.filter(smell__in=ProductSmell.objects.filter(value__in=request.GET.get('smells').split(';'))).distinct()
+            all_products = all_products.filter(smell__in=ProductSmell.objects.filter(name__in=request.GET.get('smells').split(';'))).distinct()
         elif 'smells' in key:
-            all_products = all_products.filter(smell__in=ProductSmell.objects.filter(value__in=request.GET.getlist(key))).distinct()
+            all_products = all_products.filter(smell__in=ProductSmell.objects.filter(name__in=request.GET.getlist(key))).distinct()
 
         if request.GET.get('spreads'):
             all_products = all_products.filter(spread__in=request.GET.get('spreads').split(';'))
