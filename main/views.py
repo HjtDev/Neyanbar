@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from blog.models import Post
 from shop.models import Product, Brand
-from .models import Setting, Club, AboutUs, Terms
+from .models import Setting, AboutUs, Terms, PerfumeRequest
 from order.models import CreditCart
 from uuid import uuid4
 from order.zarinpal import start_payment
@@ -89,13 +89,10 @@ def credit_card_charge_view(request, charge):
     return redirect('main:credit_card')
 
 
-def join_club_view(request):
-    email = request.GET.get('email')
-    if email:
-        print('im here bitch')
-        obj, created = Club.objects.get_or_create(email=email)
-        if created:
-            print('welcome to club')
+def perfume_request_view(request):
+    p_request = request.GET.get('request')
+    if p_request:
+        PerfumeRequest.objects.get_or_create(text=p_request)
     return redirect('main:index')
 
 

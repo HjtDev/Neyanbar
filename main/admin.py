@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
-from .models import Setting, Club, AboutUs, Terms
+from .models import Setting, PerfumeRequest, AboutUs, Terms
 from django.shortcuts import redirect
 
 
@@ -52,10 +52,10 @@ class SettingAdmin(admin.ModelAdmin):
         return perms
 
 
-@admin.register(Club)
-class ClubAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email')
-    search_fields = ('email',)
+@admin.register(PerfumeRequest)
+class PerfumeRequestAdmin(admin.ModelAdmin):
+    list_display = ('id', 'text')
+    search_fields = ('text',)
     list_per_page = 15
 
 

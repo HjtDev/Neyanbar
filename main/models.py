@@ -89,16 +89,16 @@ class Setting(models.Model):
         verbose_name = verbose_name_plural = 'تنظیمات'
 
 
-class Club(models.Model):
+class PerfumeRequest(models.Model):
     objects = models.Manager()
-    email = models.EmailField(max_length=255, unique=True, verbose_name='ایمیل')
+    text = models.EmailField(max_length=255, unique=True, verbose_name='متن درخواست')
 
     def __str__(self):
-        return self.email
+        return self.text
 
     class Meta:
-        verbose_name = 'باشگاه مشتریان'
-        verbose_name_plural = 'باشگاه مشتریان'
+        verbose_name = 'درخواست عطر'
+        verbose_name_plural = 'درخواست عطر'
 
 
 class FAQ(models.Model):
