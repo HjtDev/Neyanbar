@@ -80,7 +80,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'cart.context_processors.cart',
-                'main.context_processors.navigation'
+                'main.context_processors.base'
             ],
         },
     },
@@ -205,6 +205,8 @@ AUTH_USER_MODEL = 'account.User'
 MERCHANT = ENV('MERCHANT')
 
 SANDBOX = ENV.bool('SANDBOX', default=False)
+
+CALLBACK_URL = ENV('CALLBACK_URL')
 
 # Melypayamak
 

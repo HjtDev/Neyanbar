@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.utils.translation import gettext_lazy as _
-from .models import Setting, Club, FAQ
+from .models import Setting, PerfumeRequest, AboutUs, Terms
 from django.shortcuts import redirect
 
 
@@ -22,6 +22,10 @@ class SettingAdmin(admin.ModelAdmin):
         (_('پیشنهاد'), {
             'fields': ['show_offer', 'title', 'event', 'products', 'banner'],
             'classes': ['collapse', 'tab-offer-fields'],
+        }),
+        (_('متن ها'), {
+            'fields': ['video_text', 'footer_text',],
+            'classes': ['collapse', 'tab-text-fields'],
         }),
     ]
 
@@ -48,11 +52,22 @@ class SettingAdmin(admin.ModelAdmin):
         return perms
 
 
-@admin.register(Club)
-class ClubAdmin(admin.ModelAdmin):
-    list_display = ('id', 'email')
-    search_fields = ('email',)
+@admin.register(PerfumeRequest)
+class PerfumeRequestAdmin(admin.ModelAdmin):
+    list_display = ('id', 'text')
+    search_fields = ('text',)
     list_per_page = 15
+
+
+@admin.register(AboutUs)
+class AboutUsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title')
+    search_fields = ('title', 'description')
+
+@admin.register(Terms)
+class TermsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'title')
+    search_fields = ('title', 'description')
 
 
 # @admin.register(FAQ)

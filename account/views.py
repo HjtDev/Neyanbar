@@ -1,5 +1,10 @@
+from datetime import timedelta
+
 from django.contrib.auth import login, logout
 from copy import deepcopy
+from blog.models import Post
+from order.models import Order, Transaction
+from django.db.models import Sum, Max, Count
 from django.shortcuts import render, redirect
 from django.http.response import JsonResponse
 from django.views.decorators.http import require_POST, require_http_methods
@@ -9,7 +14,8 @@ from .models import User
 from random import randint
 from main.utilities import send_sms, LOGIN_VERIFY
 from django.http import QueryDict
-from shop.models import Product
+from shop.models import Product, Volume
+from django.utils import timezone
 
 
 @require_POST
@@ -122,6 +128,80 @@ def logout_view(request):
 def dashboard_view(request):
     if not request.user.is_authenticated:
         return redirect('main:index')
+    if request.user.is_superuser:
+        context = {
+            'total_shop_views': Product.objects.all().aggregate(Sum('views'))['views__sum'],
+            'total_blog_views': Post.objects.all().aggregate(Sum('views'))['views__sum'],
+            'total_views': Product.objects.all().aggregate(Sum('views'))['views__sum'] + Post.objects.all().aggregate(Sum('views'))['views__sum'],
+            'most_seen_post': Post.objects.all().order_by('-views').first(),
+            'most_seen_product': Product.objects.all().order_by('-views').first(),
+            'most_sold_product': Product.objects.all().annotate(sold=Count('bought_by')).order_by('-sold').first(),
+            'most_sold_volume': Volume.objects.all().annotate(sold=Count('order_items')).order_by('-sold')[:3],
+
+            'alltime_order_count': Order.objects.all().count(),
+            'alltime_total': sum(order.get_total_cost() for order in Order.objects.exclude(status__in=[Order.StatusChoices.NOT_PAID, Order.StatusChoices.REJECTED])),
+
+            'today_orders_count': Order.objects.filter(created_at__date=timezone.localdate()).count(),
+            'today_total': sum(
+                order.get_total_cost() for order in Order.objects.filter(
+                    created_at__date=timezone.localdate()
+                ).exclude(
+                    status__in=[Order.StatusChoices.NOT_PAID, Order.StatusChoices.REJECTED]
+                )
+            ),
+
+            'last_week_orders_count': Order.objects.filter(
+                created_at__gte=timezone.now() - timedelta(days=7)
+            ).count(),
+
+            'last_week_total': sum(
+                order.get_total_cost() for order in Order.objects.filter(
+                    created_at__gte=timezone.now() - timedelta(days=7)
+                ).exclude(
+                    status__in=[Order.StatusChoices.NOT_PAID, Order.StatusChoices.REJECTED]
+                )
+            ),
+            'last_month_orders_count': Order.objects.filter(
+                created_at__gte=timezone.now() - timedelta(days=30)
+            ).count(),
+
+            'last_month_total': sum(
+                order.get_total_cost() for order in Order.objects.filter(
+                    created_at__gte=timezone.now() - timedelta(days=30)
+                ).exclude(
+                    status__in=[Order.StatusChoices.NOT_PAID, Order.StatusChoices.REJECTED]
+                )
+            ),
+
+            # Last 90 days (last season)
+            'last_season_orders_count': Order.objects.filter(
+                created_at__gte=timezone.now() - timedelta(days=90)
+            ).count(),
+
+            'last_season_total': sum(
+                order.get_total_cost() for order in Order.objects.filter(
+                    created_at__gte=timezone.now() - timedelta(days=90)
+                ).exclude(
+                    status__in=[Order.StatusChoices.NOT_PAID, Order.StatusChoices.REJECTED]
+                )
+            ),
+
+            # Last 365 days (last year)
+            'last_year_orders_count': Order.objects.filter(
+                created_at__gte=timezone.now() - timedelta(days=365)
+            ).count(),
+
+            'last_year_total': sum(
+                order.get_total_cost() for order in Order.objects.filter(
+                    created_at__gte=timezone.now() - timedelta(days=365)
+                ).exclude(
+                    status__in=[Order.StatusChoices.NOT_PAID, Order.StatusChoices.REJECTED]
+                )
+            ),
+
+            'biggest_transaction': Transaction.objects.all().order_by('-paid_amount').first(),
+        }
+        return render(request, 'account.html', context)
     return render(request, 'account.html')
 
 

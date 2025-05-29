@@ -3,13 +3,17 @@ from django.dispatch import receiver
 
 from main.templatetags.tags import to_jalali_verbose
 from .models import Order
-from main.utilities import send_sms, ORDER_SUBMITTED, ORDER_PAID, ORDER_CONFIRMED, ORDER_IN_PROGRESS, ORDER_SHIPPED, ORDER_FINISHED, ORDER_REJECTED
+from main.utilities import (
+    send_sms, ORDER_SUBMITTED, ORDER_PAID,
+    ORDER_CONFIRMED, ORDER_IN_PROGRESS, ORDER_SHIPPED,
+    ORDER_FINISHED, ORDER_REJECTED, ORDER_SUBMITTED_ADMIN, ADMIN_PHONE)
 
 
 @receiver(pre_save, sender=Order)
 def status_signal(sender, instance, *args, **kwargs):
     if not instance.pk:
         send_sms(instance.phone, ORDER_SUBMITTED, instance.order_id)
+        send_sms(ADMIN_PHONE, ORDER_SUBMITTED_ADMIN, instance.name, instance.phone, instance.order_id)
         return
 
     old_status = Order.objects.get(pk=instance.pk).status

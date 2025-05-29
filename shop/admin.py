@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.db.models import Count
+
 from main.utilities import send_sms, PRODUCT_NOTIFY_ME
 from .models import Product, ProductSmell, Image, Features, Brand, Comment, Volume
 
@@ -18,23 +20,15 @@ class CommentInline(admin.StackedInline):
     extra = 0
 
 
-def notify_product_available(modeladmin, request, queryset):
-    for product in queryset:
-        for user in product.remind_to.all():
-            send_sms(user.phone, PRODUCT_NOTIFY_ME, user.name, product.name)
-        product.remind_to.clear()
-
-notify_product_available.short_description = 'ارسال پیامک موجودی'
-
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('pid', 'name', 'brand', 'get_price', 'site_score', 'inventory', 'views', 'is_visible')
+    list_display = ('pid', 'name', 'brand', 'get_price', 'site_score', 'inventory', 'views', 'get_buy_count', 'is_visible')
     list_filter = (
         'smell', 'season', 'spread',
         'taste', 'nature', 'gender',
         'available_volumes', 'perfume_type', 'is_visible',
         'brand', 'site_score',
-        'last_view', 'created_at','updated_at'
+        'last_view', 'created_at', 'updated_at'
     )
     list_editable = ('is_visible', 'inventory', 'site_score')
     search_fields = ('pid', 'name', 'name_en', 'short_description', 'description')
@@ -45,7 +39,15 @@ class ProductAdmin(admin.ModelAdmin):
         FeaturesInline,
         CommentInline,
     ]
-    actions = [notify_product_available]
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.annotate(buy_count=Count('bought_by'))
+
+    def get_buy_count(self, obj):
+        return obj.buy_count
+    get_buy_count.admin_order_field = 'buy_count'
+    get_buy_count.short_description = 'فروش'
 
     fieldsets = (
         ('اطلاعات محصول', {
@@ -56,7 +58,7 @@ class ProductAdmin(admin.ModelAdmin):
             )
         }),
         ('قیمت ها', {
-            'fields': ('price', 'discount'),
+            'fields': ('price', 'discount', 'reset_discount_at'),
         }),
         ('دسته بندی ها', {
             'fields': (
@@ -93,8 +95,8 @@ class CommentAdmin(admin.ModelAdmin):
 
 @admin.register(ProductSmell)
 class ProductSmellAdmin(admin.ModelAdmin):
-    list_display = ('value',)
-    list_filter = ('value',)
+    list_display = ('name',)
+    list_filter = ('name',)
 
 
 @admin.register(Brand)

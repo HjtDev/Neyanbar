@@ -168,23 +168,23 @@
                                     <h3 class="widget-title collapsed">گروه های بویایی</h3>
                                     <ul class="widget-body filter-items" style="display: none;">
                                         {% for smell in smells %}
-                                            <li class="smell-select" data-value="{{ smell.value }}"><a class="active-filter" href="#">{{ smell.get_value_display }}</a></li>
+                                            <li class="smell-select" data-value="{{ smell.name }}"><a class="active-filter" href="#">{{ smell }}</a></li>
                                         {% endfor %}
                                     </ul>
                                 </div>
                                 <div class="widget widget-collapsible">
                                     <h3 class="widget-title collapsed">پخش بو</h3>
                                     <ul class="widget-body filter-items" style="display: none;">
-                                        <li class="spread-select" data-value="LOW"><a class="active-filter" href="#">کم</a></li>
+                                        <li class="spread-select" data-value="HIGH"><a class="active-filter" href="#">قوی</a></li>
                                         <li class="spread-select" data-value="MEDIUM"><a class="active-filter" href="#">متوسط</a></li>
-                                        <li class="spread-select" data-value="HIGH"><a class="active-filter" href="#">زیاد</a></li>
+                                        <li class="spread-select" data-value="LOW"><a class="active-filter" href="#">ضعیف</a></li>
                                     </ul>
                                 </div>
                                 <div class="widget widget-collapsible">
                                     <h3 class="widget-title collapsed">فصل</h3>
                                     <ul class="widget-body filter-items" style="display: none;">
-                                        <li class="season-select" data-value="SUMMER"><a class="active-filter" href="#">تابستانی</a></li>
-                                        <li class="season-select" data-value="WINTER"><a class="active-filter" href="#">زمستانی</a></li>
+                                        <li class="season-select" data-value="SUMMER"><a class="active-filter" href="#">بهار - تابستان</a></li>
+                                        <li class="season-select" data-value="WINTER"><a class="active-filter" href="#">پاییز - زمستان</a></li>
                                     </ul>
                                 </div>
                                 </div>
@@ -200,16 +200,16 @@
                                 <div class="widget widget-collapsible">
                                     <h3 class="widget-title collapsed">طبع</h3>
                                     <ul class="widget-body filter-items" style="display: none;">
-                                        <li class="nature-select" data-value="COLD"><a class="active-filter" href="#">سرد</a></li>
+                                        <li class="nature-select" data-value="COLD"><a class="active-filter" href="#">خنک</a></li>
                                         <li class="nature-select" data-value="WARM"><a class="active-filter" href="#">گرم</a></li>
                                     </ul>
                                 </div>
                                 <div class="widget widget-collapsible">
                                     <h3 class="widget-title collapsed">ماندگاری</h3>
                                     <ul class="widget-body filter-items" style="display: none;">
-                                        <li class="durability-select" data-value="LOW"><a class="active-filter" href="#">کم</a></li>
+                                        <li class="durability-select" data-value="HIGH"><a class="active-filter" href="#">بالا</a></li>
                                         <li class="durability-select" data-value="MEDIUM"><a class="active-filter" href="#">متوسط</a></li>
-                                        <li class="durability-select" data-value="HIGH"><a class="active-filter" href="#">زیاد</a></li>
+                                        <li class="durability-select" data-value="LOW"><a class="active-filter" href="#">پایین</a></li>
                                     </ul>
                                 </div>
                                 <div class="widget widget-collapsible">
@@ -218,16 +218,6 @@
                                         <li class="gender-select" data-value="MALE"><a class="active-filter" href="#">مردانه</a></li>
                                         <li class="gender-select" data-value="FEMALE"><a class="active-filter" href="#">زنانه</a></li>
                                         <li class="gender-select" data-value="UNISEX"><a class="active-filter" href="#">مشترک</a></li>
-                                    </ul>
-                                </div>
-                                <div class="widget widget-collapsible">
-                                    <h3 class="widget-title collapsed">نوع</h3>
-                                    <ul class="widget-body filter-items" style="display: none;">
-                                        <li class="type-select" data-value="PERFUME"><a class="active-filter" href="#">پرفیوم</a></li>
-                                        <li class="type-select" data-value="EAU_DE_PARFUM"><a class="active-filter" href="#">ادوپرفیوم</a></li>
-                                        <li class="type-select" data-value="EAU_DE_TOILETTE"><a class="active-filter" ref="#">ادوتویلت</a></li>
-                                        <li class="type-select" data-value="EAU_DE_COLOGNE"><a class="active-filter" href="#">ادوکلن</a></li>
-                                        <li class="type-select" data-value="BODY_SPLASH"><a class="active-filter" href="#">بادی اسپلش</a></li>
                                     </ul>
                                 </div>
                                 <div class="widget widget-collapsible ">

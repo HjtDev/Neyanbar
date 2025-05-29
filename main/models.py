@@ -1,7 +1,6 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.urls import reverse
-from django.core.cache import cache
 from shop.models import Product, Brand
 
 
@@ -21,6 +20,9 @@ class Setting(models.Model):
     event = models.CharField(max_length=100, blank=True, verbose_name='(مناسبت/علت تخفیف) پیشنهاد')
     products = models.CharField(blank=True, verbose_name='محصولات انتخاب شده', help_text='بر اساس لیست پیشنهاد های مجاز')
     banner = models.ImageField(upload_to='offers/', blank=True, verbose_name='بنر')
+
+    video_text = models.CharField(max_length=150, blank=True, verbose_name='متن ویدیو')
+    footer_text = models.TextField(blank=True, verbose_name='متن فوتر')
 
     def get_offer_link(self):
         if not self.show_offer or not self.products:
@@ -87,16 +89,16 @@ class Setting(models.Model):
         verbose_name = verbose_name_plural = 'تنظیمات'
 
 
-class Club(models.Model):
+class PerfumeRequest(models.Model):
     objects = models.Manager()
-    email = models.EmailField(max_length=255, unique=True, verbose_name='ایمیل')
+    text = models.EmailField(max_length=255, unique=True, verbose_name='متن درخواست')
 
     def __str__(self):
-        return self.email
+        return self.text
 
     class Meta:
-        verbose_name = 'باشگاه مشتریان'
-        verbose_name_plural = 'باشگاه مشتریان'
+        verbose_name = 'درخواست عطر'
+        verbose_name_plural = 'درخواست عطر'
 
 
 class FAQ(models.Model):
@@ -110,3 +112,31 @@ class FAQ(models.Model):
     class Meta:
         verbose_name = 'سوال متداول'
         verbose_name_plural = 'سوالات متداول'
+
+
+class AboutUs(models.Model):
+    objects = models.Manager()
+    title = models.CharField(max_length=255, verbose_name='تیتر')
+    description = models.TextField(verbose_name='توضیحات')
+    image = models.ImageField(upload_to='about_us', verbose_name='تصویر')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'درباره ما'
+        verbose_name_plural = 'درباره ما'
+
+
+class Terms(models.Model):
+    objects = models.Manager()
+    title = models.CharField(max_length=255, verbose_name='تیتر')
+    description = models.TextField(verbose_name='توضیحات')
+    image = models.ImageField(upload_to='terms', verbose_name='تصویر')
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'شرایط و ضوابط'
+        verbose_name_plural = 'شرایط و ضوابط'

@@ -4,8 +4,10 @@ from django.db import models
 from django.db.models import Min
 from django.urls import reverse
 from tinymce.models import HTMLField
-import os
 from account.models import User
+from main.utilities import send_sms, PRODUCT_NOTIFY_ME
+import re
+import os
 
 
 def product_dynamic_path(instance, filename):
@@ -33,14 +35,14 @@ class Product(models.Model):
     smell = models.ManyToManyField('ProductSmell', verbose_name='گروه بویایی')
 
     class SpreadChoices(models.TextChoices):
-        LOW = 'LOW', 'کم'
+        LOW = 'LOW', 'ضعیف'
         MEDIUM = 'MEDIUM', 'متوسط'
-        HIGH = 'HIGH', 'زیاد'
+        HIGH = 'HIGH', 'قوی'
     spread = models.CharField(choices=SpreadChoices.choices, max_length=6, verbose_name='پخش بو')
 
     class SeasonChoices(models.TextChoices):
-        WINTER = 'WINTER', 'زمستانی'
-        SUMMER = 'SUMMER', 'تابستانی'
+        WINTER = 'WINTER', 'پاییز - زمستان'
+        SUMMER = 'SUMMER', 'بهار - تابستان'
     season = models.CharField(choices=SeasonChoices.choices, max_length=8, verbose_name='فصل')
 
     class TasteChoices(models.TextChoices):
@@ -52,13 +54,13 @@ class Product(models.Model):
 
     class NatureChoices(models.TextChoices):
         WARM = 'WARM', 'گرم'
-        COLD = 'COLD', 'سرد'
+        COLD = 'COLD', 'خنک'
     nature = models.CharField(choices=NatureChoices.choices, max_length=4, verbose_name='طبع')
 
     class DurabilityChoices(models.TextChoices):
-        LOW = 'LOW', 'کم'
+        LOW = 'LOW', 'بالا'
         MEDIUM = 'MEDIUM', 'متوسط'
-        HIGH = 'HIGH', 'زیاد'
+        HIGH = 'HIGH', 'پایین'
     durability = models.CharField(choices=DurabilityChoices.choices, max_length=6, verbose_name='ماندگاری')
 
     class GenderChoices(models.TextChoices):
@@ -79,6 +81,7 @@ class Product(models.Model):
 
     price = models.PositiveIntegerField(default=0, verbose_name='قیمت محصول', help_text='به ازای هر گرم / به تومان')
     discount = models.IntegerField(default=-1, validators=[MinValueValidator(-1)], verbose_name='قیمت پس از تخفیف', help_text='-۱ برای لغو تخفیف')
+    reset_discount_at = models.DateTimeField(blank=True, null=True, verbose_name='تاریخ پایان تخفیف')
 
     inventory = models.PositiveIntegerField(default=0, verbose_name='موجودی انبار')
 
@@ -103,10 +106,24 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    @classmethod
+    def from_db(cls, db, field_names, values):
+        instance = super().from_db(db, field_names, values)
+        instance._original_inventory = instance.inventory
+        return instance
+
     def save(self, *args, **kwargs):
+        if self.pk:
+            if not self._original_inventory and self.inventory:
+                for user in self.remind_to.all():
+                    send_sms(user.phone, PRODUCT_NOTIFY_ME, user.name, self.name)
+                self.remind_to.clear()
+
         if any(ch.isupper() for ch in self.slug):
             self.slug = self.slug.lower()
-        return super().save(*args, **kwargs)
+        super().save(*args, **kwargs)
+        self._original_inventory = self.inventory  # update cached value after save
+
 
     def get_raw_price(self):
         return self.price * int(self.available_volumes.aggregate(Min('volume'))['volume__min'] or 1)
@@ -123,7 +140,7 @@ class Product(models.Model):
         return 100 - int((self.discount / self.price) * 100)
 
     def get_smell(self):
-        return ', '.join([smell.get_value_display() for smell in self.smell.all()])
+        return ', '.join([smell.name for smell in self.smell.all()])
 
     def get_volumes(self):
         return ', '.join(list(volume for volume in self.available_volumes.values_list('name', flat=True)))
@@ -175,25 +192,13 @@ class Features(models.Model):
 class ProductSmell(models.Model):
     objects = models.Manager()
 
-    class SmellChoices(models.TextChoices):
-        GOLFAM = 'GOLFAM', 'گلفام'
-        WOODY = 'WOODY', 'چوبی'
-        FRUITY = 'FRUITY', 'میوه ای'
-        CITRUS = 'CITRUS', 'مرکباتی'
-        MARINE = 'MARINE', 'دریایی'
-        ORIENTAL = 'EASTERN', 'شرقی'
-        SPICY = 'SPICY', 'ادویه ای'
-        FOUGERE = 'FOUGERE', 'فوژه'
-        LEATHERY = 'LEATHERY', 'چرمی'
-        MEDITERRANEAN = 'MEDITERRANEAN', 'مدیترانه ای'
-        AROMATIC = 'AROMATIC', 'آروماتیک'
-    value = models.CharField(choices=SmellChoices.choices, max_length=15, verbose_name='گروه بویایی')
+    name = models.CharField(max_length=50, verbose_name='گروه بویایی')
 
     def __str__(self):
-        return self.get_value_display()
+        return self.name
 
     def get_absolute_url(self):
-        return reverse('shop:product-list') + f'?smells={self.value}'
+        return reverse('shop:product-list') + f'?smells={self.name}'
 
     class Meta:
         verbose_name = 'گروه بویایی'
@@ -253,6 +258,10 @@ class Volume(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_name(self):
+        number = re.search(r'[\d\u06F0-\u06F9]+', self.name).group()
+        return number if number else self.volume
 
     def get_absolute_url(self):
         return reverse('shop:product-list') + f'?volumes={self.volume}'

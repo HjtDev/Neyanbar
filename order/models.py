@@ -66,7 +66,7 @@ class OrderItem(models.Model):
     objects = models.Manager()
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items', verbose_name='سفارش')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='محصول')
-    volume = models.ForeignKey(Volume, on_delete=models.CASCADE, verbose_name='حجم')
+    volume = models.ForeignKey(Volume, on_delete=models.CASCADE, related_name='order_items', verbose_name='حجم')
     quantity = models.PositiveIntegerField(verbose_name='تعداد')
     price = models.PositiveIntegerField(default=0, verbose_name='هزینه', help_text='با در نظر گرفتن حجم و تعداد')
 
@@ -150,7 +150,7 @@ class CreditCart(models.Model):
     objects = models.Manager()
     token = models.CharField(max_length=10, verbose_name='توکن کارت')
     credit = models.PositiveIntegerField(verbose_name='اعتبار کارت')
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='ساخته شده توسط')
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='credit_cart', verbose_name='ساخته شده توسط')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='زمان ایجاد')
 
     def buy(self, price):

@@ -531,7 +531,6 @@
                             data-animation-options="{
                                 'name': 'fadeInDownShorter'
                             }">
-                            خوش آمديد به دنياى عطرها!
                         </h4>
                         <h3 class="banner-title text-white font-weight-bold mb-5 appear-animate"
                             data-animation-options="{
@@ -539,7 +538,9 @@
                                 'delay': '.4s',
                                 'duration': '1.4s'
                             }">
-                            فروشگاه نى عنبر، مجموعه اى خاص از عطرهاى باز طراحى شده و جستجويى براى احياى حس بى نظير از برندهاى محبوب، روايحى اصيل و ماندگار از كلاسيک تا مدرن. هر عطرى داستانى دارد كه منتظر شنيدن شماست، بگذاريد عطر مورد علاقه تان شما را تعريف كند.
+                            {% if video_text %}
+                            	{{ video_text }}
+                            {% endif %}
                         </h3>
                         <a class="btn-play text-white appear-animate" data-animation-options="{
                                 'name': 'fadeIn',
@@ -656,34 +657,8 @@
                             </div>
                         </div>
                     </section>
-                    <section class="banner banner-newsletter bg-green-gradient m-b-10 rtl text-right">
             	{% endif %}
             {% endfor %}
-                <div class="container">
-                    <div class="banner-content d-lg-flex">
-                        <div class="d-flex icon-container ml-3 justify-content-center mb-2 mb-lg-0 col-lg-6 col-xs-12">
-                            <div class="icon-box icon-box-side appear-animate"
-                                 data-animation-options="{'name': 'fadeInLeftShorter'}">
-                                <div class="icon-box-content rtl">
-                                    <h4 class="icon-box-title text-white"> عضویت در وبسایت</h4>
-                                    <p class="text-white">از آخرین تخفیف ها و محصولات جدید با خبر شوید.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-lg-block d-flex justify-content-center form-container col-lg-6 col-xs-12">
-                            <form action="{% url 'main:join_club' %}" method="get"
-                                  class="input-wrapper input-wrapper-inline ml-lg-auto appear-animate"
-                                  data-animation-options="{'name': 'fadeInRightShorter'}">
-                                <input type="email" class="form-control font-primary form-solid text-left"
-                                       name="email" id="email" placeholder="ایمیل خود را وارد کنید" required>
-                                <button class="btn btn-dark" type="submit">
-                                    عضویت<i class="fa-light fa-angles-left"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </section>
             <section class="container rtl text-right m-b-10">
                 <div class="title-wrapper">
                     <div class="container-fluid title-wrap">

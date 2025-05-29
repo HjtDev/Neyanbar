@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
 from django.utils import timezone
+from random import choice
 import os
 
 
@@ -33,13 +34,11 @@ def profile_directory_path(instance, filename):
         filename
     )
 
-
-
 class User(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField(max_length=11, unique=True, verbose_name='شماره تلفن')
     email = models.EmailField(max_length=255, blank=True, null=True, verbose_name='ایمیل')
     name = models.CharField(max_length=60, verbose_name='نام')
-    profile = models.ImageField(upload_to=profile_directory_path, null=True, blank=True, verbose_name='پروفایل', help_text='60*60')
+    profile = models.ImageField(upload_to=profile_directory_path, default=choice(['Profiles/default-1.webp', 'Profiles/default-2۰۹۴۵۸۷۳۸۵۳۴.webp']),verbose_name='پروفایل', help_text='60*60')
 
     compare_list = models.ManyToManyField('shop.Product', related_name='users_compare_list', blank=True, verbose_name='لیست مقایسه')
 

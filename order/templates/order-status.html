@@ -174,13 +174,13 @@
                                     <div class="card">
                                         <div class="card-header">
                                             <a href="#collapse2" class="expand text-body text-normal ls-m">
-                                                با کارت اعتباری
+                                                با کارت هدیه
                                             </a>
                                         </div>
                                         <div id="collapse2" class="collapsed payment-type">
                                             <div class="card-body ls-m">
-                                                <p id="response">در صورت که از وضعیت کارت اعتباری خود اطمینان ندارید می توانید از بخش کارت هدیه وضعیت ان را برسی کنید</p>
-                                                <input type="text" name="credit_token" class="input-text form-control text-grey ls-m" id="credit_token" value="" maxlength="10" placeholder="توکن خود را وارد کنید">
+                                                <p id="response">در صورت که از وضعیت کارت هدیه خود اطمینان ندارید می توانید از بخش کارت هدیه وضعیت ان را برسی کنید</p>
+                                                <input type="text" name="credit_token" class="input-text form-control text-grey ls-m" id="credit_token" value="{{ request.user.credit_cart.first.token }}" maxlength="10" placeholder="توکن خود را وارد کنید">
                                             </div>
                                         </div>
                                     </div>

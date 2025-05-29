@@ -73,7 +73,6 @@ def post_detail_view(request, slug):
             'most_viewed': most_viewed[:3],
             'categories': Category.objects.all(),
             'tags': Tag.objects.all(),
-            'verified_comment_count': post.comments.filter(is_verified=True).count()
         }
         return render(request, 'blog.html', context)
     except Post.DoesNotExist:
@@ -93,7 +92,7 @@ def comment_view(request):
 
     try:
         post = Post.objects.get(id=post_id)
-        if not post.comments.filter(user=request.user).exists():
+        if not post.comments.filter(user=request.user).exists() or request.user.is_superuser:
             comment = Comment.objects.create(content=content, post=post, user=request.user)
             return JsonResponse({'name': str(request.user), 'profile': request.user.profile.url,
                                  'created_at': to_jalali_verbose(comment.created_at)}, status=200)
