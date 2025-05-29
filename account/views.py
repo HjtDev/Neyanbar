@@ -130,9 +130,9 @@ def dashboard_view(request):
         return redirect('main:index')
     if request.user.is_superuser:
         context = {
-            'total_shop_views': Product.objects.all().aggregate(Sum('views'))['views__sum'],
-            'total_blog_views': Post.objects.all().aggregate(Sum('views'))['views__sum'],
-            'total_views': Product.objects.all().aggregate(Sum('views'))['views__sum'] + Post.objects.all().aggregate(Sum('views'))['views__sum'],
+            'total_shop_views': Product.objects.all().aggregate(Sum('views'))['views__sum'] or 1,
+            'total_blog_views': Post.objects.all().aggregate(Sum('views'))['views__sum'] or 1,
+            'total_views': Product.objects.all().aggregate(Sum('views'))['views__sum'] or 1 + Post.objects.all().aggregate(Sum('views'))['views__sum'] or 1,
             'most_seen_post': Post.objects.all().order_by('-views').first(),
             'most_seen_product': Product.objects.all().order_by('-views').first(),
             'most_sold_product': Product.objects.all().annotate(sold=Count('bought_by')).order_by('-sold').first(),
