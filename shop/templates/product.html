@@ -38,7 +38,7 @@
                         <div class="product product-single row mb-5">
                             <div class="col-md-6">
                                 <div class="product-gallery">
-                                    <div class="product-single-carousel owl-carousel owl-theme owl-nav-inner row cols-1 gutter-no ltr">
+                                    <div id="product-zoom" class="product-single-carousel owl-carousel owl-theme owl-nav-inner row cols-1 gutter-no ltr">
                                         {% for image in product.images.all %}
                                             <figure class="product-image">
                                                 <picture>
@@ -626,4 +626,11 @@
 
 {% block script %}
     <script defer src="{% static 'js/product.js' %}"></script>
+    <script defer>
+        $(document).ready(function() {
+            if ($(window).width() <= 770) {
+                $('#product-zoom').removeClass('product-single-carousel');
+            }
+        });
+    </script>
 {% endblock %}

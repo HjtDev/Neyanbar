@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.http import QueryDict, JsonResponse
 from django.shortcuts import render, redirect
 from django.db.models import Q, Avg, Count, FloatField, F, ExpressionWrapper, Max
@@ -14,6 +15,7 @@ def view_handler(request):
         if product_id:
             product = Product.objects.get(id=product_id)
             product.views += 1
+            product.last_view = timezone.now()
             product.save()
             return JsonResponse({'message': 'success'})
         else:
@@ -161,7 +163,7 @@ def product_list_view(request):
             all_products = all_products.filter(Q(name__icontains=request.GET.get('search')) | Q(name_en__icontains=request.GET.get('search')) | Q(pid__icontains=request.GET.get('search')))
 
         if request.GET.get('luxury'):
-            all_products = all_products.order_by('-price')
+            all_products = all_products.order_by('-site_score')
 
         if request.GET.get('has-discount'):
             all_products = all_products.filter(discount__gt=0)

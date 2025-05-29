@@ -13,7 +13,6 @@ $(document).ready(function() {
                 'id': product_id
             },
             success: function(response) {
-                console.log('Increased View Count')
             },
             error: function(xhr, status, error) {
                 console.log(error);
