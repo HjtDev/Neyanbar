@@ -80,6 +80,7 @@ class Product(models.Model):
 
     price = models.PositiveIntegerField(default=0, verbose_name='قیمت محصول', help_text='به ازای هر گرم / به تومان')
     discount = models.IntegerField(default=-1, validators=[MinValueValidator(-1)], verbose_name='قیمت پس از تخفیف', help_text='-۱ برای لغو تخفیف')
+    reset_discount_at = models.DateTimeField(blank=True, null=True, verbose_name='تاریخ پایان تخفیف')
 
     inventory = models.PositiveIntegerField(default=0, verbose_name='موجودی انبار')
 

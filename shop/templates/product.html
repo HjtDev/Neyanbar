@@ -91,6 +91,12 @@
                                             class="product-brand">{{ product.get_perfume_type_display }}</span>
                                     </div>
                                     <div class="product-price" id="product-actual-price" data-price="{{ product.price }}" data-discount="{{ product.discount }}"> {{ product.get_price | commafy }} تومان</div>
+                                    {% if product.discount != -1 and product.reset_discount_at %}
+                                        <div class="product-countdown-container font-weight-semi-bold bg-secondary border-no mb-3">
+                                            <label class="">تخفیف به پایان می رسد در: </label>
+                                            <div class="product-countdown countdown-compact" data-until="{{ product.reset_discount_at | date:'c' }}" data-compact="true">00:00:00</div><!-- End of .product-countdown -->
+                                        </div>
+                                    {% endif %}
                                     <div class="ratings-container">
                                         <a href="#product-tab-reviews" class="link-to-tab rating-reviews">
                                             {% if product.inventory %}
@@ -320,7 +326,7 @@
                                     <a class="nav-link active" href="#product-tab-description">توضیحات</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#product-tab-reviews">نظر ({{ verified_comment_count }})</a>
+                                    <a class="nav-link comment-count" href="#product-tab-reviews">نظر ({{ product.comments.count }})</a>
                                 </li>
                             </ul>
                             <div class="tab-content">
@@ -401,55 +407,50 @@
                                         <div class="col-12 comments pt-2 pb-10 border-no">
                                             <ul class="comments-list">
                                                 {% for comment in product.comments.all %}
-                                                    {% if comment.is_verified or comment.user == request.user %}
-                                                        <li>
-                                                            <div class="comment">
-                                                                <figure class="comment-media">
-                                                                    <a href="#">
-                                                                        <picture>
-                                                                            <source srcset="{{ comment.user.profile.url }}"
-                                                                                    type="image/webp">
-                                                                            <img loading="lazy" decoding="async"
-                                                                                 src="{{ comment.user.profile.url }}" alt="avatar">
-                                                                        </picture>
-                                                                    </a>
-                                                                </figure>
-                                                                <div class="comment-body">
-                                                                    <div class="comment-rating ratings-container">
-                                                                        <div class="ratings-full">
-                                                                            <span class="ratings" style="width:{% widthratio comment.score 1 20 %}%"></span>
-                                                                            <span class="tooltiptext tooltip-top"></span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="comment-user">
-                                                                    <span class="comment-date">
-                                                                        نویسنده :   <span
-                                                                            class="font-weight-semi-bold text-dark">
-                                                                            {{ comment.user }}
-                                                                        </span> در
-                                                                        <span class="font-weight-semi-bold text-dark">
-                                                                            {{ comment.created_at | to_jalali_verbose }}
-                                                                        </span>
-                                                                        {% if not comment.is_verified %}
-                                                                            | <small>نظر شما در حال برسی می باشد</small>
-                                                                        {% endif %}
-                                                                    </span>
-                                                                    </div>
-                                                                    <div class="comment-content mb-5">
-                                                                        <p>
-                                                                            {{ comment.content }}
-                                                                        </p>
-                                                                    </div>
-                                                                    <div class="feeling mt-5">
-                                                                        <button class="btn btn-link btn-icon-left btn-slide-up btn-infinite ml-2 like-comment" data-id="{{ comment.id }}">
-                                                                            <i class="fa fa-thumbs-up"></i>
-                                                                            لایک (<span class="count">{{ comment.liked_by.count }}</span>)
-                                                                        </button>
+                                                    <li>
+                                                        <div class="comment">
+                                                            <figure class="comment-media">
+                                                                <a href="#">
+                                                                    <picture>
+                                                                        <source srcset="{{ comment.user.profile.url }}"
+                                                                                type="image/webp">
+                                                                        <img loading="lazy" decoding="async"
+                                                                             src="{{ comment.user.profile.url }}" alt="avatar">
+                                                                    </picture>
+                                                                </a>
+                                                            </figure>
+                                                            <div class="comment-body">
+                                                                <div class="comment-rating ratings-container">
+                                                                    <div class="ratings-full">
+                                                                        <span class="ratings" style="width:{% widthratio comment.score 1 20 %}%"></span>
+                                                                        <span class="tooltiptext tooltip-top"></span>
                                                                     </div>
                                                                 </div>
+                                                                <div class="comment-user">
+                                                                <span class="comment-date">
+                                                                    نویسنده :   <span
+                                                                        class="font-weight-semi-bold text-dark">
+                                                                        {{ comment.user }}
+                                                                    </span> در
+                                                                    <span class="font-weight-semi-bold text-dark">
+                                                                        {{ comment.created_at | to_jalali_verbose }}
+                                                                    </span>
+                                                                </span>
+                                                                </div>
+                                                                <div class="comment-content mb-5">
+                                                                    <p>
+                                                                        {{ comment.content }}
+                                                                    </p>
+                                                                </div>
+                                                                <div class="feeling mt-5">
+                                                                    <button class="btn btn-link btn-icon-left btn-slide-up btn-infinite ml-2 like-comment" data-id="{{ comment.id }}">
+                                                                        <i class="fa fa-thumbs-up"></i>
+                                                                        لایک (<span class="count">{{ comment.liked_by.count }}</span>)
+                                                                    </button>
+                                                                </div>
                                                             </div>
-                                                        </li>
-                                                    {% endif %}
+                                                        </div>
+                                                    </li>
                                                 {% endfor %}
                                             </ul>
                                         </div>
@@ -524,7 +525,7 @@
                                                     <span class="ratings" style="width:{% widthratio product.site_score 1 10 %}%"></span>
                                                     <span class="tooltiptext tooltip-top"></span>
                                                 </div>
-                                                <a href="{{ product.get_absolute_url }}" class="rating-reviews">( {{ product.verified_comments_count }} نظر )</a>
+                                                <a href="{{ product.get_absolute_url }}" class="rating-reviews">( {{ product.comments.count }} نظر )</a>
                                             </div>
                                         </div>
                                     </div>
@@ -631,6 +632,44 @@
             if ($(window).width() <= 770) {
                 $('#product-zoom').removeClass('product-single-carousel');
             }
+            $('.product-countdown').each(function() {
+                var $this = $(this);
+                var untilStr = $this.data('until');
+                if (!untilStr) return;
+
+                var endTime = new Date(untilStr).getTime();
+
+                function updateCountdown() {
+                    var now = new Date().getTime();
+                    var distance = endTime - now;
+
+                    if (distance <= 0) {
+                        $this.text("00:00:00");
+                        clearInterval(interval);
+                        location.reload();  // Reload page when countdown ends
+                        return;
+                    }
+
+                    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    var formatted = "";
+                    if (days > 0) {
+                        formatted += days + "";
+                    }
+                    formatted +=
+                        String(hours).padStart(2, '0') + ':' +
+                        String(minutes).padStart(2, '0') + ':' +
+                        String(seconds).padStart(2, '0');
+
+                    $this.text(formatted);
+                }
+
+                updateCountdown();
+                var interval = setInterval(updateCountdown, 1000);
+            });
         });
     </script>
 {% endblock %}

@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.db.models import Count
+
 from main.utilities import send_sms, PRODUCT_NOTIFY_ME
 from .models import Product, ProductSmell, Image, Features, Brand, Comment, Volume
 
@@ -20,7 +22,7 @@ class CommentInline(admin.StackedInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('pid', 'name', 'brand', 'get_price', 'site_score', 'inventory', 'views', 'is_visible')
+    list_display = ('pid', 'name', 'brand', 'get_price', 'site_score', 'inventory', 'views', 'get_buy_count', 'is_visible')
     list_filter = (
         'smell', 'season', 'spread',
         'taste', 'nature', 'gender',
@@ -38,6 +40,15 @@ class ProductAdmin(admin.ModelAdmin):
         CommentInline,
     ]
 
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.annotate(buy_count=Count('bought_by'))
+
+    def get_buy_count(self, obj):
+        return obj.buy_count
+    get_buy_count.admin_order_field = 'buy_count'
+    get_buy_count.short_description = 'فروش'
+
     fieldsets = (
         ('اطلاعات محصول', {
             'fields': (
@@ -47,7 +58,7 @@ class ProductAdmin(admin.ModelAdmin):
             )
         }),
         ('قیمت ها', {
-            'fields': ('price', 'discount'),
+            'fields': ('price', 'discount', 'reset_discount_at'),
         }),
         ('دسته بندی ها', {
             'fields': (

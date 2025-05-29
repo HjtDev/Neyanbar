@@ -45,10 +45,16 @@ def like_handler(request):
 
 
 def product_view(request, slug):
+    product: Product | None = None
     try:
         product = Product.objects.prefetch_related('comments').get(slug=slug)
     except Product.DoesNotExist:
         return redirect('main:index')
+
+    if product.reset_discount_at and product.discount != -1 and product.reset_discount_at < timezone.now():
+        product.reset_discount_at = None
+        product.discount = -1
+        product.save()
 
     all_products = Product.objects.filter(is_visible=True).exclude(id=product.id)
 
@@ -70,7 +76,7 @@ def product_view(request, slug):
     most_viewed_col1 = all_products.order_by('-views')[:3]
     most_viewed_col2 = all_products.order_by('-views')[3:7]
 
-    average_rating = int(product.comments.filter(is_verified=True).aggregate(Avg('score'))['score__avg'] or 3)
+    average_rating = int(product.comments.aggregate(Avg('score'))['score__avg'] or 3)
 
     context = {
         'product': product,
@@ -78,7 +84,6 @@ def product_view(request, slug):
         'most_viewed_col1': most_viewed_col1,
         'most_viewed_col2': most_viewed_col2,
         'rating': average_rating,
-        'verified_comment_count': product.comments.filter(is_verified=True).count(),
     }
     return render(request, 'product.html', context)
 

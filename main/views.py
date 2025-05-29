@@ -49,11 +49,11 @@ def home_view(request):
 def credit_card_view(request):
     if not request.user.is_authenticated:
         return render(request, 'credit-card-empty.html')
-    credit_card = None
+    credit_cart = None
 
     try:
-        credit_card = CreditCart.objects.get(created_by=request.user)
-        return render(request, 'credit-card.html', {'credit_card': credit_card})
+        credit_cart = CreditCart.objects.filter(created_by=request.user)
+        return render(request, 'credit-card.html', {'credit_carts': credit_cart})
     except CreditCart.DoesNotExist:
         return render(request, 'credit-card-empty.html')
 

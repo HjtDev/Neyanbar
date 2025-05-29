@@ -190,35 +190,33 @@
                             </div>
                         </div>
                         <div class="comments">
-                            <h3 class="title title-simple text-right text-normal font-weight-bold">{{ verified_comment_count }} دیدگاه</h3>
+                            <h3 class="title title-simple text-right text-normal font-weight-bold comment-count">{{ post.comments.count }} دیدگاه</h3>
                             <ul id="comment-list">
                                 {% for comment in post.comments.all %}
-                                    {% if comment.is_verified or comment.user == request.user %}
-                                        <li>
-                                            <div class="comment">
-                                                <figure class="comment-media">
-                                                    <a>
-                                                        <picture>
-                                                            <source srcset="{{ comment.user.profile.url }}" type="image/webp">
-                                                            <img loading="lazy" decoding="async"
-                                                                 src="{{ comment.user.profile.url }}" alt="avatar">
-                                                        </picture>
-                                                    </a>
-                                                </figure>
-                                                <div class="comment-body rtl text-right">
-                                                    <div class="comment-user">
-                                                        <span class="comment-date">{{ comment.created_at | to_jalali_verbose }}</span>
-                                                        <h4><a href="#">{{ comment.user }}{% if not comment.is_verified %} | <small>نظر شما در حال برسی می باشد</small>{% endif %}</a></h4>
-                                                    </div>
-                                                    <div class="comment-content mb-2">
-                                                        <p>
-                                                            {{ comment.content }}
-                                                        </p>
-                                                    </div>
+                                    <li>
+                                        <div class="comment">
+                                            <figure class="comment-media">
+                                                <a>
+                                                    <picture>
+                                                        <source srcset="{{ comment.user.profile.url }}" type="image/webp">
+                                                        <img loading="lazy" decoding="async"
+                                                             src="{{ comment.user.profile.url }}" alt="avatar">
+                                                    </picture>
+                                                </a>
+                                            </figure>
+                                            <div class="comment-body rtl text-right">
+                                                <div class="comment-user">
+                                                    <span class="comment-date">{{ comment.created_at | to_jalali_verbose }}</span>
+                                                    <h4><a href="#">{{ comment.user }}{% if not comment.is_verified %} | <small>نظر شما در حال برسی می باشد</small>{% endif %}</a></h4>
+                                                </div>
+                                                <div class="comment-content mb-2">
+                                                    <p>
+                                                        {{ comment.content }}
+                                                    </p>
                                                 </div>
                                             </div>
-                                        </li>
-                                    {% endif %}
+                                        </div>
+                                    </li>
                                 {% endfor %}
                             </ul>
                         </div>

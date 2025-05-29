@@ -48,33 +48,35 @@
                     </tr>
                     </thead>
                     <tbody class="wishlist-items-wrapper">
-                    <tr>
-                        <td class="product-thumbnail">
-                            <a>{{ credit_card.token }}</a>
-                        </td>
-                        <td class="product-name">
-                        </td>
-                        <td class="product-price">
-                            <span class="amount"> {{ credit_card.credit | commafy }} تومان </span>
-                        </td>
-                        <td class="product-stock-status">
-                            <select class="form-control" name="amount-select" id="amount-select">
-                                <option value="100000" selected>{{ 100000 | commafy }} تومان</option>
-                                <option value="250000">{{ 250000 | commafy }} تومان</option>
-                                <option value="500000">{{ 500000 | commafy }} تومان</option>
-                                <option value="750000">{{ 750000 | commafy }} تومان</option>
-                                <option value="1000000">{{ 1000000 | commafy }} تومان</option>
-                                <option value="2000000">{{ 2000000 | commafy }} تومان</option>
-                                <option value="5000000">{{ 5000000 | commafy }} تومان</option>
-                                <option value="10000000">{{ 10000000 | commafy }} تومان</option>
-                                <option value="15000000">{{ 15000000 | commafy }} تومان</option>
-                                <option value="20000000">{{ 20000000 | commafy }} تومان</option>
-                            </select>
-                        </td>
-                        <td class="product-add-to-cart">
-                            <button class="btn-product btn-primary btn-charge"><span>اعمال شارژ</span></button>
-                        </td>
-                    </tr>
+                    {% for credit_cart in credit_carts %}
+                        <tr>
+                            <td class="product-thumbnail">
+                                <a>{{ credit_cart.token }}</a>
+                            </td>
+                            <td class="product-name">
+                            </td>
+                            <td class="product-price">
+                                <span class="amount"> {{ credit_cart.credit | commafy }} تومان </span>
+                            </td>
+                            <td class="product-stock-status">
+                                <select class="form-control" name="amount-select" id="amount-select">
+                                    <option value="100000" selected>{{ 100000 | commafy }} تومان</option>
+                                    <option value="250000">{{ 250000 | commafy }} تومان</option>
+                                    <option value="500000">{{ 500000 | commafy }} تومان</option>
+                                    <option value="750000">{{ 750000 | commafy }} تومان</option>
+                                    <option value="1000000">{{ 1000000 | commafy }} تومان</option>
+                                    <option value="2000000">{{ 2000000 | commafy }} تومان</option>
+                                    <option value="5000000">{{ 5000000 | commafy }} تومان</option>
+                                    <option value="10000000">{{ 10000000 | commafy }} تومان</option>
+                                    <option value="15000000">{{ 15000000 | commafy }} تومان</option>
+                                    <option value="20000000">{{ 20000000 | commafy }} تومان</option>
+                                </select>
+                            </td>
+                            <td class="product-add-to-cart">
+                                <button class="btn-product btn-primary btn-charge"><span>اعمال شارژ</span></button>
+                            </td>
+                        </tr>
+                    {% endfor %}
                     </tbody>
                 </table>
             </div>

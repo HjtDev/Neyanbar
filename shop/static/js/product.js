@@ -191,7 +191,6 @@ $(document).ready(function() {
                                                                         <span class="font-weight-semi-bold text-dark">
                                                                             ${response.created_at}
                                                                         </span>
-                                                                            | <small>نظر شما در حال برسی می باشد</small>
                                                                     </span>
                                                                     </div>
                                                                     <div class="comment-content mb-5">
@@ -213,6 +212,9 @@ $(document).ready(function() {
                 content.val('');
                 setButtonLoading(btn, false, 'ارسال شد');
                 $('.comment-response').addClass('d-none');
+                $('.comment-count').text(function(_, txt) {
+                    return 'نظر (' + (((txt.match(/\d+/) && parseInt(txt.match(/\d+/)[0])) || 0) + 1) + ')';
+                });
                 setTimeout(function() {
                     setButtonLoading(btn, false, 'ارسال نظر');
                 }, 3000);
