@@ -711,9 +711,14 @@
 <script defer src="{% static 'plugin/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
 <script defer src="{% static 'plugin/photoswipe/photoswipe.min.js' %}"></script>
 <script defer src="{% static 'plugin/photoswipe/photoswipe-ui-default.min.js' %}"></script>
-<script defer src="{% static 'plugin/jquery.floating/jquery.floating.min.js' %}"></script>
+<script src="{% static 'plugin/jquery.floating/jquery.floating.min.js' %}"></script>
 <script defer src="{% static 'js/main.min.js' %}"></script>
 <script defer src="{% static 'js/login.js' %}"></script>
+<script defer>
+    setTimeout(function() {
+        themeparsi.initFloatingElements('.floating');
+    }, 500);
+</script>
 {% if not '/cart' in request.path %}
     <script defer src="{% static 'js/cart.js' %}"></script>
 {% endif %}
