@@ -44,7 +44,7 @@ def like_handler(request):
         return JsonResponse({'message': 'Product not found'}, status=404)
 
 
-def product_view(request, slug):
+def product_view(request, slug, name=None):
     product: Product | None = None
     try:
         product = Product.objects.prefetch_related('comments').get(slug=slug)

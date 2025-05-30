@@ -406,7 +406,7 @@ $(document).ready(function() {
     $('.size').click(function(e) {
         e.preventDefault();
 
-        let value = $(this).text();
+        let value = Number($(this).data('price'));
         let price = $('#product-actual-price')
         let discount = price.data('discount');
         let base_price = Number(discount) === -1 ? price.data('price'):discount;
