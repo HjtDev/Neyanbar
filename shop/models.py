@@ -3,6 +3,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Min
 from django.urls import reverse
+from django.utils.text import slugify
 from tinymce.models import HTMLField
 from account.models import User
 from main.utilities import send_sms, PRODUCT_NOTIFY_ME
@@ -146,7 +147,7 @@ class Product(models.Model):
         return ', '.join(list(volume for volume in self.available_volumes.values_list('name', flat=True)))
 
     def get_absolute_url(self):
-        return reverse('shop:product-detail', kwargs={'slug': self.slug, 'name': self.name})
+        return reverse('shop:product-detail', kwargs={'slug': self.slug, 'name': slugify(self.name, allow_unicode=True)})
 
     class Meta:
         verbose_name = 'محصول'
