@@ -147,7 +147,7 @@ class Product(models.Model):
         return ', '.join(list(volume for volume in self.available_volumes.values_list('name', flat=True)))
 
     def get_absolute_url(self):
-        return reverse('shop:product-detail', kwargs={'slug': self.slug, 'name': slugify(self.name, allow_unicode=True)})
+        return reverse('shop:product-detail', kwargs={'slug': self.slug})
 
     class Meta:
         verbose_name = 'محصول'
