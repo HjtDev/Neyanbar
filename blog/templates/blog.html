@@ -24,14 +24,14 @@
     <main class="main single-product rtl text-right">
         <div class="page-content">
             <div class="page-header pl-4 pr-4">
-                <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبلاگ ما</h3>
+                <h3 class="page-subtitle font-weight-bold">خوش آمدید به مجله نی عنبر</h3>
                 <h1 class="page-title font-weight-bold lh-1 text-white">{{ post }}</h1>
             </div>
             <nav class="breadcrumb-nav">
                 <div class="container breadcrumb-nav-wrap">
                     <ul class="breadcrumb ">
                         <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
-                        <li><a href="{% url 'blog:post-list' %}">وبلاگ</a></li>
+                        <li><a href="{% url 'blog:post-list' %}">مجله</a></li>
                         <li>{{ post }}</li>
                     </ul>
                 </div>
@@ -255,14 +255,14 @@
                                 <div class="widget widget-search border-no mb-2">
                                     <form action="{% url 'blog:post-list' %}" type="GET" class="input-wrapper input-wrapper-inline btn-absolute">
                                         <input type="text" class="form-control" name="search" autocomplete="off"
-                                               placeholder="جستجو در وبلاگ" required/>
+                                               placeholder="جستجو در مجله" required/>
                                         <button class="btn btn-search btn-link" type="submit">
                                             <i class="fa-light fa-magnifying-glass"></i>
                                         </button>
                                     </form>
                                 </div>
                                 <div class="widget widget-collapsible border-no">
-                                    <h3 class="widget-title">دسته بندی وبلاگ ها</h3>
+                                    <h3 class="widget-title">دسته بندی ها</h3>
                                     <ul class="widget-body filter-items search-ul">
                                         {% for category in categories %}
                                             <li><a href="{% url 'blog:post-list' %}?{% query_transform category=category.slug page=None %}">{{ category.name }}</a></li>

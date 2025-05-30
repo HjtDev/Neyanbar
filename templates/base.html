@@ -232,11 +232,11 @@
                                 <ul>
                                     <li><a href="{% url 'main:index' %}">خانه</a></li>
                                     <li><a href="{% url 'shop:product-list' %}">فروشگاه</a></li>
-                                    <li><a href="{% url 'blog:post-list' %}">وبلاگ</a></li>
+                                    <li><a href="{% url 'blog:post-list' %}">مجله</a></li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="{% url 'blog:post-list' %}"> وبلاگ</a>
+                                <a href="{% url 'blog:post-list' %}"> مجله</a>
                             </li>
                             <li>
                                 <a href="{% url 'shop:product-list' %}"> فروشگاه</a>
@@ -468,7 +468,7 @@
                                     <a href="{% url 'shop:product-list' %}">فروشگاه</a>
                                 </li>
                                 <li>
-                                    <a href="{% url 'blog:post-list' %}">وبلاگ</a>
+                                    <a href="{% url 'blog:post-list' %}">مجله</a>
                                 </li>
                                 <li>
                                     <a href="{% url 'account:dashboard' %}" class="{% if not request.user.is_authenticated %}login-toggle{% endif %}">داشبورد</a>
@@ -589,7 +589,7 @@
                         <ul>
                             <li><a href="{% url 'main:index' %}">خانه</a></li>
                             <li><a href="{% url 'shop:product-list' %}">فروشگاه</a></li>
-                            <li><a href="{% url 'blog:post-list' %}">وبلاگ</a></li>
+                            <li><a href="{% url 'blog:post-list' %}">مجله</a></li>
                         </ul>
                     </li>
                     <li>
@@ -661,7 +661,7 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="{% url 'blog:post-list' %}"> وبلاگ</a>
+                        <a href="{% url 'blog:post-list' %}"> مجله</a>
                     </li>
                     <li>
                         <a href="{% url 'shop:product-list' %}"> فروشگاه</a>
