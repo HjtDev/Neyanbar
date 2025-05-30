@@ -386,16 +386,16 @@
                         </form>
                     </div>
                 </div>
-                <div class="row align-items-center mt-2">
+            </div>
+
+            <div class="footer-middle">
+                <div class="row align-items-center mb-4">
                     <div class="col-12">
                         {{ footer_text }}
                     </div>
                 </div>
-            </div>
-
-            <div class="footer-middle">
-                <div class="row">
-                    <div class="col-lg-3 col-md-6">
+                <div class="row d-flex justify-content-center align-items-center">
+                    <div class="col-lg-4 col-md-4">
                         <div class="widget widget-info">
                             <h4 class="widget-title">اطلاعات تماس</h4>
                             <ul class="widget-body ">
@@ -421,43 +421,7 @@
                         </div>
 
                     </div>
-                    <div class="col-lg-2 col-md-6">
-                        <div class="widget">
-                            <h4 class="widget-title"> حساب کاربری من</h4>
-                            <ul class="widget-body ">
-                                <li>
-                                    <a href="{% url 'account:dashboard' %}" class="{% if not request.user.is_authenticated %}login-toggle{% endif %}"> سفارش من را پیگیری کنید</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'cart:cart' %}">نمایش خرید </a>
-                                </li>
-                                {% if not request.user.is_authenticated %}
-                                    <li>
-                                        <a href="#" class="login-toggle">ورود</a>
-                                    </li>
-                                {% endif %} 
-                                <li>
-                                    <a href="{% url 'account:compare-list' %}" class="{% if not request.user.is_authenticated %}login-toggle{% endif %}">لیست مقایسه</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <div class="col-lg-2 col-md-6">
-                        <div class="widget">
-                            <h4 class="widget-title">درباره ما</h4>
-                            <ul class="widget-body ">
-                                <li>
-                                    <a href="{% url 'main:about_us' %}">درباره ما</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'main:terms' %}">شرایط و ضوابط</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    </div>
-                    <div class="col-lg-2 col-md-6">
+                    <div class="col-lg-4 col-md-4">
                         <div class="widget">
                             <h4 class="widget-title">صفحات مهم</h4>
                             <ul class="widget-body ">
@@ -473,14 +437,20 @@
                                 <li>
                                     <a href="{% url 'account:dashboard' %}" class="{% if not request.user.is_authenticated %}login-toggle{% endif %}">داشبورد</a>
                                 </li>
+                                <li>
+                                    <a href="{% url 'main:about_us' %}">درباره ما</a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'main:terms' %}">شرایط و ضوابط</a>
+                                </li>
                             </ul>
                         </div>
 
                     </div>
-                    <div class="col-lg-3 col-md-6">
+                    <div class="col-lg-4 col-md-4">
                         <div class="widget widget-instagram pr-lg-10 mb-0 mb-md-6">
                             <h4 class="widget-title">نمادهای اعتماد</h4>
-                            <figure class="widget-body row rtl">
+                            <figure class="row rtl justify-content-center align-items-center">
                                 <div class="nemad-box">
                                     <a referrerpolicy='origin' target='_blank' href='https://trustseal.enamad.ir/?id=611100&Code=4kKrqoglm1JUh4PpnpLUSIHKZtW7bdeq'><img loading="lazy" referrerpolicy='origin' src='https://trustseal.enamad.ir/logo.aspx?id=611100&Code=4kKrqoglm1JUh4PpnpLUSIHKZtW7bdeq' alt='' style='cursor:pointer' code='4kKrqoglm1JUh4PpnpLUSIHKZtW7bdeq'></a>
                                 </div>
