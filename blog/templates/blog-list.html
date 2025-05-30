@@ -2,11 +2,11 @@
 {% load tags %}
 
 {% block title %}
-	وبلاگ
+	مجله نی عنبر
 {% endblock %}
 
 {% block title_og %}
-	وبلاگ
+	مجله نی عنبر
 {% endblock %}
 
 {% block page_keywords %}
@@ -22,7 +22,7 @@
     <main class="main single-product rtl text-right">
         <div class="page-header pl-4 pr-4">
             <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبسایت ما</h3>
-            <h1 class="page-title font-weight-bold lh-1 text-white">وبلاگ</h1>
+            <h1 class="page-title font-weight-bold lh-1 text-white">مجله نی عنبر</h1>
             {% if filters %}
                 <p class="page-desc text-white mb-0">
                     فیلتر های اعمال شده <br>
@@ -36,7 +36,7 @@
             <div class="container breadcrumb-nav-wrap">
                 <ul class="breadcrumb ">
                     <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
-                    <li>وبلاگ</li>
+                    <li>مجله</li>
                 </ul>
             </div>
         </nav>
@@ -160,14 +160,14 @@
                                 <div class="widget widget-search border-no mb-2">
                                     <form type="GET" class="input-wrapper input-wrapper-inline btn-absolute">
                                         <input type="text" class="form-control" name="search" autocomplete="off"
-                                               placeholder="جستجو در وبلاگ" required/>
+                                               placeholder="جستجو در مجله" required/>
                                         <button class="btn btn-search btn-link" type="submit">
                                             <i class="fa-light fa-magnifying-glass"></i>
                                         </button>
                                     </form>
                                 </div>
                                 <div class="widget widget-collapsible border-no">
-                                    <h3 class="widget-title">دسته بندی وبلاگ ها</h3>
+                                    <h3 class="widget-title">دسته بندی ها</h3>
                                     <ul class="widget-body filter-items search-ul">
                                         {% for category in categories %}
                                             <li><a href="?{% query_transform category=category.slug page=None %}">{{ category.name }}</a></li>
