@@ -22,13 +22,13 @@
     <main class="main rtl text-right">
         <div class="page-header pl-4 pr-4">
             <h3 class="page-subtitle font-weight-bold">خوش آمدید به وبسایت ما</h3>
-            <h1 class="page-title font-weight-bold lh-1 text-white">درباره ما</h1>
+            <h1 class="page-title font-weight-bold lh-1 text-white">{{ title }}</h1>
         </div>
         <nav class="breadcrumb-nav">
             <div class="container breadcrumb-nav-wrap">
                 <ul class="breadcrumb ">
                     <li><a href="{% url 'main:index' %}"><i class="fa-light fa-house"></i></a></li>
-                    <li>درباره ما</li>
+                    <li>{{ title }}</li>
                 </ul>
             </div>
         </nav>
@@ -95,7 +95,7 @@
                             <div class="row align-items-center ">
                                 <div class="col-md-6 order-md-first mb-4 text-right">
                                     <div class="container-fluid title-right-wrap">
-                                        <h2 class="title-right">چشم انداز ما</h2>
+                                        <h2 class="title-right">{{ object.title }}</h2>
                                         <h5 class="title-info-right">
                                             <span></span>
                                             <picture><source srcset="/static/images/perfume/15.webp" type="image/webp"><img src="/static/images/perfume/15.png"></picture>
@@ -103,7 +103,7 @@
                                         </h5>
                                     </div>
                                     <p class="section-desc text-grey">
-                                        ما به عنوان یک فروشگاه پیشرو در زمینه صنعت عطر و ادکلن، به دنبال ترویج عطرسازی طبیعی و اسلامی هستیم. غیر از ایجاد عطرهای هارمونیک و طبیعی، بر آن هستیم که روایتی ناب از فرهنگ اسلامی و ایرانی را به تصویر بکشیم. ما عقیده داریم که عطر، گویای داستان‌های زندگی و احساسات است و هر رایحه‌ای می‌تواند خاطراتی خاص را زنده کند.
+                                        {{ object.description }}
                                     </p>
                                     <a href="{% url 'main:index' %}" class="btn btn-dark btn-link btn-underline ls-m">
                                         از فروشگاه  ما دیدن کنید <i class="fa-light fa-angles-left"></i>
@@ -112,8 +112,8 @@
                                 <div class="col-md-6 mb-4 store-img">
                                     <figure>
                                         <picture>
-                                            <source srcset="{% static 'images/custom/img2.jpg' %}" type="image/webp">
-                                            <img loading="lazy" decoding="async" src="{% static 'images/custom/img2.jpg' %}" alt="Our Store" width="580" height="507" class="banner-radius" style="background-color: #DEE6E8;" />
+                                            <source srcset="{{ object.image.url }}" type="image/webp">
+                                            <img loading="lazy" decoding="async" src="{{ object.image.url }}" alt="Our Store" width="580" height="507" class="banner-radius" style="background-color: #DEE6E8;" />
                                         </picture>
                                     </figure>
                                 </div>
