@@ -47,7 +47,7 @@ class OrderAdmin(admin.ModelAdmin):
             'fields': ('receive_type', 'receive_time', 'not_for_me', 'province', 'city', 'address', 'postal_code')
         }),
         (_('اطلاعات مشتری'), {
-            'fields': ('user', 'name', 'phone', 'email')
+            'fields': ('user', 'name', 'phone', 'email', 'national_code')
         }),
     )
 
