@@ -139,6 +139,8 @@
                                                                name="signin-phone"
                                                                minlength="11"
                                                                maxlength="11"
+                                                               inputmode="numeric"
+                                                               oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                                placeholder="شماره تلفن">
                                                         <input type="text" class="form-control text-left d-none"
                                                                id="token"
@@ -184,6 +186,8 @@
                                                                name="register-phone"
                                                                minlength="11"
                                                                maxlength="11"
+                                                               inputmode="numeric"
+                                                               oninput="this.value = this.value.replace(/[^0-9]/g, '');"
                                                                placeholder="شماره تلفن">
                                                         <input type="text" class="form-control text-left d-none"
                                                                id="register-token"

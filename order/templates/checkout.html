@@ -52,7 +52,14 @@
                                 </div>
                                 <div class="col-xs-6">
                                     <label>تلفن <i class="fa-light fa-star-of-life"></i></label>
-                                    <input type="text" class="form-control text-left" value="{{ request.user.phone }}" name="phone" id="phone" minlength="11" maxlength="11" required />
+                                    <input type="text" class="form-control text-left" value="{{ request.user.phone }}"
+                                           name="phone"
+                                           id="phone"
+                                           minlength="11"
+                                           maxlength="11"
+                                           inputmode="numeric"
+                                           oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                           required />
                                 </div>
                             </div>
                             <label>ایمیل (اختیاری)</label>
