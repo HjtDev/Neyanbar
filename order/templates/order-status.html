@@ -135,12 +135,14 @@
                         </tbody>
                     </table>
                 </div>
-                <h2 class="title title-simple text-right pt-10 mb-2">آدرس مقصد</h2>
+                <h2 class="title title-simple text-right pt-10 mb-2">اطلاعات</h2>
                 <div class="address-info pb-8 mb-6">
                     <p class="address-detail pb-2">
                         {{ order.province }}<br>
                         {{ order.city }}<br>
-                        {{ order.address }}
+                        {{ order.address }}<br>
+                        {{ order.description }}<br>
+                        برای {{ order.user }} با کد ملی {{ order.national_code }}
                     </p>
                     {% if order.email %}
                         <p class="email">{{ order.email }}</p>

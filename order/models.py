@@ -1,6 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.template.context_processors import request
+from zeep.exceptions import ValidationError
 
 from shop.models import Product, Volume
 from main.models import Setting
@@ -29,6 +30,7 @@ class Order(models.Model):
     user = models.ForeignKey(User, related_name='orders', on_delete=models.SET_NULL, blank=True, null=True, verbose_name='کاربر')
     name = models.CharField(max_length=100, verbose_name='نام و نام خانوادگی')
     phone = models.CharField(max_length=11, verbose_name='شماره تلفن')
+    national_code = models.CharField(max_length=10, verbose_name='کد ملی')
     email = models.EmailField(max_length=255, blank=True, null=True, verbose_name='ایمیل')
     province = models.CharField(max_length=30, blank=True, verbose_name='استان')
     city = models.CharField(max_length=30, blank=True, verbose_name='شهر')
@@ -56,6 +58,11 @@ class Order(models.Model):
     def get_total_cost(self):
         settings = Setting.objects.first()
         return int(sum(item.price for item in self.items.all()) * (1 + settings.tax_fee / 100) + settings.post_fee)
+
+    def get_parcel_items(self):
+        return [{'description': item.product.name, 'product_id': item.product.id,
+                 'properties': {'حجم': item.volume.name, 'pid': item.product.pid}, 'quantity': item.quantity,
+                 'price': item.price * 10} for item in self.items.all()]
 
     class Meta:
         verbose_name = 'سفارش'
