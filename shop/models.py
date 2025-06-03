@@ -44,7 +44,8 @@ class Product(models.Model):
     class SeasonChoices(models.TextChoices):
         WINTER = 'WINTER', 'پاییز - زمستان'
         SUMMER = 'SUMMER', 'بهار - تابستان'
-    season = models.CharField(choices=SeasonChoices.choices, max_length=8, verbose_name='فصل')
+        ALL_SEASONS = 'ALL_SEASONS', 'چهار فصل'
+    season = models.CharField(choices=SeasonChoices.choices, max_length=12, verbose_name='فصل')
 
     class TasteChoices(models.TextChoices):
         SPICY = 'SPICY', 'تند'

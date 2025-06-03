@@ -68,7 +68,7 @@
                                     </div>
                                     <div class="product-label-group">
                                         {% if not product.inventory %}
-                                            <div class="sold-out">تمام شد</div>
+                                            <div class="sold-out">ناموجود</div>
                                         {% else %}
                                             {% if product.discount != -1 %}
                                                 <div class="discount">{{ product.get_price_difference }}% تخفیف</div>
