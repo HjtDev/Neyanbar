@@ -58,7 +58,7 @@ def product_view(request, slug, name=None):
 
     all_products = Product.objects.filter(is_visible=True).exclude(id=product.id)
 
-    if not product.is_visible and request.user.is_authenticated:
+    if not product.is_visible and not request.user.is_superuser:
         return redirect('main:index')
 
     suggestion = all_products.filter(

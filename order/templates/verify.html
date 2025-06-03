@@ -54,7 +54,10 @@
                                 {% csrf_token %}
                                 <div class="form-group mb-4">
                                     <label>کد تایید <i class="fa-light fa-star-of-life"></i></label>
-                                    <input type="number" class="form-control text-left" id="token" name="token" placeholder="۱۲۳۴"
+                                    <input type="number" class="form-control text-left" id="token" name="token"
+                                           inputmode="numeric"
+                                           oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                           placeholder="۱۲۳۴"
                                            required />
                                 </div>
                                 <button class="btn btn-md btn-block btn-gradient" type="submit">
