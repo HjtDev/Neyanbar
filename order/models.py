@@ -161,11 +161,11 @@ class CreditCart(models.Model):
         return False
 
     def __str__(self):
-        return f' {self.token}کارت اعتباری:'
+        return f' {self.token}کارت هدیه:'
 
     class Meta:
-        verbose_name = 'کارت اعتباری'
-        verbose_name_plural = 'کارت های اعتباری'
+        verbose_name = 'کارت هدیه'
+        verbose_name_plural = 'کارت های هدیه'
 
 
 class Transaction(models.Model):
