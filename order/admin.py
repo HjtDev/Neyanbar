@@ -86,7 +86,7 @@ class CreditCartAdmin(admin.ModelAdmin):
     readonly_fields = ('created_at',)
 
     fieldsets = (
-        (_('اطلاعات کارت اعتباری'), {
+        (_('اطلاعات کارت هدیه'), {
             'fields': ('token', 'credit', 'created_by', 'created_at')
         }),
     )

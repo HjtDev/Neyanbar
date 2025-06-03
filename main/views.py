@@ -54,6 +54,8 @@ def credit_card_view(request):
 
     try:
         credit_cart = CreditCart.objects.filter(created_by=request.user)
+        if not credit_cart.exists():
+            return render(request, 'credit-card-empty.html')
         return render(request, 'credit-card.html', {'credit_carts': credit_cart})
     except CreditCart.DoesNotExist:
         return render(request, 'credit-card-empty.html')
