@@ -45,6 +45,18 @@
                                                          height="293">
                                                 </picture>
                                             </a>
+                                            <div class="product-label-group">
+                                                {% if not product.inventory %}
+                                                    <div class="sold-out">ناموجود</div>
+                                                {% else %}
+                                                    {% if product.discount != -1 %}
+                                                        <div class="discount">{{ product.get_price_difference }}% تخفیف</div>
+                                                    {% endif %}
+                                                    {% if product.created_at|is_new %}
+                                                        <div class="new-label">جدید</div>
+                                                    {% endif %}
+                                                {% endif %}
+                                            </div>
                                             <div class="product-action-vertical">
                                                 <a href="#" class="btn-product-icon add-to-cart" data-toggle="modal" data-id="{{ product.id }}"
                                                    data-target="#addCartModal" title="اضافه به خرید">
@@ -152,7 +164,7 @@
                         <div class="sidebar-overlay"></div>
                         <a class="sidebar-close" href="#"><i class="fa-light fa-xmark"></i></a>
                         <a href="#" class="sidebar-toggle">
-                            <i class="fa-light fa-chevron-right"></i>
+                            <i class="fa-light fa-filter-list"></i>
                         </a>
                         <div class="sidebar-content">
                             <div class="sticky-sidebar" data-sticky-options="{'top': 10}">
@@ -185,6 +197,7 @@
                                     <ul class="widget-body filter-items" style="display: none;">
                                         <li class="season-select" data-value="SUMMER"><a class="active-filter" href="#">بهار - تابستان</a></li>
                                         <li class="season-select" data-value="WINTER"><a class="active-filter" href="#">پاییز - زمستان</a></li>
+                                        <li class="season-select" data-value="ALL_SEASONS"><a class="active-filter" href="#">چهار فصل</a></li>
                                     </ul>
                                 </div>
                                 </div>

@@ -62,8 +62,18 @@
                                            required />
                                 </div>
                             </div>
-                            <label>ایمیل (اختیاری)</label>
-                            <input type="text" class="form-control text-left" name="email-address" id="email-address" value="{{ request.user.email }}" required />
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <label>ایمیل (اختیاری)</label>
+                                    <input type="text" class="form-control text-left" name="email-address" id="email-address" value="{{ request.user.email }}" required />
+                                </div>
+                                <div class="col-xs-6">
+                                    <label>کد ملی</label>
+                                    <input type="text" name="national_code" id="national_code"
+                                           class="form-control text-left" placeholder="برای ارسال پستی"
+                                           oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                </div>
+                            </div>
                             <label>استان <i class="fa-light fa-star-of-life"></i></label>
                             <div class="select-box">
                                 <select id="province-select" name="province" class="form-control">
@@ -112,7 +122,12 @@
                                    placeholder="نام محله ، نام خیابان ، کوچه" />
 
                             <label>کد پستی <i class="fa-light fa-star-of-life"></i></label>
-                            <input type="text" class="form-control text-left" name="postal_code" id="postal_code" value="{{ request.user.orders.last.postal_code }}" minlength="10" maxlength="10" required />
+                            <input type="text" class="form-control text-left"
+                                   name="postal_code" id="postal_code"
+                                   value="{{ request.user.orders.last.postal_code }}"
+                                   minlength="10" maxlength="10"
+                                   oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                   required />
 
                             <div class="form-checkbox mb-6">
                                 <input type="checkbox" class="custom-checkbox" id="different-address"

@@ -213,3 +213,27 @@ CALLBACK_URL = ENV('CALLBACK_URL')
 SMS_USERNAME = ENV('SMS_USERNAME')
 SMS_PASSWORD = ENV('SMS_PASSWORD')
 SMS = Api(SMS_USERNAME, SMS_PASSWORD).sms()
+
+# Postex
+
+POSTEX_CONFIG = {
+    'api_key': ENV('POSTEX_API_KEY'),
+    'payment_method': 'RECEIVER',  # SENDER - RECEIVER - COD
+    'courier': {  # Pishtaz
+        'courier_code': 'IR_POST',
+        'service_type': 'EXPRESS'
+    },
+    'TELEPHONE': ENV('TELEPHONE'),
+    'postal_code': ENV('POSTAL_CODE'),
+    'city_id': ENV('CITY_ID'),
+    'city_name': ENV('CITY_NAME'),
+    'address': ENV('ADDRESS'),
+    'sms_notification': True,
+    'email_notification': True,
+    'request_pickup': False,
+    'request_delivery': False,
+    "request_label": False,
+    "request_packaging": False,
+    "print_logo": False,
+    'ready_to_accept': False,
+}

@@ -75,6 +75,7 @@ def order_submit(request):
     name = request.POST.get('name')
     phone = request.POST.get('phone')
     email = request.POST.get('email')
+    national_code = request.POST.get('national_code')
     province = request.POST.get('province')
     city = request.POST.get('city')
     address = request.POST.get('address')
@@ -93,6 +94,9 @@ def order_submit(request):
 
     if email and not validate_email(email):
         return JsonResponse({'message': 'لطفا یک ایمیل معتبر وارد کنید'}, status=400)
+
+    if not national_code or len(national_code) != 10 or not national_code.isdigit():
+        return JsonResponse({'message': 'لطفا یک کد ملی معتبر انتخاب کنید'}, status=400)
 
     if not province:
         return JsonResponse({'message': 'لطفا یک استان معتبر انتخاب کنید'}, status=400)
@@ -122,6 +126,7 @@ def order_submit(request):
         name=name,
         phone=phone,
         email=email,
+        national_code=national_code,
         province=province,
         city=city,
         address=address,
