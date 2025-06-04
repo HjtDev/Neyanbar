@@ -48,7 +48,7 @@
                     </a>
                     <div class="header-search hs-simple">
                         <form action="{% url 'shop:product-list' %}" method="get" class="input-wrapper">
-                            <input type="text" class="form-control" name="search" autocomplete="off"
+                            <input type="text" class="form-control text-black" name="search" autocomplete="off"
                                    placeholder="جستجو ..." required
                                    oninvalid="this.setCustomValidity('نام محصول مورد نظر را تایپ نمایید .');"
                                    onchange="try{setCustomValidity('')}catch(e){};"
@@ -58,19 +58,19 @@
                             </button>
                         </form>
                     </div>
-                    <div class="icon-box icon-box-side phone-box">
-                        <div class="icon-box-icon mr-0 mr-lg-2">
-                            <a href="tel:02146017582">
+                    <a href="tel:02146017582">
+                        <div class="icon-box icon-box-side phone-box">
+                            <div class="icon-box-icon mr-0 mr-lg-2">
                                 <i class="fa-light fa-phone"></i>
-                            </a>
+                            </div>
+                                <div class="icon-box-content d-lg-show p-1">
+                                    <h4 class="icon-box-title text-dark text-normal">
+                                        <p class="d-inline-block">تلفن پاسخگو</p>
+                                    </h4>
+                                    <p> 02146017582 </p>
+                                </div>
                         </div>
-                        <div class="icon-box-content d-lg-show">
-                            <h4 class="icon-box-title text-dark text-normal">
-                                <a href="#" class=" d-inline-block">تلفن پاسخگو</a>
-                            </h4>
-                            <p><a href="tel:02146017582"> 02146017582 </a></p>
-                        </div>
-                    </div>
+                    </a>
                 </div>
                 <div class="header-left ">
                     {% if not '/cart' in request.path and request.path != '/order/' %}
@@ -119,13 +119,12 @@
                                 <div class="login-popup">
                                     <div class="form-box">
                                         <div class="tab tab-nav-simple tab-nav-boxed form-tab">
-                                            <ul class="nav nav-tabs nav-fill align-items-center border-no justify-content-center"
-                                                role="tablist">
+                                            <ul class="nav nav-tabs nav-fill align-items-center border-no justify-content-center">
                                                 <li class="nav-item">
                                                     <a class="nav-link active border-no lh-1 ls-normal"
                                                        href="#signin">ورود </a>
                                                 </li>
-                                                <li class="delimiter">یا</li>
+                                                <li class="delimiter"><span>یا</span></li>
                                                 <li class="nav-item">
                                                     <a class="nav-link border-no lh-1 ls-normal register-sidebar-button"
                                                        href="#register"> ثبت نام</a>
