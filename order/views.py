@@ -32,27 +32,28 @@ def order_view(request):
 
     setting = Setting.objects.first()
     context = {
-        'post_fee': setting.post_fee,
+        'post_fee': setting.get_post_fee(cart.get_total_cost()),
         'tax_fee': setting.tax_fee,
     }
     if request.session.get('discount'):
         try:
             discount = Discount.objects.get(id=request.session['discount'])
+            final_price = sum(
+                discount.get_price(item['product'], int(item['volume'])) * int(item['quantity']) for item in
+                cart)
             context.update({
                 'applied_discount': discount.value,
-                'final_price': sum(
-                    discount.get_price(item['product'], int(item['volume'])) * int(item['quantity']) for item in
-                    cart) * (1 + setting.tax_fee / 100) + setting.post_fee,
+                'final_price': final_price  * (1 + setting.tax_fee / 100) + setting.get_post_fee(final_price),
             })
         except Discount.DoesNotExist:
             del request.session['discount']
             context.update({
                 'applied_discount': 0,
-                'final_price': cart.get_total_cost() * (1 + setting.tax_fee / 100) + setting.post_fee,
+                'final_price': cart.get_total_cost() * (1 + setting.tax_fee / 100) + setting.get_post_fee(cart.get_total_cost()),
             })
     else:
         context.update({
-            'final_price': cart.get_total_cost() * (1 + setting.tax_fee / 100) + setting.post_fee,
+            'final_price': cart.get_total_cost() * (1 + setting.tax_fee / 100) + setting.get_post_fee(cart.get_total_cost()),
         })
     minimum_days = setting.order_waiting_days
     available_days = []
@@ -163,7 +164,7 @@ def order_submit(request):
                 price=price
             )
             total_cost += price
-    total_cost = total_cost * (1 + setting.tax_fee / 100) + setting.post_fee
+    total_cost = total_cost * (1 + setting.tax_fee / 100) + setting.get_post_fee(total_cost)
     cart.clear()
     if request.user.is_authenticated:
         if request.session.get('discount'):

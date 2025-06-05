@@ -71,7 +71,7 @@
                                     <label>کد ملی</label>
                                     <input type="text" name="national_code" id="national_code"
                                            class="form-control text-left" placeholder="برای ارسال پستی"
-                                           oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                                           oninput="this.value = this.value.replace(/[^0-9]/g, '');" required>
                                 </div>
                             </div>
                             <label>استان <i class="fa-light fa-star-of-life"></i></label>
@@ -173,7 +173,7 @@
                                             <td class="product-name">
                                                 هزینه پست
                                             </td>
-                                            <td class="product-total text-body" id="post-fee" data-price="{{ post_fee }}">{{ post_fee | commafy }} تومان</td>
+                                            <td class="product-total text-body" id="post-fee" data-price="{{ post_fee }}">{% if post_fee %}{{ post_fee | commafy }} تومان{% else %}رایگان{% endif %}</td>
                                         </tr>
                                         <tr>
                                             <td class="product-name">
