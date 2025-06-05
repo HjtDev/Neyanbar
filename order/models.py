@@ -57,7 +57,8 @@ class Order(models.Model):
 
     def get_total_cost(self):
         settings = Setting.objects.first()
-        return int(sum(item.price for item in self.items.all()) * (1 + settings.tax_fee / 100) + settings.post_fee)
+        total = sum(item.price for item in self.items.all())
+        return int(total * (1 + settings.tax_fee / 100) + settings.get_post_fee(total))
 
     def get_parcel_items(self):
         return [{'description': item.product.name, 'product_id': item.product.id,

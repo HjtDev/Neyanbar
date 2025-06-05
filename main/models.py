@@ -13,6 +13,7 @@ class Setting(models.Model):
     orders_per_day = models.PositiveIntegerField(default=1, verbose_name='بیشترین تعداد سفارش در یک روز')
     order_days_limit = models.PositiveIntegerField(default=3, verbose_name='تعداد روز های قابل انتخاب برای دریافت سفارش')
     post_fee = models.PositiveIntegerField(default=10, validators=[MinValueValidator(10)], verbose_name='کرایه پست', help_text='به تومان')
+    post_fee_max = models.PositiveIntegerField(default=1_000_000, validators=[MinValueValidator(10)], verbose_name='حداکثر هزینه اعمال پست', help_text='در صورتی که هزینه سفارش بیشتر از جداکثر بشه کرایه پست رایگان در نظر گرفته میشه')
     tax_fee = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1), MaxValueValidator(100)], verbose_name='مالیات', help_text='به درصد')
 
     show_offer = models.BooleanField(default=False, verbose_name='نمایش پیشنهاد')
@@ -23,6 +24,9 @@ class Setting(models.Model):
 
     video_text = models.CharField(max_length=150, blank=True, verbose_name='متن ویدیو')
     footer_text = models.TextField(blank=True, verbose_name='متن فوتر')
+
+    def get_post_fee(self, order_total):
+        return self.post_fee if order_total < self.post_fee_max else 0
 
     def get_offer_link(self):
         if not self.show_offer or not self.products:

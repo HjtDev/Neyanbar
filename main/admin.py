@@ -16,7 +16,7 @@ class SettingAdmin(admin.ModelAdmin):
             'classes': ['collapse', 'tab-order-fields'],
         }),
         (_('هزینه ها'), {
-            'fields': ['post_fee', 'tax_fee'],
+            'fields': ['post_fee', 'post_fee_max', 'tax_fee'],
             'classes': ['collapse', 'tab-fee-fields'],
         }),
         (_('پیشنهاد'), {
