@@ -635,7 +635,7 @@
                              data-animation-options="{
                                 'name': 'fadeInLeftShorter', 'duration': '1s'
                             }">
-                            <figure class="bg-green" onclick="window.location.href = '{% url 'shop:product-list' %}?gender=MALE';">
+                            <figure class="bg-green" style="cursor: pointer" onclick="window.location.href = '{% url 'shop:product-list' %}?gender=MALE';">
                                 <picture><source srcset="/static/images/banner1.webp" type="image/webp"><img loading="lazy" decoding="async" src="/static/images/banner1.png" alt="Banner" /></picture>
                             </figure>
                             <div class="banner-content rtl">
@@ -660,7 +660,7 @@
                              data-animation-options="{
                                 'name': 'fadeInRightShorter', 'duration': '1s'
                             }">
-                            <figure class="border-green" onclick="window.location.href = '{% url 'shop:product-list' %}?gender=FEMALE';">
+                            <figure class="border-green" style="cursor: pointer" onclick="window.location.href = '{% url 'shop:product-list' %}?gender=FEMALE';">
                                 <picture><source srcset="/static/images/banner2.webp" type="image/webp"><img loading="lazy" decoding="async" src="/static/images/banner2.png" alt="Banner" /></picture>
                             </figure>
                             <div class="banner-content rtl">
@@ -1408,7 +1408,7 @@
                         }
                     }">
                     {% for brand in all_brands %}
-                        <picture><source srcset="{{ brand.logo.url }}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{{ brand.logo.url }}" alt="Brand" width="180" height="100" /></picture>
+                        <picture style="cursor: pointer" onclick="window.location.href = '{{ brand.get_absolute_url }}';"><source srcset="{{ brand.logo.url }}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{{ brand.logo.url }}" alt="Brand" width="180" height="100" /></picture>
                     {% endfor %}
                 </div>
             </section>
