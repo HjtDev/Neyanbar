@@ -1,5 +1,4 @@
-from django.db.models import Count, Min, Max, Q, ExpressionWrapper, Case, When, F, IntegerField
-from django.http import HttpResponse
+from django.db.models import Count, Min, Max, ExpressionWrapper, Case, When, F, IntegerField
 from django.shortcuts import render, redirect
 from blog.models import Post
 from shop.models import Product, Brand
@@ -7,6 +6,7 @@ from .models import Setting, AboutUs, Terms, PerfumeRequest
 from order.models import CreditCart
 from uuid import uuid4
 from order.zarinpal import start_payment
+from jdatetime import date as jdate
 
 
 def home_view(request):
@@ -52,6 +52,16 @@ def home_view(request):
             'offer_event': settings.event,
             'offer_link': settings.get_offer_link(),
             'offer_banner': settings.banner.url,
+        })
+    if jdate.today().month <= 6:
+        context.update({
+            'season_title': 'عطر های بهاری و تابستانی',
+            'season_products': all_products.filter(season__in=[Product.SeasonChoices.SUMMER, Product.SeasonChoices.ALL_SEASONS]).order_by('-discount')[:7]
+        })
+    else:
+        context.update({
+            'season_title': 'عطر های پاییزی و زمستانی',
+            'season_products': all_products.filter(season__in=[Product.SeasonChoices.WINTER, Product.SeasonChoices.ALL_SEASONS]).order_by('-discount')[:7]
         })
     return render(request, 'index.html', context)
 

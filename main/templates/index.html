@@ -576,72 +576,58 @@
                     </div>
                 </section>
             {% endif %}
-            <section class="container rtl text-right">
-                <div class="service-list">
-                    <div class="owl-carousel owl-theme owl-middle row cols-lg-4 cols-md-3 cols-sm-2 cols-2"
-                         data-owl-options="{
-                             'rtl':true,
-                            'items': 4,
-                            'margin': 20,
-                            'autoplay':true,
-                            'responsive': {
-                                '0': {
-                                    'items': 1
-                                },
-                                '576': {
-                                    'items': 2
-                                },
-                                '768': {
-                                    'items': 3
-                                },
-                                '992': {
-                                    'items': 4
-                                }
-                            }
-                        }">
-                        <div class="icon-box text-center appear-animate" data-animation-options="{
-                                'name':'zoomInLeft',
-                                'delay': '.2s'
-                            }">
-                            <i class="fa-light fa-truck-fast"></i>
-                            <div class="icon-box-content rtl">
-                                <h4 class="icon-box-title">ارسال سریع و مرجوعی </h4>
-                                <p> سراسر کشور </p>
-                            </div>
-                        </div>
-                        <div class="icon-box text-center appear-animate" data-animation-options="{
-                                'name':'zoomInLeft',
-                                'delay': '.3s'
-                            }">
-                            <i class="fa-light fa-headphones"></i>
-                            <div class="icon-box-content rtl">
-                                <h4 class="icon-box-title">پشتیبانی 24 ساعته</h4>
-                                <p>دسترسی فوری به پشتیبان های ما</p>
-                            </div>
-                        </div>
-                        <div class="icon-box text-center appear-animate" data-animation-options="{
-                                'name':'zoomInLeft',
-                                'delay': '.4s'
-                            }">
-                            <i class="fa-light fa-badge-check"></i>
-                            <div class="icon-box-content rtl">
-                                <h4 class="icon-box-title">پرداخت 100% مطمئن</h4>
-                                <p>ما تضمین پرداخت امن را داریم</p>
-                            </div>
-                        </div>
-                        <div class="icon-box text-center appear-animate" data-animation-options="{
-                                'name':'zoomInLeft',
-                                'delay': '.5s'
-                            }">
-                            <i class="fa-light fa-tags"></i>
-                            <div class="icon-box-content rtl">
-                                <h4 class="icon-box-title">انواع تخفیفات روزانه</h4>
-                                <p>3 روز فرصت بازگشت کالا</p>
+
+            <section class="tab-main">
+                <div class="title-wrapper">
+                    <div class="container-fluid title-wrap">
+                        <h2 class="title">{{ season_title }} </h2>
+                        <h5 class="title-info">
+                            <span></span>
+                            <picture><source srcset="{% static 'images/perfume/15.webp' %}" type="image/webp"><img src="{% static 'images/perfume/15.png' %}"></picture>
+                            <span></span>
+                        </h5>
+                    </div>
+                </div>
+                <div class="container tab-wrap">
+                    <div class="row ">
+                        <div class="tab tab-vertical tab-nav-solid code-content">
+                            <ul class="nav nav-tabs" role="tablist">
+                                {% for product in season_products %}
+                                    <li class="nav-item">
+                                        <a class="nav-link {% if forloop.first %}active{% endif %}" href="#tab7-{{ product.id }}"> {{ product }} </a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            <div class="tab-content tab-content-main">
+                                {% for product in season_products %}
+                                    <div class="tab-pane {% if forloop.first %}active{% endif %}" id="tab7-{{ product.id }}">
+                                        <div class="col-lg-6 col-md-5 tab-content-right">
+                                            <picture><source srcset="{{ product.images.first.image.url }}" type="image/webp"><img loading="lazy" decoding="async" src="{{ product.images.first.image.url }}" /></picture>
+                                        </div>
+                                        <div class="col-lg-6 col-md-7 tab-content-left">
+                                            {% if product.discount != -1 %}
+                                                <span class="tab-discount">{{ product.get_price_difference }}% تخفیف</span>
+                                            {% endif %}
+                                            <h3>{{ product.get_price | commafy }} تومان</h3>
+                                            <h2>{{ product }}</h2>
+                                            <ul class="list list-type-check mb-4">
+                                                <li><i class="fa-light fa-badge-check"></i>جنسیت : {{ product.get_gender_display }}</li>
+                                                <li><i class="fa-light fa-badge-check"></i>طبع : {{ product.get_taste_display }}</li>
+                                                <li><i class="fa-light fa-badge-check"></i>گروه بویایی : {{ product.get_smell }}</li>
+                                                <li><i class="fa-light fa-badge-check"></i>فصل : {{ product.get_season_display }}</li>
+                                                <li><i class="fa-light fa-badge-check"></i>ماندگاری : {{ product.get_durability_display }}</li>
+                                                <li><i class="fa-light fa-badge-check"></i>پخش بو : {{ product.get_spread_display }} </li>
+                                            </ul>
+                                            <a href="{{ product.get_absolute_url }}" class="btn btn-dark btn-rounded width-half btn-md btn-block btn-gradient" data-toggle="modal" data-target="#addCartModal" title="اضافه به خرید">مشاهده و انتخاب<i class="fa-light fa-basket-shopping-simple"></i></a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
+
             {% for brand in top_brands %}
                 {% if forloop.counter < 3 %}
                     <section class="product-wrapper bg-main container appear-animate rtl text-right">
@@ -885,6 +871,7 @@
                     </section>
             	{% endif %}
             {% endfor %}
+
             <section class="container rtl text-right m-b-10">
                 <div class="title-wrapper">
                     <div class="container-fluid title-wrap">
@@ -994,6 +981,73 @@
                     {% for brand in all_brands %}
                         <picture><source srcset="{{ brand.logo.url }}" type="image/webp"><img loading="lazy" decoding="async" class="brand-2" src="{{ brand.logo.url }}" alt="Brand" width="180" height="100" /></picture>
                     {% endfor %}
+                </div>
+            </section>
+
+            <section class="container rtl text-right">
+                <div class="service-list">
+                    <div class="owl-carousel owl-theme owl-middle row cols-lg-4 cols-md-3 cols-sm-2 cols-2"
+                         data-owl-options="{
+                             'rtl':true,
+                            'items': 4,
+                            'margin': 20,
+                            'autoplay':true,
+                            'responsive': {
+                                '0': {
+                                    'items': 1
+                                },
+                                '576': {
+                                    'items': 2
+                                },
+                                '768': {
+                                    'items': 3
+                                },
+                                '992': {
+                                    'items': 4
+                                }
+                            }
+                        }">
+                        <div class="icon-box text-center appear-animate" data-animation-options="{
+                                'name':'zoomInLeft',
+                                'delay': '.2s'
+                            }">
+                            <i class="fa-light fa-truck-fast"></i>
+                            <div class="icon-box-content rtl">
+                                <h4 class="icon-box-title">ارسال سریع و مرجوعی </h4>
+                                <p> سراسر کشور </p>
+                            </div>
+                        </div>
+                        <div class="icon-box text-center appear-animate" data-animation-options="{
+                                'name':'zoomInLeft',
+                                'delay': '.3s'
+                            }">
+                            <i class="fa-light fa-headphones"></i>
+                            <div class="icon-box-content rtl">
+                                <h4 class="icon-box-title">پشتیبانی 24 ساعته</h4>
+                                <p>دسترسی فوری به پشتیبان های ما</p>
+                            </div>
+                        </div>
+                        <div class="icon-box text-center appear-animate" data-animation-options="{
+                                'name':'zoomInLeft',
+                                'delay': '.4s'
+                            }">
+                            <i class="fa-light fa-badge-check"></i>
+                            <div class="icon-box-content rtl">
+                                <h4 class="icon-box-title">پرداخت 100% مطمئن</h4>
+                                <p>ما تضمین پرداخت امن را داریم</p>
+                            </div>
+                        </div>
+                        <div class="icon-box text-center appear-animate" data-animation-options="{
+                                'name':'zoomInLeft',
+                                'delay': '.5s'
+                            }">
+                            <i class="fa-light fa-tags"></i>
+                            <div class="icon-box-content rtl">
+                                <h4 class="icon-box-title">انواع تخفیفات روزانه</h4>
+                                <p>3 روز فرصت بازگشت کالا</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>
