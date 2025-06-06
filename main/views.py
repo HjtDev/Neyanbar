@@ -10,7 +10,7 @@ from order.zarinpal import start_payment
 
 
 def home_view(request):
-    all_products = Product.objects.filter(is_visible=True).annotate(
+    all_products = Product.objects.select_related('brand').filter(is_visible=True).annotate(
         verified_comments_count=Count('comments')
     )
     all_brands = Brand.objects.prefetch_related('products').all()
@@ -37,8 +37,12 @@ def home_view(request):
                 output_field=IntegerField()
             )
         ).order_by('-products__site_score')[:4],
-        'top_products': all_products.order_by('-site_score')[:6],
+        'neyanbar_suggestion': all_products.order_by('-views')[:6],
         'top_discounts': title_products.exclude(id=title_products[0].id).annotate(max_discount=Max('discount')).order_by('max_discount')[:6],
+        'sweet_product': all_products.filter(taste=Product.TasteChoices.SWEET).order_by('-site_score').first(),
+        'sour_product': all_products.filter(taste=Product.TasteChoices.SOUR).order_by('-site_score').first(),
+        'bitter_product': all_products.filter(taste=Product.TasteChoices.BITTER).order_by('-site_score').first(),
+        'spicy_product': all_products.filter(taste=Product.TasteChoices.SPICY).order_by('-site_score').first(),
         'video_text': settings.video_text,
         'footer_text': settings.footer_text,
     }

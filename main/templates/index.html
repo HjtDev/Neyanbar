@@ -391,7 +391,7 @@
             <section class="product-wrapper container offer-main-2 appear-animate rtl text-right">
                 <div class="title-wrapper">
                     <div class="container-fluid title-wrap">
-                        <h2 class="title">محصولات برتر </h2>
+                        <h2 class="title">پیشنهاد نی عنبر </h2>
                         <h5 class="title-info">
                             <span></span>
                             <picture><source srcset="{% static 'images/perfume/15.webp' %}" type="image/webp"><img src="{% static 'images/perfume/15.png' %}" alt="section-icon"></picture>
@@ -421,7 +421,7 @@
                             }
                         }
                     }">
-                    {% for product in top_products %}
+                    {% for product in neyanbar_suggestion %}
                         <div class="product product-slideup text-center appear-animate" data-animation-options="{
                             'name':'fadeInUpShorter',
                             'delay': '.2s'
@@ -469,6 +469,92 @@
                     {% endfor %}
                 </div>
             </section>
+
+            <section class="banner-main">
+                <div class="container banner-wrap">
+                    <div class="banner-grid-3cols row cols-xl-4 cols-lg-2 cols-md-2 cols-1 justify-content-center">
+                        <div class="banner banner-fixed content-middle banner-radius mb-4 appear-animate"
+                             data-animation-options="{
+               'name': 'fadeInLeftShorter', 'duration': '1s'
+           }">
+                            <figure class="bg-blue" onclick="window.location.href = '{{ sweet_product.get_absolute_url }}';">
+                                <picture><source srcset="{{ sweet_product.images.first.image.url }}" type="image/webp"><img loading="lazy" decoding="async" src="{{ sweet_product.images.first.image.url }}" alt="Banner" /></picture>
+                            </figure>
+                            <div class="banner-content rtl">
+                                <h4 class="banner-subtitle text-white font-weight-normal ls-normal">
+                                    عطر های شیرین
+                                </h4>
+                                <h3 class="banner-title  text-white font-weight-semi-bold ls-m">
+                                    {{ sweet_product }} <br>
+                                    <span class="font-weight-normal text-white text-normal">{{ sweet_product.brand }}</span>
+                                </h3>
+                                <a href="{% url 'shop:product-list' %}?tastes=SWEET" class="btn btn-md btn-block btn-gradient">
+                                    بقیه عطر های شیرین <i class="fa-light fa-angles-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="banner banner-fixed content-middle banner-radius mb-4 appear-animate"
+                             data-animation-options="{
+               'name': 'fadeIn'
+           }">
+                            <figure class="bg-orange" onclick="window.location.href = '{{ sour_product.get_absolute_url }}';">
+                                <picture><source srcset="{{ sour_product.images.first.image.url }}" type="image/webp"><img loading="lazy" decoding="async" src="{{ sour_product.images.first.image.url }}" alt="Banner" /></picture>
+                            </figure>
+                            <div class="banner-content rtl">
+                                <h4 class="banner-subtitle text-white font-weight-normal ls-normal">عطر های ترش</h4>
+                                <h3 class="banner-title text-white  font-weight-semi-bold ls-m">
+                                    {{ sour_product }} <br>
+                                    <span class="font-weight-normal">{{ sour_product.brand }}</span>
+                                </h3>
+                                <a href="{% url 'shop:product-list' %}?tastes=SOUR" class="btn btn-md btn-block btn-gradient">
+                                    بقیه عطر های ترش <i class="fa-light fa-angles-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="banner banner-fixed content-middle banner-radius mb-4 appear-animate"
+                             data-animation-options="{
+               'name': 'fadeInRightShorter', 'duration': '1s'
+           }">
+                            <figure class="bg-purple" onclick="window.location.href = '{{ bitter_product.get_absolute_url }}';">
+                                <picture><source srcset="{{ bitter_product.images.first.image.url }}" type="image/webp"><img loading="lazy" decoding="async" src="{{ bitter_product.images.first.image.url }}" alt="Banner" /></picture>
+                            </figure>
+                            <div class="banner-content rtl">
+                                <h4 class="banner-subtitle text-white font-weight-normal ls-normal">
+                                    عطر های تلخ
+                                </h4>
+                                <h3 class="banner-title  font-weight-semi-bold text-white ls-m">
+                                    {{ bitter_product }}  <br>
+                                    <span class="font-weight-normal">{{ bitter_product.brand }}</span>
+                                </h3>
+                                <a href="{% url 'shop:product-list' %}?tastes=BITTER" class="btn btn-md btn-block btn-gradient">
+                                    بقیه عطر های تلخ <i class="fa-light fa-angles-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="banner banner-fixed content-middle banner-radius mb-4 appear-animate"
+                             data-animation-options="{
+               'name': 'fadeInRightShorter', 'duration': '1s'
+           }">
+                            <figure class="bg-red" onclick="window.location.href = '{{ spicy_product.get_absolute_url }}';">
+                                <picture><source srcset="{{ spicy_product.images.first.image.url }}" type="image/webp"><img loading="lazy" decoding="async" src="{{ spicy_product.images.first.image.url }}" alt="Banner" /></picture>
+                            </figure>
+                            <div class="banner-content rtl">
+                                <h4 class="banner-subtitle text-white font-weight-normal ls-normal">
+                                    عطر های تند
+                                </h4>
+                                <h3 class="banner-title  text-white font-weight-semi-bold ls-m">
+                                    {{ spicy_product }}  <br>
+                                    <span class="font-weight-normal">{{ spicy_product.brand }} </span>
+                                </h3>
+                                <a href="{% url 'shop:product-list' %}?tastes=SPICY" class="btn btn-md btn-block btn-gradient">
+                                    بقیه عطر های تند <i class="fa-light fa-angles-left"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             {% if offer_title %}
                 <section class="banner parallax rtl text-right" data-option="{'offset': 400}"
                          data-image-src="{{ offer_banner }}">
