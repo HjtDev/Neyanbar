@@ -71,6 +71,10 @@ def home_view(request):
                 output_field=IntegerField()
             )
         ).order_by('least_price').first(),
+        'new_products': all_products.order_by('-created_at')[:7],
+        'high_rated_products': all_products.order_by('-site_score')[:7],
+        'most_sold_products': all_products.annotate(sold=Count('bought_by', distinct=True)).order_by('-sold')[:7],
+        'most_viewed_products': all_products.order_by('-views')[:7],
         'video_text': settings.video_text,
         'footer_text': settings.footer_text,
     }
