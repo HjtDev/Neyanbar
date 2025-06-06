@@ -195,6 +195,7 @@ class ProductSmell(models.Model):
     objects = models.Manager()
 
     name = models.CharField(max_length=50, verbose_name='گروه بویایی')
+    icon = models.ImageField(upload_to='Smells/Icons', verbose_name='آیکون', help_text='80*80')
 
     def __str__(self):
         return self.name

@@ -189,6 +189,55 @@
                 </div>
             </section>
 
+            <section class="category-main">
+                <div class="container category-main-wrap">
+                    <div class="owl-carousel owl-theme owl-shadow-carousel row cols-xl-7 cols-lg-6 cols-md-5 cols-xs-3 cols-1"
+                         data-owl-options="{
+                                     'rtl':true,
+                                    'nav': false,
+                                    'dots': false,
+                                    'items': 7,
+                                    'loop': true,
+                                    'autoplay': true,
+                                    'margin':  20,
+                                    'responsive': {
+                                        '0': {
+                                            'items': 3
+                                        },
+                                        '480': {
+                                            'items': 4
+                                        },
+                                        '768': {
+                                            'items': 5
+                                        },
+                                        '992': {
+                                            'items': 6
+                                        },
+                                        '1200': {
+                                            'items':7,
+                                            'dots': false
+                                        }
+                                    }
+                                }">
+                        {% for smell in all_smells %}
+                            <div class="category category-ellipse">
+                                <a href="#">
+                                    <figure class="category-media">
+                                        <picture><source srcset="{{ smell.icon.url }}" type="image/webp"><img loading="lazy" decoding="async" src="{{ smell.icon.url }}" alt="category" width="196"
+                                                                                                                    height="196" /></picture>
+                                    </figure>
+                                </a>
+                                <div class="category-content rtl">
+                                    <h4 class="category-name"><a href="{{ smell.get_absolute_url }}">{{ smell }}</a></h4>
+                                    <span class="category-count">
+                                        <span>در تمامی سبک ها</span>
+                                    </span>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
             
             <section class="banner-group container discount-main-2 rtl text-right">
                 <div class="title-wrapper">
