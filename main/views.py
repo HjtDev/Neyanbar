@@ -43,6 +43,34 @@ def home_view(request):
         'sour_product': all_products.filter(taste=Product.TasteChoices.SOUR).order_by('-site_score').first(),
         'bitter_product': all_products.filter(taste=Product.TasteChoices.BITTER).order_by('-site_score').first(),
         'spicy_product': all_products.filter(taste=Product.TasteChoices.SPICY).order_by('-site_score').first(),
+        'top_male_product': all_products.filter(gender__in=[Product.GenderChoices.MALE, Product.GenderChoices.UNISEX]).annotate(
+            max_discount=Max('discount'),
+            min_discount = Min('discount'),
+            min_price=Min('price'),
+            min_volume=Min('available_volumes__volume'),
+            least_price=ExpressionWrapper(
+                Case(
+                    When(max_discount=-1, then=F('min_price')),
+                    default=F('min_discount'),
+                    output_field=IntegerField()
+                ) * F('min_volume'),
+                output_field=IntegerField()
+            )
+        ).order_by('least_price').first(),
+        'top_female_product': all_products.filter(gender__in=[Product.GenderChoices.FEMALE, Product.GenderChoices.UNISEX]).annotate(
+            max_discount=Max('discount'),
+            min_discount = Min('discount'),
+            min_price=Min('price'),
+            min_volume=Min('available_volumes__volume'),
+            least_price=ExpressionWrapper(
+                Case(
+                    When(max_discount=-1, then=F('min_price')),
+                    default=F('min_discount'),
+                    output_field=IntegerField()
+                ) * F('min_volume'),
+                output_field=IntegerField()
+            )
+        ).order_by('least_price').first(),
         'video_text': settings.video_text,
         'footer_text': settings.footer_text,
     }
