@@ -11,14 +11,18 @@ from order.zarinpal import start_payment
 
 def home_view(request):
     all_products = Product.objects.filter(is_visible=True).annotate(
-        verified_comments_count=Count('comments', filter=Q(comments__is_verified=True))
+        verified_comments_count=Count('comments')
     )
     all_brands = Brand.objects.prefetch_related('products').all()
+
     title_products = all_products.filter(discount__gt=-1)
+    if not title_products.exists():
+        title_products = all_products.order_by('-views')
+
     settings = Setting.objects.first()
     context = {
         'posts': Post.objects.select_related('user').filter(is_visible=True).order_by('-created_at')[:6],
-        'title_product': title_products.order_by('-views')[0] if title_products.exists() else all_products.order_by('-views')[0],
+        'title_product': title_products[0],
         'top_brands': all_brands.filter(products__is_visible=True).annotate(
             max_discount=Max('products__discount'),
             min_price=Min('products__price'),
@@ -34,6 +38,7 @@ def home_view(request):
             )
         ).order_by('-products__site_score')[:4],
         'top_products': all_products.order_by('-site_score')[:6],
+        'top_discounts': title_products.exclude(id=title_products[0].id).annotate(max_discount=Max('discount')).order_by('max_discount')[:6],
         'video_text': settings.video_text,
         'footer_text': settings.footer_text,
     }

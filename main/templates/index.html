@@ -297,6 +297,97 @@
                     {% endfor %}
                 </div>
             </section>
+
+            <section class="discount-main">
+                <div class="title-wrapper">
+                    <div class="container-fluid title-wrap">
+                        <h2 class="title">تخفیفات ویژه </h2>
+                        <h5 class="title-info">
+                            <span></span>
+                            <picture><source srcset="{% static 'images/perfume/15.webp' %}" type="image/webp"><img src="{% static 'images/perfume/15.png' %}"></picture>
+                            <span></span>
+                        </h5>
+                    </div>
+                </div>
+                <div class="container discount-wrap">
+                    <div class="col-xl-2  discount-right">
+                        <picture><source srcset="{% static 'images/discount.webp' %}" type="image/webp"><img loading="lazy" decoding="async" src="{% static 'images/discount.png' %}" alt="محصولات تخفیف خورده" /></picture>
+                    </div>
+                    <div class="col-xl-10 col-lg-12 discount-left">
+                        <div class="owl-carousel owl-theme owl-nav-inner row appear-animate"
+                             data-animation-options="{'name': 'fadeIn'}" data-owl-options="{
+                                        'rtl':true,
+                                        'nav': true,
+                                        'dots': false,
+                                        'loop': true,
+                                        'autoplay': true,
+                                        'margin': 20,
+                                        'responsive': {
+                                            '0': {
+                                                'items': 1
+                                            },
+                                            '576': {
+                                                'items': 2
+                                            },
+                                            '768': {
+                                                'items':2
+                                            },
+                                            '992': {
+                                                'items':3
+                                            },
+                                            '1200': {
+                                                'items': 3
+                                            },
+                                            '1600': {
+                                                'items': 4
+                                            }
+                                        }
+                                    }">
+                            {% for product in top_discounts %}
+                                <div class="product text-center cart-full">
+                                    <figure class="product-media">
+                                        <a href="{{ product.get_absolute_url }}">
+                                            <picture><source id="image-{{ product.id }}" srcset="{{ product.images.first.image.url }}" type="image/webp"><img loading="lazy" decoding="async" src="{{ product.images.first.image.url }}" alt="product" width="240"
+                                                                                                                   height="270"></picture>
+                                        </a>
+                                        <div class="product-action-vertical">
+                                            <a href="#" class="btn-product-icon add-to-cart" data-toggle="modal" data-id="{{ product.id }}"
+                                               data-target="#addCartModal" title="اضافه به خرید">
+                                                <i class="fa-light fa-basket-shopping-simple"></i>
+                                            </a>
+                                            <a href="#" class="btn-product-icon btn-list-wishlist like-icon-{{ product.id }}" data-id="{{ product.id }}" title="اضافه به علاقه مندی">
+                                                <i class="fa-light fa-heart" id="like-icon-{{ product.id }}" {% if request.user in product.liked_by.all %}style="color: red;"{% endif %}></i>
+                                            </a>
+                                            <a href="#" class="btn-product-icon btn-list-compare" data-id="{{ product.id }}" title="مقایسه">
+                                                <i class="fa-light fa-scale-balanced"></i>
+                                            </a>
+                                        </div>
+                                    </figure>
+                                    <div class="product-details rtl">
+                                        <h3 class="product-name">
+                                            <a id="list-title-{{ product.id }}" href="{{ product.get_absolute_url }}">{{ product }}</a>
+                                        </h3>
+                                        <div class="product-price">
+                                            <del class="old-price"> {{ product.get_raw_price | commafy }} تومان</del> <ins class="new-price"> {{ product.get_price | commafy }} تومان</ins>
+                                        </div>
+                                        <div class="ratings-container">
+                                            <div class="ratings-full">
+                                                <span class="ratings" style="width:{% widthratio product.site_score 1 10 %}%"></span>
+                                                <span class="tooltiptext tooltip-top"></span>
+                                            </div>
+                                            <a href="{{ product.get_absolute_url }}" class="rating-reviews">(
+                                                {{ product.verified_comments_count }}نظر )</a>
+                                        </div>
+                                        <a href="{{ product.get_absolute_url }}" class="btn btn-md btn-block btn-gradient" data-toggle="modal" data-target="#addCartModal"
+                                           title="اضافه به خرید">مشاهده و انتخاب<i class="fa-light fa-basket-shopping-simple"></i></a>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section class="product-wrapper container offer-main-2 appear-animate rtl text-right">
                 <div class="title-wrapper">
                     <div class="container-fluid title-wrap">
