@@ -1,5 +1,4 @@
-from django.db.models import Count, Min, Max, Q, ExpressionWrapper, Case, When, F, IntegerField
-from django.http import HttpResponse
+from django.db.models import Count, Min, Max, ExpressionWrapper, Case, When, F, IntegerField
 from django.shortcuts import render, redirect
 from blog.models import Post
 from shop.models import Product, Brand
@@ -7,23 +6,54 @@ from .models import Setting, AboutUs, Terms, PerfumeRequest
 from order.models import CreditCart
 from uuid import uuid4
 from order.zarinpal import start_payment
+from jdatetime import date as jdate
 
 
 def home_view(request):
-    all_products = Product.objects.filter(is_visible=True).annotate(
-        verified_comments_count=Count('comments', filter=Q(comments__is_verified=True))
+    all_products = Product.objects.select_related('brand').filter(is_visible=True).annotate(
+        verified_comments_count=Count('comments')
     )
-    all_brands = Brand.objects.prefetch_related('products').all()
+    all_brands = Brand.objects.filter(products__is_visible=True).annotate(
+        max_discount=Max('products__discount'),
+        min_price=Min('products__price'),
+        min_discount=Min('products__discount'),
+        min_volume=Min('products__available_volumes__volume'),
+        least_price=ExpressionWrapper(
+            Case(
+                When(max_discount=-1, then=F('min_price')),
+                default=F('min_discount'),
+                output_field=IntegerField()
+            ) * F('min_volume'),
+            output_field=IntegerField()
+        )
+    ).order_by('-products__site_score').distinct()[:4]
+
     title_products = all_products.filter(discount__gt=-1)
+    if not title_products.exists():
+        title_products = all_products.order_by('-views')
+
     settings = Setting.objects.first()
-    context = {
-        'posts': Post.objects.select_related('user').filter(is_visible=True).order_by('-created_at')[:6],
-        'title_product': title_products.order_by('-views')[0] if title_products.exists() else all_products.order_by('-views')[0],
-        'top_brands': all_brands.filter(products__is_visible=True).annotate(
-            max_discount=Max('products__discount'),
-            min_price=Min('products__price'),
-            min_discount=Min('products__discount'),
-            min_volume=Min('products__available_volumes__volume'),
+    title_product = title_products[0]
+
+    top_discounts = title_products.exclude(id=title_product.id).annotate(max_discount=Max('discount')).order_by('-max_discount')[:6]
+
+    tastes = {
+        'sweet_product': Product.TasteChoices.SWEET,
+        'sour_product': Product.TasteChoices.SOUR,
+        'bitter_product': Product.TasteChoices.BITTER,
+        'spicy_product': Product.TasteChoices.SPICY,
+    }
+    taste_products = {
+        key: all_products.filter(taste=value).order_by('-site_score').first()
+        for key, value in tastes.items()
+    }
+
+    def get_top_gender_product(genders):
+        return all_products.filter(gender__in=genders).annotate(
+            max_discount=Max('discount'),
+            min_discount=Min('discount'),
+            min_price=Min('price'),
+            min_volume=Min('available_volumes__volume'),
             least_price=ExpressionWrapper(
                 Case(
                     When(max_discount=-1, then=F('min_price')),
@@ -32,8 +62,29 @@ def home_view(request):
                 ) * F('min_volume'),
                 output_field=IntegerField()
             )
-        ).order_by('-products__site_score')[:4],
-        'top_products': all_products.order_by('-site_score')[:6],
+        ).order_by('least_price').first()
+
+    top_male_product = get_top_gender_product([Product.GenderChoices.MALE, Product.GenderChoices.UNISEX])
+    top_female_product = get_top_gender_product([Product.GenderChoices.FEMALE, Product.GenderChoices.UNISEX])
+
+    new_products = all_products.order_by('-created_at')[:7]
+    high_rated_products = all_products.order_by('-site_score')[:7]
+    most_sold_products = all_products.annotate(sold=Count('bought_by', distinct=True)).order_by('-sold')[:7]
+    most_viewed_products = all_products.order_by('-views')[:7]
+
+    context = {
+        'posts': Post.objects.select_related('user').filter(is_visible=True).order_by('-created_at')[:6],
+        'title_product': title_product,
+        'top_brands': all_brands,
+        'neyanbar_suggestion': all_products.order_by('-views')[:6],
+        'top_discounts': top_discounts,
+        **taste_products,
+        'top_male_product': top_male_product,
+        'top_female_product': top_female_product,
+        'new_products': new_products,
+        'high_rated_products': high_rated_products,
+        'most_sold_products': most_sold_products,
+        'most_viewed_products': most_viewed_products,
         'video_text': settings.video_text,
         'footer_text': settings.footer_text,
     }
@@ -43,6 +94,16 @@ def home_view(request):
             'offer_event': settings.event,
             'offer_link': settings.get_offer_link(),
             'offer_banner': settings.banner.url,
+        })
+    if jdate.today().month <= 6:
+        context.update({
+            'season_title': 'عطر های بهاری و تابستانی',
+            'season_products': all_products.filter(season__in=[Product.SeasonChoices.SUMMER, Product.SeasonChoices.ALL_SEASONS]).order_by('-discount')[:7]
+        })
+    else:
+        context.update({
+            'season_title': 'عطر های پاییزی و زمستانی',
+            'season_products': all_products.filter(season__in=[Product.SeasonChoices.WINTER, Product.SeasonChoices.ALL_SEASONS]).order_by('-discount')[:7]
         })
     return render(request, 'index.html', context)
 
