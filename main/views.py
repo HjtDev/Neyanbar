@@ -13,68 +13,78 @@ def home_view(request):
     all_products = Product.objects.select_related('brand').filter(is_visible=True).annotate(
         verified_comments_count=Count('comments')
     )
-    all_brands = Brand.objects.prefetch_related('products').all()
+    all_brands = Brand.objects.filter(products__is_visible=True).annotate(
+        max_discount=Max('products__discount'),
+        min_price=Min('products__price'),
+        min_discount=Min('products__discount'),
+        min_volume=Min('products__available_volumes__volume'),
+        least_price=ExpressionWrapper(
+            Case(
+                When(max_discount=-1, then=F('min_price')),
+                default=F('min_discount'),
+                output_field=IntegerField()
+            ) * F('min_volume'),
+            output_field=IntegerField()
+        )
+    ).order_by('-products__site_score').distinct()[:4]
 
     title_products = all_products.filter(discount__gt=-1)
     if not title_products.exists():
         title_products = all_products.order_by('-views')
 
     settings = Setting.objects.first()
+    title_product = title_products[0]
+
+    top_discounts = title_products.exclude(id=title_product.id).annotate(max_discount=Max('discount')).order_by('-max_discount')[:6]
+
+    tastes = {
+        'sweet_product': Product.TasteChoices.SWEET,
+        'sour_product': Product.TasteChoices.SOUR,
+        'bitter_product': Product.TasteChoices.BITTER,
+        'spicy_product': Product.TasteChoices.SPICY,
+    }
+    taste_products = {
+        key: all_products.filter(taste=value).order_by('-site_score').first()
+        for key, value in tastes.items()
+    }
+
+    def get_top_gender_product(genders):
+        return all_products.filter(gender__in=genders).annotate(
+            max_discount=Max('discount'),
+            min_discount=Min('discount'),
+            min_price=Min('price'),
+            min_volume=Min('available_volumes__volume'),
+            least_price=ExpressionWrapper(
+                Case(
+                    When(max_discount=-1, then=F('min_price')),
+                    default=F('min_discount'),
+                    output_field=IntegerField()
+                ) * F('min_volume'),
+                output_field=IntegerField()
+            )
+        ).order_by('least_price').first()
+
+    top_male_product = get_top_gender_product([Product.GenderChoices.MALE, Product.GenderChoices.UNISEX])
+    top_female_product = get_top_gender_product([Product.GenderChoices.FEMALE, Product.GenderChoices.UNISEX])
+
+    new_products = all_products.order_by('-created_at')[:7]
+    high_rated_products = all_products.order_by('-site_score')[:7]
+    most_sold_products = all_products.annotate(sold=Count('bought_by', distinct=True)).order_by('-sold')[:7]
+    most_viewed_products = all_products.order_by('-views')[:7]
+
     context = {
         'posts': Post.objects.select_related('user').filter(is_visible=True).order_by('-created_at')[:6],
-        'title_product': title_products[0],
-        'top_brands': all_brands.filter(products__is_visible=True).annotate(
-            max_discount=Max('products__discount'),
-            min_price=Min('products__price'),
-            min_discount=Min('products__discount'),
-            min_volume=Min('products__available_volumes__volume'),
-            least_price=ExpressionWrapper(
-                Case(
-                    When(max_discount=-1, then=F('min_price')),
-                    default=F('min_discount'),
-                    output_field=IntegerField()
-                ) * F('min_volume'),
-                output_field=IntegerField()
-            )
-        ).order_by('-products__site_score')[:4],
+        'title_product': title_product,
+        'top_brands': all_brands,
         'neyanbar_suggestion': all_products.order_by('-views')[:6],
-        'top_discounts': title_products.exclude(id=title_products[0].id).annotate(max_discount=Max('discount')).order_by('max_discount')[:6],
-        'sweet_product': all_products.filter(taste=Product.TasteChoices.SWEET).order_by('-site_score').first(),
-        'sour_product': all_products.filter(taste=Product.TasteChoices.SOUR).order_by('-site_score').first(),
-        'bitter_product': all_products.filter(taste=Product.TasteChoices.BITTER).order_by('-site_score').first(),
-        'spicy_product': all_products.filter(taste=Product.TasteChoices.SPICY).order_by('-site_score').first(),
-        'top_male_product': all_products.filter(gender__in=[Product.GenderChoices.MALE, Product.GenderChoices.UNISEX]).annotate(
-            max_discount=Max('discount'),
-            min_discount = Min('discount'),
-            min_price=Min('price'),
-            min_volume=Min('available_volumes__volume'),
-            least_price=ExpressionWrapper(
-                Case(
-                    When(max_discount=-1, then=F('min_price')),
-                    default=F('min_discount'),
-                    output_field=IntegerField()
-                ) * F('min_volume'),
-                output_field=IntegerField()
-            )
-        ).order_by('least_price').first(),
-        'top_female_product': all_products.filter(gender__in=[Product.GenderChoices.FEMALE, Product.GenderChoices.UNISEX]).annotate(
-            max_discount=Max('discount'),
-            min_discount = Min('discount'),
-            min_price=Min('price'),
-            min_volume=Min('available_volumes__volume'),
-            least_price=ExpressionWrapper(
-                Case(
-                    When(max_discount=-1, then=F('min_price')),
-                    default=F('min_discount'),
-                    output_field=IntegerField()
-                ) * F('min_volume'),
-                output_field=IntegerField()
-            )
-        ).order_by('least_price').first(),
-        'new_products': all_products.order_by('-created_at')[:7],
-        'high_rated_products': all_products.order_by('-site_score')[:7],
-        'most_sold_products': all_products.annotate(sold=Count('bought_by', distinct=True)).order_by('-sold')[:7],
-        'most_viewed_products': all_products.order_by('-views')[:7],
+        'top_discounts': top_discounts,
+        **taste_products,
+        'top_male_product': top_male_product,
+        'top_female_product': top_female_product,
+        'new_products': new_products,
+        'high_rated_products': high_rated_products,
+        'most_sold_products': most_sold_products,
+        'most_viewed_products': most_viewed_products,
         'video_text': settings.video_text,
         'footer_text': settings.footer_text,
     }

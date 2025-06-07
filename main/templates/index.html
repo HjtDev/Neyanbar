@@ -221,7 +221,7 @@
                                 }">
                         {% for smell in all_smells %}
                             <div class="category category-ellipse">
-                                <a href="#">
+                                <a href="{{ smell.get_absolute_url }}">
                                     <figure class="category-media">
                                         <picture><source srcset="{{ smell.icon.url }}" type="image/webp"><img loading="lazy" decoding="async" src="{{ smell.icon.url }}" alt="category" width="196"
                                                                                                                     height="196" /></picture>
@@ -631,50 +631,54 @@
             <section class="banner-2">
                 <div class="container banner-2-wrap">
                     <div class="banner-grid-2cols row cols-sm-2 gutter-lg">
-                        <div class="banner banner-fixed banner-fixed-right content-middle appear-animate mt-3"
-                             data-animation-options="{
-                                'name': 'fadeInLeftShorter', 'duration': '1s'
-                            }">
-                            <figure class="bg-green" style="cursor: pointer" onclick="window.location.href = '{% url 'shop:product-list' %}?gender=MALE';">
-                                <picture><source srcset="/static/images/banner1.webp" type="image/webp"><img loading="lazy" decoding="async" src="/static/images/banner1.png" alt="Banner" /></picture>
-                            </figure>
-                            <div class="banner-content rtl">
-                                <h4 class="banner-subtitle font-weight-normal ls-normal text-white">
-                                    عطر های مردانه
-                                </h4>
-                                <h3 class="banner-title font-weight-semi-bold  ls-m mb-3 text-white ">
-                                    بهترین عطر ها برای آقایان
-                                </h3>
-                                <hr class="divider border-no">
-                                <div class="banner-price-info font-weight-normal text-body">
-                                    شروع قیمت از<span class="font-weight-bold text-secondary ml-1 ls-m"> {{ top_male_product.least_price | commafy }} تومان</span>
+                        <div class="col-sm-12 col-lg-6">
+                            <div class="banner banner-fixed banner-fixed-left content-middle appear-animate mt-3 bg-white"
+                                 data-animation-options="{
+                            'name': 'fadeInRightShorter', 'duration': '1s'
+                        }">
+                                <figure style="cursor: pointer;" onclick="window.location.href = '{% url 'shop:product-list' %}?gender=FEMALE';">
+                                    <picture><source srcset="{% static 'images/womenbgperf.webp' %}" type="image/webp"><img loading="lazy" decoding="async" src="{% static 'images/womanbgperf.webp' %}" alt="Banner" /></picture>
+                                </figure>
+                                <div class="rtl text-center">
+                                    <h4 class="banner-subtitle text-body font-weight-normal ls-normal">عطر های زنانه</h4>
+                                    <h3 class="banner-title text-body font-weight-semi-bold  ls-m mb-3">
+                                        بهترین عطر ها زنانه
+                                    </h3>
+                                    <hr class="divider border-no bg-light">
+                                    <div class="banner-price-info font-weight-normal text-body">
+                                        شروع قیمت از<span class="font-weight-bold text-secondary ml-1 ls-m"> {{ top_female_product.least_price | commafy }} تومان</span>
+                                    </div>
+                                    <a href="{% url 'shop:product-list' %}?gender=FEMALE" class="btn btn-dark btn-rounded btn-md btn-gradient mt-4">
+                                        مشاهده <i class="fa-light fa-angles-left"></i>
+                                    </a>
                                 </div>
-                                <div class="banner-price-info font-weight-normal text-white">
-                                </div>
-                                <a href="{% url 'shop:product-list' %}?gender=MALE" class="btn btn-dark btn-rounded btn-md btn-gradient mt-4">
-                                    مشاهده <i class="fa-light fa-angles-left"></i>
-                                </a>
                             </div>
                         </div>
-                        <div class="banner banner-fixed banner-fixed-left content-middle appear-animate mt-3"
-                             data-animation-options="{
-                                'name': 'fadeInRightShorter', 'duration': '1s'
-                            }">
-                            <figure class="border-green" style="cursor: pointer" onclick="window.location.href = '{% url 'shop:product-list' %}?gender=FEMALE';">
-                                <picture><source srcset="/static/images/banner2.webp" type="image/webp"><img loading="lazy" decoding="async" src="/static/images/banner2.png" alt="Banner" /></picture>
-                            </figure>
-                            <div class="banner-content rtl">
-                                <h4 class="banner-subtitle text-body font-weight-normal ls-normal">عطر های زنانه</h4>
-                                <h3 class="banner-title text-body font-weight-semi-bold  ls-m mb-3">
-                                    بهترین عطر ها برای زنان
-                                </h3>
-                                <hr class="divider border-no bg-light">
-                                <div class="banner-price-info font-weight-normal text-body">
-                                    شروع قیمت از<span class="font-weight-bold text-secondary ml-1 ls-m"> {{ top_female_product.least_price | commafy }} تومان</span>
+                        <div class="col-sm-12 col-lg-6">
+                            <div class="banner banner-fixed banner-fixed-right content-middle appear-animate mt-3"
+                                 data-animation-options="{
+                            'name': 'fadeInLeftShorter', 'duration': '1s'
+                        }">
+                                <figure class="bg-green" style="cursor: pointer" onclick="window.location.href = '{% url 'shop:product-list' %}?gender=MALE';">
+                                    <picture><source srcset="{% static 'images/menbgperf.webp' %}" type="image/webp"><img loading="lazy" decoding="async" src="{% static 'images/menbgperf.webp' %}" alt="Banner" /></picture>
+                                </figure>
+                                <div class="rtl text-center">
+                                    <h4 class="banner-subtitle font-weight-normal ls-normal text-black">
+                                        عطر های مردانه
+                                    </h4>
+                                    <h3 class="banner-title font-weight-semi-bold  ls-m mb-3 text-black">
+                                        بهترین عطر ها مردانه
+                                    </h3>
+                                    <hr class="divider border-no">
+                                    <div class="banner-price-info font-weight-normal text-body">
+                                        شروع قیمت از<span class="font-weight-bold text-secondary ml-1 ls-m"> {{ top_male_product.least_price | commafy }} تومان</span>
+                                    </div>
+                                    <div class="banner-price-info font-weight-normal text-white">
+                                    </div>
+                                    <a href="{% url 'shop:product-list' %}?gender=MALE" class="btn btn-dark btn-rounded btn-md btn-gradient mt-4">
+                                        مشاهده <i class="fa-light fa-angles-left"></i>
+                                    </a>
                                 </div>
-                                <a href="{% url 'shop:product-list' %}?gender=FEMALE" class="btn btn-dark btn-rounded btn-md btn-gradient mt-4">
-                                    مشاهده <i class="fa-light fa-angles-left"></i>
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -700,7 +704,7 @@
                                             <h4 class="banner-subtitle mb-0 ls-s text-white mb-1">
                                                 برترین های نی عنبر
                                             </h4>
-                                            <h3 class="banner-title mb-2 ls-m text-green font-weight-bold">{{ brand }}</h3>
+                                            <h3 class="banner-title mb-2 ls-m text-white font-weight-bold">{{ brand }}</h3>
                                             <p class="mb-0 font-primary text-white">شروع قیمت از <strong> {{ brand.least_price | commafy }} تومان </strong></p>
                                         </div>
                                     </div>
